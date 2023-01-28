@@ -53,7 +53,7 @@ router.post('/api/currencies', auth, async (req, res) => {
 //DELETE endpoint to delete a currency for the user
 router.delete('/api/currencies/:id', auth, async (req, res) => {
     try {
-        const currency = Currency.findOneAndDelete({ _id: req.params.id, currency_owner: req.user._id })
+        const currency = await Currency.findOneAndDelete({ _id: req.params.id, currency_owner: req.user._id })
         if (!currency) throw new Error("Provided currency doesn't exist")
         res.send(currency)
     } catch (e) {
