@@ -22,7 +22,7 @@ The main branch has been protected by branch protection rules which will not all
 
 1. Create a new branch via `git branch branch_name`. The branch_name should be intuitive for the issue you are working on and begin with a 'feat/' prefix for example, feat/chart-component if you are working on React Chart component.
 
-2. If you alreadh have a branch that you are staging on, then it is important that you alwasy ensure that you are not on the main branch, but on the desired feature branch. A safe way to do this is to run `git checkout branch_name` before you start making any commits. If a error message similar to "Please stash or push your commits before checking out" pop up, this likely means that you have screwed up in the past and made some commits on the main branch. In this case you can either `git rebase` if you are familiar with it, or contact me.
+2. If you already have a branch that you are staging on, then it is important that you alwasy ensure that you are not on the main branch, but on the desired feature branch. A safe way to do this is to run `git checkout branch_name` before you start making any commits. If a error message similar to "Please stash or push your commits before checking out" pop up, this likely means that you have screwed up in the past and made some commits on the main branch. In this case you can either `git rebase` if you are familiar with it, or contact me.
 
 3. Push commits on your branch, and open a pull request from your branch to the main while you are developing.
 
