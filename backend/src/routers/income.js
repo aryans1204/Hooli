@@ -55,3 +55,5 @@ router.delete('api/income/:id', auth, async (req, res) => {
         re.status(500).send()
     }
 })
+
+module.exports = router

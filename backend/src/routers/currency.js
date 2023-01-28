@@ -60,3 +60,5 @@ router.delete('/api/currencies/:id', auth, async (req, res) => {
         res.status(500).send()
     }
 })
+
+module.exports = router
