@@ -1,4 +1,4 @@
-# An app to optimize the way people manage their parking spaces
+# An app to optimize the way people manage their personal finances
 
 ## Steps to run the dev environment locally:
 
@@ -12,7 +12,7 @@
 
 - Similarly from the root dir of `cd frontend` and run `npm install` to install all the required node_modules for the frontend.
 
-- Similarly, run `mkdir config` and place the `dev.env` file tu upload the fronten secrets.
+- Similarly, run `mkdir config` and place the `dev.env` file to upload the frontend secrets.
 
 - Then from the root, run `npm run dev` to spin up the frontend at `http://localhost:5103`
 
