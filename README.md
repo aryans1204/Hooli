@@ -1,4 +1,4 @@
-# An app to optimize the way people manage their personal finances
+# An app to optimize the way people manage their PARKING SPACES XDDDDDDDDDDDDDDDDDDDDDDDDDDD
 
 ## Steps to run the dev environment locally:
 
