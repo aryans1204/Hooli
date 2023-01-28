@@ -16,5 +16,4 @@
 
 - Then from the root, run `npm run dev` to spin up the frontend at `http://localhost:5103`
 
-Feel free to ask any questions
-
+Can just ask me any questions XDXDXD 
