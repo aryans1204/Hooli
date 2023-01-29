@@ -3,7 +3,7 @@
 ## Prerequisites:
 
 - You need to ensure that the latest LTS of `node` and `npm` is installed on your machine.
-` You also need to install the community edition of the MongoDB database, available for free on their webpage at [!MongoDB Install](https://www.mongodb.com/docs/manual/installation/) for your Operating System.
+` You also need to install the community edition of the MongoDB database, available for free on their webpage at [MongoDB Install](https://www.mongodb.com/docs/manual/installation/) for your Operating System.
 
 ## Steps to run the dev environment locally:
 
