@@ -125,7 +125,7 @@ router.patch('/api/portfolio/equities:id', auth, async (req, res) => {
             url: url,
             json: true,
             headers: {'User-Agent': 'request'}
-          }, (err, res, data) => {
+          }, async (err, res, data) => {
             if (err) {
               console.log('Error:', err);
             } else if (res.statusCode !== 200) {
@@ -163,7 +163,7 @@ router.patch('/api/portfolio/options/:id', auth, async (req, res) => {
             url: url,
             json: true,
             headers: {'User-Agent': 'request'}
-          }, (err, res, data) => {
+          }, async (err, res, data) => {
             if (err) {
               console.log('Error:', err);
             } else if (res.statusCode !== 200) {
@@ -210,7 +210,7 @@ router.patch('/api/portfolio/commodities/:id', auth, async (req, res) => {
             url: url,
             json: true,
             headers: {'User-Agent': 'request'}
-          }, (err, res, data) => {
+          }, async (err, res, data) => {
             if (err) {
               console.log('Error:', err);
             } else if (res.statusCode !== 200) {

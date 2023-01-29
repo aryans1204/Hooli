@@ -1,6 +1,6 @@
 const express = require('express')
 const mongoose = require('mongoose')
-const jsonwebtoken = requrie('jsonwebtoken')
+const jsonwebtoken = require('jsonwebtoken')
 const User = require('../models/user')
 const auth = require('../authentication/auth')
 

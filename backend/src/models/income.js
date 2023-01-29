@@ -17,7 +17,7 @@ const incomeSchema = new mongoose.Schema({
         }
     },
     end_date: {
-        type; Date,
+        type: Date,
         required: false
     },
     company: {
