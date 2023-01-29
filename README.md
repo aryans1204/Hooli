@@ -1,5 +1,5 @@
 # An app to optimize the way people manage their personal finances XDDDDDDDDDDDDDDDDDDDDDDDDDDD
-
+##New commit
 ## Steps to run the dev environment locally:
 
 - from the root directory, head over to `cd backend`
