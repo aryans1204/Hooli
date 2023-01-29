@@ -1,7 +1,15 @@
 const mongoose = require('mongoose')
 const validator = require('validator')
 
-const incomeSchema = new mongoose.Schema({
+const incomeSchema = new mongoose.Schema({,
+    income_type: {
+        type: String,
+        required: true,
+        validate(value) {
+            const allowedSet = ["FT", "PT", "Passive", "Others"] 
+            if (!allowedSet.includes(value)) throw new Error("Only supported income types are allowed")
+        }
+    },
     monthly_income: {
         type: Number,
         required: true,
