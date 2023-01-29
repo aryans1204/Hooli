@@ -1,11 +1,16 @@
 # An app to optimize the way people manage their personal finances XDDDDDDDDDDDDDDDDDDDDDDDDDDD
 
+## Prerequisites:
+
+- You need to ensure that the latest LTS of `node` and `npm` is installed on your machine.
+` You also need to install the community edition of the MongoDB database, available for free on their webpage at [MongoDB Install](https://www.mongodb.com/docs/manual/installation/) for your Operating System.
+
 ## Steps to run the dev environment locally:
 
 - from the root directory, head over to `cd backend`
 - Run `npm install` and this will create a `node_modules` directory in the backend directory, which contains all the required packages to run the backend.
 
-- Run `mkdir config` and place the `dev.env` file under there to be able to upload secrets to the dev backend.
+- Create a `.env` file under the `~/backend` directory to be able to upload secrets to the dev backend.
 - Before you can run the backend, you need a local MongoDB cluster running, so make sure your MonoDB database is running locally.
 
 - In order to run the backend, run `npm run dev` from the root dir. This should start up the backend server at `http://localhost:3001`
