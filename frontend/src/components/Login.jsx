@@ -2,7 +2,7 @@ import { useState } from "react";
 import "./Login.css";
 import logo from "../assets/icons/hooli-logo.png"
 
-function App() {
+function Login() {
   return (
     <div className="App">
       <div class="row">
@@ -35,4 +35,4 @@ function App() {
   );
 }
 
-export default App;
+export default Login;
