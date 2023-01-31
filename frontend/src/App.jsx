@@ -20,9 +20,6 @@ function App() {
                 <h3>Password</h3>
                 <input type="text" name="name" />
               </label>
-              <p class="forget">
-                <a href="#">Forgot password?</a>
-              </p>
               <input type="submit" value="Log In" />
               <p>
                 Don't have an account? <a href="#">Create An Account</a>
