@@ -20,7 +20,7 @@ router.get('/api/income', auth, async (req, res) => {
 //GET endpoint for a specific income or employment
 router.get('api/income/:id', auth, async (req, res) => {
     try {
-        const income = Income.findOne({ _id: req.params.id, income_owner: req.user._id })
+        const income = await Income.findOne({ _id: req.params.id, income_owner: req.user._id })
         if (!income) re.status(404).send()
 
         res.send(income)
