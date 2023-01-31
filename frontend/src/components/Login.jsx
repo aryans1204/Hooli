@@ -1,12 +1,13 @@
 import { useState } from "react";
 import "./Login.css";
+import logo from "../assets/icons/hooli-logo.png"
 
 function App() {
   return (
     <div className="App">
       <div class="row">
         <div class="column dark-purple">
-          <h1>HOOLI</h1>
+          <img class="logo" src={logo} alt="Hooli" />
         </div>
         <div class="column">
           <div class="login">
