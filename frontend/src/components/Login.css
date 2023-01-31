@@ -61,10 +61,20 @@ input[type="text"] {
   background-color: #d9d9d9;
   text-align: left;
   width: 100%;
-  outline: none;
-  border-radius: 15px;
+  padding: 12px 20px;
+  border-radius: 10px;
+  font-size: 18px;
 }
 
 p {
   text-align: center;
+}
+
+input[type="password"] {
+  background-color: #d9d9d9;
+  text-align: left;
+  width: 100%;
+  padding: 12px 20px;
+  border-radius: 10px;
+  font-size: 18px;
 }

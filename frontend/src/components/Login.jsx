@@ -18,7 +18,7 @@ function App() {
               </label>
               <label>
                 <h3>Password</h3>
-                <input type="text" name="name" />
+                <input type="password" name="name" />
               </label>
               <label>
                 <input type="submit" value="Log In" />
