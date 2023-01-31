@@ -1,7 +1,6 @@
 :root {
-  font-family: 'Karla', sans-serif;
+  font-family: "Karla", sans-serif;
   font-size: 16px;
-
 }
 
 .row {
@@ -10,34 +9,35 @@
 
 .column {
   flex: 50%;
+  height: 100vh;
 }
 
 .dark-purple {
-  background-color: #330C7A;
+  background-color: #330c7a;
 }
 
 h1 {
   padding-left: 1em;
   padding-top: 0.5em;
   font-size: 3em;
-  font-family: 'Open Sans', sans-serif;
-  color: #FFF;
-
+  font-family: "Open Sans", sans-serif;
+  color: #fff;
 }
 
 a {
   text-decoration: none;
-  color: #7140CC;
+  color: #7140cc;
 }
 
 .forget {
-  color: #7140CC;
+  color: #7140cc;
   text-align: right;
-  
 }
 
 h2 {
-  font-family: 'Montserrat', sans-serif;
+  font-family: "Montserrat", sans-serif;
+  font-size: 36px;
+  text-align: center;
 }
 
 .login {
@@ -45,12 +45,12 @@ h2 {
   width: 50%;
 }
 
-input[type=submit]{
-  font-family: 'Karla';
+input[type="submit"] {
+  font-family: "Karla";
   display: block;
   margin: 0 auto;
-  background-color: #330C7A;
-  color: #FFF;
+  background-color: #330c7a;
+  color: #fff;
   border-radius: 15px;
   font-size: 2em;
   width: 100%;
@@ -60,8 +60,8 @@ h3 {
   text-align: left;
 }
 
-input[type=text] {
-  background-color: #D9D9D9;
+input[type="text"] {
+  background-color: #d9d9d9;
   text-align: left;
   width: 100%;
   outline: none;
