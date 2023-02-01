@@ -1,19 +1,33 @@
-.app{
-    display: flex;
-    justify-content: center;
-    width: 100%;
+.app {
+  display: flex;
+  justify-content: center;
+  width: 100%;
 }
 
-.screen{
-    align-items: center;
-    background: linear-gradient(180deg, rgb(51,12,122)29.34%, rgba(217,217,217,0)100%);
-    min-height: 1024px;
+.screen {
+  align-items: center;
+  background: linear-gradient(
+    180deg,
+    rgb(51, 12, 122) 20%,
+    rgba(217, 217, 217, 0) 100%
+  );
+  min-height: 1024px;
 }
 
-.title{
-    font-family: "Montserrat", sans-serif;
-    font-weight: 600;
-    text-align: center;
-    
+.title {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 700;
+  text-align: center;
+  padding-top: 30%;
+  color: white;
+}
 
+.about_header {
+  color: white;
+  font-family: "karla";
+}
+
+.about_details {
+  color: white;
+  font-family: "karla";
 }
