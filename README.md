@@ -17,7 +17,7 @@
 
 - Similarly from the root dir of `cd frontend` and run `npm install` to install all the required node_modules for the frontend.
 
-- Similarly, run `mkdir config` and place the `dev.env` file to upload the frontend secrets.
+- Similarly, run `mkdir config` and place the `.env` file to upload the frontend secrets.
 
 - Then from the root, run `npm run dev` to spin up the frontend at `http://localhost:5173`
 

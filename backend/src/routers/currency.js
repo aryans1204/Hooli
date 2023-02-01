@@ -27,7 +27,7 @@ router.get('/api/currencies', auth, async (req, res) => {
 
 //GET endpoint for getting a specific currency for the User by ID
 router.get('/api/currencies/:id', auth, async (req, res) => {
-    const currency = Currency.findOne({ _id: req.params.id, currency_owner: req.user._id })
+    const currency = await Currency.findOne({ _id: req.params.id, currency_owner: req.user._id })
     try {
         if (!currency) throw new Error("Curreny doesn't exist")
         res.send(currency)
