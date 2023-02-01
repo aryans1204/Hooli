@@ -18,7 +18,7 @@
   font-family: "Montserrat", sans-serif;
   font-weight: 700;
   text-align: center;
-  padding-top: 30%;
+  padding-top: 10%;
   color: white;
 }
 
@@ -30,4 +30,9 @@
 .about_details {
   color: white;
   font-family: "karla";
+}
+
+.logo {
+  padding-top: 20%;
+  margin-top: 0px;
 }
