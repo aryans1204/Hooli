@@ -6,19 +6,16 @@ import logo from "./assets/icons/hooli-logo.png";
 
 function App() {
   return (
-    <div className="App">
-      <div className="screen">
+    <div className="app">
+      <div class="purple_column">
         <img class="logo" src={logo} alt="Hooli" />
-        <div className="title">
-          <h1>Welcome to Hooli</h1>
+      </div>
+      <div className="yellow_column">
+        <div>
+          <h1 className="title">Welcome</h1>
         </div>
-        <div className="about_header">
-          <h2>
-            <u>About Us</u>
-          </h2>
-        </div>
-        <div className="about_details">
-          <p>
+        <div>
+          <p className="about">
             Hooli is an online application that helps you manage your finances.
           </p>
         </div>

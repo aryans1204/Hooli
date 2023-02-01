@@ -3,36 +3,38 @@
   justify-content: center;
   width: 100%;
 }
+.purple_column {
+  background-color: #330c7a;
+  height: 100vh;
+  float: left;
+  width: 50%;
+}
 
-.screen {
-  align-items: center;
-  background: linear-gradient(
-    180deg,
-    rgb(51, 12, 122) 20%,
-    rgba(217, 217, 217, 0) 100%
-  );
-  min-height: 1024px;
+.yellow_column {
+  background-color: rgb(252, 221, 44);
+  height: 100vh;
+  float: right;
+  width: 50%;
 }
 
 .title {
   font-family: "Montserrat", sans-serif;
   font-weight: 700;
   text-align: center;
-  padding-top: 10%;
-  color: white;
+  color: black;
+  padding-top: 35%;
+  font-size: 50px;
 }
 
-.about_header {
-  color: white;
+.about {
+  color: black;
   font-family: "karla";
-}
-
-.about_details {
-  color: white;
-  font-family: "karla";
+  text-align: left;
+  padding-left: 15%;
+  font-size: 25px;
 }
 
 .logo {
-  padding-top: 20%;
-  margin-top: 0px;
+  align-items: center;
+  width: 50%;
 }
