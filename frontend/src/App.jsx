@@ -1,34 +1,27 @@
-import { useState } from 'react'
-import './App.css'
+/*welcome page*/
+
+import { useState } from "react";
+import "./App.css";
+import logo from "./assets/icons/hooli-logo.png";
 
 function App() {
   return (
-    <div className="App">
-      <div class="row">
-        <div class="column dark-purple">
-          <h1>HOOLI</h1>
+    <div className="app">
+      <div class="purple_column">
+        <img class="logo" src={logo} alt="Hooli" />
+      </div>
+      <div className="yellow_column">
+        <div>
+          <h1 className="title">Welcome</h1>
         </div>
-        <div class="column">
-          <div class="login">
-            <h2>Sign In</h2>
-            <form>
-              <label>
-                <h3>Email</h3>
-                <input type="text" name="name" />
-              </label>
-              <label>
-                <h3>Password</h3>
-                <input type="text" name="name" />
-              </label>
-              <p class="forget"><a href='#'>Forgot password?</a></p>
-              <input type="submit" value="Log In" />
-              <p>Don't have an account? <a href='#'>Create An Account</a></p>
-            </form>
-          </div>
+        <div>
+          <p className="about">
+            Hooli is an online application that helps you manage your finances.
+          </p>
         </div>
       </div>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
