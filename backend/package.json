@@ -22,5 +22,9 @@
     "request": "^2.88.2",
     "sharp": "^0.31.3",
     "validator": "^13.7.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.33.0",
+    "eslint-config-google": "^0.14.0"
   }
 }
