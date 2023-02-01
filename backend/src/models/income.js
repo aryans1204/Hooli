@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 const validator = require('validator')
 
-const incomeSchema = new mongoose.Schema({,
+const incomeSchema = new mongoose.Schema({
     income_type: {
         type: String,
         required: true,

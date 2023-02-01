@@ -28,11 +28,6 @@ const userSchema = new mongoose.Schema({
         required: true,
         minlength: 7,
         trim: true,
-        validate(value) {
-            if (validator.toLowerCase().contains('password')) {
-                throw new Error('Password cannot be password')
-            }
-        }
     },
     tokens: [{
         token: {
@@ -73,12 +68,12 @@ userSchema.methods.toJSON = function () {
     const userObject = user.toObject()
 
     delete userObject.password
-    delete userObject.tokens
+    //delete userObject.tokens
 
     return userObject
 }
 //generating JWT auth tokens for a user
-userSchema.methods.generateAuthToken = async function () {
+userSchema.methods.generateAuthToken = async function() {
     const user = this
     const token = jwt.sign({ _id: user._id.toString() }, process.env.JWT_SECRET)
 
@@ -89,16 +84,14 @@ userSchema.methods.generateAuthToken = async function () {
 }
 //find user by email credentials
 userSchema.statics.findByCredentials = async (email, password) => {
-    const user = await User.findOne({ email })
-
+    const user = await User.findOne({ email: email })
     if (!user) {
         throw new Error('Unable to login')
     }
-
     const isMatch = await bcrypt.compare(password, user.password)
 
     if (!isMatch) {
-        throw new Error('Unable to login')
+        throw new Error({error: "The password hashing is fucked"})
     }
 
     return user
