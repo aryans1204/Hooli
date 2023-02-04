@@ -7,32 +7,25 @@ on:
     branches: [main]
 
 jobs:
-  build:
+  test_user_endpoint:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [14.x, 16.x, 18.x]
-        mongodb-version: ['4.2', '4.4', '5.0', '6.0']
-
     steps:
     - name: Git checkout
       uses: actions/checkout@v3
 
-    - name: Use Node.js ${{ matrix.node-version }}
+    - name: Use Node.js 18.0
       uses: actions/setup-node@v3
       with:
-        node-version: ${{ matrix.node-version }}
+        node-version: 18.0
 
     - name: Start MongoDB
       uses: supercharge/mongodb-github-action@1.8.0
       with:
-        mongodb-version: ${{ matrix.mongodb-version }}
-    - run: cd backend
-    
-    - run: npm install
-    
-    - run: cd backend
-    
-    - run: npm run test
+        mongodb-version: 6.0
+    - name: Run tests
+      working-directory: ./backend
+      run: |
+        npm install
+        npm run tests
       env:
         CI: true
