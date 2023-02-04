@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node src/index.js",
     "dev": "nodemon -r dotenv/config src/index.js",
-    "test": "jest"
+    "test": "jest --forceExit"
   },
   "keywords": [],
   "author": "",
