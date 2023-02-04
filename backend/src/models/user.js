@@ -5,6 +5,7 @@ const jwt = require('jsonwebtoken')
 const Currency = require('./currency')
 const Portfolio = require('./portfolio')
 const Expenditures = require('./expenditure')
+const Income = require('./income')
 
 const userSchema = new mongoose.Schema({
     name: {

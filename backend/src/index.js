@@ -21,3 +21,5 @@ app.use(portfolioRouter)
 app.listen(port, () => {
     console.log("server is up an running on port " + port)
 })
+
+module.exports = app
