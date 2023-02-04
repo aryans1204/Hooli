@@ -1,4 +1,4 @@
-# An app to optimize the way people manage their personal finances XDDDDDDDDDDDDDDDDDDDDDDDDDDD
+#  An app to optimize the way people manage their personal finances XDDDDDDDDDDDDDDDDDDDDDDDDDDD
 
 ## Prerequisites:
 
