@@ -30,7 +30,9 @@ jobs:
     - run: cd backend
     
     - run: npm install
-
+    
+    - run: cd backend
+    
     - run: npm run test
       env:
         CI: true
