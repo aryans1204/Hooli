@@ -12,10 +12,22 @@ function SignUp() {
   const handleChange = ({ currentTarget: input }) => {
     setData({ ...data, [input.name]: input.value });
   };
-
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(data.name + data.email + data.password);
+    console.log(data);
+    //console.log(process.env.PORT);
+    fetch("http://localhost:" + 3001 + "/api/users", {
+      method: "POST",
+      body: JSON.stringify({
+        name: data.name,
+        email: data.email,
+        password: data.password,
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data, "userRegister");
+      });
   };
 
   return (
