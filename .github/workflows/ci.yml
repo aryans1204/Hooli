@@ -1,0 +1,34 @@
+name: Run tests
+
+on: 
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test_user_endpoint:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Git checkout
+      uses: actions/checkout@v3
+
+    - name: Use Node.js 18.0
+      uses: actions/setup-node@v3
+      with:
+        node-version: 18.0
+
+    - name: Start MongoDB
+      uses: supercharge/mongodb-github-action@1.8.0
+      with:
+        mongodb-version: 6.0
+    - name: Run tests
+      working-directory: ./backend
+      run: |
+        npm install
+        npm run test
+      env:
+        CI: true
+        MONGODB_URL: ${{ secrets.MONGODB_URL }}
+        PORT: ${{ secrets.PORT }}
+        JWT_SECRET: ${{ secrets.JWT_SECRET }}
