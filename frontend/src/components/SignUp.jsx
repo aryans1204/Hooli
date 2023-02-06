@@ -3,6 +3,7 @@ import "./SignUp.module.css";
 import logo from "../assets/icons/hooli-logo.png";
 
 function SignUp() {
+  let token = "";
   const [data, setData] = useState({
     name: "",
     email: "",
@@ -12,21 +13,41 @@ function SignUp() {
   const handleChange = ({ currentTarget: input }) => {
     setData({ ...data, [input.name]: input.value });
   };
+  const options = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      name: data.name,
+      email: data.email,
+      password: data.password,
+    }),
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(data);
-    //console.log(process.env.PORT);
-    fetch("http://localhost:" + 3001 + "/api/users", {
-      method: "POST",
-      body: JSON.stringify({
+    console.log(
+      JSON.stringify({
         name: data.name,
         email: data.email,
         password: data.password,
-      }),
-    })
-      .then((res) => res.json())
+      })
+    );
+    console.log(data);
+    console.log(options.body);
+    //console.log(process.env.PORT);
+    fetch("/api/users", options)
+      .then((response) => {
+        if (response.status === 201) {
+          console.log("Sign up successful!");
+          return response.json();
+        } else {
+          console.log("Error occurred: error" + response.status);
+        }
+      })
       .then((data) => {
-        console.log(data, "userRegister");
+        console.log("DATA STORED");
       });
   };
 
