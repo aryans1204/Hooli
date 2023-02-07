@@ -1,43 +1,44 @@
-import { useState } from "react";
+import { Component, useState } from "react";
 import "./SignUp.module.css";
 import logo from "../assets/icons/hooli-logo.png";
 
-function SignUp() {
-  let token = "";
-  const [data, setData] = useState({
-    name: "",
-    email: "",
-    password: "",
-  });
+class SignUp extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { name: "", email: "", password: "" };
 
-  const handleChange = ({ currentTarget: input }) => {
-    setData({ ...data, [input.name]: input.value });
-  };
-  const options = {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      name: data.name,
-      email: data.email,
-      password: data.password,
-    }),
-  };
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
 
-  const handleSubmit = (e) => {
+  handleChange(event) {
+    event.preventDefault();
+    const target = event.target;
+    this.setState({
+      [target.name]: target.value,
+    });
+  }
+
+  handleSubmit = (e) => {
     e.preventDefault();
     console.log(
       JSON.stringify({
-        name: data.name,
-        email: data.email,
-        password: data.password,
+        name: this.state.name,
+        email: this.state.email,
+        password: this.state.password,
       })
     );
-    console.log(data);
-    console.log(options.body);
-    //console.log(process.env.PORT);
-    fetch("/api/users", options)
+    fetch("/api/users", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name: this.state.name,
+        email: this.state.email,
+        password: this.state.password,
+      }),
+    })
       .then((response) => {
         if (response.status === 201) {
           console.log("Sign up successful!");
@@ -50,59 +51,60 @@ function SignUp() {
         console.log("DATA STORED");
       });
   };
-
-  return (
-    <div className={"SignUp.app"}>
-      <div class={SignUp.row}>
-        <div class={SignUp.column + " " + SignUp.darkPurple}>
-          <img class={SignUp.logo} src={logo} alt="Hooli" />
-        </div>
-        <div class={SignUp.column}>
-          <div class={SignUp.login}>
-            <h2>Sign Up</h2>
-            <form onSubmit={handleSubmit}>
-              <label>
-                <h3>Name</h3>
-                <input
-                  type="text"
-                  placeholder="name"
-                  name="name"
-                  value={data.name}
-                  required
-                  onChange={handleChange}
-                />
-              </label>
-              <label>
-                <h3>Email</h3>
-                <input
-                  type="text"
-                  placeholder="email"
-                  name="email"
-                  value={data.email}
-                  required
-                  onChange={handleChange}
-                />
-              </label>
-              <label>
-                <h3>Password</h3>
-                <input
-                  type="password"
-                  placeholder="password"
-                  name="password"
-                  value={data.password}
-                  required
-                  onChange={handleChange}
-                />
-              </label>
-              <label>
-                <button type="submit">Sign Up</button>
-              </label>
-            </form>
+  render() {
+    return (
+      <div className={"SignUp.app"}>
+        <div class={SignUp.row}>
+          <div class={SignUp.column + " " + SignUp.darkPurple}>
+            <img class={SignUp.logo} src={logo} alt="Hooli" />
+          </div>
+          <div class={SignUp.column}>
+            <div class={SignUp.login}>
+              <h2>Sign Up</h2>
+              <form onSubmit={this.handleSubmit}>
+                <label>
+                  <h3>Name</h3>
+                  <input
+                    type="text"
+                    placeholder="name"
+                    name="name"
+                    value={this.state.name}
+                    required
+                    onChange={this.handleChange}
+                  />
+                </label>
+                <label>
+                  <h3>Email</h3>
+                  <input
+                    type="text"
+                    placeholder="email"
+                    name="email"
+                    value={this.state.email}
+                    required
+                    onChange={this.handleChange}
+                  />
+                </label>
+                <label>
+                  <h3>Password</h3>
+                  <input
+                    type="password"
+                    placeholder="password"
+                    name="password"
+                    value={this.state.password}
+                    required
+                    onChange={this.handleChange}
+                  />
+                </label>
+                <label>
+                  <button type="submit">Sign Up</button>
+                </label>
+              </form>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  );
+    );
+  }
 }
 
 export default SignUp;
