@@ -12,7 +12,7 @@ router.get('/api/currencies', auth, async (req, res) => {
     try {
         await req.user.populate({
             path: 'currencies',
-        }).execPopulate()
+        })
         res.send(req.user.currencies)
     } catch (e) {
         res.status(500).send()
