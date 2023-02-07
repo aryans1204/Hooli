@@ -27,7 +27,7 @@ jobs:
       run: |
         npm install
         npm i -g jest-cli
-        jest tests/user.spec.js
+        jest tests/user.spec.js --forceExit
       env:
         CI: true
         MONGODB_URL: ${{ secrets.MONGODB_URL }}
@@ -54,7 +54,7 @@ jobs:
       run: |
         npm install
         npm i -g jest-cli
-        jest tests/income.spec.js
+        jest tests/income.spec.js --forceExit
       env:
         CI: true
         MONGODB_URL: ${{ secrets.MONGODB_URL }}
