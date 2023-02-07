@@ -48,6 +48,7 @@ class SignUp extends Component {
         }
       })
       .then((data) => {
+        sessionStorage.setItem("token", data.token);
         console.log("DATA STORED");
       });
   };
