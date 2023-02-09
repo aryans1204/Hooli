@@ -10,7 +10,7 @@ router.get('/api/expenditure', auth, async (req, res) => {
     try {
         await req.user.populate({
             path: 'expenditures',
-        }).execPopulate()
+        })
         res.send(req.user.expenditures)
     } catch (e) {
         res.status(500).send()

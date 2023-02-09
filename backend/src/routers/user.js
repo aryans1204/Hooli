@@ -49,8 +49,8 @@ router.post('/api/users/logout', auth, async (req, res) => {
             return token.token !== req.token
         })
         await req.user.save()
-
-        res.send()
+        const user = req.user
+        res.send({user})
     } catch (e) {
         res.status(500).send()
     }
@@ -95,9 +95,10 @@ router.patch('/api/users/me', auth, async (req, res) => {
 router.delete('/api/users/me', auth, async (req, res) => {
     try {
         await req.user.remove()
-        sendCancelationEmail(req.user.email, req.user.name)
+        
         res.send(req.user)
     } catch (e) {
+        console.log(e)
         res.status(500).send()
     }
 })
