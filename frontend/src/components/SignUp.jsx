@@ -1,5 +1,5 @@
 import { Component, useState } from "react";
-import "./SignUp.module.css";
+import classes from "./SignUp.module.css";
 import logo from "../assets/icons/hooli-logo.png";
 
 class SignUp extends Component {
@@ -54,13 +54,13 @@ class SignUp extends Component {
   };
   render() {
     return (
-      <div className={"SignUp.app"}>
-        <div class={SignUp.row}>
-          <div class={SignUp.column + " " + SignUp.darkPurple}>
-            <img class={SignUp.logo} src={logo} alt="Hooli" />
+      <div className={classes.app}>
+        <div className={classes.row}>
+          <div className={classes.column + " " + classes.darkPurple}>
+            <img className={classes.logo} src={logo} alt="Hooli" />
           </div>
-          <div class={SignUp.column}>
-            <div class={SignUp.login}>
+          <div className={classes.column}>
+            <div className={classes.login}>
               <h2>Sign Up</h2>
               <form onSubmit={this.handleSubmit}>
                 <label>
