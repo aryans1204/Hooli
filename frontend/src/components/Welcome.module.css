@@ -1,16 +1,17 @@
 .app {
   display: flex;
   justify-content: center;
-  width: 100%;
+  height: 100%;
 }
-.purple_column {
+
+.purple-column {
   background-color: #330c7a;
   height: 100vh;
   float: left;
   width: 50%;
 }
 
-.yellow_column {
+.yellow-column {
   background-color: rgb(252, 221, 44);
   height: 100vh;
   float: right;
@@ -35,6 +36,21 @@
 }
 
 .logo {
-  align-items: center;
+  display: block;
+  margin-top: 50%;
+  margin-bottom: 50%;
+  margin-left: auto;
+  margin-right: auto;
   width: 50%;
+}
+
+.nav {
+  font-family: "karla";
+  text-align: right;
+  padding-right: 5px;
+  font-size: 25px;
+}
+
+.link {
+  color: black;
 }
