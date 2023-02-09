@@ -1,11 +1,12 @@
 import { Component, useState } from "react";
 import classes from "./SignUp.module.css";
 import logo from "../assets/icons/hooli-logo.png";
+import { Navigate } from "react-router-dom";
 
 class SignUp extends Component {
   constructor(props) {
     super(props);
-    this.state = { name: "", email: "", password: "" };
+    this.state = { name: "", email: "", password: "", signUpSuccessful: null };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -42,14 +43,18 @@ class SignUp extends Component {
       .then((response) => {
         if (response.status === 201) {
           console.log("Sign up successful!");
+          this.setState({ signUpSuccessful: true });
           return response.json();
         } else {
+          this.setState({ signUpSuccessful: false });
           console.log("Error occurred: error" + response.status);
         }
       })
       .then((data) => {
-        sessionStorage.setItem("token", data.token);
-        console.log("DATA STORED");
+        if (this.state.signUpSuccessful == true) {
+          sessionStorage.setItem("token", data.token);
+          console.log("DATA STORED");
+        }
       });
   };
   render() {
@@ -97,9 +102,23 @@ class SignUp extends Component {
                   />
                 </label>
                 <label>
-                  <button type="submit">Sign Up</button>
+                  <input type="submit" value="Sign up" />
                 </label>
               </form>
+              <div>
+                {(() => {
+                  if (this.state.signUpSuccessful == false) {
+                    return (
+                      <div>ACcount creation unsuccessful. Please try again</div>
+                    );
+                  } else {
+                    return null;
+                  }
+                })()}
+              </div>
+              {this.state.signUpSuccessful == true && (
+                <Navigate to="/dashboard" replace={true} />
+              )}
             </div>
           </div>
         </div>
