@@ -1,6 +1,7 @@
 import { Component, useState } from "react";
 import classes from "./Login.module.css";
 import logo from "../assets/icons/hooli-logo.png";
+import { Navigate } from "react-router-dom";
 
 class Login extends Component {
   constructor(props) {
@@ -18,7 +19,6 @@ class Login extends Component {
       [target.name]: target.value,
     });
   }
-
   handleSubmit = (e) => {
     e.preventDefault();
     console.log(
@@ -110,6 +110,9 @@ class Login extends Component {
                 }
               })()}
             </div>
+            {this.state.loginSuccess == true && (
+              <Navigate to="/dashboard" replace={true} />
+            )}
           </div>
         </div>
       </div>
