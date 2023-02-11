@@ -35,14 +35,14 @@ class PersonalProfile extends Component {
       });
   }
 
-  handleLogout(e) {
+  async handleLogout(e) {
     e.preventDefault();
     alert("Logging out");
-    fetch("/api/users/logout", {
+    await fetch("/api/users/logout", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${this.token}`,
+        Authorization: `Bearer ${sessionStorage.getItem("token")}`,
       },
     })
       .then((response) => {
