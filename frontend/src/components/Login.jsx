@@ -111,7 +111,7 @@ class Login extends Component {
               })()}
             </div>
             {this.state.loginSuccess == true && (
-              <Navigate to="/dashboard" replace={true} />
+              <Navigate to="/personalprofile" replace={true} />
             )}
           </div>
         </div>

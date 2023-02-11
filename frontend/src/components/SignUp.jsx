@@ -117,7 +117,7 @@ class SignUp extends Component {
                 })()}
               </div>
               {this.state.signUpSuccessful == true && (
-                <Navigate to="/dashboard" replace={true} />
+                <Navigate to="/personalprofile" replace={true} />
               )}
             </div>
           </div>
