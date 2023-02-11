@@ -2,6 +2,7 @@ import { Component, useState } from "react";
 import classes from "./Login.module.css";
 import logo from "../assets/icons/hooli-logo.png";
 import { Navigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 class Login extends Component {
   constructor(props) {
@@ -92,7 +93,14 @@ class Login extends Component {
                 <input type="submit" value="Log In" />
               </label>
               <p>
-                Don't have an account? <a href="#">Create An Account</a>
+                Don't have an account?{" "}
+                <Link
+                  to="/signup"
+                  relative="path"
+                  className={classes.signupLink}
+                >
+                  Create an account
+                </Link>
               </p>
             </form>
             <div>
