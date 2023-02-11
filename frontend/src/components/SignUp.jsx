@@ -53,6 +53,7 @@ class SignUp extends Component {
       .then((data) => {
         if (this.state.signUpSuccessful == true) {
           sessionStorage.setItem("token", data.token);
+          window.location.reload();
           console.log("DATA STORED");
         }
       });

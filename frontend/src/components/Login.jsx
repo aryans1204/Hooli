@@ -52,6 +52,7 @@ class Login extends Component {
       .then((data) => {
         if (this.state.loginSuccess == true) {
           sessionStorage.setItem("token", data.token);
+          window.location.reload();
           console.log("DATA STORED");
         }
       });
