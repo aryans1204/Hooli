@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 const express = require('express')
-const Portfolio = require('../models/portfolio')
+const Investment = require('../models/investments')
 const auth = require('../authentication/auth')
 const date = require('date-and-time')
 
@@ -10,8 +10,8 @@ const router = new express.Router()
 
 
 //POST endpoint, create a new portfolio
-router.post('/api/portfolio', auth, async (req, res) => {
-    const portfolio = new Portfolio({
+router.post('/api/investments', auth, async (req, res) => {
+    const portfolio = new Investment({
         ...req.body,
         portfolio_owner: req.user._id
     })
@@ -25,11 +25,11 @@ router.post('/api/portfolio', auth, async (req, res) => {
 })
 
 //GET endpoint to get a portfolio by ID
-router.get('/api/portfolio/:id', auth, async (req, res) => {
+router.get('/api/investments/:id', auth, async (req, res) => {
     const _id = req.params.id
 
     try {
-        const portfolio = await Portfolio.findOne({ _id, portfolio_owner: req.user._id })
+        const portfolio = await Investment.findOne({ _id, portfolio_owner: req.user._id })
 
         if (!portfolio) {
             return res.status(404).send()
@@ -108,11 +108,11 @@ router.get('/api/portfolio/:id', auth, async (req, res) => {
 })
 
 //PATCH endpoint to update portfolio equities by portfolio ID
-router.patch('/api/portfolio/equities:id', auth, async (req, res) => {
+router.patch('/api/investments/equities:id', auth, async (req, res) => {
     const updates = Object.keys(req.body)
 
     try {
-        const portfolio = await Portfolio.findOne({ _id: req.params.id, portfolio_owner: req.user._id})
+        const portfolio = await Investment.findOne({ _id: req.params.id, portfolio_owner: req.user._id})
 
         if (!portfolio) {
             return res.status(404).send()
@@ -149,9 +149,9 @@ router.patch('/api/portfolio/equities:id', auth, async (req, res) => {
 })
 
 //PATCH endpoint to patch existing options in a portfolio by ID
-router.patch('/api/portfolio/options/:id', auth, async (req, res) => {
+router.patch('/api/investments/options/:id', auth, async (req, res) => {
     try {
-        const portfolio = await Portfolio.findOne({ _id: req.users._id, portfolio_owner: req.user._id })
+        const portfolio = await Investment.findOne({ _id: req.users._id, portfolio_owner: req.user._id })
         if (!portfolio) {
             res.status(404).send()
         }
@@ -189,9 +189,9 @@ router.patch('/api/portfolio/options/:id', auth, async (req, res) => {
 })
 
 //PATCH endpoint to patch an existing commodites portfolio by ID
-router.patch('/api/portfolio/commodities/:id', auth, async (req, res) => {
+router.patch('/api/investments/commodities/:id', auth, async (req, res) => {
     try {
-        const portfolio = await Portfolio.findOne({ _id: req.users._id, portfolio_owner: req.user._id })
+        const portfolio = await Investment.findOne({ _id: req.users._id, portfolio_owner: req.user._id })
         if (!portfolio) {
             res.status(404).send()
         }
@@ -234,9 +234,9 @@ router.patch('/api/portfolio/commodities/:id', auth, async (req, res) => {
 
 
 //DELETE endpoint to delete an entire portfolio
-router.delete('/api/portfolio/:id', auth, async (req, res) => {
+router.delete('/api/investments/:id', auth, async (req, res) => {
     try {
-        const portfolio = await Portfolio.findOneAndDelete({ _id: req.params.id, portfolio_owner: req.user._id })
+        const portfolio = await Investment.findOneAndDelete({ _id: req.params.id, portfolio_owner: req.user._id })
 
         if (!portfolio) {
             res.status(404).send()
@@ -249,9 +249,9 @@ router.delete('/api/portfolio/:id', auth, async (req, res) => {
 })
 
 //DELETE endpoint to delete an equity in a portfolio
-router.delete('/api/portfolio/equities/:id', auth, async (req, res) => {
+router.delete('/api/investments/equities/:id', auth, async (req, res) => {
     try {
-        const portfolio = await Portfolio.findOne({ _id: req.params._id, portfolio_owner: req.user._id })
+        const portfolio = await Investment.findOne({ _id: req.params._id, portfolio_owner: req.user._id })
         const eq = portfolio.equities
         const del_val = req.body.equity_ticker
         eq.forEach((equity) => {if (equity.equity_ticker == del_val) {
@@ -265,9 +265,9 @@ router.delete('/api/portfolio/equities/:id', auth, async (req, res) => {
 })
 
 //DELETE endpoint to delete options in a portfolio
-router.delete('/api/portfolio/options/:id', auth, async (req, res) => {
+router.delete('/api/investments/options/:id', auth, async (req, res) => {
     try {
-        const portfolio = await Portfolio.findOne({ _id: req.params._id, portfolio_owner: req.user._id })
+        const portfolio = await Investment.findOne({ _id: req.params._id, portfolio_owner: req.user._id })
         const opt = portfolio.options
         const del_val = req.body.derivative_ticker
         opt.forEach((option) => {if (option.derivative_ticker === del_val) {
@@ -281,9 +281,9 @@ router.delete('/api/portfolio/options/:id', auth, async (req, res) => {
 })
 
 //DELET endpoint to delete commodity in a portfolio
-router.delete('/api/portfolio/commodities/:id', auth, async (req, res) => {
+router.delete('/api/investments/commodities/:id', auth, async (req, res) => {
     try {
-        const portfolio = await Portfolio.findOne({ _id: req.params._id, portfolio_owner: req.user._id })
+        const portfolio = await Investment.findOne({ _id: req.params._id, portfolio_owner: req.user._id })
         const com = portfolio.commodities
         const del_val = req.body.commodity_type
         com.forEach((commodity) => {if (commodity.commodity_type === del_val) {
