@@ -16,6 +16,8 @@ class Welcome extends Component {
                 <div className={classes.nav}>
                     <Link to="/login" relative="path" className={classes.link}>Login</Link>
                     <Link to="/signup" relative="path" className={classes.signup}>Get Started</Link>
+                    <Link to="/nav" relative="path" className={classes.signup}>NavBar</Link>
+                    {/* <Link to="/dashboard" relative="path" className={classes.signup}>Dash</Link> */}
                 </div>
                 <div>
                     <h1 className={classes.title}>Welcome</h1>
