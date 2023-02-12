@@ -10,7 +10,7 @@ export default defineConfig(({ mode }) => {
     build: { outDir: "./wwwroot/app/", sourcemap: true },
     server: {
       proxy: {
-        "/api/users": {
+        "/api": {
           target: `http://localhost:${env.VITE_PORT}`,
           changeOrigin: true,
           secure: false,
