@@ -2,15 +2,14 @@ const mongoose = require('mongoose')
 const validator = require('validator')
 
 const currencySchema = new mongoose.Schema({
-    currency: {
+    currency_from: {
         type: String,
-        required: true,
-        validate(value) {
-            if (!validator.isCurrency(value)) {
-                throw new Error("Please enter a valid currency!")
-            }
-        }
-   },
+        required: true
+    },
+    currency_to: {
+        type: String,
+        required: true
+    },
     currency_owner: {
         type: mongoose.Schema.Types.ObjectId,
         required: true,

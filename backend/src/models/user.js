@@ -3,7 +3,7 @@ const validator = require('validator')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const Currency = require('./currency')
-const Portfolio = require('./portfolio')
+const Investment = require('./investments')
 const Expenditures = require('./expenditure')
 const Income = require('./income')
 
@@ -40,8 +40,8 @@ const userSchema = new mongoose.Schema({
     timestamps:true
 })
 //portfolio virtual
-userSchema.virtual('portfolio', {
-    ref: 'Portfolio',
+userSchema.virtual('investments', {
+    ref: 'Investment',
     localField: '_id',
     foreignField: 'portfolio_owner'
 })

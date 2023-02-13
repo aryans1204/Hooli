@@ -39,6 +39,7 @@ router.get('/api/currencies/:id', auth, async (req, res) => {
 //POST endpoint to create a new currency for a user
 router.post('/api/currencies', auth, async (req, res) => {
     try {
+        console.log("trying")
         const currency = new Currency({
             ...req.body,
             currency_owner: req.user._id
@@ -46,6 +47,7 @@ router.post('/api/currencies', auth, async (req, res) => {
         await currency.save()
         res.send(currency)
     } catch (e) {
+        console.log(e)
         res.status(500).send()
     }
 })

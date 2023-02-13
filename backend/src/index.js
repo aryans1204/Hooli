@@ -3,7 +3,7 @@ require('dotenv').config()
 require('./db/mongoose')
 const userRouter = require('./routers/user')
 const currencyRouter = require('./routers/currency')
-const portfolioRouter = require('./routers/portfolio')
+const investmentRouter = require('./routers/investments')
 const incomeRouter = require('./routers/income')
 //const expenditureRouter = require('./routers/expenditure')
 
@@ -15,7 +15,7 @@ app.use(express.json())
 app.use(userRouter)
 app.use(currencyRouter)
 app.use(incomeRouter)
-app.use(portfolioRouter)
+app.use(investmentRouter)
 //app.use(expenditureRouter)
 
 app.listen(port, () => {

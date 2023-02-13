@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 const validator = require('validator')
-const portfolioSchema = new mongoose.Schema({
+const investmentSchema = new mongoose.Schema({
     equities: [{
         equity_ticker: {
             type: String,
@@ -72,6 +72,6 @@ const portfolioSchema = new mongoose.Schema({
     timestamps: true
 })
 
-const Portfolio = mongoose.model('Portfolio', portfolioSchema)
+const Investment = mongoose.model('Investment', investmentSchema)
 
-module.exports = Portfolio
+module.exports = Investment
