@@ -1,3 +1,13 @@
+:root {
+    margin-left: 80px;
+}
+
+.search {
+    margin: auto;
+    width: 50%;
+}
+
 .text {
     color: #000;
+    padding: 0;
 }
