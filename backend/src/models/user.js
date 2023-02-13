@@ -20,7 +20,7 @@ const userSchema = new mongoose.Schema({
         trim: true,
         validate(value) {
             if (!validator.isEmail(value)) {
-                throw new Error("email is invalid")
+                throw new Error("Email is invalid.")
             }
         }
     },
@@ -39,30 +39,35 @@ const userSchema = new mongoose.Schema({
 }, {
     timestamps:true
 })
+
 //portfolio virtual
 userSchema.virtual('investments', {
     ref: 'Investment',
     localField: '_id',
     foreignField: 'portfolio_owner'
 })
+
 //currencies virtual
 userSchema.virtual('currencies', {
     ref: 'Currency',
     localField: '_id',
     foreignField: 'currency_owner'
 })
+
 //expenditure virtual
 userSchema.virtual('expenditures', {
     ref: 'Expenditures',
     localField: '_id',
     foreignField: 'expenditure_owner'
 })
+
 //income virtual
 userSchema.virtual('income', {
     ref: 'Income',
     localField: '_id',
     foreignField: 'income_owner'
 })
+
 //toJSON method for User
 userSchema.methods.toJSON = function () {
     const user = this
@@ -73,6 +78,7 @@ userSchema.methods.toJSON = function () {
 
     return userObject
 }
+
 //generating JWT auth tokens for a user
 userSchema.methods.generateAuthToken = async function() {
     const user = this
@@ -83,21 +89,23 @@ userSchema.methods.generateAuthToken = async function() {
 
     return token
 }
+
 //find user by email credentials
 userSchema.statics.findByCredentials = async (email, password) => {
     const user = await User.findOne({ email: email })
     if (!user) {
-        throw new Error('Unable to login')
+        throw new Error('Unable to login.')
     }
     const isMatch = await bcrypt.compare(password, user.password)
 
     if (!isMatch) {
-        throw new Error({error: "The password hashing is fucked"})
+        throw new Error({error: "Either the password or email is incorrect."})
     }
 
     return user
 }
-//password ecnryption after changing password
+
+//password encryption after changing password
 userSchema.pre('save', async function (next) {
     const user = this
 
@@ -107,12 +115,13 @@ userSchema.pre('save', async function (next) {
 
     next()
 })
+
 //delete user portfolios, currencies, expenditures and income
 userSchema.pre('remove', async function (next) {
     const user = this
     await Income.deleteMany({ income_owner: user._id })
     await Expenditures.deleteMany({ expenditure_owner: user._id })
-    await Portfolio.deleteMany({ portfolio_owner: user._id })
+    await Investment.deleteMany({ portfolio_owner: user._id })
     await Currency.deleteMany({ currency_owner: user._id })
     next()
 })

@@ -42,7 +42,7 @@ router.post('/api/income', auth, async (req, res) => {
     }
 })
 
-//DELET endpoint for deleting a period of employment
+//DELETE endpoint for deleting a period of employment
 router.delete('/api/income/:id', auth, async (req, res) => {
     try {
         const income = await Income.findOneAndDelete({ _id: req.params.id, income_owner: req.user._id })

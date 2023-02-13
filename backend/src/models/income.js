@@ -7,21 +7,21 @@ const incomeSchema = new mongoose.Schema({
         required: true,
         validate(value) {
             const allowedSet = ["FT", "PT", "Passive", "Others"] 
-            if (!allowedSet.includes(value)) throw new Error("Only supported income types are allowed")
+            if (!allowedSet.includes(value)) throw new Error("Only supported income types are allowed.")
         }
     },
     monthly_income: {
         type: Number,
         required: true,
         validate(value) {
-            if (value < 0) throw new Error("Income cannot be negative")
+            if (value < 0) throw new Error("Income cannot be negative.")
         }
     },
     start_date: {
         type: Date,
         required: true,
         validate(value) {
-            if (!validator.isDate(value)) throw new Error("Please enter a valid date")
+            if (!validator.isDate(value)) throw new Error("Please enter a valid date.")
         }
     },
     end_date: {

@@ -188,7 +188,7 @@ router.patch('/api/investments/options/:id', auth, async (req, res) => {
 
 })
 
-//PATCH endpoint to patch an existing commodites portfolio by ID
+//PATCH endpoint to patch an existing commodities portfolio by ID
 router.patch('/api/investments/commodities/:id', auth, async (req, res) => {
     try {
         const portfolio = await Investment.findOne({ _id: req.users._id, portfolio_owner: req.user._id })

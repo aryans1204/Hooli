@@ -29,7 +29,7 @@ router.get('/api/currencies', auth, async (req, res) => {
 router.get('/api/currencies/:id', auth, async (req, res) => {
     const currency = await Currency.findOne({ _id: req.params.id, currency_owner: req.user._id })
     try {
-        if (!currency) throw new Error("Curreny doesn't exist")
+        if (!currency) throw new Error("Currency doesn't exist.")
         res.send(currency)
     } catch (e) {
         res.status(500).send()
@@ -56,7 +56,7 @@ router.post('/api/currencies', auth, async (req, res) => {
 router.delete('/api/currencies/:id', auth, async (req, res) => {
     try {
         const currency = await Currency.findOneAndDelete({ _id: req.params.id, currency_owner: req.user._id })
-        if (!currency) throw new Error("Provided currency doesn't exist")
+        if (!currency) throw new Error("Provided currency doesn't exist.")
         res.send(currency)
     } catch (e) {
         res.status(500).send()
