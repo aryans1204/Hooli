@@ -19,7 +19,7 @@ app.use(investmentRouter)
 //app.use(expenditureRouter)
 
 app.listen(port, () => {
-    console.log("server is up an running on port " + port)
+    console.log("Server is up and running on port " + port)
 })
 
 module.exports = app

@@ -121,7 +121,7 @@ userSchema.pre('remove', async function (next) {
     const user = this
     await Income.deleteMany({ income_owner: user._id })
     await Expenditures.deleteMany({ expenditure_owner: user._id })
-    await Portfolio.deleteMany({ portfolio_owner: user._id })
+    await Investment.deleteMany({ portfolio_owner: user._id })
     await Currency.deleteMany({ currency_owner: user._id })
     next()
 })

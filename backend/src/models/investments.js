@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 const validator = require('validator')
+
 const investmentSchema = new mongoose.Schema({
     equities: [{
         equity_ticker: {
