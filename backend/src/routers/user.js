@@ -1,10 +1,38 @@
+/**
+ * express module
+ * @const
+ */
 const express = require('express')
+
+/**
+ * mongoose module
+ * @const
+ */
 const mongoose = require('mongoose')
+
+/**
+ * jsonwebtoken module
+ * @const
+ */
 const jsonwebtoken = require('jsonwebtoken')
+
+/**
+ * User module
+ * @const
+ */
 const User = require('../models/user')
+
+/**
+ * auth module
+ * @const
+ */
 const auth = require('../authentication/auth')
 
-
+/**
+ * Express router to mount user related functions on.
+ * @type {object}
+ * @const
+ */
 const router = new express.Router()
 
 router.get('/api/users', async (req, res) => {
@@ -18,6 +46,14 @@ router.get('/api/users', async (req, res) => {
 })
 
 //POST endpoint, create new user
+/**
+ * Route to create a new user.
+ * @name post/api/users
+ * @async
+ * @param {String} path
+ * @param {callback} middleware
+ * @throws {}
+ */
 router.post('/api/users', async (req, res) => {
     const user = new User(req.body)
     
@@ -32,6 +68,14 @@ router.post('/api/users', async (req, res) => {
 })
 
 //POST endpoint, sign in user
+/**
+ * Route to sign in a user.
+ * @name post/api/users/login
+ * @async
+ * @param {String} path
+ * @param {callback} middleware
+ * @throws {BadRequestError} When the email or password is incorrect.
+ */
 router.post('/api/users/login', async (req, res) => {
     try {
         console.log(req.body.email)
@@ -44,6 +88,15 @@ router.post('/api/users/login', async (req, res) => {
 })
 
 //POST endpoint, log out user
+/**
+ * Route to log out a user.
+ * @name post/api/users/logout
+ * @async
+ * @param {String} path
+ * @param {Object} auth
+ * @param {callback} middleware
+ * @throws {InternalServerError}
+ */
 router.post('/api/users/logout', auth, async (req, res) => {
     try {
         req.user.tokens = req.user.tokens.filter((token) => {
@@ -58,6 +111,15 @@ router.post('/api/users/logout', auth, async (req, res) => {
 })
 
 //POST endpoint to logout user from ALL devices
+/**
+ * Route to log out a user from all devices.
+ * @name post/api/users/logoutAll
+ * @async
+ * @param {String} path
+ * @param {Object} auth
+ * @param {callback} middleware
+ * @throws {InternalServerError}
+ */
 router.post('/api/users/logoutAll', auth, async (req, res) => {
     try {
         req.user.tokens = []
@@ -69,11 +131,28 @@ router.post('/api/users/logoutAll', auth, async (req, res) => {
 })
 
 //GET endpoint, get User profile
+/**
+ * Route to get a user profile.
+ * @name get/api/users/me
+ * @async
+ * @param {String} path
+ * @param {Object} auth
+ * @param {callback} middleware
+ */
 router.get('/api/users/me', auth, async (req, res) => {
     res.send(req.user)
 })
 
 //PATCH endpoint, update my profile
+/**
+ * Route to update a user profile.
+ * @name patch/api/users/me
+ * @async
+ * @param {String} path
+ * @param {Object} auth
+ * @param {callback} middleware
+ * @throws {BadRequestError} When update is invalid.
+ */
 router.patch('/api/users/me', auth, async (req, res) => {
     const updates = Object.keys(req.body)
     const allowedUpdates = ['name', 'email', 'password']
@@ -93,10 +172,18 @@ router.patch('/api/users/me', auth, async (req, res) => {
 })
 
 //DELETE endpoint, permanently remove a user
+/**
+ * Route permanently remove a user.
+ * @name delete/api/users/me
+ * @async
+ * @param {String} path
+ * @param {Object} auth
+ * @param {callback} middleware
+ * @throws {InternalServerError}
+ */
 router.delete('/api/users/me', auth, async (req, res) => {
     try {
         await req.user.remove()
-        
         res.send(req.user)
     } catch (e) {
         console.log(e)
