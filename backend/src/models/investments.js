@@ -30,7 +30,7 @@ const investmentSchema = new mongoose.Schema({
             type: String,
             required: true,
             validate(value) {
-                if (value != 'call' || value != 'put') throw new Error('Options contract can only be put or call')
+                if (value != 'call' || value != 'put') throw new Error('Options contract can only be put or call.')
             }
         },
         strike_price: {
@@ -41,7 +41,7 @@ const investmentSchema = new mongoose.Schema({
             type: Date,
             required: true,
             validate(value) {
-                if (!validator.isDate(value)) throw new Error("Expiration Date must be a Date")
+                if (!validator.isDate(value)) throw new Error("Expiration Date must be a Date.")
             }
         },
         derivative_current_price: {
@@ -55,7 +55,7 @@ const investmentSchema = new mongoose.Schema({
             required: false,
             validate(value) {
                 const accepted_values = ['crude_oil', 'natural_gas', 'copper', 'aluminium', 'wheat', 'coffee']
-                if (!accepted_values.contains(value)) throw new Error("COmmodity type not supported")
+                if (!accepted_values.contains(value)) throw new Error("Commodity type not supported.")
             }
         },
         commodity_price: {

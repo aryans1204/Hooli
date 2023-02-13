@@ -16,6 +16,7 @@ router.get('/api/users', async (req, res) => {
     }
     
 })
+
 //POST endpoint, create new user
 router.post('/api/users', async (req, res) => {
     const user = new User(req.body)
@@ -38,7 +39,7 @@ router.post('/api/users/login', async (req, res) => {
         const token = await user.generateAuthToken()
         res.send({user, token})
     } catch (e) {
-        res.status(400).send({error: "The email or password is incorrect. Plese try again"})
+        res.status(400).send({error: "The email or password is incorrect. Please try again."})
     }
 })
 
