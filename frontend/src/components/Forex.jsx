@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Navigate } from "react-router-dom";
 import NavBar from './NavBar';
 import classes from './Forex.module.css';
 import { Input, InputGroup, InputLeftElement } from '@chakra-ui/react';
@@ -7,18 +8,43 @@ import { SearchIcon } from '@chakra-ui/icons'
 class Forex extends Component {
     constructor(props) {
         super(props);
-        this.state = { from: "", to: "" };
+        this.state = { from: "", to: "", authenticated: null };
     
         this.handleKeyDown = this.handleKeyDown.bind(this);
         
       }
 
-    handleKeyDown(event) {
-        console.log('User pressed: ', event.key);
-        if (event.key === 'Enter') {
-          console.log('Enter key pressed');
-          console.log(event.target.value);
+    async componentDidMount() {
+        await fetch("/api/users/me", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+          },
+        })
+          .then((response) => {
+            console.log(response.status);
+            if (response.status == 401)
+                this.setState({ authenticated: false });
+            else
+                this.setState({ authenticated: true });
+          });
+    }
 
+    handleKeyDown(event) {
+        if (event.key === 'Enter') {
+            let value = event.target.value;
+            value = value.trim();
+            let arr = value.split("/");
+            arr = arr.map(element => {
+                return element.trim();
+              });
+              console.log(arr);
+            let var1 = arr[0];
+            let var2 = arr[1];
+            console.log(var1);
+            this.setState({from: var1}, ()=>{console.log(this.state);});
+            this.setState({to: var2});
         }
         // const target = event.target;
         // this.setState({
@@ -28,7 +54,9 @@ class Forex extends Component {
 
     render() {
         return (
-            <><NavBar />
+            <>
+            {this.state.authenticated == false && (<Navigate to="/" replace={true} />)}
+            <NavBar />
             <div className={classes.div}>
                 <h1 className={classes.text}>FOREX</h1>
                 <div className={classes.search}>
