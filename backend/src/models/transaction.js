@@ -6,17 +6,17 @@ const transactionSchema = new mongoose.Schema({
         type: Number,
         required: true,
         validate(value) {
-            if (value <= 0) throw new Error("Amount cannot be zero")
+            if (value <= 0) throw new Error("Amount cannot be zero.")
         }
     },
     transaction_category: {
         type: String,
         required: true,
         validate(value) {
-            const allowedCats = ["food", "housing", "utilities", "bills", "clothes", "lifestyle", "transport",
-            "healthcare", "pets", "Others"]
+            const allowedCats = ["Food", "Housing", "Utilities", "Bills", "Clothes", "Lifestyle", "Transport",
+            "Healthcare", "Pets", "Others"]
 
-            if (!allowedCats.contains(value)) throw new Error("Please choose one of the supported categories")
+            if (!allowedCats.contains(value)) throw new Error("Please choose one of the supported categories.")
         }
     },
     transaction_component: {
