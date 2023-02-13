@@ -1,0 +1,9 @@
+.income {
+  display: flex;
+}
+
+.contents {
+  color: black;
+  display: flex;
+  padding-left: 20mm;
+}
