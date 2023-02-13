@@ -8,7 +8,7 @@ import { SearchIcon } from '@chakra-ui/icons'
 class Forex extends Component {
     constructor(props) {
         super(props);
-        this.state = { base: "", symbols: "", authenticated: null };
+        this.state = { from: "", to: "" };
     
         this.handleKeyDown = this.handleKeyDown.bind(this);
         this.gettingLatestData = this.gettingLatestData.bind(this);
@@ -46,22 +46,28 @@ class Forex extends Component {
     }
 
 
+    async componentDidMount() {
+        await fetch("/api/users/me", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+          },
+        })
+          .then((response) => {
+            console.log(response.status);
+            if (response.status == 401)
+                this.setState({ authenticated: false });
+            else
+                this.setState({ authenticated: true });
+          });
+    }
+
     handleKeyDown(event) {
         if (event.key === 'Enter') {
-            let value = event.target.value;
-            value = value.trim();
-            let arr = value.split("/");
-            arr = arr.map(element => {
-                return element.trim().toUpperCase();
-              });
-              console.log(arr);
-            let var1 = arr[0];
-            let var2 = arr[1];
-            console.log(var1);
-            this.setState({base: var1}, ()=>{console.log(this.state);});
-            this.setState({symbols: var2});
+          console.log('Enter key pressed');
+          console.log(event.target.value);
 
-            this.gettingLatestData();
         }
     }
 
