@@ -1,20 +1,20 @@
 import React, { Component } from "react";
 import NavBar from "./NavBar";
 import classes from "./Income.module.css";
-import { Box } from "@chakra-ui/react";
+import { Box, Button } from "@chakra-ui/react";
 
 class Income extends Component {
   render() {
     return (
-      <div className={classes.income}>
+      <div className={classes.contents}>
         <div>
           <NavBar />
         </div>
-        <Box>this is a box</Box>
-        <div className={classes.contents}>
-          <div>Income page</div>
-          <div>test display</div>
-        </div>
+        <div className={classes.title}>My Income</div>
+        <Box className={classes.barChart}>
+          <div>test test test test</div>
+        </Box>
+        <Button className={classes.buttons}>Add</Button>
       </div>
     );
   }
