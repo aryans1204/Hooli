@@ -1,9 +1,13 @@
 import React, { Component } from 'react';
+import NavBar from './NavBar';
+import classes from './Forex.module.css';
 
 class Forex extends Component {
     render() {
         return (
-            <h1>Forex Page</h1>
+            <><NavBar />
+            <h1 className={classes.text}>Forex Page</h1>
+            </>
         );
     }
 }
