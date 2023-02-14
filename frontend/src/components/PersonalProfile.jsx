@@ -16,7 +16,7 @@ class PersonalProfile extends Component {
   }
 
   async componentDidMount() {
-    await fetch("/api/users/me", {
+    await fetch("/api/userAccounts/me", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -38,7 +38,7 @@ class PersonalProfile extends Component {
   async handleLogout(e) {
     e.preventDefault();
     alert("Logging out");
-    await fetch("/api/users/logout", {
+    await fetch("/api/userAccounts/logout", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

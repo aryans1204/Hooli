@@ -28,7 +28,7 @@ class Login extends Component {
         password: this.state.password,
       })
     );
-    fetch("/api/users/login", {
+    fetch("/api/userAccounts/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

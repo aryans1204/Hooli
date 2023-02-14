@@ -3,13 +3,13 @@ const app = require('../src/index')
 
 describe('Income test suite', (token, id, _id, second_id) => {
     it('tests posting a new employment POST method', async () => {
-        const res = await request(app).post('/api/users').send({
+        const res = await request(app).post('/api/userAccounts').send({
             name: "Vlad The Impaler",
             email: "vladtheimpaler@gmail.com",
             password: "iamvladdracula" 
         })
-        token = res.body.user.tokens[0].token
-        id = res.body.user._id
+        token = res.body.useAccountr.tokens[0].token
+        id = res.body.userAccount._id
         const response = await request(app).post('/api/income').send({
             "income_type": "FT",
             "monthly_income": 30000,
@@ -50,6 +50,6 @@ describe('Income test suite', (token, id, _id, second_id) => {
 
         //cleanup
         await request(app).delete('/api/income/'+second_id).set('Authorization', 'Bearer '+token)
-        await request(app).delete('/api/users/me').set('Authorization', 'Bearer '+token)
+        await request(app).delete('/api/userAccounts/me').set('Authorization', 'Bearer '+token)
     })
 })

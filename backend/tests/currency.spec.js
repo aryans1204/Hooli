@@ -3,13 +3,13 @@ const app = require('../src/index')
 
 describe('Income test suite', (token, id, _id, second_id) => {
     it('tests posting a new currency pair POST method', async () => {
-        const res = await request(app).post('/api/users').send({
+        const res = await request(app).post('/api/userAccounts').send({
             name: "Vlad The Impaler",
             email: "vladtheimpaler@gmail.com",
             password: "iamvladdracula" 
         })
-        token = res.body.user.tokens[0].token
-        id = res.body.user._id
+        token = res.body.userAccount.tokens[0].token
+        id = res.body.userAccount._id
         const response = await request(app).post('/api/currencies').send({
             "currency_from": "SGD",
             "currency_to": "USD"
@@ -40,6 +40,6 @@ describe('Income test suite', (token, id, _id, second_id) => {
 
         //cleanup
         await request(app).delete('/api/currencies/'+second_id).set('Authorization', 'Bearer '+token)
-        await request(app).delete('/api/users/me').set('Authorization', 'Bearer '+token)
+        await request(app).delete('/api/userAccounts/me').set('Authorization', 'Bearer '+token)
     })
 })

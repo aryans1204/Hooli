@@ -17,10 +17,10 @@ const mongoose = require('mongoose')
 const jsonwebtoken = require('jsonwebtoken')
 
 /**
- * User module
+ * UserAccount module
  * @const
  */
-const User = require('../models/user')
+const UserAccount = require('../models/userAccount')
 
 /**
  * auth module
@@ -37,16 +37,16 @@ const router = new express.Router()
 
 /**
  * Route to get a user.
- * @name get/api/users
+ * @name get/api/userAccounts
  * @async
  * @param {String} path
  * @param {callback} middleware
  * @throws {NotFoundError} User cannot be found.
  */
-router.get('/api/users', async (req, res) => {
+router.get('/api/userAccounts', async (req, res) => {
     try{
-        const users = await User.find()
-        res.send(users)
+        const userAccounts = await UserAccount.find()
+        res.send(userAccounts)
     } catch (e) {
         res.status(404).send()
     }
@@ -55,19 +55,19 @@ router.get('/api/users', async (req, res) => {
 
 /**
  * Route to create a new user.
- * @name post/api/users
+ * @name post/api/userAccounts
  * @async
  * @param {String} path
  * @param {callback} middleware
  * @throws {}
  */
-router.post('/api/users', async (req, res) => {
-    const user = new User(req.body)
+router.post('/api/userAccounts', async (req, res) => {
+    const userAccount = new UserAccount(req.body)
     
     try {
-        await user.save()
-        const token = await user.generateAuthToken()
-        res.status(201).send({ user, token })
+        await userAccount.save()
+        const token = await userAccount.generateAuthToken()
+        res.status(201).send({ userAccount, token })
     } catch (e) {
         res.send(e)
         //res.status(400).send(e)
@@ -76,18 +76,18 @@ router.post('/api/users', async (req, res) => {
 
 /**
  * Route to sign in a user.
- * @name post/api/users/login
+ * @name post/api/userAccounts/login
  * @async
  * @param {String} path
  * @param {callback} middleware
  * @throws {BadRequestError} When the email or password is incorrect.
  */
-router.post('/api/users/login', async (req, res) => {
+router.post('/api/userAccounts/login', async (req, res) => {
     try {
         console.log(req.body.email)
-        const user = await User.findByCredentials(req.body.email, req.body.password)
-        const token = await user.generateAuthToken()
-        res.send({user, token})
+        const userAccount = await UserAccount.findByCredentials(req.body.email, req.body.password)
+        const token = await userAccount.generateAuthToken()
+        res.send({userAccount, token})
     } catch (e) {
         res.status(400).send({error: "The email or password is incorrect. Please try again."})
     }
@@ -95,21 +95,21 @@ router.post('/api/users/login', async (req, res) => {
 
 /**
  * Route to log out a user.
- * @name post/api/users/logout
+ * @name post/api/userAccounts/logout
  * @async
  * @param {String} path
  * @param {Object} auth
  * @param {callback} middleware
  * @throws {InternalServerError}
  */
-router.post('/api/users/logout', auth, async (req, res) => {
+router.post('/api/userAccounts/logout', auth, async (req, res) => {
     try {
-        req.user.tokens = req.user.tokens.filter((token) => {
+        req.userAccount.tokens = req.userAccount.tokens.filter((token) => {
             return token.token !== req.token
         })
-        await req.user.save()
-        const user = req.user
-        res.send({user})
+        await req.userAccount.save()
+        const userAccount = req.userAccount
+        res.send({userAccount})
     } catch (e) {
         res.status(500).send()
     }
@@ -117,17 +117,17 @@ router.post('/api/users/logout', auth, async (req, res) => {
 
 /**
  * Route to log out a user from all devices.
- * @name post/api/users/logoutAll
+ * @name post/api/userAccounts/logoutAll
  * @async
  * @param {String} path
  * @param {Object} auth
  * @param {callback} middleware
  * @throws {InternalServerError}
  */
-router.post('/api/users/logoutAll', auth, async (req, res) => {
+router.post('/api/userAccounts/logoutAll', auth, async (req, res) => {
     try {
-        req.user.tokens = []
-        await req.user.save()
+        req.userAccount.tokens = []
+        await req.userAccount.save()
         res.send()
     } catch (e) {
         res.status(500).send()
@@ -136,26 +136,26 @@ router.post('/api/users/logoutAll', auth, async (req, res) => {
 
 /**
  * Route to get a user profile.
- * @name get/api/users/me
+ * @name get/api/userAccounts/me
  * @async
  * @param {String} path
  * @param {Object} auth
  * @param {callback} middleware
  */
-router.get('/api/users/me', auth, async (req, res) => {
-    res.send(req.user)
+router.get('/api/userAccounts/me', auth, async (req, res) => {
+    res.send(req.userAccount)
 })
 
 /**
  * Route to update a user profile.
- * @name patch/api/users/me
+ * @name patch/api/userAccounts/me
  * @async
  * @param {String} path
  * @param {Object} auth
  * @param {callback} middleware
  * @throws {BadRequestError} When update is invalid.
  */
-router.patch('/api/users/me', auth, async (req, res) => {
+router.patch('/api/userAccounts/me', auth, async (req, res) => {
     const updates = Object.keys(req.body)
     const allowedUpdates = ['name', 'email', 'password']
     const isValidOperation = updates.every((update) => allowedUpdates.includes(update))
@@ -165,9 +165,9 @@ router.patch('/api/users/me', auth, async (req, res) => {
     }
 
     try {
-        updates.forEach((update) => req.user[update] = req.body[update])
-        await req.user.save()
-        res.send(req.user)
+        updates.forEach((update) => req.userAccount[update] = req.body[update])
+        await req.userAccount.save()
+        res.send(req.userAccount)
     } catch (e) {
         res.status(400).send(e)
     }
@@ -175,17 +175,17 @@ router.patch('/api/users/me', auth, async (req, res) => {
 
 /**
  * Route to permanently remove a user.
- * @name delete/api/users/me
+ * @name delete/api/userAccounts/me
  * @async
  * @param {String} path
  * @param {Object} auth
  * @param {callback} middleware
  * @throws {InternalServerError}
  */
-router.delete('/api/users/me', auth, async (req, res) => {
+router.delete('/api/userAccounts/me', auth, async (req, res) => {
     try {
-        await req.user.remove()
-        res.send(req.user)
+        await req.userAccount.remove()
+        res.send(req.userAccount)
     } catch (e) {
         console.log(e)
         res.status(500).send()

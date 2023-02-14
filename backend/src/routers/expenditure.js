@@ -40,10 +40,10 @@ const router = new express.Router()
  */
 router.get('/api/expenditure', auth, async (req, res) => {
     try {
-        await req.user.populate({
+        await req.userAccount.populate({
             path: 'expenditures',
         })
-        res.send(req.user.expenditures)
+        res.send(req.userAccount.expenditures)
     } catch (e) {
         res.status(500).send()
     } 
@@ -60,7 +60,7 @@ router.get('/api/expenditure', auth, async (req, res) => {
  */
 router.get('/api/expenditure/:id', auth, async (req, res) => {
     try {
-        const expenditure = await Expenditure.findOne({ _id: req.params.id, expenditue_owner: req.user._id })
+        const expenditure = await Expenditure.findOne({ _id: req.params.id, expenditure_owner: req.userAccount._id })
         if (!expenditure) throw new Error("This expenditure does not exist.")
 
         res.send(expenditure)
@@ -80,7 +80,7 @@ router.get('/api/expenditure/:id', auth, async (req, res) => {
  */
 router.post('/api/expenditure', auth, async (req, res) => {
     const expenditure = new Expenditure({
-        expenditure_owner: req.user._id
+        expenditure_owner: req.userAccount._id
     })
 
     try {
