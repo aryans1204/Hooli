@@ -17,11 +17,11 @@ router.get('/api/expenditure', auth, async (req, res) => {
     } 
 })
 
-//GET endpoint for a particular Expenditure by ID
+//GET endpoint for a particular expenditure by ID
 router.get('/api/expenditure/:id', auth, async (req, res) => {
     try {
         const expenditure = await Expenditure.findOne({ _id: req.params.id, expenditue_owner: req.user._id })
-        if (!expenditure) throw new Error("This expenditure does not exist")
+        if (!expenditure) throw new Error("This expenditure does not exist.")
 
         res.send(expenditure)
     } catch (e) {
