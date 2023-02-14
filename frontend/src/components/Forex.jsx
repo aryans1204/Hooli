@@ -8,7 +8,7 @@ import { SearchIcon } from '@chakra-ui/icons'
 class Forex extends Component {
     constructor(props) {
         super(props);
-        this.state = { from: "", to: "" };
+        this.state = { from: "", to: "", authenticated: null };
     
         this.handleKeyDown = this.handleKeyDown.bind(this);
         this.gettingLatestData = this.gettingLatestData.bind(this);
@@ -63,11 +63,34 @@ class Forex extends Component {
           });
     }
 
+    gettingLatestData() {
+        const url = 'https://data.fixer.io/api/' + 'latest' + '?access_key=' + process.env.REACT_APP_FIXER_API_SECRET;
+        console.log(url);
+        // fetch(url, {
+        //     method: "GET",
+        //     headers: {
+        //         "Content-Type": "application/json",
+        //         Authorization: `Bearer ${sessionStorage.getItem("token")}`
+        //     },
+        // })
+        // .then()
+    }
+
+
     handleKeyDown(event) {
         if (event.key === 'Enter') {
-          console.log('Enter key pressed');
-          console.log(event.target.value);
-
+            let value = event.target.value;
+            value = value.trim();
+            let arr = value.split("/");
+            arr = arr.map(element => {
+                return element.trim();
+              });
+              console.log(arr);
+            let var1 = arr[0];
+            let var2 = arr[1];
+            console.log(var1);
+            this.setState({from: var1}, ()=>{console.log(this.state);});
+            this.setState({to: var2});
         }
     }
 
