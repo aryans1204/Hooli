@@ -35,6 +35,14 @@ const auth = require('../authentication/auth')
  */
 const router = new express.Router()
 
+/**
+ * Route to get a user.
+ * @name get/api/users
+ * @async
+ * @param {String} path
+ * @param {callback} middleware
+ * @throws {NotFoundError} User cannot be found.
+ */
 router.get('/api/users', async (req, res) => {
     try{
         const users = await User.find()
@@ -45,7 +53,6 @@ router.get('/api/users', async (req, res) => {
     
 })
 
-//POST endpoint, create new user
 /**
  * Route to create a new user.
  * @name post/api/users
@@ -67,7 +74,6 @@ router.post('/api/users', async (req, res) => {
     }
 })
 
-//POST endpoint, sign in user
 /**
  * Route to sign in a user.
  * @name post/api/users/login
@@ -87,7 +93,6 @@ router.post('/api/users/login', async (req, res) => {
     }
 })
 
-//POST endpoint, log out user
 /**
  * Route to log out a user.
  * @name post/api/users/logout
@@ -110,7 +115,6 @@ router.post('/api/users/logout', auth, async (req, res) => {
     }
 })
 
-//POST endpoint to logout user from ALL devices
 /**
  * Route to log out a user from all devices.
  * @name post/api/users/logoutAll
@@ -130,7 +134,6 @@ router.post('/api/users/logoutAll', auth, async (req, res) => {
     }
 })
 
-//GET endpoint, get User profile
 /**
  * Route to get a user profile.
  * @name get/api/users/me
@@ -143,7 +146,6 @@ router.get('/api/users/me', auth, async (req, res) => {
     res.send(req.user)
 })
 
-//PATCH endpoint, update my profile
 /**
  * Route to update a user profile.
  * @name patch/api/users/me
@@ -159,7 +161,7 @@ router.patch('/api/users/me', auth, async (req, res) => {
     const isValidOperation = updates.every((update) => allowedUpdates.includes(update))
 
     if (!isValidOperation) {
-        return res.status(400).send({ error: 'Invalid updates!' })
+        return res.status(400).send({ error: "Invalid updates!" })
     }
 
     try {
@@ -171,9 +173,8 @@ router.patch('/api/users/me', auth, async (req, res) => {
     }
 })
 
-//DELETE endpoint, permanently remove a user
 /**
- * Route permanently remove a user.
+ * Route to permanently remove a user.
  * @name delete/api/users/me
  * @async
  * @param {String} path

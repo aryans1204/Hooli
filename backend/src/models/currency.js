@@ -1,6 +1,21 @@
+/**
+ * mongoose module
+ * @const
+ */
 const mongoose = require('mongoose')
+
+/**
+ * validator module
+ * @const
+ */
 const validator = require('validator')
 
+/**
+ * @typedef {Object} Currency
+ * @property {String} currency_from
+ * @property {String} currency_to
+ * @property {UserObject} currency_owner
+ */
 const currencySchema = new mongoose.Schema({
     currency_from: {
         type: String,
