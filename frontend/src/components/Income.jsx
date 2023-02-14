@@ -12,6 +12,16 @@ import {
   ModalCloseButton,
   useDisclosure,
 } from "@chakra-ui/react";
+import {
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
+  MenuItemOption,
+  MenuGroup,
+  MenuOptionGroup,
+  MenuDivider,
+} from "@chakra-ui/react";
 
 export function AddOverlay() {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -36,8 +46,8 @@ export function AddOverlay() {
           </ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            yes
-            <Box bg="gray">testing</Box>
+            Income Type<br></br>
+            <IncomeTypeMenuComponent />
           </ModalBody>
 
           <ModalFooter>
@@ -82,6 +92,25 @@ export function AddOverlay() {
 
 const AddOverlayComponent = ({ render }) => {
   return AddOverlay();
+};
+
+export function IncomeTypes() {
+  return (
+    <Menu>
+      <MenuButton as={Button}>Click</MenuButton>
+      <MenuList>
+        <MenuItem>Download</MenuItem>
+        <MenuItem>Create a Copy</MenuItem>
+        <MenuItem>Mark as Draft</MenuItem>
+        <MenuItem>Delete</MenuItem>
+        <MenuItem>Attend a Workshop</MenuItem>
+      </MenuList>
+    </Menu>
+  );
+}
+
+const IncomeTypeMenuComponent = ({ render }) => {
+  return IncomeTypes();
 };
 
 class Income extends Component {
