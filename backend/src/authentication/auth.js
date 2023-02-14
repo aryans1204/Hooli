@@ -12,7 +12,7 @@ const auth = async (req, res, next) => {
         }
 
         req.token = token
-        req.userAccount = userAccount
+        req.user = user
         next()
     } catch (e) {
         res.status(401).send({ error: 'Please authenticate.' })
