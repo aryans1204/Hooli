@@ -17,7 +17,7 @@ const validator = require('validator')
  * @property {Date} start_date
  * @property {Date} end_date
  * @property {String} company
- * @property {UserAccountObject} income_owner
+ * @property {UserObject} income_owner
  */
 const incomeSchema = new mongoose.Schema({
     income_type: {
@@ -53,7 +53,7 @@ const incomeSchema = new mongoose.Schema({
     income_owner: {
         type: mongoose.Schema.Types.ObjectId,
         required: true,
-        ref: 'UserAccount'
+        ref: 'User'
     }
 })
 

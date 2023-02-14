@@ -40,8 +40,8 @@ const router = new express.Router()
  */
 router.get('/api/income', auth, async (req, res) => {
     try {
-        await req.userAccount.populate('income')
-        res.send(req.userAccount.income)
+        await req.user.populate('income')
+        res.send(req.user.income)
     } catch (e) {
         console.log(e)
         res.status(500).send()
@@ -60,7 +60,7 @@ router.get('/api/income', auth, async (req, res) => {
  */
 router.get('/api/income/:id', auth, async (req, res) => {
     try {
-        const income = await Income.findOne({ _id: req.params.id, income_owner: req.userAccount._id })
+        const income = await Income.findOne({ _id: req.params.id, income_owner: req.user._id })
         if (!income) re.status(404).send()
 
         res.send(income)
@@ -82,7 +82,7 @@ router.post('/api/income', auth, async (req, res) => {
     try {
         const income = new Income({
             ...req.body,
-            income_owner: req.userAccount._id
+            income_owner: req.user._id
         })
         await income.save()
         res.send(income)
@@ -102,7 +102,7 @@ router.post('/api/income', auth, async (req, res) => {
  */
 router.delete('/api/income/:id', auth, async (req, res) => {
     try {
-        const income = await Income.findOneAndDelete({ _id: req.params.id, income_owner: req.userAccount._id })
+        const income = await Income.findOneAndDelete({ _id: req.params.id, income_owner: req.user._id })
         if (!income) res.status(404).send()
 
         res.send(income)

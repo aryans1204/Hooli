@@ -29,7 +29,7 @@ class SignUp extends Component {
         password: this.state.password,
       })
     );
-    fetch("/api/userAccounts", {
+    fetch("/api/users", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

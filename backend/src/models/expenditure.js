@@ -12,13 +12,13 @@ const validator = require('validator')
 
 /**
  * @typedef {Object} Expenditure
- * @property {UserAccountObject} expenditure_owner
+ * @property {UserObject} expenditure_owner
  */
 const expenditureSchema = new mongoose.Schema({
     expenditure_owner: {
         type: mongoose.Schema.Types.ObjectId,
         required: true,
-        ref: 'UserAccount'
+        ref: 'User'
     }
 })
 

@@ -14,7 +14,7 @@ const validator = require('validator')
  * @typedef {Object} Currency
  * @property {String} currency_from
  * @property {String} currency_to
- * @property {UserAccountObject} currency_owner
+ * @property {UserObject} currency_owner
  */
 const currencySchema = new mongoose.Schema({
     currency_from: {
@@ -28,7 +28,7 @@ const currencySchema = new mongoose.Schema({
     currency_owner: {
         type: mongoose.Schema.Types.ObjectId,
         required: true,
-        ref: 'UserAccount'
+        ref: 'User'
     }
 })
 

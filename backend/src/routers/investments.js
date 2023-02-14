@@ -53,7 +53,7 @@ const router = new express.Router()
 router.post('/api/investments', auth, async (req, res) => {
     const portfolio = new Investment({
         ...req.body,
-        portfolio_owner: req.userAccount._id
+        portfolio_owner: req.user._id
     })
 
     try {
@@ -78,7 +78,7 @@ router.get('/api/investments/:id', auth, async (req, res) => {
     const _id = req.params.id
 
     try {
-        const portfolio = await Investment.findOne({ _id, portfolio_owner: req.userAccount._id })
+        const portfolio = await Investment.findOne({ _id, portfolio_owner: req.user._id })
 
         if (!portfolio) {
             return res.status(404).send()
@@ -170,7 +170,7 @@ router.patch('/api/investments/equities:id', auth, async (req, res) => {
     const updates = Object.keys(req.body)
 
     try {
-        const portfolio = await Investment.findOne({ _id: req.params.id, portfolio_owner: req.userAccount._id})
+        const portfolio = await Investment.findOne({ _id: req.params.id, portfolio_owner: req.user._id})
 
         if (!portfolio) {
             return res.status(404).send()
@@ -218,7 +218,7 @@ router.patch('/api/investments/equities:id', auth, async (req, res) => {
  */
 router.patch('/api/investments/options/:id', auth, async (req, res) => {
     try {
-        const portfolio = await Investment.findOne({ _id: req.userAccounts._id, portfolio_owner: req.userAccount._id })
+        const portfolio = await Investment.findOne({ _id: req.users._id, portfolio_owner: req.user._id })
         if (!portfolio) {
             res.status(404).send()
         }
@@ -267,7 +267,7 @@ router.patch('/api/investments/options/:id', auth, async (req, res) => {
  */
 router.patch('/api/investments/commodities/:id', auth, async (req, res) => {
     try {
-        const portfolio = await Investment.findOne({ _id: req.userAccounts._id, portfolio_owner: req.userAccount._id })
+        const portfolio = await Investment.findOne({ _id: req.users._id, portfolio_owner: req.user._id })
         if (!portfolio) {
             res.status(404).send()
         }
@@ -320,7 +320,7 @@ router.patch('/api/investments/commodities/:id', auth, async (req, res) => {
  */
 router.delete('/api/investments/:id', auth, async (req, res) => {
     try {
-        const portfolio = await Investment.findOneAndDelete({ _id: req.params.id, portfolio_owner: req.userAccount._id })
+        const portfolio = await Investment.findOneAndDelete({ _id: req.params.id, portfolio_owner: req.user._id })
 
         if (!portfolio) {
             res.status(404).send()
@@ -343,7 +343,7 @@ router.delete('/api/investments/:id', auth, async (req, res) => {
  */
 router.delete('/api/investments/equities/:id', auth, async (req, res) => {
     try {
-        const portfolio = await Investment.findOne({ _id: req.params._id, portfolio_owner: req.userAccount._id })
+        const portfolio = await Investment.findOne({ _id: req.params._id, portfolio_owner: req.user._id })
         const eq = portfolio.equities
         const del_val = req.body.equity_ticker
         eq.forEach((equity) => {if (equity.equity_ticker == del_val) {
@@ -367,7 +367,7 @@ router.delete('/api/investments/equities/:id', auth, async (req, res) => {
  */
 router.delete('/api/investments/options/:id', auth, async (req, res) => {
     try {
-        const portfolio = await Investment.findOne({ _id: req.params._id, portfolio_owner: req.userAccount._id })
+        const portfolio = await Investment.findOne({ _id: req.params._id, portfolio_owner: req.user._id })
         const opt = portfolio.options
         const del_val = req.body.derivative_ticker
         opt.forEach((option) => {if (option.derivative_ticker === del_val) {
@@ -391,7 +391,7 @@ router.delete('/api/investments/options/:id', auth, async (req, res) => {
  */
 router.delete('/api/investments/commodities/:id', auth, async (req, res) => {
     try {
-        const portfolio = await Investment.findOne({ _id: req.params._id, portfolio_owner: req.userAccount._id })
+        const portfolio = await Investment.findOne({ _id: req.params._id, portfolio_owner: req.user._id })
         const com = portfolio.commodities
         const del_val = req.body.commodity_type
         com.forEach((commodity) => {if (commodity.commodity_type === del_val) {

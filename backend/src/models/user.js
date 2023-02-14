@@ -47,14 +47,14 @@ const Expenditures = require('./expenditure')
 const Income = require('./income')
 
 /**
- * @typedef {Object} UserAccount
+ * @typedef {Object} User
  * @property {String} name
  * @property {String} email
  * @property {String} password
  * @property {Object} tokens
  * @property {} timestamps
  */
-const userAccountSchema = new mongoose.Schema({
+const userSchema = new mongoose.Schema({
     name: {
         type: String,
         required: true,
@@ -78,7 +78,7 @@ const userAccountSchema = new mongoose.Schema({
         trim: true,
     },
     /**
-     * @memberof UserAccount
+     * @memberof User
      * @property {String} token
      */
     tokens: [{
@@ -92,91 +92,91 @@ const userAccountSchema = new mongoose.Schema({
 })
 
 //portfolio virtual
-userAccountSchema.virtual('investments', {
+userSchema.virtual('investments', {
     ref: 'Investment',
     localField: '_id',
     foreignField: 'portfolio_owner'
 })
 
 //currencies virtual
-userAccountSchema.virtual('currencies', {
+userSchema.virtual('currencies', {
     ref: 'Currency',
     localField: '_id',
     foreignField: 'currency_owner'
 })
 
 //expenditure virtual
-userAccountSchema.virtual('expenditures', {
+userSchema.virtual('expenditures', {
     ref: 'Expenditures',
     localField: '_id',
     foreignField: 'expenditure_owner'
 })
 
 //income virtual
-userAccountSchema.virtual('income', {
+userSchema.virtual('income', {
     ref: 'Income',
     localField: '_id',
     foreignField: 'income_owner'
 })
 
 //toJSON method for User
-userAccountSchema.methods.toJSON = function () {
-    const userAccount = this
-    const userAccountObject = userAccount.toObject()
+userSchema.methods.toJSON = function () {
+    const user = this
+    const userObject = user.toObject()
 
-    delete userAccountObject.password
+    delete userObject.password
     //delete userObject.tokens
 
-    return userAccountObject
+    return userObject
 }
 
 //generating JWT auth tokens for a user
-userAccountSchema.methods.generateAuthToken = async function() {
-    const userAccount = this
-    const token = jwt.sign({ _id: userAccount._id.toString() }, process.env.JWT_SECRET)
+userSchema.methods.generateAuthToken = async function() {
+    const user = this
+    const token = jwt.sign({ _id: user._id.toString() }, process.env.JWT_SECRET)
 
-    userAccount.tokens = userAccount.tokens.concat({ token })
-    await userAccount.save()
+    user.tokens = user.tokens.concat({ token })
+    await user.save()
 
     return token
 }
 
 //find user by email credentials
-userAccountSchema.statics.findByCredentials = async (email, password) => {
-    const userAccount = await UserAccount.findOne({ email: email })
-    if (!userAccount) {
+userSchema.statics.findByCredentials = async (email, password) => {
+    const user = await User.findOne({ email: email })
+    if (!user) {
         throw new Error('Unable to login.')
     }
-    const isMatch = await bcrypt.compare(password, userAccount.password)
+    const isMatch = await bcrypt.compare(password, user.password)
 
     if (!isMatch) {
         throw new Error({error: "Either the password or email is incorrect."})
     }
 
-    return userAccount
+    return user
 }
 
 //password encryption after changing password
-userAccountSchema.pre('save', async function (next) {
-    const userAccount = this
+userSchema.pre('save', async function (next) {
+    const user = this
 
-    if (userAccount.isModified('password')) {
-        userAccount.password = await bcrypt.hash(userAccount.password, 8)
+    if (user.isModified('password')) {
+        user.password = await bcrypt.hash(user.password, 8)
     }
 
     next()
 })
 
 //delete user portfolios, currencies, expenditures and income
-userAccountSchema.pre('remove', async function (next) {
-    const userAccount = this
-    await Income.deleteMany({ income_owner: userAccount._id })
-    await Expenditures.deleteMany({ expenditure_owner: userAccount._id })
-    await Investment.deleteMany({ portfolio_owner: userAccount._id })
-    await Currency.deleteMany({ currency_owner: userAccount._id })
+userSchema.pre('remove', async function (next) {
+    const user = this
+    await Income.deleteMany({ income_owner: user._id })
+    await Expenditures.deleteMany({ expenditure_owner: user._id })
+    await Investment.deleteMany({ portfolio_owner: user._id })
+    await Currency.deleteMany({ currency_owner: user._id })
     next()
 })
 
-const UserAccount = mongoose.model('UserAccount', userAccountSchema)
+const User = mongoose.model('User', userSchema)
 
-module.exports = UserAccount
+module.exports = User
