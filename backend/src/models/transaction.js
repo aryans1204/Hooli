@@ -1,6 +1,21 @@
+/**
+ * mongoose module
+ * @const
+ */
 const mongoose = require('mongoose')
+
+/**
+ * validator module
+ * @const
+ */
 const validator = require('validator')
 
+/**
+ * @typedef {Object} Transaction
+ * @property {Number} amount
+ * @property {String} transaction_category
+ * @property {ExpenditureObject} transaction_component
+ */
 const transactionSchema = new mongoose.Schema({
     amount: {
         type: Number,

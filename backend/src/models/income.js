@@ -1,6 +1,24 @@
+/**
+ * mongoose module
+ * @const
+ */
 const mongoose = require('mongoose')
+
+/**
+ * validator module
+ * @const
+ */
 const validator = require('validator')
 
+/**
+ * @typedef {Object} Income
+ * @property {String} income_type
+ * @property {Number} monthly_income
+ * @property {Date} start_date
+ * @property {Date} end_date
+ * @property {String} company
+ * @property {UserObject} income_owner
+ */
 const incomeSchema = new mongoose.Schema({
     income_type: {
         type: String,
