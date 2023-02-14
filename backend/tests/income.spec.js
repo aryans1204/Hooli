@@ -8,7 +8,7 @@ describe('Income test suite', (token, id, _id, second_id) => {
             email: "vladtheimpaler@gmail.com",
             password: "iamvladdracula" 
         })
-        token = res.body.useAccountr.tokens[0].token
+        token = res.body.userAccount.tokens[0].token
         id = res.body.userAccount._id
         const response = await request(app).post('/api/income').send({
             "income_type": "FT",
