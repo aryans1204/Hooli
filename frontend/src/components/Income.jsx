@@ -99,11 +99,10 @@ export function IncomeTypes() {
     <Menu>
       <MenuButton as={Button}>Click</MenuButton>
       <MenuList>
-        <MenuItem>Download</MenuItem>
-        <MenuItem>Create a Copy</MenuItem>
-        <MenuItem>Mark as Draft</MenuItem>
-        <MenuItem>Delete</MenuItem>
-        <MenuItem>Attend a Workshop</MenuItem>
+        <MenuItem>Full-time</MenuItem>
+        <MenuItem>Part-time</MenuItem>
+        <MenuItem>Passive</MenuItem>
+        <MenuItem>Others</MenuItem>
       </MenuList>
     </Menu>
   );
