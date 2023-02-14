@@ -8,9 +8,10 @@ import { SearchIcon } from '@chakra-ui/icons'
 class Forex extends Component {
     constructor(props) {
         super(props);
-        this.state = { from: "", to: "", authenticated: null };
+        this.state = { base: "", symbols: "", authenticated: null };
     
         this.handleKeyDown = this.handleKeyDown.bind(this);
+        this.gettingLatestData = this.gettingLatestData.bind(this);
         
       }
 
@@ -31,25 +32,37 @@ class Forex extends Component {
           });
     }
 
+    gettingLatestData() {
+        const url = 'https://data.fixer.io/api/' + 'latest' + '?access_key=' + process.env.REACT_APP_FIXER_API_SECRET;
+        console.log(url);
+        // fetch(url, {
+        //     method: "GET",
+        //     headers: {
+        //         "Content-Type": "application/json",
+        //         Authorization: `Bearer ${sessionStorage.getItem("token")}`
+        //     },
+        // })
+        // .then()
+    }
+
+
     handleKeyDown(event) {
         if (event.key === 'Enter') {
             let value = event.target.value;
             value = value.trim();
             let arr = value.split("/");
             arr = arr.map(element => {
-                return element.trim();
+                return element.trim().toUpperCase();
               });
               console.log(arr);
             let var1 = arr[0];
             let var2 = arr[1];
             console.log(var1);
-            this.setState({from: var1}, ()=>{console.log(this.state);});
-            this.setState({to: var2});
+            this.setState({base: var1}, ()=>{console.log(this.state);});
+            this.setState({symbols: var2});
+
+            this.gettingLatestData();
         }
-        // const target = event.target;
-        // this.setState({
-        //   [target.name]: target.value,
-        // });
     }
 
     render() {
