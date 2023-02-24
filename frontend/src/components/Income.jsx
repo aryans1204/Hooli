@@ -14,8 +14,17 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 
+//overlay component for adding income data
 export function AddOverlay() {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const [incomeType, setIncomeType] = useState("click");
+  function handleChange(event) {
+    console.log(event.target.value);
+  }
+  function handleSubmit() {
+    console.log("fetch api here");
+  }
+
   return (
     <ButtonGroup spacing="40px" float="left" pl="180px">
       <Button
@@ -38,16 +47,37 @@ export function AddOverlay() {
           <ModalCloseButton />
           <ModalBody>
             Income Type<br></br>
-            <IncomeTypeMenuComponent />
+            <select
+              value={incomeType}
+              onChange={(event) => {
+                setIncomeType(event.target.value);
+              }}
+            >
+              <option value="FT">Full-time</option>
+              <option value="PT">Part-time</option>
+              <option value="Passive">Passive</option>
+              <option value="Others">Others</option>
+            </select>
+          </ModalBody>
+          <ModalBody>
+            Amount<br></br>
+            <input
+              type="text"
+              placeholder="amount"
+              name="amount"
+              size="30"
+              required
+              onChange={handleChange}
+            ></input>
           </ModalBody>
 
           <ModalFooter>
             <Button
               colorScheme="purple"
-              onClick={onClose}
               h="50px"
               w="80px"
               d="flex"
+              onClick={handleSubmit}
             >
               Save
             </Button>
@@ -81,34 +111,9 @@ export function AddOverlay() {
   );
 }
 
+//overlay when attempting to add income. To use, call it as a regular component
 const AddOverlayComponent = ({ render }) => {
   return AddOverlay();
-};
-
-export function IncomeTypes() {
-  const [buttonText, setButtonText] = useState("click");
-
-  //function to observe change in state of after income type is selected
-  useEffect(() => {
-    console.log(buttonText);
-  }, [buttonText]);
-  return (
-    <select
-      value={buttonText}
-      onChange={(event) => {
-        setButtonText(event.target.value);
-      }}
-    >
-      <option value="FT">Full-time</option>
-      <option value="PT">Part-time</option>
-      <option value="Passive">Passive</option>
-      <option value="Others">Others</option>
-    </select>
-  );
-}
-
-const IncomeTypeMenuComponent = ({ render }) => {
-  return IncomeTypes();
 };
 
 class Income extends Component {
