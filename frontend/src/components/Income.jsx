@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import NavBar from "./NavBar";
 import classes from "./Income.module.css";
+import { useState, useEffect } from "react";
 import { Box, Button, ButtonGroup } from "@chakra-ui/react";
 import {
   Modal,
@@ -11,16 +12,6 @@ import {
   ModalBody,
   ModalCloseButton,
   useDisclosure,
-} from "@chakra-ui/react";
-import {
-  Menu,
-  MenuButton,
-  MenuList,
-  MenuItem,
-  MenuItemOption,
-  MenuGroup,
-  MenuOptionGroup,
-  MenuDivider,
 } from "@chakra-ui/react";
 
 export function AddOverlay() {
@@ -95,16 +86,24 @@ const AddOverlayComponent = ({ render }) => {
 };
 
 export function IncomeTypes() {
+  const [buttonText, setButtonText] = useState("click");
+
+  //function to observe change in state of after income type is selected
+  useEffect(() => {
+    console.log(buttonText);
+  }, [buttonText]);
   return (
-    <Menu>
-      <MenuButton as={Button}>Click</MenuButton>
-      <MenuList>
-        <MenuItem>Full-time</MenuItem>
-        <MenuItem>Part-time</MenuItem>
-        <MenuItem>Passive</MenuItem>
-        <MenuItem>Others</MenuItem>
-      </MenuList>
-    </Menu>
+    <select
+      value={buttonText}
+      onChange={(event) => {
+        setButtonText(event.target.value);
+      }}
+    >
+      <option value="FT">Full-time</option>
+      <option value="PT">Part-time</option>
+      <option value="Passive">Passive</option>
+      <option value="Others">Others</option>
+    </select>
   );
 }
 
