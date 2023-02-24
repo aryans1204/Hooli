@@ -13,16 +13,54 @@ import {
   ModalCloseButton,
   useDisclosure,
 } from "@chakra-ui/react";
+import { Navigate } from "react-router-dom";
 
 //overlay component for adding income data
 export function AddOverlay() {
+  const initialValues = {
+    incomeAmount: 0,
+    startDate: 0,
+    endDate: null,
+    company: null,
+  };
+
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [incomeType, setIncomeType] = useState("click");
-  function handleChange(event) {
-    console.log(event.target.value);
-  }
+  const [values, setValues] = useState(initialValues);
+  const [incomeType, setIncomeType] = useState(0);
+
+  const handleInputChange = (e) => {
+    var { name, value } = e.target;
+    setValues({
+      ...values,
+      [name]: value,
+    });
+  };
+
+  //calls backend api to create new income data when submitted
   function handleSubmit() {
-    console.log("fetch api here");
+    fetch("/api/income", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+      },
+      body: JSON.stringify({
+        income_type: incomeType,
+        monthly_income: values.incomeAmount,
+        start_date: values.startDate,
+        end_date: values.endDate,
+        company: values.company,
+      }),
+    })
+      .then((response) => {
+        if (response.status === 500) {
+          console.log("Some error occurred - " + response.status);
+        } else {
+          console.log("Success");
+          return response.json();
+        }
+      })
+      .then((data) => {});
   }
 
   return (
@@ -64,10 +102,39 @@ export function AddOverlay() {
             <input
               type="text"
               placeholder="amount"
-              name="amount"
               size="30"
               required
-              onChange={handleChange}
+              name="incomeAmount"
+              onChange={handleInputChange}
+            ></input>
+          </ModalBody>
+          <ModalBody>
+            Start Date<br></br>
+            <input
+              type="date"
+              size="30"
+              required
+              name="startDate"
+              onChange={handleInputChange}
+            ></input>
+          </ModalBody>
+          <ModalBody>
+            End Date (optional)<br></br>
+            <input
+              type="date"
+              size="30"
+              name="endDate"
+              onChange={handleInputChange}
+            ></input>
+          </ModalBody>
+          <ModalBody>
+            Company (optional)<br></br>
+            <input
+              type="text"
+              placeholder="company name"
+              size="30"
+              name="company"
+              onChange={handleInputChange}
             ></input>
           </ModalBody>
 
@@ -81,7 +148,7 @@ export function AddOverlay() {
             >
               Save
             </Button>
-            <Button colorScheme="yellow" pl="20px">
+            <Button onClick={onClose} colorScheme="yellow" pl="20px">
               Cancel
             </Button>
           </ModalFooter>
@@ -118,9 +185,38 @@ const AddOverlayComponent = ({ render }) => {
 
 class Income extends Component {
   //const { isOpen, onOpen, onClose } = useDisclosure();
+  constructor(props) {
+    super(props);
+    this.state = {
+      authenticated: null,
+    };
+  }
+
+  async componentDidMount() {
+    await fetch("/api/users/me", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+      },
+    })
+      .then((response) => {
+        console.log(response.status);
+        if (response.status == 401) this.setState({ authenticated: false });
+        else this.setState({ authenticated: true });
+        return response.json();
+      })
+      .then((data) => {});
+  }
+
   render() {
     return (
       <div className={classes.contents}>
+        <div>
+          {this.state.authenticated == false && (
+            <Navigate to="/" replace={true} />
+          )}
+        </div>
         <div>
           <NavBar />
         </div>
