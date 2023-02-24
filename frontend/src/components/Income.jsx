@@ -91,6 +91,7 @@ export function AddOverlay() {
                 setIncomeType(event.target.value);
               }}
             >
+              <option>N.A</option>
               <option value="FT">Full-time</option>
               <option value="PT">Part-time</option>
               <option value="Passive">Passive</option>
