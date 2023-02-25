@@ -18,8 +18,8 @@ import { Navigate } from "react-router-dom";
 //overlay component for adding income data
 export function AddOverlay() {
   const initialValues = {
-    incomeAmount: 0,
-    startDate: 0,
+    incomeAmount: null,
+    startDate: null,
     endDate: null,
     company: null,
   };
@@ -27,6 +27,7 @@ export function AddOverlay() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [values, setValues] = useState(initialValues);
   const [incomeType, setIncomeType] = useState(0);
+  const [addSuccess, setAddSuccess] = useState(null);
 
   const handleInputChange = (e) => {
     var { name, value } = e.target;
@@ -55,8 +56,10 @@ export function AddOverlay() {
       .then((response) => {
         if (response.status === 500) {
           console.log("Some error occurred - " + response.status);
+          setAddSuccess(false);
         } else {
           console.log("Success");
+          setAddSuccess(true);
           return response.json();
         }
       })
@@ -152,6 +155,24 @@ export function AddOverlay() {
             <Button onClick={onClose} colorScheme="yellow" pl="20px">
               Cancel
             </Button>
+            <div>
+              {(() => {
+                if (addSuccess == false) {
+                  return <div>An error occurred. Please try again</div>;
+                } else if (addSuccess == true) {
+                  return (
+                    <div>
+                      <div>Successfully added income data!</div>
+                      <div>
+                        <Button onClick={onClose}>OK</Button>
+                      </div>
+                    </div>
+                  );
+                } else {
+                  return null;
+                }
+              })()}
+            </div>
           </ModalFooter>
         </ModalContent>
       </Modal>
