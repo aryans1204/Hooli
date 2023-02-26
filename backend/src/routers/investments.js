@@ -1,15 +1,55 @@
+/**
+ * mongoose module
+ * @const
+ */
 const mongoose = require('mongoose')
+
+/**
+ * express module
+ * @const
+ */
 const express = require('express')
+
+/**
+ * Investment module
+ * @const
+ */
 const Investment = require('../models/investments')
+
+/**
+ * auth module
+ * @const
+ */
 const auth = require('../authentication/auth')
+
+/**
+ * date-and-time module
+ * @const
+ */
 const date = require('date-and-time')
 
+/**
+ * request module
+ * @const
+ */
 const request = require('request')
+
+/**
+ * Express router to mount user related functions on.
+ * @type {object}
+ * @const
+ */
 const router = new express.Router()
 
-
-
-//POST endpoint, create a new portfolio
+/**
+ * Route to create a new portfolio.
+ * @name post/api/investments
+ * @async
+ * @param {String} path
+ * @param {Object} auth
+ * @param {callback} middleware
+ * @throws {BadRequestError}
+ */
 router.post('/api/investments', auth, async (req, res) => {
     const portfolio = new Investment({
         ...req.body,
@@ -24,7 +64,16 @@ router.post('/api/investments', auth, async (req, res) => {
     }
 })
 
-//GET endpoint to get a portfolio by ID
+/**
+ * Route to get a portfolio by ID.
+ * @name get/api/investments/:id
+ * @async
+ * @param {String} path
+ * @param {Object} auth
+ * @param {callback} middleware
+ * @throws {NotFoundError} Portfolio cannot be found.
+ * @throws {InternalServerError}
+ */
 router.get('/api/investments/:id', auth, async (req, res) => {
     const _id = req.params.id
 
@@ -107,7 +156,16 @@ router.get('/api/investments/:id', auth, async (req, res) => {
     }
 })
 
-//PATCH endpoint to update portfolio equities by portfolio ID
+/**
+ * Route to update an existing equity in a portfolio by ID.
+ * @name patch/api/investments/equities:id
+ * @async
+ * @param {String} path
+ * @param {Object} auth
+ * @param {callback} middleware
+ * @throws {NotFoundError} Portfolio cannot be found.
+ * @throws {BadRequestError}
+ */
 router.patch('/api/investments/equities:id', auth, async (req, res) => {
     const updates = Object.keys(req.body)
 
@@ -148,7 +206,16 @@ router.patch('/api/investments/equities:id', auth, async (req, res) => {
     }
 })
 
-//PATCH endpoint to patch existing options in a portfolio by ID
+/**
+ * Route to update an existing option in a portfolio by ID.
+ * @name patch/api/investments/options/:id
+ * @async
+ * @param {String} path
+ * @param {Object} auth
+ * @param {callback} middleware
+ * @throws {NotFoundError} Portfolio cannot be found.
+ * @throws {BadRequestError}
+ */
 router.patch('/api/investments/options/:id', auth, async (req, res) => {
     try {
         const portfolio = await Investment.findOne({ _id: req.users._id, portfolio_owner: req.user._id })
@@ -188,7 +255,16 @@ router.patch('/api/investments/options/:id', auth, async (req, res) => {
 
 })
 
-//PATCH endpoint to patch an existing commodities portfolio by ID
+/**
+ * Route to update an existing commodity in a portfolio by ID. 
+ * @name patch/api/investments/commodities/:id
+ * @async
+ * @param {String} path
+ * @param {Object} auth
+ * @param {callback} middleware
+ * @throws {NotFoundError} Portfolio cannot be found.
+ * @throws {BadRequestError}
+ */
 router.patch('/api/investments/commodities/:id', auth, async (req, res) => {
     try {
         const portfolio = await Investment.findOne({ _id: req.users._id, portfolio_owner: req.user._id })
@@ -232,8 +308,16 @@ router.patch('/api/investments/commodities/:id', auth, async (req, res) => {
 
 })
 
-
-//DELETE endpoint to delete an entire portfolio
+/**
+ * Route to delete an entire portfolio.
+ * @name delete/api/investments/:id
+ * @async
+ * @param {String} path
+ * @param {Object} auth
+ * @param {callback} middleware
+ * @throws {NotFoundError} Portfolio cannot be found.
+ * @throws {InternalServerError}
+ */
 router.delete('/api/investments/:id', auth, async (req, res) => {
     try {
         const portfolio = await Investment.findOneAndDelete({ _id: req.params.id, portfolio_owner: req.user._id })
@@ -248,7 +332,15 @@ router.delete('/api/investments/:id', auth, async (req, res) => {
     }
 })
 
-//DELETE endpoint to delete an equity in a portfolio
+/**
+ * Route to delete an equity in a portfolio.
+ * @name delete/api/investments/equities/:id
+ * @async
+ * @param {String} path
+ * @param {Object} auth
+ * @param {callback} middleware
+ * @throws {InternalServerError}
+ */
 router.delete('/api/investments/equities/:id', auth, async (req, res) => {
     try {
         const portfolio = await Investment.findOne({ _id: req.params._id, portfolio_owner: req.user._id })
@@ -264,7 +356,15 @@ router.delete('/api/investments/equities/:id', auth, async (req, res) => {
     }   
 })
 
-//DELETE endpoint to delete options in a portfolio
+/**
+ * Route to delete an option in a portfolio.
+ * @name delete/api/investments/options/:id
+ * @async
+ * @param {String} path
+ * @param {Object} auth
+ * @param {callback} middleware
+ * @throws {InternalServerError}
+ */
 router.delete('/api/investments/options/:id', auth, async (req, res) => {
     try {
         const portfolio = await Investment.findOne({ _id: req.params._id, portfolio_owner: req.user._id })
@@ -280,7 +380,15 @@ router.delete('/api/investments/options/:id', auth, async (req, res) => {
     }
 })
 
-//DELET endpoint to delete commodity in a portfolio
+/**
+ * Route to delete a commodity in a portfolio.
+ * @name delete/api/investments/commodities/:id
+ * @async
+ * @param {String} path
+ * @param {Object} auth
+ * @param {callback} middleware
+ * @throws {InternalServerError}
+ */
 router.delete('/api/investments/commodities/:id', auth, async (req, res) => {
     try {
         const portfolio = await Investment.findOne({ _id: req.params._id, portfolio_owner: req.user._id })
@@ -295,4 +403,5 @@ router.delete('/api/investments/commodities/:id', auth, async (req, res) => {
         res.status(500).send()
     }
 })
+
 module.exports = router

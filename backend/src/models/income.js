@@ -1,13 +1,31 @@
+/**
+ * mongoose module
+ * @const
+ */
 const mongoose = require('mongoose')
+
+/**
+ * validator module
+ * @const
+ */
 const validator = require('validator')
 
+/**
+ * @typedef {Object} Income
+ * @property {String} income_type
+ * @property {Number} monthly_income
+ * @property {Date} start_date
+ * @property {Date} end_date
+ * @property {String} company
+ * @property {UserObject} income_owner
+ */
 const incomeSchema = new mongoose.Schema({
-    income_type: {
+    industry: {
         type: String,
         required: true,
         validate(value) {
-            const allowedSet = ["FT", "PT", "Passive", "Others"] 
-            if (!allowedSet.includes(value)) throw new Error("Only supported income types are allowed.")
+            const allowedSet = ["manufacturing", "services", "construction", "others"] 
+            if (!allowedSet.includes(value)) throw new Error("Only supported industries are allowed.")
         }
     },
     monthly_income: {
@@ -15,6 +33,13 @@ const incomeSchema = new mongoose.Schema({
         required: true,
         validate(value) {
             if (value < 0) throw new Error("Income cannot be negative.")
+        }
+    },
+    weekly_hours: {
+        type: Number,
+        required: false,
+        validate(value) {
+            if (value < 0) throw new Error("Weekly hours cannot be negative")
         }
     },
     start_date: {
