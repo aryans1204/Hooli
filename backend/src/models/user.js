@@ -1,12 +1,59 @@
+/**
+ * mongoose module
+ * @const
+ */
 const mongoose = require('mongoose')
+
+/**
+ * validator module
+ * @const
+ */
 const validator = require('validator')
+
+/**
+ * bcrypt module
+ * @const
+ */
 const bcrypt = require('bcrypt')
+
+/**
+ * jsonwebtoken module
+ * @const
+ */
 const jwt = require('jsonwebtoken')
+
+/**
+ * Currency module
+ * @const
+ */
 const Currency = require('./currency')
+
+/**
+ * Investment module
+ * @const
+ */
 const Investment = require('./investments')
+
+/**
+ * Expenditures module
+ * @const
+ */
 const Expenditures = require('./expenditure')
+
+/**
+ * Income module
+ * @const
+ */
 const Income = require('./income')
 
+/**
+ * @typedef {Object} User
+ * @property {String} name
+ * @property {String} email
+ * @property {String} password
+ * @property {Object} tokens
+ * @property {} timestamps
+ */
 const userSchema = new mongoose.Schema({
     name: {
         type: String,
@@ -30,6 +77,10 @@ const userSchema = new mongoose.Schema({
         minlength: 7,
         trim: true,
     },
+    /**
+     * @memberof User
+     * @property {String} token
+     */
     tokens: [{
         token: {
             type: String,

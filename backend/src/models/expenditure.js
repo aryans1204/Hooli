@@ -1,6 +1,19 @@
+/**
+ * mongoose module
+ * @const
+ */
 const mongoose = require('mongoose')
+
+/**
+ * validator module
+ * @const
+ */
 const validator = require('validator')
 
+/**
+ * @typedef {Object} Expenditure
+ * @property {UserObject} expenditure_owner
+ */
 const expenditureSchema = new mongoose.Schema({
     expenditure_owner: {
         type: mongoose.Schema.Types.ObjectId,
