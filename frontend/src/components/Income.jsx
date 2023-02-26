@@ -182,7 +182,21 @@ export function AddOverlay() {
           </ModalFooter>
         </ModalContent>
       </Modal>
+    </ButtonGroup>
+  );
+}
+
+//overlay when attempting to add income. To use, call it as a regular component
+const AddOverlayComponent = ({ render }) => {
+  return AddOverlay();
+};
+
+export function removeOverlay() {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  return (
+    <div>
       <Button
+        onClick={onOpen}
         w="175px"
         h="71px"
         borderRadius="50"
@@ -192,23 +206,62 @@ export function AddOverlay() {
       >
         Remove
       </Button>
-      <Button
-        w="175px"
-        h="71px"
-        borderRadius="50"
-        color="white"
-        bg="#3f2371"
-        float="left"
-      >
-        Edit
-      </Button>
-    </ButtonGroup>
+      <Modal isOpen={isOpen}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader textAlign="center" fontSize="30px">
+            Remove income data
+          </ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            Amount<br></br>
+            <input
+              type="text"
+              placeholder="amount"
+              size="30"
+              required
+              name="incomeAmount"
+            ></input>
+          </ModalBody>
+          <ModalBody>
+            Start Date<br></br>
+            <input type="date" size="30" required name="startDate"></input>
+          </ModalBody>
+          <ModalBody>
+            End Date (optional)<br></br>
+            <input type="date" size="30" name="endDate"></input>
+          </ModalBody>
+          <ModalBody>
+            Company (optional)<br></br>
+            <input
+              type="text"
+              placeholder="company name"
+              size="30"
+              name="company"
+            ></input>
+          </ModalBody>
+
+          <ModalFooter>
+            <Button
+              colorScheme="purple"
+              h="50px"
+              w="80px"
+              d="flex"
+              onClick={onClose}
+            >
+              Save
+            </Button>
+            <Button onClick={onClose} colorScheme="yellow" pl="20px">
+              Cancel
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+    </div>
   );
 }
-
-//overlay when attempting to add income. To use, call it as a regular component
-const AddOverlayComponent = ({ render }) => {
-  return AddOverlay();
+const RemoveOverlayComponent = ({ render }) => {
+  return removeOverlay();
 };
 
 class Income extends Component {
@@ -262,6 +315,7 @@ class Income extends Component {
           <div>test test test test</div>
         </Box>
         <AddOverlayComponent />
+        <RemoveOverlayComponent />
       </div>
     );
   }
