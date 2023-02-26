@@ -18,7 +18,8 @@ import classes from "./AddOverlayComponent.module.css";
 //overlay component for adding income data
 export function AddOverlay() {
   const initialValues = {
-    incomeAmount: null,
+    monthlyIncome: null,
+    weeklyHours: null,
     startDate: null,
     endDate: null,
     company: null,
@@ -26,7 +27,7 @@ export function AddOverlay() {
 
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [values, setValues] = useState(initialValues);
-  const [incomeType, setIncomeType] = useState(0);
+  const [industry, setIndustry] = useState("");
   const [addSuccess, setAddSuccess] = useState(null);
 
   const handleInputChange = (e) => {
@@ -52,8 +53,8 @@ export function AddOverlay() {
         Authorization: `Bearer ${sessionStorage.getItem("token")}`,
       },
       body: JSON.stringify({
-        income_type: incomeType,
-        monthly_income: values.incomeAmount,
+        industry: industry,
+        monthly_income: values.monthlyIncome,
         start_date: values.startDate,
         end_date: values.endDate,
         company: values.company,
@@ -95,29 +96,30 @@ export function AddOverlay() {
           <ModalBody>
             Income Type<br></br>
             <select
-              value={incomeType}
+              value={industry}
               onChange={(event) => {
-                setIncomeType(event.target.value);
+                setIndustry(event.target.value);
               }}
             >
               <option>N.A</option>
-              <option value="FT">Full-time</option>
-              <option value="PT">Part-time</option>
-              <option value="Passive">Passive</option>
+              <option value="manufacturing">Manufacturing</option>
+              <option value="services">Services</option>
+              <option value="construction">Construction</option>
               <option value="Others">Others</option>
             </select>
           </ModalBody>
           <ModalBody>
-            Amount<br></br>
+            Monthly income<br></br>
             <input
-              type="text"
+              type="number"
               placeholder="amount"
               size="30"
               required
-              name="incomeAmount"
+              name="monthlyIncome"
               onChange={handleInputChange}
             ></input>
           </ModalBody>
+
           <ModalBody>
             Start Date<br></br>
             <input
@@ -134,6 +136,17 @@ export function AddOverlay() {
               type="date"
               size="30"
               name="endDate"
+              onChange={handleInputChange}
+            ></input>
+          </ModalBody>
+          <ModalBody>
+            Weekly hours (optional)<br></br>
+            <input
+              type="number"
+              placeholder="hours"
+              size="30"
+              required
+              name="weeklyHours"
               onChange={handleInputChange}
             ></input>
           </ModalBody>
