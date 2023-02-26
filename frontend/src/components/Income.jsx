@@ -193,6 +193,30 @@ const AddOverlayComponent = ({ render }) => {
 
 export function removeOverlay() {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const [result, setResult] = useState([{}]); //result is the income data fetched with backend api
+
+  //populates 'result' with income data
+  useEffect(() => {
+    fetch("/api/income", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+      },
+    })
+      .then((response) => {
+        if (response.status === 500) {
+          console.log("Some error occurred - " + response.status);
+        } else {
+          return response.json();
+        }
+      })
+      .then((data) => {
+        setResult(data);
+      });
+  }, []);
+  console.log(result);
+
   return (
     <div>
       <Button
@@ -213,33 +237,6 @@ export function removeOverlay() {
             Remove income data
           </ModalHeader>
           <ModalCloseButton />
-          <ModalBody>
-            Amount<br></br>
-            <input
-              type="text"
-              placeholder="amount"
-              size="30"
-              required
-              name="incomeAmount"
-            ></input>
-          </ModalBody>
-          <ModalBody>
-            Start Date<br></br>
-            <input type="date" size="30" required name="startDate"></input>
-          </ModalBody>
-          <ModalBody>
-            End Date (optional)<br></br>
-            <input type="date" size="30" name="endDate"></input>
-          </ModalBody>
-          <ModalBody>
-            Company (optional)<br></br>
-            <input
-              type="text"
-              placeholder="company name"
-              size="30"
-              name="company"
-            ></input>
-          </ModalBody>
 
           <ModalFooter>
             <Button
