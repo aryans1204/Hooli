@@ -37,6 +37,12 @@ export function AddOverlay() {
     });
   };
 
+  const clearState = () => {
+    setValues(initialValues);
+    setAddSuccess(null);
+    onClose();
+  };
+
   //calls backend api to create new income data when submitted
   function handleSubmit() {
     fetch("/api/income", {
@@ -79,7 +85,7 @@ export function AddOverlay() {
       >
         Add
       </Button>
-      <Modal isOpen={isOpen} onClose={onClose}>
+      <Modal isOpen={isOpen}>
         <ModalOverlay />
         <ModalContent>
           <ModalHeader textAlign="center" fontSize="30px">
@@ -152,7 +158,7 @@ export function AddOverlay() {
             >
               Save
             </Button>
-            <Button onClick={onClose} colorScheme="yellow" pl="20px">
+            <Button onClick={clearState} colorScheme="yellow" pl="20px">
               Cancel
             </Button>
             <div>
@@ -164,7 +170,7 @@ export function AddOverlay() {
                     <div>
                       <div>Successfully added income data!</div>
                       <div>
-                        <Button onClick={onClose}>OK</Button>
+                        <Button onClick={clearState}>OK</Button>
                       </div>
                     </div>
                   );
