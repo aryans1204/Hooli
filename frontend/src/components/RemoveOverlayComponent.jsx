@@ -21,8 +21,30 @@ export function RemoveOverlay() {
   const [result, setResult] = useState([{}]); //result is the income data fetched with backend api
   const [selectedItem, setSelectedItem] = useState(null);
 
+  //stores the data for which income record to remove
   function handleItemSelected(item) {
     setSelectedItem(item);
+  }
+
+  function handleRemove() {
+    console.log(selectedItem._id);
+    fetch("/api/income/" + selectedItem._id, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+      },
+    })
+      .then((response) => {
+        if (response.status === 500 || response.status === 404) {
+          console.log("Some error occurred - " + response.status);
+        } else {
+          return response.json();
+        }
+      })
+      .then((data) => {
+        console.log(data);
+      });
   }
 
   //populates 'result' with income data
@@ -78,9 +100,9 @@ export function RemoveOverlay() {
               h="50px"
               w="80px"
               d="flex"
-              onClick={onClose}
+              onClick={handleRemove}
             >
-              Save
+              Remove
             </Button>
             <Button onClick={onClose} colorScheme="yellow" pl="20px">
               Cancel
