@@ -8,11 +8,11 @@ import { SearchIcon } from '@chakra-ui/icons'
 class Forex extends Component {
     constructor(props) {
         super(props);
-        this.state = { from: "", to: "", authenticated: null };
+        this.state = { from: "", to: "", authenticated: null, items: "" };
     
         this.handleKeyDown = this.handleKeyDown.bind(this);
         this.postData = this.postData.bind(this);
-        
+        this.getAllData = this.getAllData.bind(this);
       }
 
     async componentDidMount() {
@@ -30,6 +30,8 @@ class Forex extends Component {
             else
                 this.setState({ authenticated: true });
           });
+
+        this.getAllData();
     }
 
     handleKeyDown(event) {
@@ -43,7 +45,6 @@ class Forex extends Component {
             console.log(arr);
             let var1 = arr[0];
             let var2 = arr[1];
-            //this.setState({from: var1}, ()=>{console.log(this.state);});
             this.setState({from: var1});
             this.setState({to: var2}, ()=>{this.postData();});
             //TODO: clear text in input
@@ -70,6 +71,26 @@ class Forex extends Component {
              });
     }
 
+    getAllData () {
+        console.log("YOURE HERE");
+        fetch('/api/currencies', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${sessionStorage.getItem("token")}`
+            }
+        })
+        .then((response) => {
+            if (response.status == 500) console.log("Error");
+            return response.json;
+        })
+        .then ((data) => {
+            console.log("YOURE THERE");
+            this.setState({items: data});
+            console.log(this.state);
+        })
+    }
+
     render() {
         return (
             <>
@@ -84,6 +105,7 @@ class Forex extends Component {
                         children={<SearchIcon color='gray.600' />}
                     />
                     <Input placeholder='Enter Currency Pair' htmlSize={50} width='auto' variant='filled' onKeyDown={this.handleKeyDown}/>
+                    {this.state.items}
                     </InputGroup>
                 </div>
             </div>
