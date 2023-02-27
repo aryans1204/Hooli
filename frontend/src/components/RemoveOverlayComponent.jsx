@@ -14,6 +14,7 @@ import {
 } from "@chakra-ui/react";
 import { Navigate } from "react-router-dom";
 import classes from "./RemoveOverlayComponent.module.css";
+import DisplayTableComponent from "./DisplayTableComponent";
 
 export function RemoveOverlay() {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -61,7 +62,9 @@ export function RemoveOverlay() {
             Remove income data
           </ModalHeader>
           <ModalCloseButton />
-
+          <ModalBody>
+            <DisplayTableComponent items={result}></DisplayTableComponent>
+          </ModalBody>
           <ModalFooter>
             <Button
               colorScheme="purple"
