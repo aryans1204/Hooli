@@ -5,6 +5,7 @@ function DisplayTableComponent(props) {
 
   function handleItemClick(item) {
     setSelectedItem(item);
+    props.onItemSelected(item);
   }
 
   return (

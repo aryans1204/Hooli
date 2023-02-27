@@ -19,6 +19,11 @@ import DisplayTableComponent from "./DisplayTableComponent";
 export function RemoveOverlay() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [result, setResult] = useState([{}]); //result is the income data fetched with backend api
+  const [selectedItem, setSelectedItem] = useState(null);
+
+  function handleItemSelected(item) {
+    setSelectedItem(item);
+  }
 
   //populates 'result' with income data
   useEffect(() => {
@@ -40,7 +45,6 @@ export function RemoveOverlay() {
         setResult(data);
       });
   }, []);
-  console.log(result);
 
   return (
     <div>
@@ -63,7 +67,10 @@ export function RemoveOverlay() {
           </ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <DisplayTableComponent items={result}></DisplayTableComponent>
+            <DisplayTableComponent
+              items={result}
+              onItemSelected={handleItemSelected}
+            />
           </ModalBody>
           <ModalFooter>
             <Button
