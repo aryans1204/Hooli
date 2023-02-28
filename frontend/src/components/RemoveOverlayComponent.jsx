@@ -48,8 +48,7 @@ export function RemoveOverlay() {
       });
   }
 
-  //populates 'result' with income data
-  useEffect(() => {
+  function getData() {
     fetch("/api/income", {
       method: "GET",
       headers: {
@@ -67,12 +66,13 @@ export function RemoveOverlay() {
       .then((data) => {
         setResult(data);
       });
-  }, [result]);
+    onOpen();
+  }
 
   return (
     <div>
       <Button
-        onClick={onOpen}
+        onClick={getData}
         w="175px"
         h="71px"
         borderRadius="50"
