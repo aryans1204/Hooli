@@ -16,6 +16,7 @@ import {
 import { Navigate } from "react-router-dom";
 import { AddOverlayComponent } from "./AddOverlayComponent";
 import { RemoveOverlayComponent } from "./RemoveOverlayComponent";
+import { IncomeBarChartComponent } from "./IncomeBarChartComponent";
 
 class Income extends Component {
   //const { isOpen, onOpen, onClose } = useDisclosure();
@@ -66,6 +67,9 @@ class Income extends Component {
           borderRadius="50"
         >
           <div>test test test test</div>
+          <div>
+            <IncomeBarChartComponent />
+          </div>
         </Box>
         <AddOverlayComponent />
         <RemoveOverlayComponent />
