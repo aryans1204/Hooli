@@ -39,6 +39,7 @@ export function RemoveOverlay() {
         if (response.status === 500 || response.status === 404) {
           console.log("Some error occurred - " + response.status);
         } else {
+          setResult(result.filter((item) => item._id !== selectedItem._id));
           return response.json();
         }
       })
@@ -66,7 +67,7 @@ export function RemoveOverlay() {
       .then((data) => {
         setResult(data);
       });
-  }, []);
+  }, [result]);
 
   return (
     <div>
@@ -105,7 +106,7 @@ export function RemoveOverlay() {
               Remove
             </Button>
             <Button onClick={onClose} colorScheme="yellow" pl="20px">
-              Cancel
+              Close
             </Button>
           </ModalFooter>
         </ModalContent>
