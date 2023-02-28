@@ -97,7 +97,12 @@ function IncomeBarChart() {
   return (
     <div>
       <h2>Monthly Income by Industry</h2>
-      <Bar data={chartData} options={chartOptions} />
+      <Bar
+        width="769px"
+        height="550px"
+        data={chartData}
+        options={chartOptions}
+      />
     </div>
   );
 }
