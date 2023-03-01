@@ -16,7 +16,7 @@ import { Navigate } from "react-router-dom";
 import classes from "./AddOverlayComponent.module.css";
 
 //overlay component for adding income data
-export function AddOverlay() {
+export function AddOverlayComponent(props) {
   const initialValues = {
     monthlyIncome: null,
     weeklyHours: null,
@@ -70,7 +70,9 @@ export function AddOverlay() {
           return response.json();
         }
       })
-      .then((data) => {});
+      .then((data) => {
+        props.setState();
+      });
   }
 
   return (
@@ -198,8 +200,3 @@ export function AddOverlay() {
     </ButtonGroup>
   );
 }
-
-//overlay when attempting to add income. To use, call it as a regular component
-export const AddOverlayComponent = ({ render }) => {
-  return AddOverlay();
-};

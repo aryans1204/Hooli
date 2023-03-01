@@ -24,10 +24,12 @@ class Income extends Component {
     super(props);
     this.state = {
       authenticated: null,
+      incomeData: null,
     };
   }
 
   async componentDidMount() {
+    this.getIncomeData();
     await fetch("/api/users/me", {
       method: "GET",
       headers: {
@@ -42,6 +44,33 @@ class Income extends Component {
         return response.json();
       })
       .then((data) => {});
+  }
+
+  //updates the state of incomeData
+  getIncomeData() {
+    fetch("/api/income", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+      },
+    })
+      .then((response) => {
+        if (response.status === 500) {
+          console.log("Some error occurred - " + response.status);
+        } else {
+          return response.json();
+        }
+      })
+      .then((data) => {
+        const tempData = data.sort(
+          (a, b) => new Date(a.start_date) - new Date(b.start_date)
+        );
+        console.log(tempData);
+        this.setState({
+          incomeData: tempData,
+        });
+      });
   }
 
   render() {
@@ -67,10 +96,21 @@ class Income extends Component {
           borderRadius="50"
           overflow="hidden"
         >
-          <IncomeBarChartComponent />
+          {this.state.incomeData !== null ? (
+            <IncomeBarChartComponent data={this.state.incomeData} />
+          ) : null}
         </Box>
-        <AddOverlayComponent />
-        <RemoveOverlayComponent />
+        <AddOverlayComponent
+          setState={() => {
+            //this function is passed in as prop and will be triggered by the child component whenever there's a change to the database
+            this.getIncomeData();
+          }}
+        />
+        <RemoveOverlayComponent
+          setState={() => {
+            this.getIncomeData();
+          }}
+        />
       </div>
     );
   }

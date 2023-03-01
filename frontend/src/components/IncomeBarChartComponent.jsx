@@ -5,8 +5,13 @@ import Chart from "chart.js/auto";
 import classes from "./IncomeBarChartComponent.module.css";
 import Income from "./Income";
 
-function IncomeBarChart() {
-  const [result, setResult] = useState([]);
+export function IncomeBarChartComponent(props) {
+  console.log(props.data);
+  const [result, setResult] = useState(null);
+  useEffect(() => {
+    setResult(props.data);
+  }, [props.data]);
+
   const monthNames = [
     "January",
     "February",
@@ -35,28 +40,6 @@ function IncomeBarChart() {
     others: "yellow",
   };
 
-  useEffect(() => {
-    // Fetch the data and set it to the state
-    fetch("/api/income", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${sessionStorage.getItem("token")}`,
-      },
-    })
-      .then((response) => {
-        if (response.status === 500) {
-          console.log("Some error occurred - " + response.status);
-        } else {
-          return response.json();
-        }
-      })
-      .then((data) => {
-        setResult(
-          data.sort((a, b) => new Date(a.start_date) - new Date(b.start_date))
-        );
-      });
-  }, []);
   // Create an object to store the income data for each month and industry
   function industryObj() {
     return { manufacturing: 0, services: 0, construction: 0, others: 0 };
@@ -80,17 +63,19 @@ function IncomeBarChart() {
       incomeData[monthNames[month]][industry[industryName]] = 0;
     }
   }
-  result.forEach(({ industry, monthly_income, start_date }) => {
-    const month = new Date(start_date).getMonth();
-    const monthName = monthNames[month];
-    if (!incomeData[monthName]) {
-      incomeData[monthName] = {};
-    }
-    if (!incomeData[monthName][industry]) {
-      incomeData[monthName][industry] = 0;
-    }
-    incomeData[monthName][industry] += monthly_income;
-  });
+  if (result !== null) {
+    result.forEach(({ industry, monthly_income, start_date }) => {
+      const month = new Date(start_date).getMonth();
+      const monthName = monthNames[month];
+      if (!incomeData[monthName]) {
+        incomeData[monthName] = {};
+      }
+      if (!incomeData[monthName][industry]) {
+        incomeData[monthName][industry] = 0;
+      }
+      incomeData[monthName][industry] += monthly_income;
+    });
+  }
 
   const chartData = {
     labels: monthNames.sort(
@@ -164,7 +149,3 @@ function IncomeBarChart() {
     </div>
   );
 }
-
-export const IncomeBarChartComponent = ({ render }) => {
-  return IncomeBarChart();
-};

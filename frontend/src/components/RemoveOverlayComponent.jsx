@@ -16,7 +16,7 @@ import { Navigate } from "react-router-dom";
 import classes from "./RemoveOverlayComponent.module.css";
 import DisplayTableComponent from "./DisplayTableComponent";
 
-export function RemoveOverlay() {
+export function RemoveOverlayComponent(props) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [result, setResult] = useState([{}]); //result is the income data fetched with backend api
   const [selectedItem, setSelectedItem] = useState(null);
@@ -46,6 +46,7 @@ export function RemoveOverlay() {
       .then((data) => {
         console.log(data);
       });
+    props.setState();
   }
 
   function getData() {
@@ -114,6 +115,3 @@ export function RemoveOverlay() {
     </div>
   );
 }
-export const RemoveOverlayComponent = ({ render }) => {
-  return RemoveOverlay();
-};
