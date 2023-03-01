@@ -6,7 +6,6 @@ import classes from "./IncomeBarChartComponent.module.css";
 import Income from "./Income";
 
 export function IncomeBarChartComponent(props) {
-  console.log(props.data);
   const [result, setResult] = useState(null);
   useEffect(() => {
     setResult(props.data);
@@ -142,7 +141,7 @@ export function IncomeBarChartComponent(props) {
     <div>
       <Bar
         width="100%"
-        height="400px"
+        height="500px"
         data={chartData}
         options={chartOptions}
       />

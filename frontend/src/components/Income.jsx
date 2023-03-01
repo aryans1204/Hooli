@@ -17,6 +17,7 @@ import { Navigate } from "react-router-dom";
 import { AddOverlayComponent } from "./AddOverlayComponent";
 import { RemoveOverlayComponent } from "./RemoveOverlayComponent";
 import { IncomeBarChartComponent } from "./IncomeBarChartComponent";
+import { EditOverlayComponent } from "./EditOverlayComponent";
 
 class Income extends Component {
   //const { isOpen, onOpen, onClose } = useDisclosure();
@@ -38,7 +39,6 @@ class Income extends Component {
       },
     })
       .then((response) => {
-        console.log(response.status);
         if (response.status == 401) this.setState({ authenticated: false });
         else this.setState({ authenticated: true });
         return response.json();
@@ -66,7 +66,6 @@ class Income extends Component {
         const tempData = data.sort(
           (a, b) => new Date(a.start_date) - new Date(b.start_date)
         );
-        console.log(tempData);
         this.setState({
           incomeData: tempData,
         });
@@ -88,7 +87,7 @@ class Income extends Component {
         <Box
           bg="rgba(148, 114, 208, 1)"
           w="770px"
-          h="400px"
+          h="500px"
           color="white"
           p={5}
           mt={5}
@@ -111,6 +110,7 @@ class Income extends Component {
             this.getIncomeData();
           }}
         />
+        <EditOverlayComponent />
       </div>
     );
   }
