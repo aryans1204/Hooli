@@ -52,11 +52,34 @@ function IncomeBarChart() {
         }
       })
       .then((data) => {
-        setResult(data);
+        setResult(
+          data.sort((a, b) => new Date(a.start_date) - new Date(b.start_date))
+        );
       });
   }, []);
   // Create an object to store the income data for each month and industry
-  const incomeData = {};
+  function industryObj() {
+    return { manufacturing: 0, services: 0, construction: 0, others: 0 };
+  }
+  const incomeData = {
+    January: { industryObj },
+    February: { industryObj },
+    March: { industryObj },
+    April: { industryObj },
+    May: { industryObj },
+    June: { industryObj },
+    July: { industryObj },
+    August: { industryObj },
+    September: { industryObj },
+    October: { industryObj },
+    November: { industryObj },
+    December: { industryObj },
+  };
+  for (const month in monthNames) {
+    for (const industryName in industry) {
+      incomeData[monthNames[month]][industry[industryName]] = 0;
+    }
+  }
   result.forEach(({ industry, monthly_income, start_date }) => {
     const month = new Date(start_date).getMonth();
     const monthName = monthNames[month];
@@ -68,71 +91,35 @@ function IncomeBarChart() {
     }
     incomeData[monthName][industry] += monthly_income;
   });
-  console.log("here");
-  console.log(incomeData);
-  // Convert the income data object to an array of data points for the chart
-  /*const chartData = {
-    labels: Object.keys(incomeData),
-    datasets: [
-      {
-        label: "Monthly Income by Industry",
-        data: Object.values(incomeData).map((income) =>
-          Object.values(income).reduce((sum, value) => sum + value, 0)
-        ),
-        backgroundColor: "rgba(54, 162, 235, 0.5)",
-      },
-    ],
-  };*/
-  // Sort the labels by month
-  /*const chartData = {
-    labels: Object.keys(incomeData).sort((a, b) => {
-      const monthA = monthNames.indexOf(a);
-      const monthB = monthNames.indexOf(b);
-      return monthA - monthB;
-    }),
-    datasets: [
-      {
-        label: "Monthly Income by Industry",
-        data: Object.keys(incomeData).map((month) =>
-          Object.values(incomeData[month]).reduce(
-            (sum, value) => sum + value,
-            0
-          )
-        ),
-        backgroundColor: [
-          colors.manufacturing,
-          colors.services,
-          colors.construction,
-          colors.others,
-        ],
-      },
-    ],
-  };*/
+
   const chartData = {
-    labels: monthNames,
+    labels: monthNames.sort(
+      (a, b) => monthNames.indexOf(a) - monthNames.indexOf(b)
+    ),
     datasets: industry.map((industry) => ({
       label: industry.industry,
-      data: result
-        .filter(({ industry: ind }) => ind === industry.industry)
-        .map(({ monthly_income }) => monthly_income)
-        .reverse(),
+      data: monthNames.map(
+        (monthName) => incomeData[monthName][industry.industry]
+      ),
       backgroundColor: colors[industry.industry],
+      stack: "income",
     })),
   };
-  console.log(chartData);
-  console.log("hello");
+
   // Configure the chart options
   const chartOptions = {
     maintainAspectRatio: false,
     responsive: true,
     scales: {
       y: {
-        type: "linear",
+        stacked: true,
         title: {
           display: true,
           text: "Monthly Income ($)",
+          color: "black",
         },
         ticks: {
+          color: "black",
           beginAtZero: true,
           precision: 0,
         },
@@ -141,19 +128,25 @@ function IncomeBarChart() {
         },
       },
       x: {
-        type: "category",
+        stacked: true,
         title: {
           display: true,
           text: "Month",
+          color: "black",
         },
         grid: {
           drawBorder: false,
         },
+        ticks: { color: "black" },
       },
     },
     plugins: {
       legend: {
         position: "bottom",
+        labels: {
+          usePointStyle: true,
+          color: "black",
+        },
       },
     },
   };
