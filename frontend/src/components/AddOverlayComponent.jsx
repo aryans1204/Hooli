@@ -105,7 +105,7 @@ export function AddOverlay() {
               <option value="manufacturing">Manufacturing</option>
               <option value="services">Services</option>
               <option value="construction">Construction</option>
-              <option value="Others">Others</option>
+              <option value="others">Others</option>
             </select>
           </ModalBody>
           <ModalBody>

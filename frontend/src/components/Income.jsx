@@ -58,18 +58,16 @@ class Income extends Component {
         <div className={classes.title}>My Income</div>
         <Box
           bg="rgba(148, 114, 208, 1)"
-          w="769px"
+          w="770px"
           h="400px"
           color="white"
           p={5}
           mt={5}
           ml="20"
           borderRadius="50"
+          overflow="hidden"
         >
-          <div>test test test test</div>
-          <div>
-            <IncomeBarChartComponent />
-          </div>
+          <IncomeBarChartComponent />
         </Box>
         <AddOverlayComponent />
         <RemoveOverlayComponent />
