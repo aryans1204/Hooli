@@ -18,6 +18,7 @@ import { AddOverlayComponent } from "./AddOverlayComponent";
 import { RemoveOverlayComponent } from "./RemoveOverlayComponent";
 import { IncomeBarChartComponent } from "./IncomeBarChartComponent";
 import { EditOverlayComponent } from "./EditOverlayComponent";
+import { WeeklyIncomeComparison } from "./WeeklyIncomeComparison";
 
 class Income extends Component {
   //const { isOpen, onOpen, onClose } = useDisclosure();
@@ -115,6 +116,9 @@ class Income extends Component {
             this.getIncomeData();
           }}
         />
+        <div>
+          <WeeklyIncomeComparison />
+        </div>
       </div>
     );
   }
