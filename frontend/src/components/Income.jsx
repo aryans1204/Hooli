@@ -110,7 +110,11 @@ class Income extends Component {
             this.getIncomeData();
           }}
         />
-        <EditOverlayComponent />
+        <EditOverlayComponent
+          setState={() => {
+            this.getIncomeData();
+          }}
+        />
       </div>
     );
   }
