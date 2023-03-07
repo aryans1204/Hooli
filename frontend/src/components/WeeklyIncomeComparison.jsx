@@ -19,13 +19,12 @@ export function WeeklyIncomeComparison(props) {
     );
     console.log(tempData.length);
     if (tempData.length > 5) {
-      const tempData2 = tempData.slice(0, 5); //temporary variable to store 5 latest data
-      tempData = tempData2;
-      tempData = tempData.map((item) => ({
-        ...item,
-        quarter: getQuarter(new Date(item.start_date)),
-      }));
+      tempData = tempData.slice(0, 5); //temporary variable to store 5 latest data
     }
+    tempData = tempData.map((item) => ({
+      ...item,
+      quarter: getQuarter(new Date(item.start_date)),
+    })); //adds the quarter data to tempData, e.g. 2022-Q2
     console.log(tempData);
     setuserData(tempData); //userData now contains the 5 latest income data based on start_date
   }, [props.data]);
