@@ -10,8 +10,8 @@ export function WeeklyIncomeComparison() {
   const resource_id = "1109b8a4-dafe-42af-840e-0cf447147d5e";
   const query_params = {
     resource_id: resource_id,
-    q: "jason",
     limit: 5,
+    sort: "quarter desc",
   };
 
   const url = new URL(endpoint);
@@ -26,11 +26,11 @@ export function WeeklyIncomeComparison() {
       .then((data) => {
         console.log(data);
         setIncomeData(data);
-        /*data.result.records.map((record) => {
-          console.log(record.id);
-          console.log(record.name);
-          console.log(record.income);
-        });*/
+        data.result.records.map((record) => {
+          console.log(record.quarter);
+          console.log(record.total_paid_hours);
+          console.log(record.industry1);
+        });
         console.log(data.result.records);
       })
       .catch((error) => {
@@ -40,13 +40,15 @@ export function WeeklyIncomeComparison() {
   return (
     <div>
       <h1>Income Data</h1>
-      {incomeData &&
-        incomeData.result.records.map((record) => (
-          <div key={record.id}>
-            <p>Name: {record.name}</p>
-            <p>Income: {record.income}</p>
-          </div>
-        ))}
+      <ul style={{ listStyleType: "none", padding: 0 }}>
+        {incomeData &&
+          incomeData.result.records.map((record) => (
+            <li key={record._id}>
+              Quarter: {record.quarter}, Total Paid Hours:{" "}
+              {record.total_paid_hours}, Industry: {record.industry1}
+            </li>
+          ))}
+      </ul>
     </div>
   );
 }
