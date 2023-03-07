@@ -3,6 +3,7 @@ import NavBar from "./NavBar";
 import { useState, useEffect } from "react";
 import classes from "./WeeklyIncomeComparison.module.css";
 
+//provides the quarter data for the input date e.g. 2022-Q1
 function getQuarter(date) {
   const month = date.getMonth();
   const year = date.getFullYear();
@@ -10,8 +11,19 @@ function getQuarter(date) {
   return `${year}-Q${quarter}`;
 }
 
+//filters result from api to find matching quarter and industry
+function filterDataByQuarterAndIndustry(data, filters) {
+  return data.filter((item) => {
+    return filters.some((filter) => {
+      const itemQuarter = getQuarter(new Date(item.start_date));
+      const itemIndustry = item.industry1.toLowerCase();
+      return itemQuarter === filter.quarter && itemIndustry === filter.industry;
+    });
+  });
+}
+
 export function WeeklyIncomeComparison(props) {
-  const [apiData, setapiData] = useState(""); //data retrieved from api
+  const [apiData, setapiData] = useState(null); //data retrieved from api
   const [userData, setuserData] = useState(null); //user data passed in from parent class as prop
   useEffect(() => {
     let tempData = props.data.sort(
@@ -27,20 +39,20 @@ export function WeeklyIncomeComparison(props) {
     })); //adds the quarter data to tempData, e.g. 2022-Q2
     console.log(tempData);
     setuserData(tempData); //userData now contains the 5 latest income data based on start_date
-  }, [props.data]);
-  const endpoint = "https://data.gov.sg/api/action/datastore_search";
-  const resource_id = "1109b8a4-dafe-42af-840e-0cf447147d5e";
-  const query_params = {
-    resource_id: resource_id,
-    limit: 5,
-    sort: "quarter desc",
-  };
 
-  const url = new URL(endpoint);
-  Object.keys(query_params).forEach((key) =>
-    url.searchParams.append(key, query_params[key])
-  );
-  useEffect(() => {
+    //accessing weekly hours API
+    const endpoint = "https://data.gov.sg/api/action/datastore_search";
+    const resource_id = "1109b8a4-dafe-42af-840e-0cf447147d5e";
+    const query_params = {
+      resource_id: resource_id,
+      limit: 30,
+      sort: "quarter desc",
+    };
+
+    const url = new URL(endpoint);
+    Object.keys(query_params).forEach((key) =>
+      url.searchParams.append(key, query_params[key])
+    );
     fetch(url)
       .then((response) => {
         return response.json();
@@ -48,17 +60,25 @@ export function WeeklyIncomeComparison(props) {
       .then((data) => {
         console.log(data);
         setapiData(data);
-        data.result.records.map((record) => {
-          console.log(record.quarter);
-          console.log(record.total_paid_hours);
-          console.log(record.industry1);
-        });
+        data.result.records.map((record) => {});
         console.log(data.result.records);
       })
       .catch((error) => {
         console.error(error);
       });
-  }, []);
+  }, [props.data]);
+  useEffect(() => {
+    if (apiData != null) {
+      console.log(userData);
+      console.log(apiData.result.records);
+      const filteredData = filterDataByQuarterAndIndustry(
+        apiData.result.records,
+        userData
+      );
+      console.log(filteredData);
+    }
+  }, [apiData]);
+
   return (
     <div>
       <h1>Income Data</h1>
