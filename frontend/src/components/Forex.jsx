@@ -70,6 +70,7 @@ class Forex extends Component {
         .then(response => response.text())
         .then(result => {console.log("PAIR OK"); result = JSON.parse(result); arr.push(result);})
         .catch(error => console.log('error', error));
+
     }
 
     // Post search to database
@@ -147,7 +148,7 @@ class Forex extends Component {
         });
     }
 
-    // getTable (allData) {
+    getTable () {
     //     const responses = [];
     //     allData = JSON.parse(allData);
     //     allData.forEach((item) => {
@@ -169,7 +170,7 @@ class Forex extends Component {
     //             })}
     //         </Tr>
     //     )
-    // }
+    }
 
     render() {
         return (
@@ -199,14 +200,12 @@ class Forex extends Component {
                         </Thead>
                         <Tbody>
 
-
-
-                        <Tr>
+                        {/* <Tr>
                             <Td>inches</Td>
                             <Td>millimetres (mm)</Td>
                             <Td isNumeric>25.4</Td>
-                        </Tr>
-                        {this.getAllData()}
+                        </Tr> */}
+                        {this.getTable()}
 
                         </Tbody>
                     </Table>
