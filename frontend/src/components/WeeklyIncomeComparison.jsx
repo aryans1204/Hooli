@@ -106,7 +106,7 @@ export function WeeklyIncomeComparison(props) {
                 <td>{data.quarter}</td>
                 <td>{formatDate(data.start_date)}</td>
                 <td>{data.industry}</td>
-                <td>{data.weekly_hours ? data.weekly_hours : "n.a"}</td>
+                <td>{data.weekly_hours ? data.weekly_hours : "N.A."}</td>
                 <td>{getRecommendedHours(data.quarter, data.industry)}</td>
               </tr>
             ))}
