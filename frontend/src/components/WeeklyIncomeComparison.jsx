@@ -1,8 +1,14 @@
 import React, { Component } from "react";
 import NavBar from "./NavBar";
 import { useState, useEffect } from "react";
-
 import classes from "./WeeklyIncomeComparison.module.css";
+
+function getQuarter(date) {
+  const month = date.getMonth();
+  const year = date.getFullYear();
+  const quarter = Math.floor(month / 3) + 1;
+  return `${year}-Q${quarter}`;
+}
 
 export function WeeklyIncomeComparison(props) {
   const [apiData, setapiData] = useState(""); //data retrieved from api
@@ -15,7 +21,12 @@ export function WeeklyIncomeComparison(props) {
     if (tempData.length > 5) {
       const tempData2 = tempData.slice(0, 5); //temporary variable to store 5 latest data
       tempData = tempData2;
+      tempData = tempData.map((item) => ({
+        ...item,
+        quarter: getQuarter(new Date(item.start_date)),
+      }));
     }
+    console.log(tempData);
     setuserData(tempData); //userData now contains the 5 latest income data based on start_date
   }, [props.data]);
   const endpoint = "https://data.gov.sg/api/action/datastore_search";
