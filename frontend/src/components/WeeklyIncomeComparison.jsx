@@ -38,7 +38,6 @@ export function WeeklyIncomeComparison(props) {
       ...item,
       quarter: getQuarter(new Date(item.start_date)),
     })); //adds the quarter data to tempData, e.g. 2022-Q2
-    console.log(tempData);
     setuserData(tempData); //userData now contains the 5 latest income data based on start_date
 
     //accessing weekly hours API
@@ -59,10 +58,7 @@ export function WeeklyIncomeComparison(props) {
         return response.json();
       })
       .then((data) => {
-        console.log(data);
         setapiData(data);
-        data.result.records.map((record) => {});
-        console.log(data.result.records);
       })
       .catch((error) => {
         console.error(error);
@@ -70,14 +66,11 @@ export function WeeklyIncomeComparison(props) {
   }, [props.data]);
   useEffect(() => {
     if (apiData != null) {
-      console.log(userData);
-      console.log(apiData.result.records);
       const filteredDatas = filterDataByQuarterAndIndustry(
         apiData.result.records,
         userData
       );
       setFilteredData(filteredDatas);
-      console.log(filteredDatas);
     }
   }, [apiData]);
 
@@ -96,15 +89,6 @@ export function WeeklyIncomeComparison(props) {
   return (
     <div>
       <h2>Weekly hours comparison</h2>
-      {/*<ul className={classes.list}>
-        {apiData &&
-          apiData.result.records.map((record) => (
-            <li key={record._id}>
-              Quarter: {record.quarter}, Total Paid Hours:{" "}
-              {record.total_paid_hours}, Industry: {record.industry1}
-            </li>
-          ))}
-          </ul>*/}
       {userData !== null && filteredData !== null ? (
         <table>
           <thead>
@@ -118,7 +102,7 @@ export function WeeklyIncomeComparison(props) {
           </thead>
           <tbody>
             {userData.map((data) => (
-              <tr key={data.quarter + data.industry}>
+              <tr key={data._id}>
                 <td>{data.quarter}</td>
                 <td>{formatDate(data.start_date)}</td>
                 <td>{data.industry}</td>
