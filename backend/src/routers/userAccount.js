@@ -20,7 +20,7 @@ const jsonwebtoken = require('jsonwebtoken')
  * User module
  * @const
  */
-const User = require('../models/user')
+const UserAccount = require('../models/userAccount')
 
 /**
  * auth module
@@ -45,7 +45,7 @@ const router = new express.Router()
  */
 router.get('/api/users', async (req, res) => {
     try{
-        const users = await User.find()
+        const users = await UserAccount.find()
         res.send(users)
     } catch (e) {
         res.status(404).send()
@@ -62,7 +62,7 @@ router.get('/api/users', async (req, res) => {
  * @throws {}
  */
 router.post('/api/users', async (req, res) => {
-    const user = new User(req.body)
+    const user = new UserAccount(req.body)
     
     try {
         await user.save()
@@ -85,7 +85,7 @@ router.post('/api/users', async (req, res) => {
 router.post('/api/users/login', async (req, res) => {
     try {
         console.log(req.body.email)
-        const user = await User.findByCredentials(req.body.email, req.body.password)
+        const user = await UserAccount.findByCredentials(req.body.email, req.body.password)
         const token = await user.generateAuthToken()
         res.send({user, token})
     } catch (e) {
