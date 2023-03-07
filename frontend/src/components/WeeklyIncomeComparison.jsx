@@ -25,6 +25,7 @@ function filterDataByQuarterAndIndustry(data, filters) {
 export function WeeklyIncomeComparison(props) {
   const [apiData, setapiData] = useState(null); //data retrieved from api
   const [userData, setuserData] = useState(null); //user data passed in from parent class as prop
+  const [filteredData, setFilteredData] = useState(null);
   useEffect(() => {
     let tempData = props.data.sort(
       (a, b) => new Date(b.start_date) - new Date(a.start_date)
@@ -71,19 +72,31 @@ export function WeeklyIncomeComparison(props) {
     if (apiData != null) {
       console.log(userData);
       console.log(apiData.result.records);
-      const filteredData = filterDataByQuarterAndIndustry(
+      const filteredDatas = filterDataByQuarterAndIndustry(
         apiData.result.records,
         userData
       );
-      console.log(userData);
-      console.log(filteredData);
+      setFilteredData(filteredDatas);
+      console.log(filteredDatas);
     }
   }, [apiData]);
 
+  const getRecommendedHours = (quarter, industry) => {
+    const finalData = filteredData.find(
+      (data) => data.quarter === quarter && data.industry1 === industry
+    );
+    return finalData ? finalData.total_paid_hours : "N.A.";
+  };
+
+  const formatDate = (dateString) => {
+    const date = dateString.slice(0, 10);
+    return date;
+  };
+
   return (
     <div>
-      <h2>Income Data</h2>
-      <ul className={classes.list}>
+      <h2>Weekly hours comparison</h2>
+      {/*<ul className={classes.list}>
         {apiData &&
           apiData.result.records.map((record) => (
             <li key={record._id}>
@@ -91,7 +104,31 @@ export function WeeklyIncomeComparison(props) {
               {record.total_paid_hours}, Industry: {record.industry1}
             </li>
           ))}
-      </ul>
+          </ul>*/}
+      {userData !== null && filteredData !== null ? (
+        <table>
+          <thead>
+            <tr>
+              <th>Quarter</th>
+              <th>Start Date</th>
+              <th>Industry</th>
+              <th>My Weekly Hours</th>
+              <th>Recommended Weekly Hours</th>
+            </tr>
+          </thead>
+          <tbody>
+            {userData.map((data) => (
+              <tr key={data.quarter + data.industry}>
+                <td>{data.quarter}</td>
+                <td>{formatDate(data.start_date)}</td>
+                <td>{data.industry}</td>
+                <td>{data.weekly_hours ? data.weekly_hours : "n.a"}</td>
+                <td>{getRecommendedHours(data.quarter, data.industry)}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      ) : null}
     </div>
   );
 }

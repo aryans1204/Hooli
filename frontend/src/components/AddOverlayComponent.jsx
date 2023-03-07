@@ -58,6 +58,7 @@ export function AddOverlayComponent(props) {
         start_date: values.startDate,
         end_date: values.endDate,
         company: values.company,
+        weekly_hours: values.weeklyHours,
       }),
     })
       .then((response) => {
