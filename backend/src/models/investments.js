@@ -15,7 +15,7 @@ const validator = require('validator')
  * @property {Object} equities
  * @property {Object} options
  * @property {Object} commodities
- * @property {UserObject} portfolio_owner
+ * @property {UserAccountObject} portfolio_owner
  * @property {} timestamps
  */
 const investmentSchema = new mongoose.Schema({
@@ -104,7 +104,7 @@ const investmentSchema = new mongoose.Schema({
     portfolio_owner: {
         type: mongoose.Schema.Types.ObjectId,
         required: true,
-        ref: 'User'
+        ref: 'UserAccount'
     }
 }, {
     timestamps: true
