@@ -4,8 +4,20 @@ import { useState, useEffect } from "react";
 
 import classes from "./WeeklyIncomeComparison.module.css";
 
-export function WeeklyIncomeComparison() {
-  const [incomeData, setIncomeData] = useState("");
+export function WeeklyIncomeComparison(props) {
+  const [apiData, setapiData] = useState(""); //data retrieved from api
+  const [userData, setuserData] = useState(null); //user data passed in from parent class as prop
+  useEffect(() => {
+    let tempData = props.data.sort(
+      (a, b) => new Date(b.start_date) - new Date(a.start_date)
+    );
+    console.log(tempData.length);
+    if (tempData.length > 5) {
+      const tempData2 = tempData.slice(0, 5); //temporary variable to store 5 latest data
+      tempData = tempData2;
+    }
+    setuserData(tempData); //userData now contains the 5 latest income data based on start_date
+  }, [props.data]);
   const endpoint = "https://data.gov.sg/api/action/datastore_search";
   const resource_id = "1109b8a4-dafe-42af-840e-0cf447147d5e";
   const query_params = {
@@ -25,7 +37,7 @@ export function WeeklyIncomeComparison() {
       })
       .then((data) => {
         console.log(data);
-        setIncomeData(data);
+        setapiData(data);
         data.result.records.map((record) => {
           console.log(record.quarter);
           console.log(record.total_paid_hours);
@@ -41,8 +53,8 @@ export function WeeklyIncomeComparison() {
     <div>
       <h1>Income Data</h1>
       <ul style={{ listStyleType: "none", padding: 0 }}>
-        {incomeData &&
-          incomeData.result.records.map((record) => (
+        {apiData &&
+          apiData.result.records.map((record) => (
             <li key={record._id}>
               Quarter: {record.quarter}, Total Paid Hours:{" "}
               {record.total_paid_hours}, Industry: {record.industry1}
