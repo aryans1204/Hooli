@@ -1,4 +1,4 @@
-import React, { Component, useState} from 'react';
+import React, { Component, useState, useEffect} from 'react';
 import { Navigate } from "react-router-dom";
 import NavBar from './NavBar';
 import classes from './Forex.module.css';
@@ -10,11 +10,12 @@ class Forex extends Component {
     constructor(props) {
         super(props);
         this.state = { from: "", to: "", authenticated: null, items: "" };
-    
+
         this.handleKeyDown = this.handleKeyDown.bind(this);
         this.postData = this.postData.bind(this);
         this.getAllData = this.getAllData.bind(this);
         this.getPair = this.getPair.bind(this);
+        //this.getTable = this.getTable.bind(this);
       }
 
     async componentDidMount() {
@@ -32,8 +33,7 @@ class Forex extends Component {
             else
                 this.setState({ authenticated: true });
           });
-
-        this.getAllData();
+          //this.getAllData();
     }
 
     handleKeyDown(event) {
@@ -68,7 +68,7 @@ class Forex extends Component {
 
         fetch(url, requestOptions)
         .then(response => response.text())
-        .then(result => console.log(result))
+        .then(result => {console.log("OK"); return result;})
         .catch(error => console.log('error', error));
     }
 
@@ -103,24 +103,81 @@ class Forex extends Component {
         })
         .then((response) => response.json())
         .then((data) => {
-            console.log(data);
-            var count = 0;
-            let fromArr = [];
-            let toArr = [];
+            //console.log(data);
+            let count = 0;
+            var conversions = [];
             data.forEach(element => {
                 if (count != 5) {
                     count += 1;
-                    fromArr.push(element["currency_from"]);
-                    toArr.push(element["currency_to"]);
+                    let pair = {from: element["currency_from"], to: element["currency_to"]}
+                    conversions.push(pair);
                 }
             });
-            console.log(fromArr);
-            console.log(toArr);
+            const responses = [];
+            responses.push(this.getPair("SGD", "EUR"));
+            console.log(responses);
+            // responses.forEach((item) =>
+            //     {
+            //         console.log(item);
+            //         // console.log(item["base"]);
+            //         // console.log("DDFDFDF");
+            //     })
+
+            // console.log(conversions);
+            // //this.getTable(conversions);
+            // const responses = [];
+            // conversions.forEach((item) => {
+            //     const from = item.from;
+            //     const to = item.to;
+            //     responses.push(this.getPair(from, to));
+            // });
+
+            // return (
+            //     <Tr>
+            //         {responses.map(resp => {
+            //             let pair = resp.base + '/' + Object.keys(resp.rates);
+            //             return ( <>
+            //                 <Td>{pair}</Td>
+            //                 <Td>{resp.rates[0]}</Td>
+            //                 <Td>Something</Td>
+            //                 </>
+            //             )
+            //         })}
+            //     </Tr>
+            // )
+
+
+
+
         })
         .catch((err) => {
             console.log(err.message);
         });
     }
+
+    // getTable (allData) {
+    //     const responses = [];
+    //     allData = JSON.parse(allData);
+    //     allData.forEach((item) => {
+    //         const from = item.from;
+    //         const to = item.to;
+    //         responses.push(this.getPair(from, to));
+    //       });
+
+    //     return (
+    //         <Tr>
+    //             {responses.map(resp => {
+    //                 let pair = resp.base + '/' + Object.keys(resp.rates);
+    //                 return ( <>
+    //                     <Td>{pair}</Td>
+    //                     <Td>{resp.rates[0]}</Td>
+    //                     <Td>Something</Td>
+    //                     </>
+    //                 )
+    //             })}
+    //         </Tr>
+    //     )
+    // }
 
     render() {
         return (
@@ -149,21 +206,16 @@ class Forex extends Component {
                         </Tr>
                         </Thead>
                         <Tbody>
+
+
+
                         <Tr>
                             <Td>inches</Td>
                             <Td>millimetres (mm)</Td>
                             <Td isNumeric>25.4</Td>
                         </Tr>
-                        <Tr>
-                            <Td>feet</Td>
-                            <Td>centimetres (cm)</Td>
-                            <Td isNumeric>30.48</Td>
-                        </Tr>
-                        <Tr>
-                            <Td>yards</Td>
-                            <Td>metres (m)</Td>
-                            <Td isNumeric>0.91444</Td>
-                        </Tr>
+                        {this.getAllData()}
+
                         </Tbody>
                     </Table>
                     </TableContainer>
