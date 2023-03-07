@@ -116,7 +116,7 @@ class Income extends Component {
             this.getIncomeData();
           }}
         />
-        <div>
+        <div className={classes.data}>
           {this.state.incomeData !== null ? (
             <WeeklyIncomeComparison data={this.state.incomeData} />
           ) : null}

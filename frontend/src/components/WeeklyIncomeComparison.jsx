@@ -15,7 +15,7 @@ function getQuarter(date) {
 function filterDataByQuarterAndIndustry(data, filters) {
   return data.filter((item) => {
     return filters.some((filter) => {
-      const itemQuarter = getQuarter(new Date(item.start_date));
+      const itemQuarter = item.quarter;
       const itemIndustry = item.industry1.toLowerCase();
       return itemQuarter === filter.quarter && itemIndustry === filter.industry;
     });
@@ -75,14 +75,15 @@ export function WeeklyIncomeComparison(props) {
         apiData.result.records,
         userData
       );
+      console.log(userData);
       console.log(filteredData);
     }
   }, [apiData]);
 
   return (
     <div>
-      <h1>Income Data</h1>
-      <ul style={{ listStyleType: "none", padding: 0 }}>
+      <h2>Income Data</h2>
+      <ul className={classes.list}>
         {apiData &&
           apiData.result.records.map((record) => (
             <li key={record._id}>
