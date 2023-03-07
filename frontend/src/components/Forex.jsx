@@ -53,7 +53,7 @@ class Forex extends Component {
         }
     }
 
-    getPair(fromVar, toVar) {
+    getPair(fromVar, toVar, arr) {
         var myHeaders = new Headers();
         myHeaders.append("apikey", import.meta.env.VITE_FIXER_API_KEY);
 
@@ -68,7 +68,7 @@ class Forex extends Component {
 
         fetch(url, requestOptions)
         .then(response => response.text())
-        .then(result => {console.log("OK"); return result;})
+        .then(result => {console.log("PAIR OK"); result = JSON.parse(result); arr.push(result);})
         .catch(error => console.log('error', error));
     }
 
@@ -103,7 +103,7 @@ class Forex extends Component {
         })
         .then((response) => response.json())
         .then((data) => {
-            //console.log(data);
+            // Gets recent 5 pairs and puts into conversions array
             let count = 0;
             var conversions = [];
             data.forEach(element => {
@@ -113,24 +113,16 @@ class Forex extends Component {
                     conversions.push(pair);
                 }
             });
-            const responses = [];
-            responses.push(this.getPair("SGD", "EUR"));
+            // for each conversion, getPair and put into responses array
+            var responses = [];
+            conversions.forEach((item) => {
+                const from = item.from;
+                const to = item.to;
+                this.getPair(from, to, responses);
+            });
             console.log(responses);
-            // responses.forEach((item) =>
-            //     {
-            //         console.log(item);
-            //         // console.log(item["base"]);
-            //         // console.log("DDFDFDF");
-            //     })
-
-            // console.log(conversions);
-            // //this.getTable(conversions);
-            // const responses = [];
-            // conversions.forEach((item) => {
-            //     const from = item.from;
-            //     const to = item.to;
-            //     responses.push(this.getPair(from, to));
-            // });
+                
+            return (<p>sdgffgdgdfg</p>)
 
             // return (
             //     <Tr>
