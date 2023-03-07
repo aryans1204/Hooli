@@ -4,12 +4,13 @@ import NavBar from './NavBar';
 import classes from './Forex.module.css';
 import { Input, InputGroup, InputLeftElement, Table, Thead, Tbody, Tfoot, Tr, 
     Th, Td, TableContainer,} from '@chakra-ui/react';
-import { SearchIcon } from '@chakra-ui/icons'
+import { SearchIcon } from '@chakra-ui/icons';
+import ForexTable from './ForexTable';
 
 class Forex extends Component {
     constructor(props) {
         super(props);
-        this.state = { from: "", to: "", authenticated: null, items: "" };
+        this.state = { from: "", to: "", authenticated: null, items: "", hasData: false};
 
         this.handleKeyDown = this.handleKeyDown.bind(this);
         this.postData = this.postData.bind(this);
@@ -33,7 +34,7 @@ class Forex extends Component {
             else
                 this.setState({ authenticated: true });
           });
-          //this.getAllData();
+          this.getAllData();
     }
 
     handleKeyDown(event) {
@@ -51,26 +52,6 @@ class Forex extends Component {
             this.setState({to: toVar}, ()=>{this.getPair(fromVar, toVar); this.postData();});
             //TODO: clear text in input
         }
-    }
-
-    getPair(fromVar, toVar, arr) {
-        var myHeaders = new Headers();
-        myHeaders.append("apikey", import.meta.env.VITE_FIXER_API_KEY);
-
-        var requestOptions = {
-            method: 'GET',
-            redirect: 'follow',
-            headers: myHeaders
-        };
-
-        var url = "https://api.apilayer.com/fixer/latest?base=" + fromVar + "&symbols=" + toVar;
-        //console.log(url);
-
-        fetch(url, requestOptions)
-        .then(response => response.text())
-        .then(result => {console.log("PAIR OK"); result = JSON.parse(result); arr.push(result);})
-        .catch(error => console.log('error', error));
-
     }
 
     // Post search to database
@@ -93,6 +74,27 @@ class Forex extends Component {
              });
     }
 
+    // Get pair from API
+    getPair(fromVar, toVar, arr) {
+        var myHeaders = new Headers();
+        myHeaders.append("apikey", import.meta.env.VITE_FIXER_API_KEY);
+
+        var requestOptions = {
+            method: 'GET',
+            redirect: 'follow',
+            headers: myHeaders
+        };
+
+        var url = "https://api.apilayer.com/fixer/latest?base=" + fromVar + "&symbols=" + toVar;
+        //console.log(url);
+
+        fetch(url, requestOptions)
+        .then(response => response.text())
+        .then(result => {console.log("PAIR OK"); result = JSON.parse(result); arr.push(result);})
+        .catch(error => console.log('error', error));
+
+    }
+
     // Get recent 5 searches
     getAllData () {
         fetch('/api/currencies', {
@@ -104,26 +106,33 @@ class Forex extends Component {
         })
         .then((response) => response.json())
         .then((data) => {
-            // Gets recent 5 pairs and puts into conversions array
-            let count = 0;
-            var conversions = [];
-            data.forEach(element => {
-                if (count != 5) {
-                    count += 1;
-                    let pair = {from: element["currency_from"], to: element["currency_to"]}
-                    conversions.push(pair);
-                }
-            });
-            // for each conversion, getPair and put into responses array
-            var responses = [];
-            conversions.forEach((item) => {
-                const from = item.from;
-                const to = item.to;
-                this.getPair(from, to, responses);
-            });
-            console.log(responses);
-                
-            return (<p>sdgffgdgdfg</p>)
+            // Checks there's entries
+            if (data.length != 0) {
+                this.setState({hasData: true});
+                // Gets recent 5 pairs and puts into conversions array
+                let count = data.count;
+                console.log(count);
+                // let count = 0;
+                // var conversions = [];
+                // data.forEach(element => {
+                //     if (count != 5) {
+                //         count += 1;
+                //         let pair = {from: element["currency_from"], to: element["currency_to"]}
+                //         conversions.push(pair);
+                //     }
+                // });
+                // // for each conversion, getPair and put into responses array
+                // var responses = [];
+                // conversions.forEach((item) => {
+                //     const from = item.from;
+                //     const to = item.to;
+                //     this.getPair(from, to, responses);
+                // });
+                // console.log(responses);
+                    
+                // return (<p>sdgffgdgdfg</p>)
+            }
+            
 
             // return (
             //     <Tr>
@@ -148,7 +157,7 @@ class Forex extends Component {
         });
     }
 
-    getTable () {
+    //getTable () {
     //     const responses = [];
     //     allData = JSON.parse(allData);
     //     allData.forEach((item) => {
@@ -170,7 +179,7 @@ class Forex extends Component {
     //             })}
     //         </Tr>
     //     )
-    }
+    //}
 
     render() {
         return (
@@ -188,29 +197,9 @@ class Forex extends Component {
                     <Input placeholder='Enter Currency Pair' htmlSize={50} width='auto' variant='filled' onKeyDown={this.handleKeyDown}/>
                     </InputGroup>
                 </div>
-                <div className={classes.currencyDiv}>
-                <TableContainer>
-                    <Table variant='simple'>
-                        <Thead>
-                        <Tr>
-                            <Th>Currency Pairs</Th>
-                            <Th>Rate</Th>
-                            <Th isNumeric>Fluctuation</Th>
-                        </Tr>
-                        </Thead>
-                        <Tbody>
+                {(this.state.hasData) ? (<ForexTable/>) : (<p>No entries yet!</p>)}
 
-                        {/* <Tr>
-                            <Td>inches</Td>
-                            <Td>millimetres (mm)</Td>
-                            <Td isNumeric>25.4</Td>
-                        </Tr> */}
-                        {this.getTable()}
 
-                        </Tbody>
-                    </Table>
-                    </TableContainer>
-                </div>
             </div>
             </>
         );
