@@ -52,4 +52,9 @@ const expenditureSchema = new mongoose.Schema({
 })
 
 const Expenditure = mongoose.model('Expenditure', expenditureSchema)
+
+/**
+ * Expenditure module
+ * @module Expenditure
+ */
 module.exports = Expenditure

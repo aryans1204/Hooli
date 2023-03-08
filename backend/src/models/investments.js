@@ -11,7 +11,8 @@ const mongoose = require('mongoose')
 const validator = require('validator')
 
 /**
- * @typedef {Object} Investment
+ * investmentSchema schema
+ * @class Investment
  * @property {Object} equities
  * @property {Object} options
  * @property {Object} commodities
@@ -90,4 +91,8 @@ const investmentSchema = new mongoose.Schema({
 
 const Investment = mongoose.model('Investment', investmentSchema)
 
+/**
+ * Investment module
+ * @module Investment
+ */
 module.exports = Investment
