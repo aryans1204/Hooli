@@ -351,11 +351,12 @@ router.delete('/api/investments/equities/:id', auth, async (req, res) => {
         const portfolio = await Investment.findOne({ _id: req.params.id, portfolio_owner: req.user._id })
         const eq = portfolio.equities
         const del_val = req.body.equity_ticker
-        eq.forEach((equity) => {if (equity.equity_ticker === del_val) {
-            eq.remove(eq.indexOf(equity))
+        eq.forEach((equity, index) => {if (equity.equity_ticker === del_val) {
+            delete eq.splice(index, 1)
         }})
         portfolio.equities = eq
         await portfolio.save()
+        res.send(portfolio)
     } catch (e) {
         res.status(500).send()
         console.log(e)
@@ -373,14 +374,15 @@ router.delete('/api/investments/equities/:id', auth, async (req, res) => {
  */
 router.delete('/api/investments/options/:id', auth, async (req, res) => {
     try {
-        const portfolio = await Investment.findOne({ _id: req.params._id, portfolio_owner: req.user._id })
+        const portfolio = await Investment.findOne({ _id: req.params.id, portfolio_owner: req.user._id })
         const opt = portfolio.options
         const del_val = req.body.derivative_ticker
-        opt.forEach((option) => {if (option.derivative_ticker === del_val) {
-            opt.remove(opt.indexOf(option))
+        opt.forEach((option, index) => {if (option.derivative_ticker === del_val) {
+            opt.splice(index, 1)
         }})
         portfolio.options = opt
         await portfolio.save()
+        res.send(portfolio)
     } catch (e) {
         res.status(500).send()
     }
