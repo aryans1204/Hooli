@@ -180,43 +180,38 @@ router.get('/api/investments/:id', auth, async (req, res) => {
  * @throws {NotFoundError} Portfolio cannot be found.
  * @throws {BadRequestError}
  */
-router.patch('/api/investments/equities:id', auth, async (req, res) => {
+router.patch('/api/investments/equities/:id', auth, async (req, res) => {
     const updates = Object.keys(req.body)
 
     try {
-        const portfolio = await Investment.findOne({ _id: req.params.id, portfolio_owner: req.user._id})
+        let portfolio = await Investment.findOne({ _id: req.params.id, portfolio_owner: req.user._id})
 
         if (!portfolio) {
             return res.status(404).send()
         }
         let now = new Date()
-        date.format(now, "YYYY-MM-DD")
-        var url = `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=${req.body.equity_ticker}&apikey=${process.env.ALPHA_VANTAGE_API_KEY}`
-
-        request.get({
-            url: url,
-            json: true,
-            headers: {'User-Agent': 'request'}
-          }, async (err, res, data) => {
-            if (err) {
-              console.log('Error:', err);
-            } else if (res.statusCode !== 200) {
-              console.log('Status:', res.statusCode);
-            }
-            const current_price = data["Time Series (Daily)"][now].open
-            const pnl = (((current_price - req.body.equity_buy_price) / req.body.equity_buy_price ) * 100).toString() + "%"
-            portfolio.equities.concat({ 
-                equity_ticker: req.body.equity_ticker, 
-                equity_pnl: pnl, 
-                equity_buy_price: req.body.equity_buy_price, 
-                equity_current_price: current_price
-            })
-            await portfolio.save()
-            res.send(portfolio) 
-        })   
-        
+        now.setDate(now.getDate()-1)
+        let getYear = now.toLocaleDateString("default", {year: "numeric"})
+        let getMonth = now.toLocaleDateString("default", {month: "2-digit"})
+        let getDay = now.toLocaleDateString("default", {day: "2-digit"})
+        now = getYear + "-" + getMonth + "-" + getDay
+        var url = `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=${req.body.equity_ticker}&apikey=${process.env.ALPHA_VANTAGE_API_KEY}`
+        let data = await needle('get', url)
+        data = data.body
+        const current_price = data["Time Series (Daily)"][now]['1. open']
+        const pnl = (((current_price - req.body.equity_buy_price) / req.body.equity_buy_price ) * 100).toString() + "%"
+        const temp = portfolio.equities.concat({ 
+            equity_ticker: req.body.equity_ticker, 
+            equity_pnl: pnl, 
+            equity_buy_price: req.body.equity_buy_price, 
+            equity_current_price: current_price
+        })
+        portfolio.equities = temp
+        await portfolio.save()
+        res.send(portfolio)    
     } catch (e) {
         res.status(400).send(e)
+        console.log(e)
     }
 })
 
@@ -232,39 +227,35 @@ router.patch('/api/investments/equities:id', auth, async (req, res) => {
  */
 router.patch('/api/investments/options/:id', auth, async (req, res) => {
     try {
-        const portfolio = await Investment.findOne({ _id: req.users._id, portfolio_owner: req.user._id })
+        let portfolio = await Investment.findOne({ _id: req.params.id, portfolio_owner: req.user._id })
         if (!portfolio) {
             res.status(404).send()
         }
 
         let now = new Date()
-        var url = `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=${req.body.derivative_ticker}&apikey=${process.env.ALPHA_VANTAGE_API_KEY}`
-
-        request.get({
-            url: url,
-            json: true,
-            headers: {'User-Agent': 'request'}
-          }, async (err, res, data) => {
-            if (err) {
-              console.log('Error:', err);
-            } else if (res.statusCode !== 200) {
-              console.log('Status:', res.statusCode);
-            }
-            const current_price = data["Time Series (Daily)"][now].open
-
-            portfolio.options.concat({ 
-                derivative_ticker: req.body.derivative_ticker, 
-                option_type: req.body.option_type, 
-                strike_price: req.body.strike_price, 
-                expiration_date: req.body.expiration_date,
-                derivative_current_price: current_price
-            })
-            await portfolio.save()
-            res.send(portfolio) 
-        })   
+        now.setDate(now.getDate()-1)
+        let getYear = now.toLocaleDateString("default", {year: "numeric"})
+        let getMonth = now.toLocaleDateString("default", {month: "2-digit"})
+        let getDay = now.toLocaleDateString("default", {day: "2-digit"})
+        now = getYear + "-" + getMonth + "-" + getDay
+        var url = `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=${req.body.derivative_ticker}&apikey=${process.env.ALPHA_VANTAGE_API_KEY}`
+        let data = await needle('get', url)
+        data = data.body
+        const current_price = data["Time Series (Daily)"][now]['1. open']
+        const temp = portfolio.options.concat({ 
+            derivative_ticker: req.body.derivative_ticker, 
+            option_type: req.body.option_type, 
+            strike_price: req.body.strike_price, 
+            expiration_date: req.body.expiration_date,
+            derivative_current_price: current_price
+        })
+        portfolio.options = temp
+        await portfolio.save()
+        res.send(portfolio)    
         
     } catch (e) {
         res.status(400).send(e)
+        console.log(e)
     }
 
 })
@@ -357,16 +348,17 @@ router.delete('/api/investments/:id', auth, async (req, res) => {
  */
 router.delete('/api/investments/equities/:id', auth, async (req, res) => {
     try {
-        const portfolio = await Investment.findOne({ _id: req.params._id, portfolio_owner: req.user._id })
+        const portfolio = await Investment.findOne({ _id: req.params.id, portfolio_owner: req.user._id })
         const eq = portfolio.equities
         const del_val = req.body.equity_ticker
-        eq.forEach((equity) => {if (equity.equity_ticker == del_val) {
+        eq.forEach((equity) => {if (equity.equity_ticker === del_val) {
             eq.remove(eq.indexOf(equity))
         }})
         portfolio.equities = eq
         await portfolio.save()
     } catch (e) {
         res.status(500).send()
+        console.log(e)
     }   
 })
 
