@@ -11,7 +11,8 @@ const mongoose = require('mongoose')
 const validator = require('validator')
 
 /**
- * @typedef {Object} Transaction
+ * transactionSchema schema
+ * @class Transaction
  * @property {Number} amount
  * @property {String} transaction_category
  * @property {ExpenditureObject} transaction_component
@@ -43,4 +44,8 @@ const transactionSchema = new mongoose.Schema({
 
 const Transaction = mongoose.model('Transaction', transactionSchema)
 
+/**
+ * Transaction module
+ * @module Transaction
+ */
 module.exports = Transaction
