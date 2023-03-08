@@ -56,19 +56,16 @@ const investmentSchema = new mongoose.Schema({
     options: [{
         derivative_ticker: {
             type: String,
-            required: true,
+            required: false,
             maxlength: 4
         },
         option_type: {
             type: String,
-            required: true,
-            validate(value) {
-                if (value != 'call' || value != 'put') throw new Error('Options contract can only be put or call.')
-            }
+            required: false,
         },
         strike_price: {
-            type: Number,  //to be represented as a percentage like 89% or -12%
-            required: true
+            type: Number, 
+            required: false
         },
         expiration_date: {
             type: Date,
