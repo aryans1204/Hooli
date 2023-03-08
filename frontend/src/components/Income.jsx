@@ -14,11 +14,11 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import { Navigate } from "react-router-dom";
-import { AddOverlayComponent } from "./AddOverlayComponent";
-import { RemoveOverlayComponent } from "./RemoveOverlayComponent";
-import { IncomeBarChartComponent } from "./IncomeBarChartComponent";
-import { EditOverlayComponent } from "./EditOverlayComponent";
-import { WeeklyIncomeComparison } from "./WeeklyIncomeComparison";
+import { AddOverlayComponent } from "./IncomeComponents/AddOverlayComponent";
+import { RemoveOverlayComponent } from "./IncomeComponents/RemoveOverlayComponent";
+import { IncomeBarChartComponent } from "./IncomeComponents/IncomeBarChartComponent";
+import { EditOverlayComponent } from "./IncomeComponents/EditOverlayComponent";
+import { WeeklyIncomeComparison } from "./IncomeComponents/WeeklyIncomeComparison";
 
 class Income extends Component {
   //const { isOpen, onOpen, onClose } = useDisclosure();

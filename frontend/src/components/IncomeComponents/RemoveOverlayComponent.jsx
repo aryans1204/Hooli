@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import NavBar from "./NavBar";
+import NavBar from "../NavBar";
 import { useState, useEffect } from "react";
 import { Box, Button, ButtonGroup } from "@chakra-ui/react";
 import {

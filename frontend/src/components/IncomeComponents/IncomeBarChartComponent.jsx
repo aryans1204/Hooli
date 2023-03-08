@@ -3,7 +3,7 @@ import { Bar } from "react-chartjs-2";
 import { LinearScale, CategoryScale } from "chart.js";
 import Chart from "chart.js/auto";
 import classes from "./IncomeBarChartComponent.module.css";
-import Income from "./Income";
+import Income from "../Income";
 
 export function IncomeBarChartComponent(props) {
   const [result, setResult] = useState(null);
