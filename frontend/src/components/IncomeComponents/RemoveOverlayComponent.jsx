@@ -89,7 +89,7 @@ export function RemoveOverlayComponent(props) {
           <ModalHeader textAlign="center" fontSize="30px">
             Remove income data
           </ModalHeader>
-          <ModalCloseButton />
+          <ModalCloseButton onClick={onClose} />
           <ModalBody>
             <DisplayTableComponent
               items={result}

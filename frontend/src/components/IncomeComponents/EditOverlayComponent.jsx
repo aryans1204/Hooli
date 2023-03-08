@@ -110,7 +110,7 @@ export function EditOverlayComponent(props) {
           <ModalHeader textAlign="center" fontSize="30px">
             Edit income data
           </ModalHeader>
-          <ModalCloseButton />
+          <ModalCloseButton onClick={onClose} />
           <ModalBody>
             <DisplayTableComponent
               items={result}
@@ -222,7 +222,6 @@ function EditDataComponent(props) {
           <ModalHeader textAlign="center" fontSize="30px">
             Add new income
           </ModalHeader>
-          <ModalCloseButton />
           <ModalBody>
             Income Type<br></br>
             <select

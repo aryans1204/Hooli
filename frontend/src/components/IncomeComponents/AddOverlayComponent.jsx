@@ -95,7 +95,7 @@ export function AddOverlayComponent(props) {
           <ModalHeader textAlign="center" fontSize="30px">
             Add new income
           </ModalHeader>
-          <ModalCloseButton />
+          <ModalCloseButton onClick={onClose} />
           <ModalBody>
             Income Type<br></br>
             <select
