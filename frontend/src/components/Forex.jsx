@@ -53,7 +53,7 @@ class Forex extends Component {
             let toVar = arr[1];
             this.setState({from: fromVar});
             this.setState({to: toVar}, ()=>{this.getPair(fromVar, toVar); this.postData();});
-            //TODO: clear text in input
+            window.location.reload(false);
         }
     }
 
@@ -78,7 +78,7 @@ class Forex extends Component {
     }
 
     // Get pair from API
-    getPair(fromVar, toVar, arr) {
+    getPair(fromVar, toVar, arr, name) {
         var myHeaders = new Headers();
         myHeaders.append("apikey", import.meta.env.VITE_FIXER_API_KEY);
 
@@ -92,7 +92,12 @@ class Forex extends Component {
 
         fetch(url, requestOptions)
         .then(response => response.text())
-        .then(result => {console.log("PAIR OK"); result = JSON.parse(result); arr.push(result);})
+        .then(result => {console.log("PAIR OK");
+            // console.log(result);
+            result = JSON.parse(result); arr.push(result);
+            sessionStorage.setItem(name, JSON.stringify(result));
+            // console.log(arr)
+        })
         .catch(error => console.log('error', error));
     }
 
@@ -134,12 +139,20 @@ class Forex extends Component {
 
                 // for each conversion, getPair and put into responses array
                 var responses = [];
+                let count = 0;
                 conversions.forEach((item) => {
                     const from = item.from;
                     const to = item.to;
-                    this.getPair(from, to, responses);
+                    count += 1;
+                    let name = "dataKey" + count;
+                    this.getPair(from, to, responses, name);
                 });
                 this.setState({data: responses});
+                console.log(typeof(responses));
+                console.log('hi');
+                
+                console.log(responses);
+                sessionStorage.setItem("dataKey", JSON.parse(responses));
                 // console.log(responses);
                 // console.log("RESPONSES IS ON TOP");
                 //console.log(this.state.data);
