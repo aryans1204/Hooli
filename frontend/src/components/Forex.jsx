@@ -9,7 +9,7 @@ import ForexTable from './ForexTable';
 class Forex extends Component {
     constructor(props) {
         super(props);
-        this.state = { from: "", to: "", authenticated: null, hasData: false};
+        this.state = { from: "", to: "", authenticated: null, hasData: false, data: null};
 
         this.handleButton = this.handleButton.bind(this);
         this.postData = this.postData.bind(this);
@@ -33,11 +33,11 @@ class Forex extends Component {
             else
                 this.setState({ authenticated: true });
           });
-          this.getAllData();
+        this.getAllData();
     }
 
+
     handleButton(event) {
-        event.preventDefault();
         let value = this.inputNode.value;
         if (value.length == 0) {
             alert("Empty input");
@@ -129,8 +129,8 @@ class Forex extends Component {
                             }}
                     )
                 }
-                console.log(conversions);
-                console.log("WE ARE HERE");
+                //console.log(conversions);
+                //console.log("WE ARE HERE");
 
                 // for each conversion, getPair and put into responses array
                 var responses = [];
@@ -139,29 +139,11 @@ class Forex extends Component {
                     const to = item.to;
                     this.getPair(from, to, responses);
                 });
-                console.log(responses);
-                    
-                // return (<p>sdgffgdgdfg</p>)
+                this.setState({data: responses});
+                // console.log(responses);
+                // console.log("RESPONSES IS ON TOP");
+                //console.log(this.state.data);
             }
-            
-
-            // return (
-            //     <Tr>
-            //         {responses.map(resp => {
-            //             let pair = resp.base + '/' + Object.keys(resp.rates);
-            //             return ( <>
-            //                 <Td>{pair}</Td>
-            //                 <Td>{resp.rates[0]}</Td>
-            //                 <Td>Something</Td>
-            //                 </>
-            //             )
-            //         })}
-            //     </Tr>
-            // )
-
-
-
-
         })
         .catch((err) => {
             console.log(err.message);
@@ -185,9 +167,9 @@ class Forex extends Component {
                     <Button colorScheme='purple' onClick={this.handleButton}>Search</Button>
                     </InputGroup>
                 </div>
-                {(this.state.hasData) ? (<ForexTable/>) : (<p>No entries yet!</p>)}
-
-
+                <div>
+                    {(this.state.hasData) ? (<ForexTable data = {this.state.data}/>) : (<p>No entries yet!</p>)}
+                </div>
             </div>
             </>
         );
