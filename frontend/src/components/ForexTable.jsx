@@ -6,6 +6,7 @@ import classes from './Forex.module.css';
 const ForexTable = ({ data }) => {
     const [fields, setFields] = useState(data);
     console.log("DFDF"); console.log(fields); console.log(typeof(fields)); console.log("SOMETHING");
+    
     return (
         <>
         <p>{JSON.stringify(fields)}</p>
