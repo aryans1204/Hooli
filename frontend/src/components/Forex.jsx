@@ -15,7 +15,7 @@ class Forex extends Component {
         this.postData = this.postData.bind(this);
         this.getAllData = this.getAllData.bind(this);
         this.getPair = this.getPair.bind(this);
-        //this.getFlucs = this.getFlucs.bind(this);
+        this.getFlucs = this.getFlucs.bind(this);
       }
 
     async componentDidMount() {
@@ -76,7 +76,7 @@ class Forex extends Component {
              });
     }
 
-    // Get pair from API
+    // Get pair from API (rate only)
     getPair(fromVar, toVar, arr, name) {
         var myHeaders = new Headers();
         myHeaders.append("apikey", import.meta.env.VITE_FIXER_API_KEY);
@@ -94,7 +94,11 @@ class Forex extends Component {
         .then(result => {console.log("PAIR OK");
             // console.log(result);
             result = JSON.parse(result); arr.push(result);
-            sessionStorage.setItem(name, JSON.stringify(result));
+            let key = String(Object.keys(result.rates));
+            let rateData = result.rates[key].toFixed(2);
+            let data = {from: fromVar, to: toVar, rate: rateData};
+            //console.log(data);
+            sessionStorage.setItem(name, JSON.stringify(data));
             // console.log(arr)
         })
         .catch(error => console.log('error', error));
@@ -140,20 +144,26 @@ class Forex extends Component {
                 //console.log(conversions);
                 //console.log("WE ARE HERE");
 
-                // for each conversion, getPair and put into responses array
+                // for each conversion, getPair and put into rate value in responses array
                 var responses = [];
                 let count = 0;
+
+                // get dates
+                const curDate = new Date().toISOString().slice(0, 10);
+                const lastDate = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString().slice(0, 10);
+
                 conversions.forEach((item) => {
                     const from = item.from;
                     const to = item.to;
                     count += 1;
                     let name = "dataKey" + count;
                     this.getPair(from, to, responses, name);
+                    this.getFlucs(from, to, curDate, lastDate);
                 });
-                this.tableData(responses, )
                 // console.log(responses);
                 // console.log("RESPONSES IS ON TOP");
                 //console.log(this.state.data);
+                
             }
         })
         .catch((err) => {
@@ -162,31 +172,26 @@ class Forex extends Component {
     }
 
     // fetch fluctations
-    // getFlucs(fromVar, toVar, arr, name) {
-    //     var myHeaders = new Headers();
-    //     myHeaders.append("apikey", import.meta.env.VITE_FIXER_API_KEY);
+    getFlucs(fromVar, toVar, curDate, lastDate) {
+        var myHeaders = new Headers();
+        myHeaders.append("apikey", import.meta.env.VITE_FIXER_API_KEY);
 
-    //     var requestOptions = {
-    //         method: 'GET',
-    //         redirect: 'follow',
-    //         headers: myHeaders
-    //     };
+        var requestOptions = {
+            method: 'GET',
+            redirect: 'follow',
+            headers: myHeaders
+        };
 
-    //     // get dates
+        var url = "https://api.apilayer.com/fixer/fluctuation?start_date=" + lastDate + "&end_date=" + curDate + "&base=" + fromVar + "&symbols=" + toVar;
 
-
-    //     var url = "https://api.apilayer.com/fixer/fluctuation?start_date=" + startDate + "&end_date=" + endDate + "&base=" + fromVar + "&symbols=" + toVar;
-
-    //     fetch(url, requestOptions)
-    //     .then(response => response.text())
-    //     .then(result => {console.log("PAIR OK");
-    //         // console.log(result);
-    //         result = JSON.parse(result); arr.push(result);
-    //         sessionStorage.setItem(name, JSON.stringify(result));
-    //         // console.log(arr)
-    //     })
-    //     .catch(error => console.log('error', error));
-    // }
+        fetch(url, requestOptions)
+        .then(response => response.text())
+        .then(result => {
+            
+            console.log(result);
+        })
+        .catch(error => console.log('error', error));
+    }
 
     render() {
         return (
