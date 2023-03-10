@@ -1,12 +1,19 @@
 import React, {useState} from 'react';
-import { Table, Thead, Tbody, Tfoot, Tr, 
+import { Table, Thead, Tbody, Tr, 
     Th, Td, TableContainer,} from '@chakra-ui/react';
 import classes from './Forex.module.css';
 
-const ForexTable = ({ data }) => {
-    const [fields, setFields] = useState(data);
-    console.log("DFDF"); console.log(fields); console.log(typeof(fields)); console.log("SOMETHING");
-    
+const ForexTable = (num) => {
+    let count = num.num;
+    let fields = [];
+    while (count > 0) {
+        let val = "dataKey" + count;
+        fields.push(JSON.parse(sessionStorage.getItem(val)));
+        count -= 1;
+    }
+    console.log(fields);
+    console.log("asdfasdfasdf");
+
     return (
         <>
         <p>{JSON.stringify(fields)}</p>

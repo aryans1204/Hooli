@@ -9,13 +9,13 @@ import ForexTable from './ForexTable';
 class Forex extends Component {
     constructor(props) {
         super(props);
-        this.state = { from: "", to: "", authenticated: null, hasData: false, data: null};
+        this.state = { from: "", to: "", authenticated: null, hasData: false, num: 0};
 
         this.handleButton = this.handleButton.bind(this);
         this.postData = this.postData.bind(this);
         this.getAllData = this.getAllData.bind(this);
         this.getPair = this.getPair.bind(this);
-        //this.getTable = this.getTable.bind(this);
+        //this.getFlucs = this.getFlucs.bind(this);
       }
 
     async componentDidMount() {
@@ -53,7 +53,6 @@ class Forex extends Component {
             let toVar = arr[1];
             this.setState({from: fromVar});
             this.setState({to: toVar}, ()=>{this.getPair(fromVar, toVar); this.postData();});
-            window.location.reload(false);
         }
     }
 
@@ -119,12 +118,16 @@ class Forex extends Component {
                 var conversions = []
                 // DB has <= 5 
                 if (data.length <= 5) {
+                    let count = 0;
                     data.forEach(element => {
                         let pair ={from: element["currency_from"], to: element["currency_to"]};
                         conversions.push(pair);
+                        count += 1;
                     })
+                    this.setState({num: count});
                 } else {
                     // DB has > 5
+                    this.setState({num: 5});
                     let count = 0;
                     data.forEach(element => {
                             if (count != 5) {
@@ -147,12 +150,7 @@ class Forex extends Component {
                     let name = "dataKey" + count;
                     this.getPair(from, to, responses, name);
                 });
-                this.setState({data: responses});
-                console.log(typeof(responses));
-                console.log('hi');
-                
-                console.log(responses);
-                sessionStorage.setItem("dataKey", JSON.parse(responses));
+                this.tableData(responses, )
                 // console.log(responses);
                 // console.log("RESPONSES IS ON TOP");
                 //console.log(this.state.data);
@@ -162,6 +160,33 @@ class Forex extends Component {
             console.log(err.message);
         });
     }
+
+    // fetch fluctations
+    // getFlucs(fromVar, toVar, arr, name) {
+    //     var myHeaders = new Headers();
+    //     myHeaders.append("apikey", import.meta.env.VITE_FIXER_API_KEY);
+
+    //     var requestOptions = {
+    //         method: 'GET',
+    //         redirect: 'follow',
+    //         headers: myHeaders
+    //     };
+
+    //     // get dates
+
+
+    //     var url = "https://api.apilayer.com/fixer/fluctuation?start_date=" + startDate + "&end_date=" + endDate + "&base=" + fromVar + "&symbols=" + toVar;
+
+    //     fetch(url, requestOptions)
+    //     .then(response => response.text())
+    //     .then(result => {console.log("PAIR OK");
+    //         // console.log(result);
+    //         result = JSON.parse(result); arr.push(result);
+    //         sessionStorage.setItem(name, JSON.stringify(result));
+    //         // console.log(arr)
+    //     })
+    //     .catch(error => console.log('error', error));
+    // }
 
     render() {
         return (
@@ -181,7 +206,7 @@ class Forex extends Component {
                     </InputGroup>
                 </div>
                 <div>
-                    {(this.state.hasData) ? (<ForexTable data = {this.state.data}/>) : (<p>No entries yet!</p>)}
+                    {(this.state.hasData) ? (<ForexTable num={this.state.num}/>) : (<p>No entries yet!</p>)}
                 </div>
             </div>
             </>
