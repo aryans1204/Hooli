@@ -11,8 +11,8 @@ const ForexTable = (num) => {
         fields.push(JSON.parse(sessionStorage.getItem(val)));
         count -= 1;
     }
-    console.log(fields);
-    console.log("asdfasdfasdf");
+    // console.log(fields);
+    // console.log("fields of table");
 
     return (
         <>
