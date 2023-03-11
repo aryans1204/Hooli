@@ -1,9 +1,13 @@
 import React, { Component } from 'react';
+import NavBar from './NavBar';
+import classes from './Expenditures.module.css';
 
 class Expenditures extends Component {
     render() {
         return (
-            <h1>Expenditures Page</h1>
+            <><NavBar />
+            <h1 className={classes.text}>Expeditures Page</h1>
+            </>
         );
     }
 }
