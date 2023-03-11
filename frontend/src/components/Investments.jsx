@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Navigate } from "react-router-dom";
 import { AddPortfolio } from "./InvestmentComponents/AddPortfolio";
+import { NavBar } from "./NavBar";
 
 class Investments extends Component {
   constructor(props) {
@@ -38,6 +39,7 @@ class Investments extends Component {
   render() {
     return (
       <div>
+        <NavBar />
         <h1>Investments Page</h1>
         <div>
           {this.state.authenticated == false && (
