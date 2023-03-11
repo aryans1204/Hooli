@@ -8,9 +8,7 @@ class Investments extends Component {
     super(props);
     this.state = {
       authenticated: null,
-      AddPortfolio: false,
     };
-    this.handleClickAdd = this.handleClickAdd.bind(this);
   }
 
   //checks if the user is authenticated
@@ -31,11 +29,6 @@ class Investments extends Component {
       .then((data) => {});
   }
 
-  //setting AddPortfolio to true to render the add portfolio overlay
-  handleClickAdd() {
-    this.setState({ AddPortfolio: true });
-  }
-
   render() {
     return (
       <div>
@@ -47,8 +40,7 @@ class Investments extends Component {
           )}
         </div>
         <div>
-          <button onClick={this.handleClickAdd}>Show Other Component</button>
-          {AddPortfolio && <AddPortfolio />}
+          <AddPortfolio />
         </div>
       </div>
     );
