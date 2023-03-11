@@ -11,8 +11,8 @@ const ForexTable = (num) => {
         fields.push(JSON.parse(sessionStorage.getItem(val)));
         count -= 1;
     }
-    // console.log(fields);
-    // console.log("fields of table");
+    //console.log(fields);
+    //console.log("fields of table");
 
     return (
         <>
@@ -29,16 +29,11 @@ const ForexTable = (num) => {
                         </Tr>
                     </Thead>
                     <Tbody>
-                    <Tr>
-                        <Td>sgfsdfg</Td>
-                        <Td>sgfsdfg</Td>
-                        <Td>sgfsdfg</Td>
-                    </Tr>
                     {fields.map((field, index) => (
                         <Tr key={index}>
-                            <Td>{field.base}</Td>
-                            <Td>{field.timestamp}</Td>
-                            <Td>{field.success}</Td>
+                            <Td>{field.from}/{field.to}</Td>
+                            <Td>{field.rate}</Td>
+                            <Td>{field.change}</Td>
                         </Tr>
                     ))}
 

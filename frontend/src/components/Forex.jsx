@@ -9,7 +9,7 @@ import ForexTable from './ForexTable';
 class Forex extends Component {
     constructor(props) {
         super(props);
-        this.state = { from: "", to: "", authenticated: null, hasData: false, num: 0};
+        this.state = { from: "", to: "", authenticated: null, hasData: false, num: 0, setStorage: false};
 
         this.handleButton = this.handleButton.bind(this);
         this.postData = this.postData.bind(this);
@@ -96,10 +96,46 @@ class Forex extends Component {
             result = JSON.parse(result); arr.push(result);
             let key = String(Object.keys(result.rates));
             let rateData = result.rates[key].toFixed(2);
-            let data = {from: fromVar, to: toVar, rate: rateData};
+            let data = {from: fromVar, to: toVar, rate: rateData, change: 0};
             //console.log(data);
             sessionStorage.setItem(name, JSON.stringify(data));
             // console.log(arr)
+        })
+        .catch(error => console.log('error', error));
+    }
+
+    // fetch fluctations
+    getFlucs(fromVar, toVar, curDate, lastDate, name) {
+        var myHeaders = new Headers();
+        myHeaders.append("apikey", import.meta.env.VITE_FIXER_API_KEY);
+
+        var requestOptions = {
+            method: 'GET',
+            redirect: 'follow',
+            headers: myHeaders
+        };
+
+        var url = "https://api.apilayer.com/fixer/fluctuation?start_date=" + lastDate + "&end_date=" + curDate + "&base=" + fromVar + "&symbols=" + toVar;
+
+        fetch(url, requestOptions)
+        .then(response => response.text())
+        .then(result => {
+            result = JSON.parse(result);
+            let key = String(Object.keys(result.rates));
+            let changeVal = result.rates[key].change; // take absolute value of change
+            // console.log(changeVal);
+            // console.log("VALUE IS HEREE");
+            let sessData = JSON.parse(sessionStorage.getItem(name));
+            //sessionStorage.removeItem(name);
+            //sessData.push({change: changeVal});
+            sessData.change = changeVal;
+            console.log(sessData);
+            console.log("SESSION IS HEREE");
+            
+            sessionStorage.setItem(name, JSON.stringify(sessData));
+            console.log(sessionStorage.getItem(name));
+            console.log("SESSION DATA HERE");
+            this.setState({setStorage: true});
         })
         .catch(error => console.log('error', error));
     }
@@ -158,12 +194,11 @@ class Forex extends Component {
                     count += 1;
                     let name = "dataKey" + count;
                     this.getPair(from, to, responses, name);
-                    this.getFlucs(from, to, curDate, lastDate);
+                    this.getFlucs(from, to, curDate, lastDate, name);
                 });
                 // console.log(responses);
                 // console.log("RESPONSES IS ON TOP");
                 //console.log(this.state.data);
-                
             }
         })
         .catch((err) => {
@@ -171,27 +206,7 @@ class Forex extends Component {
         });
     }
 
-    // fetch fluctations
-    getFlucs(fromVar, toVar, curDate, lastDate) {
-        var myHeaders = new Headers();
-        myHeaders.append("apikey", import.meta.env.VITE_FIXER_API_KEY);
-
-        var requestOptions = {
-            method: 'GET',
-            redirect: 'follow',
-            headers: myHeaders
-        };
-
-        var url = "https://api.apilayer.com/fixer/fluctuation?start_date=" + lastDate + "&end_date=" + curDate + "&base=" + fromVar + "&symbols=" + toVar;
-
-        fetch(url, requestOptions)
-        .then(response => response.text())
-        .then(result => {
-            
-            console.log(result);
-        })
-        .catch(error => console.log('error', error));
-    }
+    
 
     render() {
         return (
