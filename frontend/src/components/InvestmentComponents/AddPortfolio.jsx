@@ -33,9 +33,213 @@ export function AddPortfolio() {
             Test Test
           </ModalHeader>
           <ModalCloseButton onClick={onClose} />
-          Test<br></br>
+          <PortfolioForm />
         </ModalContent>
       </Modal>
     </div>
   );
 }
+
+// component that renders a form for the user to enter their data
+const PortfolioForm = () => {
+  const [equities, setEquities] = useState([]);
+  const [options, setOptions] = useState([]);
+  const [commodities, setCommodities] = useState([]);
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+  };
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <h2>Equities</h2>
+      {equities.map((equity, index) => (
+        <div key={index}>
+          <label htmlFor={`equity_ticker_${index}`}>Ticker:</label>
+          <input
+            type="text"
+            id={`equity_ticker_${index}`}
+            value={equity.equity_ticker}
+            onChange={(event) => {
+              const newEquities = [...equities];
+              newEquities[index] = {
+                ...newEquities[index],
+                equity_ticker: event.target.value,
+              };
+              setEquities(newEquities);
+            }}
+          />
+          <label htmlFor={`equity_pnl_${index}`}>P&L:</label>
+          <input
+            type="text"
+            id={`equity_pnl_${index}`}
+            value={equity.equity_pnl}
+            onChange={(event) => {
+              const newEquities = [...equities];
+              newEquities[index] = {
+                ...newEquities[index],
+                equity_pnl: event.target.value,
+              };
+              setEquities(newEquities);
+            }}
+          />
+          <label htmlFor={`equity_buy_price_${index}`}>Buy Price:</label>
+          <input
+            type="number"
+            id={`equity_buy_price_${index}`}
+            value={equity.equity_buy_price}
+            onChange={(event) => {
+              const newEquities = [...equities];
+              newEquities[index] = {
+                ...newEquities[index],
+                equity_buy_price: event.target.value,
+              };
+              setEquities(newEquities);
+            }}
+          />
+          <label htmlFor={`equity_current_price_${index}`}>
+            <br></br>Current Price:
+          </label>
+          <input
+            type="number"
+            id={`equity_current_price_${index}`}
+            value={equity.equity_current_price}
+            onChange={(event) => {
+              const newEquities = [...equities];
+              newEquities[index] = {
+                ...newEquities[index],
+                equity_current_price: event.target.value,
+              };
+              setEquities(newEquities);
+            }}
+          />
+        </div>
+      ))}
+      <button onClick={() => setEquities([...equities, {}])}>Add Equity</button>
+
+      {options.map((option, index) => (
+        <div key={index}>
+          <label htmlFor={`derivative_ticker_${index}`}>Ticker:</label>
+          <input
+            type="text"
+            id={`derivative_ticker_${index}`}
+            value={option.derivative_ticker}
+            onChange={(event) => {
+              const newOptions = [...options];
+              newOptions[index] = {
+                ...newOptions[index],
+                derivative_ticker: event.target.value,
+              };
+              setOptions(newOptions);
+            }}
+          />
+          <label htmlFor={`option_type_${index}`}>Option Type:</label>
+          <select
+            id={`option_type_${index}`}
+            value={option.option_type}
+            onChange={(event) => {
+              const newOptions = [...options];
+              newOptions[index] = {
+                ...newOptions[index],
+                option_type: event.target.value,
+              };
+              setOptions(newOptions);
+            }}
+          >
+            <option value="call">Call</option>
+            <option value="put">Put</option>
+          </select>
+          <label htmlFor={`strike_price_${index}`}>Strike Price:</label>
+          <input
+            type="number"
+            id={`strike_price_${index}`}
+            value={option.strike_price}
+            onChange={(event) => {
+              const newOptions = [...options];
+              newOptions[index] = {
+                ...newOptions[index],
+                strike_price: event.target.value,
+              };
+              setOptions(newOptions);
+            }}
+          />
+          <label htmlFor={`expiration_date_${index}`}>
+            <br></br>Expiration Date:
+          </label>
+          <input
+            type="date"
+            id={`expiration_date_${index}`}
+            value={option.expiration_date}
+            onChange={(event) => {
+              const newOptions = [...options];
+              newOptions[index] = {
+                ...newOptions[index],
+                expiration_date: event.target.value,
+              };
+              setOptions(newOptions);
+            }}
+          />
+          <label htmlFor={`derivative_current_price_${index}`}>
+            <br></br>Current Price:
+          </label>
+          <input
+            type="number"
+            id={`derivative_current_price_${index}`}
+            value={option.derivative_current_price}
+            onChange={(event) => {
+              const newOptions = [...options];
+              newOptions[index] = {
+                ...newOptions[index],
+                derivative_current_price: event.target.value,
+              };
+              setOptions(newOptions);
+            }}
+          />
+        </div>
+      ))}
+      <button onClick={() => setOptions([...options, {}])}>Add Option</button>
+
+      {commodities.map((commodity, index) => (
+        <div key={index}>
+          <label htmlFor={`commodity_type_${index}`}>Commodity Type:</label>
+          <select
+            id={`commodity_type_${index}`}
+            value={commodity.commodity_type}
+            onChange={(event) => {
+              const newCommodities = [...commodities];
+              newCommodities[index] = {
+                ...newCommodities[index],
+                commodity_type: event.target.value,
+              };
+              setCommodities(newCommodities);
+            }}
+          >
+            <option value="crude_oil">Crude Oil</option>
+            <option value="natural_gas">Natural Gas</option>
+            <option value="copper">Copper</option>
+            <option value="aluminium">Aluminium</option>
+            <option value="wheat">Wheat</option>
+            <option value="coffee">Coffee</option>
+          </select>
+          <label htmlFor={`commodity_price_${index}`}>Price:</label>
+          <input
+            type="number"
+            id={`commodity_price_${index}`}
+            value={commodity.commodity_price}
+            onChange={(event) => {
+              const newCommodities = [...commodities];
+              newCommodities[index] = {
+                ...newCommodities[index],
+                commodity_price: event.target.value,
+              };
+              setCommodities(newCommodities);
+            }}
+          />
+        </div>
+      ))}
+      <button onClick={() => setCommodities([...commodities, {}])}>
+        Add Commodity
+      </button>
+    </form>
+  );
+};
