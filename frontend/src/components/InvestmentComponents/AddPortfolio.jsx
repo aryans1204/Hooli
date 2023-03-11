@@ -30,7 +30,7 @@ export function AddPortfolio() {
         <ModalOverlay />
         <ModalContent>
           <ModalHeader textAlign="center" fontSize="30px">
-            Test Test
+            Create Portfolio
           </ModalHeader>
           <ModalCloseButton onClick={onClose} />
           <PortfolioForm />
@@ -52,7 +52,6 @@ const PortfolioForm = () => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <h2>Equities</h2>
       {equities.map((equity, index) => (
         <div key={index}>
           <label htmlFor={`equity_ticker_${index}`}>Ticker:</label>
@@ -115,7 +114,6 @@ const PortfolioForm = () => {
           />
         </div>
       ))}
-      <button onClick={() => setEquities([...equities, {}])}>Add Equity</button>
 
       {options.map((option, index) => (
         <div key={index}>
@@ -197,7 +195,6 @@ const PortfolioForm = () => {
           />
         </div>
       ))}
-      <button onClick={() => setOptions([...options, {}])}>Add Option</button>
 
       {commodities.map((commodity, index) => (
         <div key={index}>
@@ -237,6 +234,8 @@ const PortfolioForm = () => {
           />
         </div>
       ))}
+      <button onClick={() => setEquities([...equities, {}])}>Add Equity</button>
+      <button onClick={() => setOptions([...options, {}])}>Add Option</button>
       <button onClick={() => setCommodities([...commodities, {}])}>
         Add Commodity
       </button>
