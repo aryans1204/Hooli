@@ -10,6 +10,7 @@ import {
   ModalCloseButton,
   useDisclosure,
 } from "@chakra-ui/react";
+import "./AddPortfolio.css";
 
 export function AddPortfolio() {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -33,7 +34,12 @@ export function AddPortfolio() {
             Create Portfolio
           </ModalHeader>
           <ModalCloseButton onClick={onClose} />
-          <PortfolioForm />
+          <PortfolioForm />{" "}
+          <ModalFooter>
+            <Button onClick={onClose} colorScheme="yellow" pl="20px">
+              Cancel
+            </Button>
+          </ModalFooter>
         </ModalContent>
       </Modal>
     </div>
@@ -42,12 +48,31 @@ export function AddPortfolio() {
 
 // component that renders a form for the user to enter their data
 const PortfolioForm = () => {
-  const [equities, setEquities] = useState([]);
-  const [options, setOptions] = useState([]);
-  const [commodities, setCommodities] = useState([]);
+  const [equities, setEquities] = useState([
+    {
+      equity_ticker: "",
+      equity_pnl: "",
+      equity_buy_price: 0,
+      equity_current_price: 0,
+    },
+  ]);
+  const [options, setOptions] = useState([
+    {
+      derivative_ticker: "",
+      option_type: "",
+      strike_price: 0,
+      expiration_date: "",
+    },
+  ]);
+  const [commodities, setCommodities] = useState([
+    { commodity_type: "", commodity_price: 0 },
+  ]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    console.log(equities);
+    console.log(options);
+    console.log(commodities);
   };
 
   return (
@@ -112,6 +137,7 @@ const PortfolioForm = () => {
               setEquities(newEquities);
             }}
           />
+          <hr></hr>
         </div>
       ))}
 
@@ -193,6 +219,7 @@ const PortfolioForm = () => {
               setOptions(newOptions);
             }}
           />
+          <hr></hr>
         </div>
       ))}
 
@@ -232,13 +259,15 @@ const PortfolioForm = () => {
               setCommodities(newCommodities);
             }}
           />
+          <hr></hr>
         </div>
       ))}
-      <button onClick={() => setEquities([...equities, {}])}>Add Equity</button>
-      <button onClick={() => setOptions([...options, {}])}>Add Option</button>
-      <button onClick={() => setCommodities([...commodities, {}])}>
+      <Button onClick={() => setEquities([...equities, {}])}>Add Equity</Button>
+      <Button onClick={() => setOptions([...options, {}])}>Add Option</Button>
+      <Button onClick={() => setCommodities([...commodities, {}])}>
         Add Commodity
-      </button>
+      </Button>
+      <Button onClick={handleSubmit}>Submit</Button>
     </form>
   );
 };
