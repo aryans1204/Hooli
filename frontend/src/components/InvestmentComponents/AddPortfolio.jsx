@@ -34,7 +34,7 @@ export function AddPortfolio() {
             Create Portfolio
           </ModalHeader>
           <ModalCloseButton onClick={onClose} />
-          <PortfolioForm />{" "}
+          <PortfolioForm />
           <ModalFooter>
             <Button onClick={onClose} colorScheme="yellow" pl="20px">
               Cancel
@@ -48,25 +48,9 @@ export function AddPortfolio() {
 
 // component that renders a form for the user to enter their data
 const PortfolioForm = () => {
-  const [equities, setEquities] = useState([
-    {
-      equity_ticker: "",
-      equity_pnl: "",
-      equity_buy_price: 0,
-      equity_current_price: 0,
-    },
-  ]);
-  const [options, setOptions] = useState([
-    {
-      derivative_ticker: "",
-      option_type: "",
-      strike_price: 0,
-      expiration_date: "",
-    },
-  ]);
-  const [commodities, setCommodities] = useState([
-    { commodity_type: "", commodity_price: 0 },
-  ]);
+  const [equities, setEquities] = useState([]);
+  const [options, setOptions] = useState([]);
+  const [commodities, setCommodities] = useState([]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -83,7 +67,7 @@ const PortfolioForm = () => {
           <input
             type="text"
             id={`equity_ticker_${index}`}
-            value={equity.equity_ticker}
+            value={equity.equity_ticker || ""}
             onChange={(event) => {
               const newEquities = [...equities];
               newEquities[index] = {
@@ -97,7 +81,7 @@ const PortfolioForm = () => {
           <input
             type="text"
             id={`equity_pnl_${index}`}
-            value={equity.equity_pnl}
+            value={equity.equity_pnl || ""}
             onChange={(event) => {
               const newEquities = [...equities];
               newEquities[index] = {
@@ -111,7 +95,7 @@ const PortfolioForm = () => {
           <input
             type="number"
             id={`equity_buy_price_${index}`}
-            value={equity.equity_buy_price}
+            value={equity.equity_buy_price || 0}
             onChange={(event) => {
               const newEquities = [...equities];
               newEquities[index] = {
@@ -127,7 +111,7 @@ const PortfolioForm = () => {
           <input
             type="number"
             id={`equity_current_price_${index}`}
-            value={equity.equity_current_price}
+            value={equity.equity_current_price || 0}
             onChange={(event) => {
               const newEquities = [...equities];
               newEquities[index] = {
@@ -147,7 +131,7 @@ const PortfolioForm = () => {
           <input
             type="text"
             id={`derivative_ticker_${index}`}
-            value={option.derivative_ticker}
+            value={option.derivative_ticker || ""}
             onChange={(event) => {
               const newOptions = [...options];
               newOptions[index] = {
@@ -160,7 +144,7 @@ const PortfolioForm = () => {
           <label htmlFor={`option_type_${index}`}>Option Type:</label>
           <select
             id={`option_type_${index}`}
-            value={option.option_type}
+            value={option.option_type || ""}
             onChange={(event) => {
               const newOptions = [...options];
               newOptions[index] = {
@@ -177,7 +161,7 @@ const PortfolioForm = () => {
           <input
             type="number"
             id={`strike_price_${index}`}
-            value={option.strike_price}
+            value={option.strike_price || 0}
             onChange={(event) => {
               const newOptions = [...options];
               newOptions[index] = {
@@ -193,7 +177,7 @@ const PortfolioForm = () => {
           <input
             type="date"
             id={`expiration_date_${index}`}
-            value={option.expiration_date}
+            value={option.expiration_date || ""}
             onChange={(event) => {
               const newOptions = [...options];
               newOptions[index] = {
@@ -209,7 +193,7 @@ const PortfolioForm = () => {
           <input
             type="number"
             id={`derivative_current_price_${index}`}
-            value={option.derivative_current_price}
+            value={option.derivative_current_price || 0}
             onChange={(event) => {
               const newOptions = [...options];
               newOptions[index] = {
@@ -228,7 +212,7 @@ const PortfolioForm = () => {
           <label htmlFor={`commodity_type_${index}`}>Commodity Type:</label>
           <select
             id={`commodity_type_${index}`}
-            value={commodity.commodity_type}
+            value={commodity.commodity_type || ""}
             onChange={(event) => {
               const newCommodities = [...commodities];
               newCommodities[index] = {
@@ -249,7 +233,7 @@ const PortfolioForm = () => {
           <input
             type="number"
             id={`commodity_price_${index}`}
-            value={commodity.commodity_price}
+            value={commodity.commodity_price || 0}
             onChange={(event) => {
               const newCommodities = [...commodities];
               newCommodities[index] = {
