@@ -5,6 +5,7 @@ import classes from './Forex.module.css';
 import { Input, InputGroup, InputLeftElement, Button, ButtonGroup} from '@chakra-ui/react';
 import { SearchIcon } from '@chakra-ui/icons';
 import ForexTable from './ForexTable';
+import SGUSGraph from './SGUSGraph';
 
 class Forex extends Component {
     constructor(props) {
@@ -16,6 +17,7 @@ class Forex extends Component {
         this.getAllData = this.getAllData.bind(this);
         this.getPair = this.getPair.bind(this);
         this.getFlucs = this.getFlucs.bind(this);
+        this.getSGUS =this.getSGUS.bind(this);
       }
 
     async componentDidMount() {
@@ -196,6 +198,7 @@ class Forex extends Component {
                     this.getPair(from, to, responses, name);
                     this.getFlucs(from, to, curDate, lastDate, name);
                 });
+                this.getSGUS(curDate, lastDate);
                 // console.log(responses);
                 // console.log("RESPONSES IS ON TOP");
                 //console.log(this.state.data);
@@ -206,7 +209,26 @@ class Forex extends Component {
         });
     }
 
-    
+    getSGUS(curDate, lastDate) {
+        var myHeaders = new Headers();
+        myHeaders.append("apikey", import.meta.env.VITE_FIXER_API_KEY);
+
+        var requestOptions = {
+        method: 'GET',
+        redirect: 'follow',
+        headers: myHeaders
+        };
+
+        let url = "https://api.apilayer.com/fixer/timeseries?start_date=" + lastDate + "&end_date=" + curDate + "&base=SGD&symbols=USD";
+
+        fetch(url, requestOptions)
+        .then(response => response.text())
+        .then(result => {
+            var SGUSarr = [];
+            
+        })
+        .catch(error => console.log('error', error));
+    }
 
     render() {
         return (
@@ -226,7 +248,7 @@ class Forex extends Component {
                     </InputGroup>
                 </div>
                 <div>
-                    {(this.state.hasData) ? (<ForexTable num={this.state.num}/>) : (<p>No entries yet!</p>)}
+                    {(this.state.hasData) ? (<div><ForexTable num={this.state.num}/><SGUSGraph/></div>) : (<div><p>No entries yet!</p><SGUSGraph/></div>)}
                 </div>
             </div>
             </>
