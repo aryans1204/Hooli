@@ -78,7 +78,6 @@ router.post("/api/investments", auth, async (req, res) => {
     ...req.body,
     portfolio_owner: req.user._id,
   });
-  console.log(req.body);
   try {
     await portfolio.save();
     res.status(201).send(portfolio);

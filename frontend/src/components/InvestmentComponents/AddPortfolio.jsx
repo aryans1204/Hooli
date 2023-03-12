@@ -57,7 +57,6 @@ const PortfolioForm = () => {
     console.log(equities);
     console.log(options);
     console.log(commodities);
-    console.log(typeof commodities[0].commodity_type);
     fetch("/api/investments", {
       method: "POST",
       headers: {
