@@ -4,6 +4,13 @@ import logo from "../assets/icons/hooli-logo.png";
 import { Navigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 
+
+/**
+ * Login class
+ * @class Login
+ * @typedef {Login}
+ * @extends {Component}
+ */
 class Login extends Component {
   constructor(props) {
     super(props);
@@ -13,6 +20,10 @@ class Login extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
+  /**
+   * Sets state of the component to the value of the input field when user types in the input field.
+   * @param {*} event
+   */
   handleChange(event) {
     event.preventDefault();
     const target = event.target;
@@ -20,6 +31,11 @@ class Login extends Component {
       [target.name]: target.value,
     });
   }
+
+  /**
+   * Logs in a user with email and password using post/api/users/login
+   * @param {*} e
+   */
   handleSubmit = (e) => {
     e.preventDefault();
     console.log(

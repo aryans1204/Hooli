@@ -3,7 +3,20 @@ import classes from "./SignUp.module.css";
 import logo from "../assets/icons/hooli-logo.png";
 import { Navigate } from "react-router-dom";
 
+
+/**
+ * Signup class
+ * @class SignUp
+ * @typedef {SignUp}
+ * @extends {Component}
+ */
 class SignUp extends Component {
+  
+  /**
+   * Creates an instance of SignUp.
+   * @constructor
+   * @param {*} props
+   */
   constructor(props) {
     super(props);
     this.state = { name: "", email: "", password: "", signUpSuccessful: null };
@@ -12,6 +25,10 @@ class SignUp extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
+  /**
+   * Sets state of the component to the value of the input field when user types in the input field.
+   * @param {*} event
+   */
   handleChange(event) {
     event.preventDefault();
     const target = event.target;
@@ -20,6 +37,10 @@ class SignUp extends Component {
     });
   }
 
+  /**
+   * Creates a new user using post/api/users when user clicks the submit button.
+   * @param {*} e
+   */
   handleSubmit = (e) => {
     e.preventDefault();
     console.log(

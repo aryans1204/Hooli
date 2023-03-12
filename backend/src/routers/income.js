@@ -30,7 +30,7 @@ const date = require('date-and-time')
 const router = new express.Router()
 
 /**
- * Route to get all employments.
+ * Route to get all income records.
  * @name get/api/income
  * @async
  * @param {String} path

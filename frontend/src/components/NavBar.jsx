@@ -19,6 +19,10 @@ import profile from "../assets/icons/user.png";
 import logout from "../assets/icons/logout.png";
 import "@trendmicro/react-sidenav/dist/react-sidenav.css";
 
+/**
+ * Returns a SideNav component that has a NavItem component for each of the pages in the app.
+ * @returns {*}
+ */
 function NavBar() {
   const navigate = useNavigate();
   const [logoutSuccess, setLogoutSuccess] = useState(null);
