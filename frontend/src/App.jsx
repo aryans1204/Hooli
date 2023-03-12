@@ -12,13 +12,16 @@ import Income from "./components/Income";
 import Investments from "./components/Investments";
 import Forex from "./components/Forex";
 
+/**
+ * Returns a Routes component that contains Route components.
+ * @returns {*}
+ */
 function App() {
   return (
     <Routes>
       <Route exact path="/" element={<Welcome />} />
       <Route exact path="/login" element={<Login />} />
       <Route exact path="/signup" element={<SignUp />} />
-
       <Route exact path="/dashboard" element={<Dashboard />} />
       <Route exact path="/expenditures" element={<Expenditures />} />
       <Route exact path="/income" element={<Income />} />

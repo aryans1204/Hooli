@@ -11,6 +11,10 @@ import income from "../assets/icons/income.png";
 import investment from "../assets/icons/investment.png";
 import '@trendmicro/react-sidenav/dist/react-sidenav.css';
 
+/**
+ * Returns a SideNav component that has a NavItem component for each of the pages in the app.
+ * @returns {*}
+ */
 function NavBar() {
     const navigate = useNavigate();
     return (

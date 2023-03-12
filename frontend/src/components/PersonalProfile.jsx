@@ -3,7 +3,19 @@ import classes from "./PersonalProfile.module.css";
 import logo from "../assets/icons/hooli-logo.png";
 import { Navigate } from "react-router-dom";
 
+
+/**
+ * PersonalProfile class
+ * @class PersonalProfile
+ * @typedef {PersonalProfile}
+ * @extends {Component}
+ */
 class PersonalProfile extends Component {
+  
+  /**
+   * Creates an instance of PersonalProfile.
+   * @param {*} props
+   */
   constructor(props) {
     super(props);
     this.state = {
@@ -15,6 +27,12 @@ class PersonalProfile extends Component {
     this.handleLogout = this.handleLogout.bind(this);
   }
 
+ 
+  /**
+   * Retrieves the user's profile after the component is rendered.
+   * @async
+   * @returns {*}
+   */
   async componentDidMount() {
     await fetch("/api/users/me", {
       method: "GET",
@@ -35,6 +53,12 @@ class PersonalProfile extends Component {
       });
   }
 
+  /**
+   * Logs the user out when the logout button is clicked.
+   * @async
+   * @param {*} e
+   * @returns {*}
+   */
   async handleLogout(e) {
     e.preventDefault();
     alert("Logging out");

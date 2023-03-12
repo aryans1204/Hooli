@@ -1,10 +1,14 @@
-/*welcome page*/
-
 import { React, Component } from "react";
 import { Link } from "react-router-dom";
 import classes from "./Welcome.module.css";
 import logo from "../assets/icons/hooli-logo.png";
 
+/**
+ * Welcome class
+ * @class Welcome
+ * @typedef {Welcome}
+ * @extends {Component}
+ */
 class Welcome extends Component {
   render() {
     return (
