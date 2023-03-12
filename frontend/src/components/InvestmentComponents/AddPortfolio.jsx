@@ -57,6 +57,33 @@ const PortfolioForm = () => {
     console.log(equities);
     console.log(options);
     console.log(commodities);
+    console.log(typeof commodities[0].commodity_type);
+    fetch("/api/investments", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+      },
+      body: JSON.stringify({
+        equities: equities,
+        options: options,
+        commodities: commodities,
+      }),
+    })
+      .then((response) => {
+        if (response.status === 400) {
+          console.log("Some error occurred - " + response.status);
+          console.log(response);
+          //setAddSuccess(false);
+        } else {
+          console.log("Success");
+          //setAddSuccess(true);
+          return response.json();
+        }
+      })
+      .then((data) => {
+        //props.setState();
+      });
   };
 
   return (
