@@ -15,7 +15,12 @@ import {
 import { Navigate } from "react-router-dom";
 import classes from "./AddOverlayComponent.module.css";
 
-//overlay component for adding income data
+/**
+ * Overlay component for adding an income record.
+ * @export
+ * @param {*} props
+ * @returns {*}
+ */
 export function AddOverlayComponent(props) {
   const initialValues = {
     monthlyIncome: null,
@@ -44,7 +49,9 @@ export function AddOverlayComponent(props) {
     onClose();
   };
 
-  //calls backend api to create new income data when submitted
+  /**
+   * Creates new income data when submitted using post/api/income.
+   */
   function handleSubmit() {
     fetch("/api/income", {
       method: "POST",

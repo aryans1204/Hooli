@@ -20,8 +20,21 @@ import { IncomeBarChartComponent } from "./IncomeComponents/IncomeBarChartCompon
 import { EditOverlayComponent } from "./IncomeComponents/EditOverlayComponent";
 import { WeeklyIncomeComparison } from "./IncomeComponents/WeeklyIncomeComparison";
 
+
+/**
+ * Income class
+ * @class Income
+ * @typedef {Income}
+ * @extends {Component}
+ */
 class Income extends Component {
   //const { isOpen, onOpen, onClose } = useDisclosure();
+  
+  /**
+   * Creates an instance of Income.
+   * @constructor
+   * @param {*} props
+   */
   constructor(props) {
     super(props);
     this.state = {
@@ -30,6 +43,12 @@ class Income extends Component {
     };
   }
 
+  
+  /**
+   * Retrieves income data and user profile after component is rendered.
+   * @async
+   * @returns {*}
+   */
   async componentDidMount() {
     this.getIncomeData();
     await fetch("/api/users/me", {
@@ -47,7 +66,9 @@ class Income extends Component {
       .then((data) => {});
   }
 
-  //updates the state of incomeData
+  /**
+   * Retrieves all income records using get/api/income and updates the state of incomeData.
+   */
   getIncomeData() {
     fetch("/api/income", {
       method: "GET",

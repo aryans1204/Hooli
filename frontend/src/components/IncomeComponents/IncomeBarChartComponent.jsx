@@ -5,12 +5,23 @@ import Chart from "chart.js/auto";
 import classes from "./IncomeBarChartComponent.module.css";
 import Income from "../Income";
 
+
+/**
+ * Component for income bar chart.
+ * @export
+ * @param {*} props
+ * @returns {*}
+ */
 export function IncomeBarChartComponent(props) {
   const [result, setResult] = useState(null);
   useEffect(() => {
     setResult(props.data);
   }, [props.data]);
 
+  
+  /**
+   * Month Names
+   */
   const monthNames = [
     "January",
     "February",
@@ -25,6 +36,11 @@ export function IncomeBarChartComponent(props) {
     "November",
     "December",
   ];
+
+  
+  /**
+   * Industry types
+   */
   const industry = [
     { industry: "manufacturing" },
     { industry: "services" },
@@ -32,6 +48,10 @@ export function IncomeBarChartComponent(props) {
     { industry: "others" },
   ];
 
+  
+  /**
+   * Colors for industry types
+   */
   const colors = {
     manufacturing: "purple",
     services: "brown",
@@ -39,10 +59,18 @@ export function IncomeBarChartComponent(props) {
     others: "yellow",
   };
 
-  // Create an object to store the income data for each month and industry
+  /**
+   * Creates an object to store the income data for each month and industry.
+   * @returns {{ manufacturing: number; services: number; construction: number; others: number; }}
+   */
   function industryObj() {
     return { manufacturing: 0, services: 0, construction: 0, others: 0 };
   }
+
+  
+  /**
+   * Income data for the months
+   */
   const incomeData = {
     January: { industryObj },
     February: { industryObj },
@@ -90,7 +118,10 @@ export function IncomeBarChartComponent(props) {
     })),
   };
 
-  // Configure the chart options
+  
+  /**
+   * Chart options
+   */
   const chartOptions = {
     maintainAspectRatio: false,
     responsive: true,
@@ -137,6 +168,7 @@ export function IncomeBarChartComponent(props) {
 
   Chart.register(LinearScale, CategoryScale);
 
+  
   return (
     <div>
       <Bar

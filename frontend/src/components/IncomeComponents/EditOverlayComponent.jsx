@@ -17,6 +17,13 @@ import { Navigate } from "react-router-dom";
 import DisplayTableComponent from "./DisplayTableComponent";
 import { AddOverlayComponent } from "./AddOverlayComponent";
 
+
+/**
+ * Overlay component for editing an income record.
+ * @export
+ * @param {*} props
+ * @returns {*}
+ */
 export function EditOverlayComponent(props) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [result, setResult] = useState([{}]); //result is the income data fetched with backend api
@@ -24,13 +31,21 @@ export function EditOverlayComponent(props) {
   const [targetData, setTargetData] = useState(null); //targetData is the specific data that the user wants to edit
   const [targetFound, setTargetFound] = useState(false);
 
+  /**
+   * Stores data of income record to be removed.
+   * @param {*} item
+   */
   function handleItemSelected(item) {
     setSelectedItem(item);
   }
+
   function setState() {
     props.setState();
   }
 
+  /**
+   * Retrieves selected income record using get/api/income/:id.
+   */
   function getTargetItem() {
     fetch("/api/income/" + selectedItem._id, {
       method: "GET",
@@ -58,6 +73,11 @@ export function EditOverlayComponent(props) {
       onOpen();
     }
   }, [targetData]);
+
+  
+  /**
+   * Retrieves all income records using get/api/income.
+   */
   function getData() {
     fetch("/api/income", {
       method: "GET",
@@ -137,6 +157,11 @@ export function EditOverlayComponent(props) {
   );
 }
 
+/**
+ * Component for editing an income record.
+ * @param {*} props
+ * @returns {*}
+ */
 function EditDataComponent(props) {
   const initialValues = {
     monthlyIncome: null,
@@ -162,6 +187,10 @@ function EditDataComponent(props) {
     props.onClose();
   };
 
+  
+  /**
+   * Removea an income record using delete/api/income/:id.
+   */
   function handleRemove() {
     console.log(props.data._id);
     fetch("/api/income/" + props.data._id, {
@@ -185,6 +214,10 @@ function EditDataComponent(props) {
       });
   }
 
+  
+  /**
+   * Creates a new (edited) income record using post/api/income.
+   */
   function handleSubmit() {
     handleRemove();
     fetch("/api/income", {

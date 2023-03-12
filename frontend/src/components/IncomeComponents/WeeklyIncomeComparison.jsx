@@ -4,6 +4,12 @@ import { useState, useEffect } from "react";
 import classes from "./WeeklyIncomeComparison.module.css";
 
 //provides the quarter data for the input date e.g. 2022-Q1
+
+/**
+ * Returns the input date's year quarter. (e.g. '2022-Q1' for 12 Mar 2022)
+ * @param {*} date
+ * @returns {string}
+ */
 function getQuarter(date) {
   const month = date.getMonth();
   const year = date.getFullYear();
@@ -11,7 +17,12 @@ function getQuarter(date) {
   return `${year}-Q${quarter}`;
 }
 
-//filters result from api to find matching quarter and industry
+/**
+ * Filters result from API to find matching year quarter and industry type.
+ * @param {*} data
+ * @param {*} filters
+ * @returns {*}
+ */
 function filterDataByQuarterAndIndustry(data, filters) {
   return data.filter((item) => {
     return filters.some((filter) => {
@@ -22,6 +33,13 @@ function filterDataByQuarterAndIndustry(data, filters) {
   });
 }
 
+
+/**
+ * Compares weekly income with the data from API.
+ * @export
+ * @param {*} props
+ * @returns {*}
+ */
 export function WeeklyIncomeComparison(props) {
   const [apiData, setapiData] = useState(null); //data retrieved from api
   const [userData, setuserData] = useState(null); //user data passed in from parent class as prop
