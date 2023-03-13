@@ -33,7 +33,6 @@ function filterDataByQuarterAndIndustry(data, filters) {
   });
 }
 
-
 /**
  * Compares weekly income with the data from API.
  * @export
@@ -106,7 +105,7 @@ export function WeeklyIncomeComparison(props) {
 
   return (
     <div>
-      <h2>Weekly hours comparison</h2>
+      <h3>Weekly hours comparison</h3>
       {userData !== null && filteredData !== null ? (
         <table>
           <thead>
@@ -132,5 +131,32 @@ export function WeeklyIncomeComparison(props) {
         </table>
       ) : null}
     </div>
+    /*<div>
+      <h2>Weekly hours comparison</h2>
+      {userData !== null && filteredData !== null ? (
+        <table>
+          <thead>
+            <tr>
+              <th>Quarter</th>
+              <th>Start Date</th>
+              <th>Industry</th>
+              <th>My Weekly Hours</th>
+              <th>Recommended Weekly Hours</th>
+            </tr>
+          </thead>
+          <tbody>
+            {userData.map((data) => (
+              <tr key={data._id}>
+                <td>{data.quarter}</td>
+                <td>{formatDate(data.start_date)}</td>
+                <td>{data.industry}</td>
+                <td>{data.weekly_hours ? data.weekly_hours : "N.A."}</td>
+                <td>{getRecommendedHours(data.quarter, data.industry)}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      ) : null}
+            </div>*/
   );
 }

@@ -14,5 +14,7 @@
   position: absolute;
   top: 0;
   right: 0;
-  padding-right: 10%;
+  padding-right: 5%;
+  padding-top: 5%;
+  width: 30%;
 }

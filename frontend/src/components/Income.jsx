@@ -20,7 +20,6 @@ import { IncomeBarChartComponent } from "./IncomeComponents/IncomeBarChartCompon
 import { EditOverlayComponent } from "./IncomeComponents/EditOverlayComponent";
 import { WeeklyIncomeComparison } from "./IncomeComponents/WeeklyIncomeComparison";
 
-
 /**
  * Income class
  * @class Income
@@ -29,7 +28,7 @@ import { WeeklyIncomeComparison } from "./IncomeComponents/WeeklyIncomeCompariso
  */
 class Income extends Component {
   //const { isOpen, onOpen, onClose } = useDisclosure();
-  
+
   /**
    * Creates an instance of Income.
    * @constructor
@@ -43,7 +42,6 @@ class Income extends Component {
     };
   }
 
-  
   /**
    * Retrieves income data and user profile after component is rendered.
    * @async
@@ -108,12 +106,12 @@ class Income extends Component {
         <div className={classes.title}>My Income</div>
         <Box
           bg="rgba(148, 114, 208, 1)"
-          w="770px"
-          h="500px"
+          w="50%"
+          h="50%"
           color="white"
-          p={5}
-          mt={5}
-          ml="20"
+          p="1%"
+          mt="1%"
+          ml="5%"
           borderRadius="50"
           overflow="hidden"
         >
