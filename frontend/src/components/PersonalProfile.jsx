@@ -2,6 +2,7 @@ import { Component, useState } from "react";
 import classes from "./PersonalProfile.module.css";
 import logo from "../assets/icons/hooli-logo.png";
 import { Navigate } from "react-router-dom";
+import NavBar from "./NavBar";
 
 class PersonalProfile extends Component {
   constructor(props) {
@@ -59,22 +60,25 @@ class PersonalProfile extends Component {
 
   render() {
     return (
-      <div>
-        <div className={classes.title}>Personal Profile</div>
-        <div>Name: {this.state.name}</div>
-        <div>Email: {this.state.email}</div>
-        <div>
-          <button onClick={this.handleLogout}>logout</button>
+      <>
+        <NavBar />
+        <div className={classes.contents}>
+          <div className={classes.title}>Personal Profile</div>
+          <div>Name: {this.state.name}</div>
+          <div>Email: {this.state.email}</div>
+          <div>
+            <button onClick={this.handleLogout}>logout</button>
+          </div>
+          <div>
+            {this.state.authenticated == false && (
+              <Navigate to="/" replace={true} />
+            )}
+            {this.state.logoutSuccess == true && (
+              <Navigate to="/" replace={true} />
+            )}
+          </div>
         </div>
-        <div>
-          {this.state.authenticated == false && (
-            <Navigate to="/" replace={true} />
-          )}
-          {this.state.logoutSuccess == true && (
-            <Navigate to="/" replace={true} />
-          )}
-        </div>
-      </div>
+      </>
     );
   }
 }
