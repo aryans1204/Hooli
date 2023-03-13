@@ -27,7 +27,15 @@ class Investments extends Component {
         return response.json();
       })
       .then((data) => {});
-    this.getIncomeData();
+    if (
+      sessionStorage.getItem("portfolios") === "null" ||
+      sessionStorage.getItem("portfolios") === "undefined" ||
+      sessionStorage.getItem("portfolios") === null
+    ) {
+      this.getIncomeData();
+    }
+    const portfolios = JSON.parse(sessionStorage.getItem("portfolios"));
+    console.log(portfolios);
   }
 
   //
@@ -59,6 +67,15 @@ class Investments extends Component {
         this.setState({
           portfolio: data,
         });
+        const tempData = JSON.stringify(data);
+        if (
+          sessionStorage.getItem("portfolios") === "null" ||
+          sessionStorage.getItem("portfolios") === "undefined" ||
+          sessionStorage.getItem("portfolios") === null
+        ) {
+          sessionStorage.setItem("portfolios", tempData);
+        }
+
         console.log(data);
       });
   }
