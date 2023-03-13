@@ -100,11 +100,11 @@ router.get("/api/investments", auth, async (req, res) => {
   const _id = req.params.id;
 
   try {
-    const portfolio = await Investment.findOne({
+    const portfolios = await Investment.find({
       portfolio_owner: req.user._id,
     });
 
-    if (!portfolio) {
+    if (!portfolios || portfolios.length === 0) {
       return res.status(404).send();
     }
     let now = new Date();
@@ -113,67 +113,103 @@ router.get("/api/investments", auth, async (req, res) => {
     let getMonth = now.toLocaleDateString("default", { month: "2-digit" });
     let getDay = now.toLocaleDateString("default", { day: "2-digit" });
     now = getYear + "-" + getMonth + "-" + getDay;
-    const data = await fetchData(portfolio.equities, "equities");
-    console.log(data);
-    portfolio.equities.forEach((equity, index) => {
-      console.log(data[index]["Time Series (Daily)"]["2022-12-07"]);
-      const current_price = parseInt(
-        data[index]["Time Series (Daily)"][now]["1. open"]
-      );
-      console.log(`current price ${current_price}`);
-      const pnl =
-        (
-          ((current_price - equity.equity_buy_price) /
-            equity.equity_buy_price) *
-          100
-        ).toString() + "%";
-      portfolio.equities[index].equity_current_price = current_price;
-      portfolio.equities[index].equity_pnl = pnl;
-      console.log(portfolio.equities);
-    });
 
-    console.log(portfolio);
-    const optionsData = await fetchData(portfolio.options, "options");
-    console.log(data);
-    portfolio.options.forEach((option, index) => {
-      const current_price = parseInt(
+    for (const portfolio of portfolios) {
+      console.log("current portfolio: ");
+      console.log(portfolio);
+      const data = await fetchData(portfolio.equities, "equities");
+      //console.log(data);
+      portfolio.equities.forEach((equity, index) => {
+        //console.log(data[index]["Time Series (Daily)"]["2022-12-07"]);
+        /*const current_price = parseInt(
+        data[index]["Time Series (Daily)"][now]["1. open"]
+      );*/
+        let current_price = 0;
+        let i = 0;
+        while (!current_price && i < 7) {
+          console.log("current price = " + current_price);
+          // check up to 7 days back
+          let date = now.slice(0, 8) + (getDay - i).toString();
+          if (data[index]["Time Series (Daily)"][date] !== undefined) {
+            console.log("i'm running");
+            current_price = parseInt(
+              data[index]["Time Series (Daily)"][date]["1. open"]
+            );
+            break;
+          }
+          i++;
+        }
+        console.log(`current price ${current_price}`);
+        const pnl =
+          (
+            ((current_price - equity.equity_buy_price) /
+              equity.equity_buy_price) *
+            100
+          ).toString() + "%";
+        portfolio.equities[index].equity_current_price = current_price;
+        portfolio.equities[index].equity_pnl = pnl;
+      });
+      console.log("equities here");
+      console.log(portfolio.equities);
+      const optionsData = await fetchData(portfolio.options, "options");
+      portfolio.options.forEach((option, index) => {
+        /*const current_price = parseInt(
         optionsData[index]["Time Series (Daily)"][now]["1. open"]
       );
-      portfolio.options[index].derivative_current_price = current_price;
-    });
-    portfolio.commodities.forEach((commodity) => {
-      keys_obj = {
-        crude_oil: "BRENT",
-        natural_gas: "NATURAL_GAS",
-        copper: "COPPER",
-        aluminum: "ALUMINUM",
-        coffee: "COFFEE",
-        wheat: "WHEAT",
-      };
-
-      var url = `https://www.alphavantage.co/query?function=${
-        keys_obj[commodity.commodity_type]
-      }&interval=monthly&apikey=${process.env.ALPHA_VANTAGE_API_KEY}`;
-
-      request.get(
-        {
-          url: url,
-          json: true,
-          headers: { "User-Agent": "request" },
-        },
-        (err, res, data) => {
-          if (err) {
-            console.log("Error:", err);
-          } else if (res.statusCode !== 200) {
-            console.log("Status:", res.statusCode);
+      portfolio.options[index].derivative_current_price = current_price;*/
+        let current_price = 0;
+        let i = 0;
+        while (!current_price && i < 7) {
+          // check up to 7 days back
+          const date = now.slice(0, 8) + (getDay - i).toString();
+          if (optionsData[index]["Time Series (Daily)"][date] !== undefined) {
+            current_price = parseInt(
+              data[index]["Time Series (Daily)"][date]["1. open"]
+            );
+            portfolio.options[index].derivative_current_price = current_price;
+            break;
           }
-          const current_price = data.data[0].value;
-          commodity.commodity_price = current_price;
+          i++;
         }
-      );
-    });
-    await portfolio.save();
-    res.send(portfolio);
+      });
+      console.log("options here");
+      console.log(portfolio.options);
+      portfolio.commodities.forEach((commodity) => {
+        keys_obj = {
+          crude_oil: "BRENT",
+          natural_gas: "NATURAL_GAS",
+          copper: "COPPER",
+          aluminum: "ALUMINUM",
+          coffee: "COFFEE",
+          wheat: "WHEAT",
+        };
+
+        var url = `https://www.alphavantage.co/query?function=${
+          keys_obj[commodity.commodity_type]
+        }&interval=monthly&apikey=${process.env.ALPHA_VANTAGE_API_KEY}`;
+
+        request.get(
+          {
+            url: url,
+            json: true,
+            headers: { "User-Agent": "request" },
+          },
+          (err, res, data) => {
+            if (err) {
+              console.log("Error:", err);
+            } else if (res.statusCode !== 200) {
+              console.log("Status:", res.statusCode);
+            }
+            const current_price = data.data[0].value;
+            commodity.commodity_price = current_price;
+          }
+        );
+      });
+      console.log("commodities here");
+      console.log(portfolio.commodities);
+      await portfolio.save();
+    }
+    res.send(portfolios);
     console.log("saved and sent");
   } catch (e) {
     console.log(e);

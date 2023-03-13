@@ -22,7 +22,6 @@ class Investments extends Component {
       },
     })
       .then((response) => {
-        console.log(response.status);
         if (response.status == 401) this.setState({ authenticated: false });
         else this.setState({ authenticated: true });
         return response.json();
@@ -45,6 +44,8 @@ class Investments extends Component {
       },
     })
       .then((response) => {
+        console.log("trying to log response");
+        console.log(response);
         if (response.status === 500) {
           console.log("Some error occurred - " + response.status);
           console.log(response);
