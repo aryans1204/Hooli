@@ -17,7 +17,6 @@ import { Navigate } from "react-router-dom";
 import DisplayTableComponent from "./DisplayTableComponent";
 import { AddOverlayComponent } from "./AddOverlayComponent";
 
-
 /**
  * Overlay component for editing an income record.
  * @export
@@ -74,7 +73,6 @@ export function EditOverlayComponent(props) {
     }
   }, [targetData]);
 
-  
   /**
    * Retrieves all income records using get/api/income.
    */
@@ -187,13 +185,12 @@ function EditDataComponent(props) {
     props.onClose();
   };
 
-  
   /**
    * Removea an income record using delete/api/income/:id.
    */
   function handleRemove() {
     console.log(props.data._id);
-    fetch("/api/income/" + props.data._id, {
+    return fetch("/api/income/" + props.data._id, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -214,38 +211,39 @@ function EditDataComponent(props) {
       });
   }
 
-  
   /**
    * Creates a new (edited) income record using post/api/income.
    */
   function handleSubmit() {
-    handleRemove();
-    fetch("/api/income", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${sessionStorage.getItem("token")}`,
-      },
-      body: JSON.stringify({
-        industry: industry,
-        monthly_income: values.monthlyIncome,
-        start_date: values.startDate,
-        end_date: values.endDate,
-        company: values.company,
-      }),
-    })
-      .then((response) => {
-        if (response.status === 500) {
-          console.log("Some error occurred - " + response.status);
-          setAddSuccess(false);
-        } else {
-          console.log("Added new");
-          setAddSuccess(true);
-          return response.json();
-        }
+    handleRemove().then(() => {
+      fetch("/api/income", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+        },
+        body: JSON.stringify({
+          industry: industry,
+          monthly_income: values.monthlyIncome,
+          start_date: values.startDate,
+          end_date: values.endDate,
+          company: values.company,
+        }),
       })
-      .then((data) => {});
-    props.setState();
+        .then((response) => {
+          if (response.status === 500) {
+            console.log("Some error occurred - " + response.status);
+            setAddSuccess(false);
+          } else {
+            console.log("Added new");
+            setAddSuccess(true);
+            return response.json();
+          }
+        })
+        .then((data) => {
+          props.setState();
+        });
+    });
   }
   return (
     <div>
