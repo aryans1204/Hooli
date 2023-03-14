@@ -12,11 +12,11 @@ class Forex extends Component {
         super(props);
         this.state = { from: "", to: "", authenticated: null, hasData: false, num: 0, setStorage: false};
 
-        // this.handleButton = this.handleButton.bind(this);
-        // this.postData = this.postData.bind(this);
-        // this.getAllData = this.getAllData.bind(this);
-        // this.getPair = this.getPair.bind(this);
-        // this.getFlucs = this.getFlucs.bind(this);
+        this.handleButton = this.handleButton.bind(this);
+        this.postData = this.postData.bind(this);
+        this.getAllData = this.getAllData.bind(this);
+        this.getPair = this.getPair.bind(this);
+        this.getFlucs = this.getFlucs.bind(this);
         this.getSGUS =this.getSGUS.bind(this);
       }
 
@@ -35,7 +35,7 @@ class Forex extends Component {
             else
                 this.setState({ authenticated: true });
           });
-        //this.getAllData();
+        this.getAllData();
         this.getSGUS();
     }
 
@@ -73,7 +73,7 @@ class Forex extends Component {
             }
         })
             .then((response) => response.json())
-            .then((data) => {console.log(data);})
+            .then((data) => {console.log("Data posted successfully");})
             .catch((err) => {
                 console.log(err.message);
              });
@@ -199,7 +199,6 @@ class Forex extends Component {
                     this.getPair(from, to, responses, name);
                     this.getFlucs(from, to, curDate, lastDate, name);
                 });
-                this.getSGUS(curDate, lastDate);
                 // console.log(responses);
                 // console.log("RESPONSES IS ON TOP");
                 //console.log(this.state.data);
@@ -259,8 +258,7 @@ class Forex extends Component {
                     </InputGroup>
                 </div>
                 <div>
-                    <SGUSGraph/>
-                    {/* {(this.state.hasData) ? (<div><ForexTable num={this.state.num}/><SGUSGraph/></div>) : (<div><p>No entries yet!</p><SGUSGraph/></div>)} */}
+                    {(this.state.hasData) ? (<div><ForexTable num={this.state.num}/><SGUSGraph/></div>) : (<div><p>No entries yet!</p><SGUSGraph/></div>)}
                 </div>
             </div>
             </>
