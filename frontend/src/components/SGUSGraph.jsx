@@ -31,12 +31,13 @@ const SGUSGraph = () => {
     
     return (
         <>
-        <p className={classes.sgdusd}>SG to USD GRAPH</p>
+        <p className={classes.sgdusd}>SG to USD Graph</p>
         <ResponsiveContainer width="100%" height={300}>
         <LineChart
           width={1000}
           height={300}
           data={values}
+          margin={{left: 70, right: 70}}
         >
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="date" />
