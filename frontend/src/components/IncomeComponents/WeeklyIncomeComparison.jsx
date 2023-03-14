@@ -114,7 +114,9 @@ export function WeeklyIncomeComparison(props) {
               <th>Start Date</th>
               <th>Industry</th>
               <th>My Weekly Hours</th>
-              <th>Recommended Weekly Hours</th>
+              <th>
+                Average weekly hours per employee by industry in Singapore
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -131,32 +133,5 @@ export function WeeklyIncomeComparison(props) {
         </table>
       ) : null}
     </div>
-    /*<div>
-      <h2>Weekly hours comparison</h2>
-      {userData !== null && filteredData !== null ? (
-        <table>
-          <thead>
-            <tr>
-              <th>Quarter</th>
-              <th>Start Date</th>
-              <th>Industry</th>
-              <th>My Weekly Hours</th>
-              <th>Recommended Weekly Hours</th>
-            </tr>
-          </thead>
-          <tbody>
-            {userData.map((data) => (
-              <tr key={data._id}>
-                <td>{data.quarter}</td>
-                <td>{formatDate(data.start_date)}</td>
-                <td>{data.industry}</td>
-                <td>{data.weekly_hours ? data.weekly_hours : "N.A."}</td>
-                <td>{getRecommendedHours(data.quarter, data.industry)}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      ) : null}
-            </div>*/
   );
 }
