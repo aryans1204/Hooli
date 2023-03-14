@@ -1,5 +1,11 @@
 import React, { useState } from "react";
 
+
+/**
+ * Component for display table.
+ * @param {*} props
+ * @returns {*}
+ */
 function DisplayTableComponent(props) {
   const [selectedItem, setSelectedItem] = useState(null);
 

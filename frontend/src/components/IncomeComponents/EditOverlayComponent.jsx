@@ -17,6 +17,12 @@ import { Navigate } from "react-router-dom";
 import DisplayTableComponent from "./DisplayTableComponent";
 import { AddOverlayComponent } from "./AddOverlayComponent";
 
+/**
+ * Overlay component for editing an income record.
+ * @export
+ * @param {*} props
+ * @returns {*}
+ */
 export function EditOverlayComponent(props) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [result, setResult] = useState([{}]); //result is the income data fetched with backend api
@@ -24,13 +30,21 @@ export function EditOverlayComponent(props) {
   const [targetData, setTargetData] = useState(null); //targetData is the specific data that the user wants to edit
   const [targetFound, setTargetFound] = useState(false);
 
+  /**
+   * Stores data of income record to be removed.
+   * @param {*} item
+   */
   function handleItemSelected(item) {
     setSelectedItem(item);
   }
+
   function setState() {
     props.setState();
   }
 
+  /**
+   * Retrieves selected income record using get/api/income/:id.
+   */
   function getTargetItem() {
     fetch("/api/income/" + selectedItem._id, {
       method: "GET",
@@ -58,6 +72,10 @@ export function EditOverlayComponent(props) {
       onOpen();
     }
   }, [targetData]);
+
+  /**
+   * Retrieves all income records using get/api/income.
+   */
   function getData() {
     fetch("/api/income", {
       method: "GET",
@@ -137,6 +155,11 @@ export function EditOverlayComponent(props) {
   );
 }
 
+/**
+ * Component for editing an income record.
+ * @param {*} props
+ * @returns {*}
+ */
 function EditDataComponent(props) {
   const initialValues = {
     monthlyIncome: null,
@@ -162,9 +185,12 @@ function EditDataComponent(props) {
     props.onClose();
   };
 
+  /**
+   * Removea an income record using delete/api/income/:id.
+   */
   function handleRemove() {
     console.log(props.data._id);
-    fetch("/api/income/" + props.data._id, {
+    return fetch("/api/income/" + props.data._id, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -185,34 +211,41 @@ function EditDataComponent(props) {
       });
   }
 
+  /**
+   * Creates a new (edited) income record using post/api/income.
+   */
   function handleSubmit() {
-    handleRemove();
-    fetch("/api/income", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${sessionStorage.getItem("token")}`,
-      },
-      body: JSON.stringify({
-        industry: industry,
-        monthly_income: values.monthlyIncome,
-        start_date: values.startDate,
-        end_date: values.endDate,
-        company: values.company,
-      }),
-    })
-      .then((response) => {
-        if (response.status === 500) {
-          console.log("Some error occurred - " + response.status);
-          setAddSuccess(false);
-        } else {
-          console.log("Added new");
-          setAddSuccess(true);
-          return response.json();
-        }
+    handleRemove().then(() => {
+      fetch("/api/income", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+        },
+        body: JSON.stringify({
+          industry: industry,
+          monthly_income: values.monthlyIncome,
+          start_date: values.startDate,
+          end_date: values.endDate,
+          weekly_hours: values.weeklyHours,
+          company: values.company,
+        }),
       })
-      .then((data) => {});
-    props.setState();
+        .then((response) => {
+          if (response.status === 500) {
+            console.log("Some error occurred - " + response.status);
+            setAddSuccess(false);
+          } else {
+            console.log("Added new");
+            setAddSuccess(true);
+            return response.json();
+          }
+        })
+        .then((data) => {
+          console.log(data);
+          props.setState();
+        });
+    });
   }
   return (
     <div>

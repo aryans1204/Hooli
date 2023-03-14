@@ -16,16 +16,29 @@ import { Navigate } from "react-router-dom";
 import classes from "./RemoveOverlayComponent.module.css";
 import DisplayTableComponent from "./DisplayTableComponent";
 
+
+/**
+ * Overlay component for removing an income record.
+ * @export
+ * @param {*} props
+ * @returns {*}
+ */
 export function RemoveOverlayComponent(props) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [result, setResult] = useState([{}]); //result is the income data fetched with backend api
   const [selectedItem, setSelectedItem] = useState(null);
 
-  //stores the data for which income record to remove
+  /**
+   * Stores data of income record to be removed.
+   * @param {*} item
+   */
   function handleItemSelected(item) {
     setSelectedItem(item);
   }
-
+  
+  /**
+   * Removes selected income record using delete/api/income/:id.
+   */
   function handleRemove() {
     console.log(selectedItem._id);
     fetch("/api/income/" + selectedItem._id, {
@@ -49,6 +62,9 @@ export function RemoveOverlayComponent(props) {
     props.setState();
   }
 
+  /**
+   * Retrieves all income records using get/api/income.
+   */
   function getData() {
     fetch("/api/income", {
       method: "GET",
