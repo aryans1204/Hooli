@@ -177,6 +177,7 @@ function EditDataComponent(props) {
       ...values,
       [name]: value,
     });
+    console.log(value);
   };
   const clearState = () => {
     setValues(initialValues);
@@ -227,6 +228,7 @@ function EditDataComponent(props) {
           monthly_income: values.monthlyIncome,
           start_date: values.startDate,
           end_date: values.endDate,
+          weekly_hours: values.weeklyHours,
           company: values.company,
         }),
       })
@@ -241,6 +243,7 @@ function EditDataComponent(props) {
           }
         })
         .then((data) => {
+          console.log(data);
           props.setState();
         });
     });
