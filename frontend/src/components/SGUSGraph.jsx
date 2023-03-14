@@ -11,8 +11,9 @@ import {
     Legend
   } from "recharts";
 
-const SGUSGraph = () => {
-    var values = JSON.parse(sessionStorage.getItem('graph'));
+const SGUSGraph = (data) => {
+    //var values = JSON.parse(sessionStorage.getItem('graph'));
+    var values = data;
     
     let lowestRate = Number.MAX_SAFE_INTEGER;
     let highestRate = Number.MIN_SAFE_INTEGER;

@@ -10,7 +10,7 @@ import SGUSGraph from './SGUSGraph';
 class Forex extends Component {
     constructor(props) {
         super(props);
-        this.state = { from: "", to: "", authenticated: null, hasData: false, num: 0, setStorage: false};
+        this.state = { from: "", to: "", authenticated: null, hasData: false, num: 0, setStorage: false, hasGraph: false, graphVals: null};
 
         this.handleButton = this.handleButton.bind(this);
         this.postData = this.postData.bind(this);
@@ -35,11 +35,11 @@ class Forex extends Component {
             else
                 this.setState({ authenticated: true });
           });
-        this.getAllData();
         this.getSGUS();
+        this.getAllData();
     }
 
-
+    // String formatting to set state
     handleButton(event) {
         let value = this.inputNode.value;
         if (value.length == 0) {
@@ -73,7 +73,7 @@ class Forex extends Component {
             }
         })
             .then((response) => response.json())
-            .then((data) => {console.log("Data posted successfully");})
+            .then(() => {console.log("Data posted successfully");})
             .catch((err) => {
                 console.log(err.message);
              });
@@ -123,22 +123,21 @@ class Forex extends Component {
         fetch(url, requestOptions)
         .then(response => response.text())
         .then(result => {
-            result = JSON.parse(result);
-            let key = String(Object.keys(result.rates));
-            let changeVal = result.rates[key].change; // take absolute value of change
+            result = JSON.parse(result).rates;
+            let key = String(Object.keys(result));
+            let changeVal = result[key].change_pct; // take absolute value of change
             // console.log(changeVal);
             // console.log("VALUE IS HEREE");
             let sessData = JSON.parse(sessionStorage.getItem(name));
-            //sessionStorage.removeItem(name);
-            //sessData.push({change: changeVal});
+            // //sessionStorage.removeItem(name);
+            // //sessData.push({change: changeVal});
             sessData.change = changeVal;
             console.log(sessData);
-            console.log("SESSION IS HEREE");
+            console.log("HERE IS THE ARRAY");
             
             sessionStorage.setItem(name, JSON.stringify(sessData));
-            console.log(sessionStorage.getItem(name));
-            console.log("SESSION DATA HERE");
-            this.setState({setStorage: true});
+            // console.log(sessionStorage.getItem(name));
+            // console.log("SESSION STORAGE HERE");
         })
         .catch(error => console.log('error', error));
     }
@@ -180,8 +179,8 @@ class Forex extends Component {
                             }}
                     )
                 }
-                //console.log(conversions);
-                //console.log("WE ARE HERE");
+                // console.log(conversions);
+                // console.log("WE ARE HERE");
 
                 // for each conversion, getPair and put into rate value in responses array
                 var responses = [];
@@ -199,6 +198,7 @@ class Forex extends Component {
                     this.getPair(from, to, responses, name);
                     this.getFlucs(from, to, curDate, lastDate, name);
                 });
+                this.setState({setStorage: true});
                 // console.log(responses);
                 // console.log("RESPONSES IS ON TOP");
                 //console.log(this.state.data);
@@ -234,7 +234,9 @@ class Forex extends Component {
                 rate = JSON.parse(rate);
                 SGUSArr.push({date: key, rate: rate})
             })
-            sessionStorage.setItem("graph", JSON.stringify(SGUSArr));
+            this.setState({hasGraph: true});
+            this.setState({graphVals: JSON.stringify(SGUSArr)});
+            //sessionStorage.setItem("graph", JSON.stringify(SGUSArr));
             
         })
         .catch(error => console.log('error', error));
@@ -254,11 +256,11 @@ class Forex extends Component {
                         children={<SearchIcon color='gray.600' />}
                     />
                     <Input placeholder='Enter Currency Pair' htmlSize={50} width='auto' variant='filled' ref={node => (this.inputNode = node)}/>
-                    <Button colorScheme='purple' onClick={this.handleButton}>Search</Button>
+                    <Button colorScheme='purple' onClick={this.handleButton} className={classes.button}>Search</Button>
                     </InputGroup>
                 </div>
                 <div>
-                    {(this.state.hasData) ? (<div><ForexTable num={this.state.num}/><SGUSGraph/></div>) : (<div><p>No entries yet!</p><SGUSGraph/></div>)}
+                    {(this.state.hasData && this.state.hasGraph) ? (<div><ForexTable num={this.state.num}/><SGUSGraph data={this.state.graphVals}/></div>) : (<div><p>No entries yet!</p><SGUSGraph data={this.state.graphVals}/></div>)}
                 </div>
             </div>
             </>
