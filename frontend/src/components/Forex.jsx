@@ -12,11 +12,11 @@ class Forex extends Component {
         super(props);
         this.state = { from: "", to: "", authenticated: null, hasData: false, num: 0, setStorage: false};
 
-        this.handleButton = this.handleButton.bind(this);
-        this.postData = this.postData.bind(this);
-        this.getAllData = this.getAllData.bind(this);
-        this.getPair = this.getPair.bind(this);
-        this.getFlucs = this.getFlucs.bind(this);
+        // this.handleButton = this.handleButton.bind(this);
+        // this.postData = this.postData.bind(this);
+        // this.getAllData = this.getAllData.bind(this);
+        // this.getPair = this.getPair.bind(this);
+        // this.getFlucs = this.getFlucs.bind(this);
         this.getSGUS =this.getSGUS.bind(this);
       }
 
@@ -35,7 +35,8 @@ class Forex extends Component {
             else
                 this.setState({ authenticated: true });
           });
-        this.getAllData();
+        //this.getAllData();
+        this.getSGUS();
     }
 
 
@@ -209,7 +210,7 @@ class Forex extends Component {
         });
     }
 
-    getSGUS(curDate, lastDate) {
+    getSGUS() {
         var myHeaders = new Headers();
         myHeaders.append("apikey", import.meta.env.VITE_FIXER_API_KEY);
 
@@ -219,12 +220,21 @@ class Forex extends Component {
         headers: myHeaders
         };
 
+        const curDate = new Date().toISOString().slice(0, 10);
+        const lastDate = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString().slice(0, 10);
+
         let url = "https://api.apilayer.com/fixer/timeseries?start_date=" + lastDate + "&end_date=" + curDate + "&base=SGD&symbols=USD";
 
         fetch(url, requestOptions)
         .then(response => response.text())
         .then(result => {
-            var SGUSarr = [];
+            var SGUSArr = [];
+            result = JSON.parse(result).rates;
+            Object.keys(result).forEach(function(key) {
+                let rate = JSON.stringify(result[key][String(Object.keys(result[key]))]); // getting value from API JSON
+                SGUSArr.push({date: key, rate: rate})
+            })
+            sessionStorage.setItem("graph", JSON.stringify(SGUSArr));
             
         })
         .catch(error => console.log('error', error));
@@ -248,7 +258,8 @@ class Forex extends Component {
                     </InputGroup>
                 </div>
                 <div>
-                    {(this.state.hasData) ? (<div><ForexTable num={this.state.num}/><SGUSGraph/></div>) : (<div><p>No entries yet!</p><SGUSGraph/></div>)}
+                    <SGUSGraph/>
+                    {/* {(this.state.hasData) ? (<div><ForexTable num={this.state.num}/><SGUSGraph/></div>) : (<div><p>No entries yet!</p><SGUSGraph/></div>)} */}
                 </div>
             </div>
             </>
