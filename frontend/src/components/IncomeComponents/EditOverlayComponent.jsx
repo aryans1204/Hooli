@@ -177,7 +177,6 @@ function EditDataComponent(props) {
       ...values,
       [name]: value,
     });
-    console.log(value);
   };
   const clearState = () => {
     setValues(initialValues);
