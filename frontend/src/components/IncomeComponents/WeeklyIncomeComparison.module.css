@@ -1,0 +1,23 @@
+.list {
+  list-style-type: none;
+  padding: 0;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+thead th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+tbody td {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+tbody td:nth-child(even) {
+  background-color: #f2f2f2;
+}
