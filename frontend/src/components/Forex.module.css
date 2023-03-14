@@ -2,6 +2,10 @@
     margin-left: 80px;
 }
 
+.button {
+    margin-left: 5px;
+}
+
 .search {
     margin: auto;
     width: 50%;
@@ -13,7 +17,7 @@
 }
 
 .currencyDiv {
-    margin: 70px 70px;
+    margin: 10px 70px 10px 70px;
 
 }
 
