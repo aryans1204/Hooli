@@ -16,9 +16,7 @@ const ForexTable = (num) => {
 
     return (
         <>
-        <p>{JSON.stringify(fields)}</p>
         <div className={classes.currencyDiv}>
-        <p>THIS IS THE FOREX TABLE THINGIE</p>
             <TableContainer>
                 <Table variant='simple'>
                     <Thead>
