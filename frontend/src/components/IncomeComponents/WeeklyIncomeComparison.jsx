@@ -113,6 +113,7 @@ export function WeeklyIncomeComparison(props) {
               <th>Quarter</th>
               <th>Start Date</th>
               <th>Industry</th>
+              <th>Company</th>
               <th>My Weekly Hours</th>
               <th>
                 Average weekly hours per employee by industry in Singapore
@@ -125,6 +126,7 @@ export function WeeklyIncomeComparison(props) {
                 <td>{data.quarter}</td>
                 <td>{formatDate(data.start_date)}</td>
                 <td>{data.industry}</td>
+                <td>{data.company ? data.company : "N.A."}</td>
                 <td>{data.weekly_hours ? data.weekly_hours : "N.A."}</td>
                 <td>{getRecommendedHours(data.quarter, data.industry)}</td>
               </tr>
