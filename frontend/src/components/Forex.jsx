@@ -232,6 +232,7 @@ class Forex extends Component {
             result = JSON.parse(result).rates;
             Object.keys(result).forEach(function(key) {
                 let rate = JSON.stringify(result[key][String(Object.keys(result[key]))]); // getting value from API JSON
+                rate = JSON.parse(rate);
                 SGUSArr.push({date: key, rate: rate})
             })
             sessionStorage.setItem("graph", JSON.stringify(SGUSArr));
