@@ -90,3 +90,25 @@ router.post('/api/expenditure', auth, async (req, res) => {
         res.status(500).send()
     }
 })
+
+/**
+ * Route to delete an expenditure.
+ * @name delete/api/expenditure/:id
+ * @async
+ * @param {String} path
+ * @param {Object} auth
+ * @param {callback} middleware
+ * @throws {InternalServerError}
+ */
+router.delete('/api/expenditure/:id', auth, async (req, res) => {
+    try {
+        const expenditure = await Expenditure.findOneAndDelete({ _id: req.params.id, income_owner: req.user._id })
+        if (!expenditure) res.status(404).send()
+
+        res.send(expenditure)
+
+    } catch (e) {
+        res.status(500).send()
+    }
+})
+

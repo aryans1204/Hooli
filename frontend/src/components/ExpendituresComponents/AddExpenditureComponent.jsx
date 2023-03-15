@@ -12,3 +12,146 @@ import {
   ModalCloseButton,
   useDisclosure,
 } from "@chakra-ui/react";
+
+export function AddExpenditureComponent(props) {
+  const initialValues = {
+    amount: null,
+    category: null,
+  };
+
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const [values, setValues] = useState(initialValues);
+  const [category, setCategory] = useState("");
+  const [addSuccess, setAddSuccess] = useState(null);
+
+  const handleInputChange = (e) => {
+    var { name, value } = e.target;
+    setValues({
+      ...values,
+      [name]: value,
+    });
+  };
+
+  const clearState = () => {
+    setValues(initialValues);
+    setAddSuccess(null);
+    onClose();
+  };
+
+  function handleSubmit() {
+    fetch("/api/expenditure", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+      },
+      body: JSON.stringify({
+        category: category,
+        amount: values.amount,
+      }),
+    })
+      .then((response) => {
+        if (response.status === 500) {
+          console.log("Some error occurred - " + response.status);
+          setAddSuccess(false);
+        } else {
+          console.log("Success");
+          setAddSuccess(true);
+          return response.json();
+        }
+      })
+      .then((data) => {
+        props.setState();
+      });
+  }
+
+  return (
+    <ButtonGroup spacing="40px" float="left" pl="180px">
+      <Button
+        onClick={onOpen}
+        w="175px"
+        h="71px"
+        borderRadius="50"
+        color="white"
+        bg="#3f2371"
+        float="left"
+      >
+        Add
+      </Button>
+      <Modal isOpen={isOpen}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader textAlign="center" fontSize="30px">
+            Add new expenditure
+          </ModalHeader>
+          <ModalCloseButton onClick={onClose} />
+          <ModalBody>
+            Category<br></br>
+            <select
+              value={category}
+              onChange={(event) => {
+                setCategory(event.target.value);
+              }}
+            >
+              <option>N.A</option>
+              <option value="Food">Food</option>
+              <option value="Housing">Housing</option>
+              <option value="Utilities">Utilities</option>
+              <option value="Bills">Bills</option>
+              <option value="Clothes">Clothes</option>
+              <option value="Lifestyle">Lifestyle</option>
+              <option value="Transport">Transport</option>
+              <option value="Healthcare">Healthcare</option>
+              <option value="Pets">Pets</option>
+              <option value="Others">Others</option>
+            </select>
+          </ModalBody>
+          <ModalBody>
+            Amount<br></br>
+            <input
+              type="number"
+              placeholder="amount"
+              size="30"
+              required
+              name="monthlyIncome"
+              onChange={handleInputChange}
+            ></input>
+          </ModalBody>
+
+          <ModalFooter>
+            <Button
+              colorScheme="purple"
+              h="50px"
+              w="80px"
+              d="flex"
+              onClick={handleSubmit}
+            >
+              Save
+            </Button>
+            <Button onClick={clearState} colorScheme="yellow" pl="20px">
+              Cancel
+            </Button>
+            <div>
+              {(() => {
+                if (addSuccess == false) {
+                  return <div>An error occurred. Please try again.</div>;
+                } else if (addSuccess == true) {
+                  return (
+                    <div>
+                      <div>Successfully added expenditure!</div>
+                      <div>
+                        <Button onClick={clearState}>OK</Button>
+                      </div>
+                    </div>
+                  );
+                } else {
+                  return null;
+                }
+              })()}
+            </div>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+    </ButtonGroup>
+  );
+}
