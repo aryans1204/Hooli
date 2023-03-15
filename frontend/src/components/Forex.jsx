@@ -14,9 +14,10 @@ class Forex extends Component {
 
         this.handleButton = this.handleButton.bind(this);
         this.postData = this.postData.bind(this);
-        this.getAllData = this.getAllData.bind(this);
-        this.getPair = this.getPair.bind(this);
-        this.getFlucs = this.getFlucs.bind(this);
+        this.checkData = this.checkData.bind(this);
+        // this.getAllData = this.getAllData.bind(this);
+        // this.getPair = this.getPair.bind(this);
+        // this.getFlucs = this.getFlucs.bind(this);
       }
 
     async componentDidMount() {
@@ -34,8 +35,8 @@ class Forex extends Component {
             else
                 this.setState({ authenticated: true });
           });
-        //this.getSGUS();
-        this.getAllData();
+        this.checkData();
+        //this.getAllData();
     }
 
     // String formatting to set state
@@ -78,71 +79,8 @@ class Forex extends Component {
              });
     }
 
-    // Get pair from API (rate only)
-    getPair(fromVar, toVar, arr, name) {
-        var myHeaders = new Headers();
-        myHeaders.append("apikey", import.meta.env.VITE_FIXER_API_KEY);
-
-        var requestOptions = {
-            method: 'GET',
-            redirect: 'follow',
-            headers: myHeaders
-        };
-
-        var url = "https://api.apilayer.com/fixer/latest?base=" + fromVar + "&symbols=" + toVar;
-
-        fetch(url, requestOptions)
-        .then(response => response.text())
-        .then(result => {console.log("PAIR OK");
-            // console.log(result);
-            result = JSON.parse(result); arr.push(result);
-            let key = String(Object.keys(result.rates));
-            let rateData = result.rates[key].toFixed(2);
-            let data = {from: fromVar, to: toVar, rate: rateData, change: 0};
-            //console.log(data);
-            sessionStorage.setItem(name, JSON.stringify(data));
-            // console.log(arr)
-        })
-        .catch(error => console.log('error', error));
-    }
-
-    // fetch fluctations
-    getFlucs(fromVar, toVar, curDate, lastDate, name) {
-        var myHeaders = new Headers();
-        myHeaders.append("apikey", import.meta.env.VITE_FIXER_API_KEY);
-
-        var requestOptions = {
-            method: 'GET',
-            redirect: 'follow',
-            headers: myHeaders
-        };
-
-        var url = "https://api.apilayer.com/fixer/fluctuation?start_date=" + lastDate + "&end_date=" + curDate + "&base=" + fromVar + "&symbols=" + toVar;
-
-        fetch(url, requestOptions)
-        .then(response => response.text())
-        .then(result => {
-            result = JSON.parse(result).rates;
-            let key = String(Object.keys(result));
-            let changeVal = result[key].change_pct; // take absolute value of change
-            // console.log(changeVal);
-            // console.log("VALUE IS HEREE");
-            let sessData = JSON.parse(sessionStorage.getItem(name));
-            // //sessionStorage.removeItem(name);
-            // //sessData.push({change: changeVal});
-            sessData.change = changeVal;
-            console.log(sessData);
-            console.log("HERE IS THE ARRAY");
-            
-            sessionStorage.setItem(name, JSON.stringify(sessData));
-            // console.log(sessionStorage.getItem(name));
-            // console.log("SESSION STORAGE HERE");
-        })
-        .catch(error => console.log('error', error));
-    }
-
-    // Get recent 5 searches
-    getAllData () {
+    // CHeck if DB has data
+    checkData () {
         fetch('/api/currencies', {
             method: 'GET',
             headers: {
@@ -155,53 +93,10 @@ class Forex extends Component {
             // Checks there's entries
             if (data.length != 0) {
                 this.setState({hasData: true});
-                // Gets recent 5 pairs and puts into conversions array
-                var conversions = []
-                // DB has <= 5 
-                if (data.length <= 5) {
-                    let count = 0;
-                    data.forEach(element => {
-                        let pair ={from: element["currency_from"], to: element["currency_to"]};
-                        conversions.push(pair);
-                        count += 1;
-                    })
-                    this.setState({num: count});
-                } else {
-                    // DB has > 5
-                    this.setState({num: 5});
-                    let count = 0;
-                    data.forEach(element => {
-                            if (count != 5) {
-                                count += 1;
-                                let pair = {from: element["currency_from"], to: element["currency_to"]}
-                                conversions.push(pair);
-                            }}
-                    )
-                }
-                // console.log(conversions);
-                // console.log("WE ARE HERE");
-
-                // for each conversion, getPair and put into rate value in responses array
-                var responses = [];
-                let count = 0;
-
-                // get dates
-                const curDate = new Date().toISOString().slice(0, 10);
-                const lastDate = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString().slice(0, 10);
-
-                conversions.forEach((item) => {
-                    const from = item.from;
-                    const to = item.to;
-                    count += 1;
-                    let name = "dataKey" + count;
-                    this.getPair(from, to, responses, name);
-                    this.getFlucs(from, to, curDate, lastDate, name);
-                });
-                this.setState({setStorage: true});
-                // console.log(responses);
-                // console.log("RESPONSES IS ON TOP");
-                //console.log(this.state.data);
+                if (data.length >= 5) {this.setState({num: 5});}
+                else {this.setState({num: data.length});}
             }
+            else {this.setState({num: 0})}
         })
         .catch((err) => {
             console.log(err.message);
@@ -226,7 +121,7 @@ class Forex extends Component {
                     </InputGroup>
                 </div>
                 <div>
-                    {(this.state.hasData && this.state.hasGraph) ? (<div><ForexTable num={this.state.num}/></div>) : (<div><p>No entries yet!</p></div>)}
+                    {(this.state.hasData) ? (<ForexTable num={this.state.num}/>) : (<p>No entries yet!</p>)}
                     <SGUSGraph/>
                 </div>
             </div>
