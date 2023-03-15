@@ -1,6 +1,6 @@
 import { Component, useState } from "react";
 import classes from "./PersonalProfile.module.css";
-import logo from "../assets/icons/hooli-logo.png";
+import { Input, InputGroup, InputLeftElement, Button} from '@chakra-ui/react';
 import { Navigate } from "react-router-dom";
 import NavBar from "./NavBar";
 
@@ -10,10 +10,10 @@ class PersonalProfile extends Component {
     this.state = {
       name: "",
       email: "",
-      logoutSuccess: null,
       authenticated: null,
+      inputName: '',
     };
-    this.handleLogout = this.handleLogout.bind(this);
+    this.handleDeleteUser = this.handleDeleteUser.bind(this);
   }
 
   async componentDidMount() {
@@ -36,26 +36,21 @@ class PersonalProfile extends Component {
       });
   }
 
-  async handleLogout(e) {
-    e.preventDefault();
-    alert("Logging out");
-    await fetch("/api/users/logout", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${sessionStorage.getItem("token")}`,
-      },
-    })
-      .then((response) => {
-        if (response.status != 500) {
-          this.setState({ logoutSuccess: true });
-          sessionStorage.clear();
-        }
-        return response.json();
+  async handleDeleteUser () {
+    try {
+      const response = await fetch("/api/users/me", {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+        },
       })
-      .then((data) => {
-        console.log(data);
-      });
+      console.log("Account deleted successfully");
+      location.reload();
+    }
+    catch (error) {
+      console.log(error.message);
+    }
   }
 
   render() {
@@ -63,17 +58,16 @@ class PersonalProfile extends Component {
       <>
         <NavBar />
         <div className={classes.contents}>
-          <div className={classes.title}>Personal Profile</div>
+          <h1 className={classes.title}>Personal Profile</h1>
           <div>Name: {this.state.name}</div>
           <div>Email: {this.state.email}</div>
-          <div>
-            <button onClick={this.handleLogout}>logout</button>
-          </div>
+          <Input placeholder='Enter Currency Pair' htmlSize={50} width='auto' variant='filled' id="myInput"/>
+          
+
+          <Button colorScheme='purple' onClick={this.handleDeleteUser}>Delete Account</Button>
+
           <div>
             {this.state.authenticated == false && (
-              <Navigate to="/" replace={true} />
-            )}
-            {this.state.logoutSuccess == true && (
               <Navigate to="/" replace={true} />
             )}
           </div>

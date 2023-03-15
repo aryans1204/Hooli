@@ -1,6 +1,8 @@
 .contents {
-  padding-left: 20mm;
+  margin-left: 80px;
 }
+
 .title {
-  font-size: 50px;
+  color: #000;
+  padding: 0;
 }
