@@ -33,8 +33,8 @@ const expenditureSchema = new mongoose.Schema({
         type: String,
         required: true,
         validate(value) {
-            const allowedCats = ["food", "housing", "utilities", "bills", "clothes", "lifestyle", "transport",
-            "healthcare", "pets", "others"]
+            const allowedCats = ["Food", "Housing", "Utilities", "Bills", "Clothes", "Lifestyle", "Transport",
+            "Healthcare", "Pets", "Others"]
 
             if (!allowedCats.includes(value)) throw new Error("Please choose one of the supported categories.")
         }
