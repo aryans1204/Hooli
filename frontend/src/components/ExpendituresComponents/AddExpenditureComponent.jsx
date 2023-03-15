@@ -113,17 +113,16 @@ export function AddExpenditureComponent(props) {
                 setCategory(event.target.value);
               }}
             >
-              <option>N.A</option>
-              <option value="Food">Food</option>
-              <option value="Housing">Housing</option>
-              <option value="Utilities">Utilities</option>
-              <option value="Bills">Bills</option>
-              <option value="Clothes">Clothes</option>
-              <option value="Lifestyle">Lifestyle</option>
-              <option value="Transport">Transport</option>
-              <option value="Healthcare">Healthcare</option>
-              <option value="Pets">Pets</option>
-              <option value="Others">Others</option>
+              <option value="food">Food</option>
+              <option value="housing">Housing</option>
+              <option value="utilities">Utilities</option>
+              <option value="bills">Bills</option>
+              <option value="clothes">Clothes</option>
+              <option value="lifestyle">Lifestyle</option>
+              <option value="transport">Transport</option>
+              <option value="healthcare">Healthcare</option>
+              <option value="pets">Pets</option>
+              <option value="others">Others</option>
             </select>
           </ModalBody>
           <ModalBody>
