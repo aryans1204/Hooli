@@ -48,7 +48,6 @@ function ForexTable () {
             arr = arr.map(element => {
                 return element.trim();
             });
-            //console.log(arr);
             let fromVar = arr[0];
             let toVar = arr[1];
             await postData(fromVar, toVar);
@@ -148,11 +147,9 @@ function ForexTable () {
         
         const response = await fetch(url, requestOptions);
         const result = await response.json();
-        //console.log(result); console.log("pair results here");
         let key = String(Object.keys(result.rates));
         let rateData = result.rates[key].toFixed(2);
         var data = {from: fromVar, to: toVar, rate: rateData, change: null};
-        //console.log(data); console.log("pair arr here");
         return data;
     }
   
@@ -223,29 +220,6 @@ function ForexTable () {
                     </TableContainer>
                     </div>
                 ) : (<p>No entries yet!</p>)}
-
-                {/* <div className={classes.currencyDiv}>
-                    <TableContainer>
-                        <Table variant='simple'>
-                        <Thead>
-                            <Tr>
-                            <Th>Currency Pairs</Th>
-                            <Th>Rate</Th>
-                            <Th>Fluctuation</Th>
-                            </Tr>
-                        </Thead>
-                        <Tbody>
-                            {tableData.map((data, index) => (
-                            <Tr key={index}>
-                                <Td>{data[0].from}/{data[0].to}</Td>
-                                <Td>{data[0].rate}</Td>
-                                <Td>{data[0].change}</Td>
-                            </Tr>
-                            ))}
-                        </Tbody>
-                        </Table>
-                    </TableContainer>
-                </div> */}
             </div>
       </div>
     );
