@@ -106,18 +106,9 @@ class Forex extends Component {
             <NavBar />
             <div className={classes.div}>
                 <h1 className={classes.text}>FOREX</h1>
-                <div className={classes.search}>
-                    <InputGroup>
-                    <InputLeftElement
-                        pointerEvents='none'
-                        children={<SearchIcon color='gray.600' />}
-                    />
-                    <Input placeholder='Enter Currency Pair' htmlSize={50} width='auto' variant='filled' ref={node => (this.inputNode = node)}/>
-                    <Button colorScheme='purple' onClick={this.handleButton} className={classes.button}>Search</Button>
-                    </InputGroup>
-                </div>
                 <div>
-                    {(this.state.hasData) ? (<ForexTable num={this.state.num}/>) : (<p>No entries yet!</p>)}
+                    {/* {(this.state.hasData) ? (<ForexTable num={this.state.num}/>) : (<p>No entries yet!</p>)} */}
+                    <ForexTable num={this.state.num}/>
                     <SGUSGraph/>
                 </div>
             </div>
