@@ -45,9 +45,9 @@ function SGUSGraph () {
         const SGUSArr = [];
 
         fetch(url, requestOptions)
-        .then(response => response.text())
+        .then(response => response.json())
         .then(result => {
-            result = JSON.parse(result).rates;
+            result = result.rates;
             Object.keys(result).forEach(function(key) {
                 let rate = JSON.stringify(result[key][String(Object.keys(result[key]))]); // getting value from API JSON
                 rate = JSON.parse(rate); // make rate a number
