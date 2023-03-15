@@ -249,7 +249,7 @@ function EditDataComponent(props) {
             Memo<br></br>
             <input
               type="text"
-              placeholder="memo"
+              placeholder="Enter expenditure details"
               size="30"
               name="memo"
               onChange={handleInputChange}
@@ -279,7 +279,7 @@ function EditDataComponent(props) {
             Amount<br></br>
             <input
               type="number"
-              placeholder="amount"
+              placeholder="Enter a number"
               size="30"
               required
               name="amount"
