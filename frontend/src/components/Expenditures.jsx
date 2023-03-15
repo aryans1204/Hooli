@@ -3,8 +3,8 @@ import NavBar from './NavBar';
 import classes from './Expenditures.module.css';
 import { Navigate } from "react-router-dom";
 import { AddExpenditureComponent } from "./ExpendituresComponents/AddExpenditureComponent";
-//import { EditExpenditureComponent } from "./ExpendituresComponents/EditExpenditureComponent";
-//import { RemoveExpenditureComponent } from "./ExpendituresComponents/RemoveExpenditureComponent";
+import { EditExpenditureComponent } from "./ExpendituresComponents/EditExpenditureComponent";
+import { RemoveExpenditureComponent } from "./ExpendituresComponents/RemoveExpenditureComponent";
 //import { ExpendituresPieChartComponent } from "./ExpendituresComponents/ExpendituresPieChartComponent";
 
 class Expenditures extends Component {
@@ -30,7 +30,8 @@ class Expenditures extends Component {
           if (response.status == 401) this.setState({ authenticated: false });
           else this.setState({ authenticated: true });
           return response.json();
-        });
+        })
+        .then((data) => {});
     }
 
     getExpendituresData() {
@@ -65,7 +66,7 @@ class Expenditures extends Component {
             <NavBar />
           </div>
           <div className={classes.title}>My Expenditures</div>
-          <Box
+          {/* <Box
             bg="rgba(148, 114, 208, 1)"
             w="50%"
             h="50%"
@@ -79,7 +80,7 @@ class Expenditures extends Component {
             {this.state.expendituresData !== null ? (
               <ExpendituresPieChartComponent data={this.state.expendituresData} />
             ) : null}
-          </Box>
+          </Box> */}
           <AddExpenditureComponent
             setState={() => {
               this.getExpendituresData();

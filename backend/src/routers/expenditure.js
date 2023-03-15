@@ -11,12 +11,6 @@ const express = require('express')
 const Expenditure = require('../models/expenditure')
 
 /**
- * Transaction module
- * @const
- */
-const Transaction = require('../models/transaction')
-
-/**
  * auth module
  * @const
  */
@@ -40,13 +34,12 @@ const router = new express.Router()
  */
 router.get('/api/expenditure', auth, async (req, res) => {
     try {
-        await req.user.populate({
-            path: 'expenditures',
-        })
-        res.send(req.user.expenditures)
+        await req.user.populate('expenditure')
+        res.send(req.user.expenditure)
     } catch (e) {
+        console.log(e)
         res.status(500).send()
-    } 
+    }
 })
 
 /**
@@ -60,7 +53,7 @@ router.get('/api/expenditure', auth, async (req, res) => {
  */
 router.get('/api/expenditure/:id', auth, async (req, res) => {
     try {
-        const expenditure = await Expenditure.findOne({ _id: req.params.id, expenditue_owner: req.user._id })
+        const expenditure = await Expenditure.findOne({ _id: req.params.id, expenditure_owner: req.user._id })
         if (!expenditure) throw new Error("This expenditure does not exist.")
 
         res.send(expenditure)
@@ -79,11 +72,11 @@ router.get('/api/expenditure/:id', auth, async (req, res) => {
  * @throws {InternalServerError}
  */
 router.post('/api/expenditure', auth, async (req, res) => {
-    const expenditure = new Expenditure({
-        expenditure_owner: req.user._id
-    })
-
     try {
+        const expenditure = new Expenditure({
+            ...req.body,
+            expenditure_owner: req.user._id
+        })
         await expenditure.save()
         res.send(expenditure)
     } catch (e) {
@@ -102,7 +95,7 @@ router.post('/api/expenditure', auth, async (req, res) => {
  */
 router.delete('/api/expenditure/:id', auth, async (req, res) => {
     try {
-        const expenditure = await Expenditure.findOneAndDelete({ _id: req.params.id, income_owner: req.user._id })
+        const expenditure = await Expenditure.findOneAndDelete({ _id: req.params.id, expenditure_owner: req.user._id })
         if (!expenditure) res.status(404).send()
 
         res.send(expenditure)
@@ -112,3 +105,4 @@ router.delete('/api/expenditure/:id', auth, async (req, res) => {
     }
 })
 
+module.exports = router

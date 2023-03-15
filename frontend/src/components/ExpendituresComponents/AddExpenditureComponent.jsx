@@ -13,10 +13,16 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 
+/**
+ * Component for adding an expenditure.
+ * @export
+ * @param {*} props
+ * @returns {*}
+ */
 export function AddExpenditureComponent(props) {
   const initialValues = {
     amount: null,
-    category: null,
+    memo: null,
   };
 
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -38,6 +44,9 @@ export function AddExpenditureComponent(props) {
     onClose();
   };
 
+   /**
+   * Creates new expenditure when submitted using post/api/income.
+   */
   function handleSubmit() {
     fetch("/api/expenditure", {
       method: "POST",
@@ -46,6 +55,7 @@ export function AddExpenditureComponent(props) {
         Authorization: `Bearer ${sessionStorage.getItem("token")}`,
       },
       body: JSON.stringify({
+        memo: values.memo,
         category: category,
         amount: values.amount,
       }),
@@ -86,6 +96,16 @@ export function AddExpenditureComponent(props) {
           </ModalHeader>
           <ModalCloseButton onClick={onClose} />
           <ModalBody>
+            Memo<br></br>
+            <input
+              type="text"
+              placeholder="memo"
+              size="30"
+              name="memo"
+              onChange={handleInputChange}
+            ></input>
+          </ModalBody>
+          <ModalBody>
             Category<br></br>
             <select
               value={category}
@@ -113,7 +133,7 @@ export function AddExpenditureComponent(props) {
               placeholder="amount"
               size="30"
               required
-              name="monthlyIncome"
+              name="amount"
               onChange={handleInputChange}
             ></input>
           </ModalBody>
