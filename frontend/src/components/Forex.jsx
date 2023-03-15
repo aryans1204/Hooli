@@ -33,7 +33,6 @@ class Forex extends Component {
                 this.setState({ authenticated: true });
           });
         this.checkData();
-        //this.getAllData();
     }
 
     // String formatting to set state
@@ -108,7 +107,7 @@ class Forex extends Component {
                 <h1 className={classes.text}>FOREX</h1>
                 <div>
                     {/* {(this.state.hasData) ? (<ForexTable num={this.state.num}/>) : (<p>No entries yet!</p>)} */}
-                    <ForexTable num={this.state.num}/>
+                    <ForexTable />
                     <SGUSGraph/>
                 </div>
             </div>

@@ -5,18 +5,38 @@ import { Input, InputGroup, InputLeftElement, Button,
     import { SearchIcon } from '@chakra-ui/icons';
 import classes from './Forex.module.css';
 
-const ForexTable = (num) => {
+function ForexTable () {
     const [isDataFetched, setIsDataFetched] = useState(false);
     const [tableData, setTableData] = useState([]);
-    const [from, setFrom] = useState('');
-    const [to, setTo] = useState('');
-    const [isTableUpdated, setIsTableUpdated] = useState(false);
+    const [num, setNum] = useState(0);
+    const [hasData, setData] = useState(false);
 
-    const hasData = true;
+    function checkData () {
+        fetch('/api/currencies', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${sessionStorage.getItem("token")}`
+            }
+        })
+        .then((response) => response.json())
+        .then((data) => {
+            // Checks there's entries
+            if (data.length != 0) {
+                setData(true);
+                if (data.length >= 5) {setNum(5)}
+                else {setNum(data.length)}
+            }
+            else {setNum(0)}
+        })
+        .catch((err) => {
+            console.log(err.message);
+        });
+    }
 
 
     // String formatting to set state
-    function handleButton(event) {
+    async function handleButton() {
         const inputElement = document.getElementById('myInput');
         var value = inputElement.value;
         if (value.length == 0) {
@@ -28,72 +48,113 @@ const ForexTable = (num) => {
             arr = arr.map(element => {
                 return element.trim();
             });
-            console.log(arr);
+            //console.log(arr);
             let fromVar = arr[0];
             let toVar = arr[1];
-            setFrom(fromVar);
-            setTo(toVar);
-            setIsTableUpdated(true);
-            postData();
+            await postData(fromVar, toVar);
         }
     }
 
     // Post search to database
-    function postData() {
+    async function postData(fromVar, toVar) {
         fetch('/api/currencies', {
             method: 'POST',
             body: JSON.stringify({
-                currency_from: state.from,
-                currency_to: state.to
+                currency_from: fromVar,
+                currency_to: toVar
             }),
             headers: {
                 'Content-Type': 'application/json',
                 Authorization: `Bearer ${sessionStorage.getItem("token")}`
             }
         })
-            .then((response) => response.json())
-            .then(() => {console.log("Data posted successfully");})
-            .catch((err) => {
-                console.log(err.message);
-             });
+        .then((response) => response.json())
+        .then(() => {console.log("Data posted successfully");
+            setNum(num+1);
+            setIsDataFetched(!isDataFetched);})
+        .catch((err) => {
+            console.log(err.message);
+         });
     }
-  
+
     useEffect(() => {
-      const fetchTableData = async () => {
-        try {
-          const response = await fetch('/api/currencies', {
-            method: 'GET',
-            headers: {
-              'Content-Type': 'application/json',
-              Authorization: `Bearer ${sessionStorage.getItem('token')}`,
-            },
-          });
-  
-          const data = await response.json();
-          const conversions = [];
-          for (let i = 0; i < num.num; i++) {
-            const pair = { from: data[i].currency_from, to: data[i].currency_to };
-            conversions.push(pair);
+        checkData();
+      
+        const fetchTableData = async () => {
+          try {
+            const response = await fetch('/api/currencies', {
+              method: 'GET',
+              headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${sessionStorage.getItem('token')}`,
+              },
+            });
+      
+            const data = await response.json();
+            const conversions = [];
+      
+            for (let i = 0; i < num; i++) {
+              const pair = { from: data[i].currency_from, to: data[i].currency_to };
+              conversions.push(pair);
+            }
+      
+            const responses = [];
+            for (const { from, to } of conversions) {
+              const pairRes = await getPair(from, to);
+              const flucRes = await getFluc(from, to);
+              pairRes.change = flucRes;
+              const indivResp = [pairRes];
+              responses.push(indivResp);
+            }
+      
+            sessionStorage.setItem('tableData', JSON.stringify(responses));
+            setTableData(responses);
+            setIsDataFetched(true);
+          } catch (error) {
+            console.log(error.message);
           }
+        };
+      
+        fetchTableData();
+      }, [num]);
   
-          const responses = [];
-          for (const { from, to } of conversions) {
-            const pairRes = await getPair(from, to);
-            const flucRes = await getFluc(from, to);
-            pairRes.change = flucRes;
-            const indivResp = [pairRes];
-            responses.push(indivResp);
-          }
-          sessionStorage.setItem('tableData', JSON.stringify(responses));
-          setTableData(responses);
-          setIsDataFetched(true);
-        } catch (error) {
-          console.log(error.message);
-        }
-      };
+    // useEffect( () => {
+    //     checkData();
+    //     const fetchTableData = async () => {
+
+    //     try {
+    //       const response = await fetch('/api/currencies', {
+    //         method: 'GET',
+    //         headers: {
+    //           'Content-Type': 'application/json',
+    //           Authorization: `Bearer ${sessionStorage.getItem('token')}`,
+    //         },
+    //       });
   
-      fetchTableData();
-    }, []);
+    //       const data = await response.json();
+    //       const conversions = [];
+    //       for (let i = 0; i < num.num; i++) {
+    //         const pair = { from: data[i].currency_from, to: data[i].currency_to };
+    //         conversions.push(pair);
+    //       }
+  
+    //       const responses = [];
+    //       for (const { from, to } of conversions) {
+    //         const pairRes = await getPair(from, to);
+    //         const flucRes = await getFluc(from, to);
+    //         pairRes.change = flucRes;
+    //         const indivResp = [pairRes];
+    //         responses.push(indivResp);
+    //       }
+    //       sessionStorage.setItem('tableData', JSON.stringify(responses));
+    //       setTableData(responses);
+    //       setIsDataFetched(true);
+    //     } catch (error) {
+    //       console.log(error.message);
+    //     }
+    //   };
+    //   fetchTableData();
+    // }, []);
   
     // Get pair from API (rate only)
     const getPair = async (fromVar, toVar) => {
@@ -149,7 +210,6 @@ const ForexTable = (num) => {
   
     return (
         <div className={classes.div}>
-            <h1 className={classes.text}>FOREX</h1>
             <div className={classes.search}>
                 <InputGroup>
                 <InputLeftElement
@@ -161,7 +221,8 @@ const ForexTable = (num) => {
                 </InputGroup>
             </div>
             <div>
-                {(hasData) ? (
+            
+                { hasData ? (
                     <div className={classes.currencyDiv}>
                     <TableContainer>
                         <Table variant='simple'>
@@ -185,6 +246,29 @@ const ForexTable = (num) => {
                     </TableContainer>
                     </div>
                 ) : (<p>No entries yet!</p>)}
+
+                {/* <div className={classes.currencyDiv}>
+                    <TableContainer>
+                        <Table variant='simple'>
+                        <Thead>
+                            <Tr>
+                            <Th>Currency Pairs</Th>
+                            <Th>Rate</Th>
+                            <Th>Fluctuation</Th>
+                            </Tr>
+                        </Thead>
+                        <Tbody>
+                            {tableData.map((data, index) => (
+                            <Tr key={index}>
+                                <Td>{data[0].from}/{data[0].to}</Td>
+                                <Td>{data[0].rate}</Td>
+                                <Td>{data[0].change}</Td>
+                            </Tr>
+                            ))}
+                        </Tbody>
+                        </Table>
+                    </TableContainer>
+                </div> */}
             </div>
       </div>
     );
