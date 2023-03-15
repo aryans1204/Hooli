@@ -68,10 +68,15 @@ function ForexTable () {
                 Authorization: `Bearer ${sessionStorage.getItem("token")}`
             }
         })
-        .then((response) => response.json())
+        .then((response) => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
         .then(() => {console.log("Data posted successfully");
             setNum(num+1);
-            setIsDataFetched(!isDataFetched);})
+            setIsDataFetched(false);})
         .catch((err) => {
             console.log(err.message);
          });
@@ -90,7 +95,17 @@ function ForexTable () {
               },
             });
       
-            const data = await response.json();
+            const allData = await response.json();
+            const sortedData = allData.sort((a, b) => {
+                if (a._id < b._id) {
+                  return -1; // a should come before b
+                }
+                if (a._id > b._id) {
+                  return 1; // a should come after b
+                }
+                return 0; // a and b are equal
+              });
+            const data = await sortedData.slice(-5); // get the 5 most recent entries
             const conversions = [];
       
             for (let i = 0; i < num; i++) {
@@ -116,45 +131,7 @@ function ForexTable () {
         };
       
         fetchTableData();
-      }, [num]);
-  
-    // useEffect( () => {
-    //     checkData();
-    //     const fetchTableData = async () => {
-
-    //     try {
-    //       const response = await fetch('/api/currencies', {
-    //         method: 'GET',
-    //         headers: {
-    //           'Content-Type': 'application/json',
-    //           Authorization: `Bearer ${sessionStorage.getItem('token')}`,
-    //         },
-    //       });
-  
-    //       const data = await response.json();
-    //       const conversions = [];
-    //       for (let i = 0; i < num.num; i++) {
-    //         const pair = { from: data[i].currency_from, to: data[i].currency_to };
-    //         conversions.push(pair);
-    //       }
-  
-    //       const responses = [];
-    //       for (const { from, to } of conversions) {
-    //         const pairRes = await getPair(from, to);
-    //         const flucRes = await getFluc(from, to);
-    //         pairRes.change = flucRes;
-    //         const indivResp = [pairRes];
-    //         responses.push(indivResp);
-    //       }
-    //       sessionStorage.setItem('tableData', JSON.stringify(responses));
-    //       setTableData(responses);
-    //       setIsDataFetched(true);
-    //     } catch (error) {
-    //       console.log(error.message);
-    //     }
-    //   };
-    //   fetchTableData();
-    // }, []);
+      }, [num, isDataFetched]);
   
     // Get pair from API (rate only)
     const getPair = async (fromVar, toVar) => {
@@ -238,7 +215,7 @@ function ForexTable () {
                             <Tr key={index}>
                                 <Td>{data[0].from}/{data[0].to}</Td>
                                 <Td>{data[0].rate}</Td>
-                                <Td>{data[0].change}</Td>
+                                <Td>{(data[0].change < 0) ? (<div style={{color: '#C90202'}}>{data[0].change}</div>) : (<div style={{color: '#00FF00'}}>{data[0].change}</div>)}</Td>
                             </Tr>
                             ))}
                         </Tbody>
