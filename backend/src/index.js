@@ -7,7 +7,6 @@ const investmentRouter = require('./routers/investments')
 const incomeRouter = require('./routers/income')
 const expenditureRouter = require('./routers/expenditure')
 
-
 const app = express()
 const port = process.env.PORT
 

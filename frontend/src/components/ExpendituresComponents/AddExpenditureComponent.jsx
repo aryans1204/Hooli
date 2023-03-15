@@ -21,8 +21,8 @@ import {
  */
 export function AddExpenditureComponent(props) {
   const initialValues = {
-    amount: null,
     memo: null,
+    amount: null,
   };
 
   const { isOpen, onOpen, onClose } = useDisclosure();

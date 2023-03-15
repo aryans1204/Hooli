@@ -1,3 +1,11 @@
-.text {
-    color: #000;
-}
+.contents {
+    color: black;
+    padding-left: 20mm;
+    text-align: center;
+  }
+  
+  .title {
+    text-align: left;
+    padding-left: 10px;
+    font-size: 40px;
+  }

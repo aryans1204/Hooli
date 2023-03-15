@@ -8,7 +8,7 @@ const mongoose = require('mongoose')
  * validator module
  * @const
  */
-const validator = require('validator')
+//const validator = require('validator')
 
 /**
  * @typedef {Object} Expenditure
@@ -20,7 +20,7 @@ const validator = require('validator')
 const expenditureSchema = new mongoose.Schema({
     memo: {
         type: String,
-        required: false
+        required: true
     },
     amount: {
         type: Number,
@@ -47,5 +47,4 @@ const expenditureSchema = new mongoose.Schema({
 })
 
 const Expenditure = mongoose.model('Expenditure', expenditureSchema)
-
 module.exports = Expenditure

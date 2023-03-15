@@ -34,8 +34,8 @@ const router = new express.Router()
  */
 router.get('/api/expenditure', auth, async (req, res) => {
     try {
-        await req.user.populate('expenditure')
-        res.send(req.user.expenditure)
+        await req.user.populate('expenditures')
+        res.send(req.user.expenditures)
     } catch (e) {
         console.log(e)
         res.status(500).send()
@@ -54,7 +54,7 @@ router.get('/api/expenditure', auth, async (req, res) => {
 router.get('/api/expenditure/:id', auth, async (req, res) => {
     try {
         const expenditure = await Expenditure.findOne({ _id: req.params.id, expenditure_owner: req.user._id })
-        if (!expenditure) throw new Error("This expenditure does not exist.")
+        if (!expenditure) re.status(404).send()
 
         res.send(expenditure)
     } catch (e) {
