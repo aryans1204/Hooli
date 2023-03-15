@@ -62,7 +62,7 @@ function SGUSGraph () {
 
     if (isLoading) {
         getGraphData();
-        return <p>Loading...</p>
+        return <p>Loading Graph...</p>
     }
 
     let lowestRate = Number.MAX_SAFE_INTEGER;

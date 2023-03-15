@@ -10,14 +10,11 @@ import SGUSGraph from './SGUSGraph';
 class Forex extends Component {
     constructor(props) {
         super(props);
-        this.state = { from: "", to: "", authenticated: null, hasData: false, num: 0, setStorage: false, hasGraph: false, graphVals: null};
+        this.state = { from: "", to: "", authenticated: null, hasData: false, num: 0, isTableUpdated: false};
 
         this.handleButton = this.handleButton.bind(this);
         this.postData = this.postData.bind(this);
         this.checkData = this.checkData.bind(this);
-        // this.getAllData = this.getAllData.bind(this);
-        // this.getPair = this.getPair.bind(this);
-        // this.getFlucs = this.getFlucs.bind(this);
       }
 
     async componentDidMount() {
@@ -54,8 +51,7 @@ class Forex extends Component {
             console.log(arr);
             let fromVar = arr[0];
             let toVar = arr[1];
-            this.setState({from: fromVar});
-            this.setState({to: toVar}, ()=>{this.getPair(fromVar, toVar); this.postData();});
+            this.setState({from: fromVar, to: toVar, isTableUpdated: true}, ()=>{this.postData();});
         }
     }
 
