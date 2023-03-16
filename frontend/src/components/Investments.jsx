@@ -11,6 +11,7 @@ class Investments extends Component {
     this.state = {
       authenticated: null,
       portfolio: null,
+      selectedIndex: null,
     };
   }
 
@@ -40,10 +41,6 @@ class Investments extends Component {
     console.log(portfolios);
     this.setState({ portfolio: portfolios });
   }
-
-  //
-  //there seems to be some error with the input data and getIncomeData is not working properly
-  //
 
   // gets user portfolio data from database
   getIncomeData() {
@@ -80,6 +77,12 @@ class Investments extends Component {
         }
       });
   }
+
+  //sets the index of the portolio that the user wants to display
+  handleSelectedIndexChange = (index) => {
+    this.setState({ selectedIndex: index });
+  };
+
   render() {
     return (
       <div>
@@ -95,7 +98,11 @@ class Investments extends Component {
         </div>
         <div className={classes.selector}>
           {this.state.portfolio && (
-            <PortfolioSelector data={this.state.portfolio}></PortfolioSelector>
+            <PortfolioSelector
+              data={this.state.portfolio}
+              index={this.state.selectedPortfolio}
+              onIndexChange={this.handleSelectedIndexChange}
+            ></PortfolioSelector>
           )}
         </div>
       </div>
