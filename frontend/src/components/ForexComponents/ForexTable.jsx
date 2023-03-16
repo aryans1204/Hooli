@@ -5,12 +5,22 @@ import { Input, InputGroup, InputLeftElement, Button,
     import { SearchIcon } from '@chakra-ui/icons';
 import classes from '../Forex.module.css';
 
+/**
+ * Returns the currency pair values in a table format
+ * @export
+ * @function
+ * @returns {string}
+ */
 function ForexTable () {
     const [isDataFetched, setIsDataFetched] = useState(false);
     const [tableData, setTableData] = useState([]);
     const [num, setNum] = useState(0);
     const [hasData, setData] = useState(false);
 
+    /**
+     * Checks that there are entries in the database and sets a number <= 5
+     * @returns {}
+     */
     function checkData () {
         fetch('/api/currencies', {
             method: 'GET',
@@ -34,8 +44,11 @@ function ForexTable () {
         });
     }
 
-
-    // String formatting to set state
+    /**
+     * Does input formatting to post data to database
+     * @async
+     * @returns {object} arr
+     */
     async function handleButton() {
         const inputElement = document.getElementById('myInput');
         var value = inputElement.value;
@@ -54,7 +67,15 @@ function ForexTable () {
         }
     }
 
-    // Post search to database
+    /**
+     * Posts searched data to database
+     * @async
+     * @function
+     * @param {string} fromVar - base currency symbol for exchange rate
+     * @param {string} toVar  - target currency symbol for exchange rate
+     * @returns {Promise}
+     * @throws {Error}
+     */
     async function postData(fromVar, toVar) {
         fetch('/api/currencies', {
             method: 'POST',
@@ -81,10 +102,24 @@ function ForexTable () {
          });
     }
 
+    /**
+     * Calls {@link fetchTableData} and sets up the component to render the table.
+     * @function
+     * @effect Calls {@link fetchTableData}
+     * @returns {void}
+     */
     useEffect(() => {
         checkData();
       
+        /**
+         * Calls the API and database to fetch table data and set the state with the results.
+         * @function
+         * @async
+         * @throws {Error} If the network response is not ok.
+         * @returns {void}
+        */
         const fetchTableData = async () => {
+          // Make a GET request to the API endpoint
           try {
             const response = await fetch('/api/currencies', {
               method: 'GET',
@@ -94,6 +129,7 @@ function ForexTable () {
               },
             });
       
+            // Parase response data to get the 5 most recent entries
             const allData = await response.json();
             const sortedData = allData.sort((a, b) => {
                 if (a._id < b._id) {
@@ -105,13 +141,15 @@ function ForexTable () {
                 return 0; // a and b are equal
               });
             const data = await sortedData.slice(-5); // get the 5 most recent entries
+
+            // Getting currency pairs from sortedData
             const conversions = [];
-      
             for (let i = 0; i < num; i++) {
               const pair = { from: data[i].currency_from, to: data[i].currency_to };
               conversions.push(pair);
             }
       
+            // Getting responses for each currency pair (rate and fluctation)
             const responses = [];
             for (const { from, to } of conversions) {
               const pairRes = await getPair(from, to);
@@ -120,7 +158,8 @@ function ForexTable () {
               const indivResp = [pairRes];
               responses.push(indivResp);
             }
-      
+            
+            // Set the table data in session storage and in state
             sessionStorage.setItem('tableData', JSON.stringify(responses));
             setTableData(responses);
             setIsDataFetched(true);
@@ -132,7 +171,14 @@ function ForexTable () {
         fetchTableData();
       }, [num, isDataFetched]);
   
-    // Get pair from API (rate only)
+    /**
+     * Get pair response from Fixer API
+     * @async
+     * @param {string} fromVar - base currency symbol for exchange rate
+     * @param {string} toVar  - target currency symbol for exchange rate
+     * @returns {Promise}
+     * @throws {Error}
+     */
     const getPair = async (fromVar, toVar) => {
         var myHeaders = new Headers();
         myHeaders.append("apikey", import.meta.env.VITE_FIXER_API_KEY);
@@ -153,7 +199,16 @@ function ForexTable () {
         return data;
     }
   
-    // fetch fluctations
+    /**
+     * Fetches fluctuation data from the API and returns the percent change value for a given currency pair within the past 7 days
+     *
+     * @async
+     * @function getFluc
+     * @param {string} fromVar - The base currency to convert from (e.g., "USD")
+     * @param {string} toVar - The target currency to convert to (e.g., "EUR")
+     * @throws {Error} When the network response is not successful
+     * @returns {Promise<number>} A Promise that resolves with the percent change value for the given currency pair within the past 7 days
+     */
     const getFluc = async (fromVar, toVar) => {
         var myHeaders = new Headers();
         myHeaders.append("apikey", import.meta.env.VITE_FIXER_API_KEY);
@@ -164,7 +219,7 @@ function ForexTable () {
             headers: myHeaders
         };
     
-        // get dates
+        // Get dates
         const curDate = new Date().toISOString().slice(0, 10);
         const lastDate = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString().slice(0, 10);
     
@@ -195,7 +250,7 @@ function ForexTable () {
                 </InputGroup>
             </div>
             <div>
-            
+                {/* Conditionally renders based on whether there is data in the database */}
                 { hasData ? (
                     <div className={classes.currencyDiv}>
                     <TableContainer>

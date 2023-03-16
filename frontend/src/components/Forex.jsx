@@ -2,17 +2,31 @@ import React, { Component, useState, useEffect} from 'react';
 import { Navigate } from "react-router-dom";
 import NavBar from './NavBar';
 import classes from './Forex.module.css';
-import { Input, InputGroup, InputLeftElement, Button, ButtonGroup} from '@chakra-ui/react';
-import { SearchIcon } from '@chakra-ui/icons';
 import ForexTable from './ForexComponents/ForexTable';
 import SGUSGraph from './ForexComponents/SGUSGraph';
 
+/**
+ * Forex class
+ * @class Forex
+ * @typedef {Forex}
+ * @extends {Component}
+ */
 class Forex extends Component {
+    /**
+     * Creates an instance of Income.
+     * @constructor
+     * @param {*} props
+     */
     constructor(props) {
         super(props);
         this.state = { from: "", to: "", authenticated: null, hasData: false, num: 0, isTableUpdated: false};
       }
 
+    /**
+     * Retrieves user profile and checks for authentiation when component is mounted
+     * @async
+     * @returns {*}
+     */
     async componentDidMount() {
         await fetch("/api/users/me", {
           method: "GET",
