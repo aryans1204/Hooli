@@ -46,7 +46,7 @@ class PersonalProfile extends Component {
           <div>Name: {this.state.name}</div>
           <div>Email: {this.state.email}</div>
           <Input placeholder='Enter Currency Pair' htmlSize={50} width='auto' variant='filled' id="myInput"/>
-          
+          <br></br>
           <DeleteAcc />
           {/* <Button colorScheme='purple' onClick={this.handleDeleteUser}>Delete Account</Button> */}
 
