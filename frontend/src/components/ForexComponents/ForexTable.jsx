@@ -3,7 +3,7 @@ import { Input, InputGroup, InputLeftElement, Button,
     Table, Thead, Tbody, Tr, 
     Th, Td, TableContainer,} from '@chakra-ui/react';
     import { SearchIcon } from '@chakra-ui/icons';
-import classes from './Forex.module.css';
+import classes from '../Forex.module.css';
 
 function ForexTable () {
     const [isDataFetched, setIsDataFetched] = useState(false);

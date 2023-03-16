@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import classes from './Forex.module.css';
+import classes from '../Forex.module.css';
 import {
     ResponsiveContainer,
     LineChart,

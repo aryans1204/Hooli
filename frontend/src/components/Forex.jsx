@@ -4,8 +4,8 @@ import NavBar from './NavBar';
 import classes from './Forex.module.css';
 import { Input, InputGroup, InputLeftElement, Button, ButtonGroup} from '@chakra-ui/react';
 import { SearchIcon } from '@chakra-ui/icons';
-import ForexTable from './ForexTable';
-import SGUSGraph from './SGUSGraph';
+import ForexTable from './ForexComponents/ForexTable';
+import SGUSGraph from './ForexComponents/SGUSGraph';
 
 class Forex extends Component {
     constructor(props) {
