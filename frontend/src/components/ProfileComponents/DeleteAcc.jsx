@@ -7,10 +7,11 @@ import {
   AlertDialogContent,
   AlertDialogOverlay,
   Button,
+  useDisclosure
 } from '@chakra-ui/react';
 
 
-function DeleteAcc () {
+export function DeleteAcc () {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const cancelRef = React.useRef()
 
@@ -50,4 +51,4 @@ function DeleteAcc () {
   )
 };
 
-export default DeleteAcc;
+//export default DeleteAcc;
