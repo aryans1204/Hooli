@@ -70,11 +70,11 @@ class Expenditures extends Component {
         }
       })
       .then((data) => {
-        const tempData = data.sort(
-          (a, b) => new Date(a.start_date) - new Date(b.start_date)
-        );
+        // const tempData = data.sort(
+        //   (a, b) => new Date(a.start_date) - new Date(b.start_date)
+        // );
         this.setState({
-          expendituresData: tempData,
+          expendituresData: data,
         });
       });
   }
@@ -89,17 +89,7 @@ class Expenditures extends Component {
           <NavBar />
         </div>
         <div className={classes.title}>My Expenditures</div>
-        <Box
-          bg="rgba(148, 114, 208, 1)"
-          w="50%"
-          h="50%"
-          color="white"
-          p="1%"
-          mt="1%"
-          ml="5%"
-          borderRadius="50"
-          overflow="hidden"
-        >
+        <Box>
           {this.state.expendituresData !== null ? (
             <ExpendituresPieChartComponent data={this.state.expendituresData} />
           ) : null}

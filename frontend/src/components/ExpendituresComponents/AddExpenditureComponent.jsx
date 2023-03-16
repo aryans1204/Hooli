@@ -45,7 +45,7 @@ export function AddExpenditureComponent(props) {
   };
 
    /**
-   * Creates new expenditure when submitted using post/api/income.
+   * Creates new expenditure when submitted using post/api/expenditure.
    */
   function handleSubmit() {
     fetch("/api/expenditure", {
