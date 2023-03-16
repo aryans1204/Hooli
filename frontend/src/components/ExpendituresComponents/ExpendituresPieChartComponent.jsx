@@ -22,16 +22,12 @@ export function ExpendituresPieChartComponent(props) {
         {name: "Others", value: 0},
     ];
 
-    console.log(result);
-
     if (result !== null) {
         result.forEach(({category, amount}) => {
             var index = pieData.findIndex(x => x.name.toLowerCase() === category.toLowerCase());
             pieData[index].value += amount;
         });
     };
-
-    console.log(pieData);
 
     const COLORS = ['#37b067', '#6296bc', '#edb40d', '#7fd7c1', '#9f8cae', 
                     '#eb6672', '#376c72', '#ee9dcc', '#e3791a', '#9f765e'];
