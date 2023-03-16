@@ -10,7 +10,7 @@ import {
   ModalCloseButton,
   useDisclosure,
 } from "@chakra-ui/react";
-import "./AddPortfolio.css";
+import classes from "./AddPortfolio.module.css";
 
 export function AddPortfolio() {
   const { isOpen, onOpen, onClose } = useDisclosure();

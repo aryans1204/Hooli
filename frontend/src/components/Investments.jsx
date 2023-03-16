@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import { Navigate } from "react-router-dom";
 import { AddPortfolio } from "./InvestmentComponents/AddPortfolio";
+import PortfolioSelector from "./InvestmentComponents/PortfolioSelector";
 import NavBar from "./NavBar";
+import classes from "./Investments.module.css";
 
 class Investments extends Component {
   constructor(props) {
@@ -36,6 +38,7 @@ class Investments extends Component {
     }
     const portfolios = JSON.parse(sessionStorage.getItem("portfolios"));
     console.log(portfolios);
+    this.setState({ portfolio: portfolios });
   }
 
   //
@@ -75,8 +78,6 @@ class Investments extends Component {
         ) {
           sessionStorage.setItem("portfolios", tempData);
         }
-
-        console.log(data);
       });
   }
   render() {
@@ -91,6 +92,11 @@ class Investments extends Component {
         </div>
         <div>
           <AddPortfolio />
+        </div>
+        <div className={classes.selector}>
+          {this.state.portfolio && (
+            <PortfolioSelector data={this.state.portfolio}></PortfolioSelector>
+          )}
         </div>
       </div>
     );

@@ -1,3 +1,6 @@
 .text {
-    color: #000;
+  color: #000;
+}
+.selector {
+  padding-left: 10%;
 }
