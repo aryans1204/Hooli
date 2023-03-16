@@ -10,8 +10,8 @@ class Investments extends Component {
     super(props);
     this.state = {
       authenticated: null,
-      portfolio: null,
-      selectedIndex: null,
+      portfolio: null, //stores all portfolios retrieved from the database
+      selectedIndex: 1, //index to access particular portfolio
     };
   }
 
