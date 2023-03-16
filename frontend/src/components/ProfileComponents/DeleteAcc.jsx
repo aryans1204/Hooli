@@ -15,6 +15,23 @@ export function DeleteAcc () {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const cancelRef = React.useRef()
 
+  async function onDelete () {
+    try {
+      const response = await fetch("/api/users/me", {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+        },
+      })
+      console.log("Account deleted successfully");
+      location.reload();
+    }
+    catch (error) {
+      console.log(error.message);
+    }
+  }
+
   return (
     <>
       <Button colorScheme='red' onClick={onOpen}>
@@ -40,7 +57,7 @@ export function DeleteAcc () {
               <Button ref={cancelRef} onClick={onClose}>
                 Cancel
               </Button>
-              <Button colorScheme='red' onClick={onClose} ml={3}>
+              <Button colorScheme='red' onClick={onDelete} ml={3}>
                 Delete
               </Button>
             </AlertDialogFooter>

@@ -14,7 +14,7 @@ class PersonalProfile extends Component {
       authenticated: null,
       inputName: '',
     };
-    this.handleDeleteUser = this.handleDeleteUser.bind(this);
+    // this.handleDeleteUser = this.handleDeleteUser.bind(this);
   }
 
   async componentDidMount() {
@@ -35,23 +35,6 @@ class PersonalProfile extends Component {
         this.setState({ name: data.name });
         this.setState({ email: data.email });
       });
-  }
-
-  async handleDeleteUser () {
-    // try {
-    //   const response = await fetch("/api/users/me", {
-    //     method: "DELETE",
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //       Authorization: `Bearer ${sessionStorage.getItem("token")}`,
-    //     },
-    //   })
-    //   console.log("Account deleted successfully");
-    //   location.reload();
-    // }
-    // catch (error) {
-    //   console.log(error.message);
-    // }
   }
 
   render() {
