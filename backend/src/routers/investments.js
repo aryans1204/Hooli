@@ -98,11 +98,11 @@ router.post('/api/investments', auth, async (req, res) => {
  * @throws {NotFoundError} Portfolio cannot be found.
  * @throws {InternalServerError}
  */
-router.get('/api/investments/:id', auth, async (req, res) => {
+router.get('/api/investments', auth, async (req, res) => {
     const _id = req.params.id
 
     try {
-        const portfolio = await Investment.findOne({ _id, portfolio_owner: req.user._id })
+        const portfolio = await Investment.findOne({ portfolio_owner: req.user._id })
 
         if (!portfolio) {
             return res.status(404).send()

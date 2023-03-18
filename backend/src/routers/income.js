@@ -87,7 +87,7 @@ router.post('/api/income', auth, async (req, res) => {
         await income.save()
         res.send(income)
     } catch (e) {
-        re.status(500).send()
+        res.status(500).send()
     }
 })
 
@@ -108,7 +108,7 @@ router.delete('/api/income/:id', auth, async (req, res) => {
         res.send(income)
 
     } catch (e) {
-        re.status(500).send()
+        res.status(500).send()
     }
 })
 
