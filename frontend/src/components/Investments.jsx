@@ -12,17 +12,12 @@ class Investments extends Component {
     this.state = {
       authenticated: null,
       portfolio: null, //stores all portfolios retrieved from the database
-      selectedIndex: 1, //index to access particular portfolio
+      selectedIndex: 0, //index to access particular portfolio
     };
   }
 
   //checks if the user is authenticated
   async componentDidMount() {
-    /*this.fetchAPIData(["AAPL", "MSFT", "TSLA", "AMZN", "NVDA", "AMD"]).then(
-      (data) => {
-        console.log(data);
-      }
-    );*/
     await fetch("/api/users/me", {
       method: "GET",
       headers: {
@@ -85,20 +80,6 @@ class Investments extends Component {
       });
   }
 
-  /*
-  fetchAPIData(tickers) {
-    const API_KEY = import.meta.env.VITE_ALPHA_VANTAGE_API_KEY;
-    //const symbol = "MSFT";
-
-    const promises = tickers.map((ticker) => {
-      return fetch(
-        `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=${ticker}&apikey=${API_KEY}`
-      ).then((response) => response.json());
-    });
-    return Promise.all(promises);
-  }
-  */
-
   //sets the index of the portolio that the user wants to display
   handleSelectedIndexChange = (index) => {
     this.setState({ selectedIndex: index });
@@ -121,7 +102,7 @@ class Investments extends Component {
           {this.state.portfolio && (
             <PortfolioSelector
               data={this.state.portfolio}
-              index={this.state.selectedPortfolio}
+              index={this.state.selectedIndex}
               onIndexChange={this.handleSelectedIndexChange}
             ></PortfolioSelector>
           )}
@@ -130,7 +111,7 @@ class Investments extends Component {
           {this.state.portfolio && (
             <GetPriceData
               data={this.state.portfolio}
-              index={this.state.selectedPortfolio}
+              index={this.state.selectedIndex}
             ></GetPriceData>
           )}
         </div>

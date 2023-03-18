@@ -6,7 +6,7 @@ function PortfolioSelector(props) {
   const [selectedPortfolioIndex, setSelectedPortfolioIndex] = useState(
     props.index
   );
-  const selectedPortfolio = props.data[selectedPortfolioIndex];
+  const selectedPortfolio = props.data[props.index];
   useEffect(() => {
     console.log(selectedPortfolio);
   }, [selectedPortfolio]);
