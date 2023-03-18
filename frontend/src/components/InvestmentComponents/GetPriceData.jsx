@@ -59,7 +59,7 @@ export function GetPriceData(props) {
           let functionKey;
           switch (commodity) {
             case "crude_oil":
-              functionKey = "WTI";
+              functionKey = "BRENT";
               break;
             case "natural_gas":
               functionKey = "NATURAL_GAS";
