@@ -95,7 +95,7 @@ export function AddExpenditureComponent(props) {
         <ModalOverlay />
         <ModalContent>
           <ModalHeader textAlign="center" fontSize="30px">
-            Add new expenditure
+            Add New Expenditure
           </ModalHeader>
           <ModalCloseButton onClick={onClose} />
           <ModalBody>
@@ -151,17 +151,8 @@ export function AddExpenditureComponent(props) {
           </ModalBody>
 
           <ModalFooter>
-            <Button
-              colorScheme="purple"
-              h="50px"
-              w="80px"
-              d="flex"
-              onClick={handleSubmit}
-            >
+            <Button onClick={handleSubmit} colorScheme="yellow">
               Save
-            </Button>
-            <Button onClick={clearState} colorScheme="yellow" pl="20px">
-              Cancel
             </Button>
             <div>
               {(() => {

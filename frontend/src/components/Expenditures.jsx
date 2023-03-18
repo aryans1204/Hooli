@@ -2,11 +2,12 @@ import React, { Component } from 'react';
 import NavBar from './NavBar';
 import classes from './Expenditures.module.css';
 import { Navigate } from "react-router-dom";
-import { Box, Flex, Button, ButtonGroup, Center } from "@chakra-ui/react";
+import { Box, Flex, Spacer, Text, Center } from "@chakra-ui/react";
 import { AddExpenditureComponent } from "./ExpendituresComponents/AddExpenditureComponent";
 import { EditExpenditureComponent } from "./ExpendituresComponents/EditExpenditureComponent";
 import { RemoveExpenditureComponent } from "./ExpendituresComponents/RemoveExpenditureComponent";
 import { ExpendituresPieChartComponent } from "./ExpendituresComponents/ExpendituresPieChartComponent";
+import { DisplayExpendituresComponent } from './ExpendituresComponents/DisplayExpendituresComponent';
 
 /**
  * Expenditures class
@@ -70,9 +71,6 @@ class Expenditures extends Component {
         }
       })
       .then((data) => {
-        // const tempData = data.sort(
-        //   (a, b) => new Date(a.start_date) - new Date(b.start_date)
-        // );
         this.setState({
           expendituresData: data,
         });
@@ -89,13 +87,37 @@ class Expenditures extends Component {
           <NavBar />
         </div>
         <div className={classes.title}>My Expenditures</div>
-        <Flex>
-          <Box className={classes.chart} w={400} h={300} borderRadius="lg" border='2px' borderColor='#55185d' overflow="hidden">
-            <div className={classes.chartTitle}>Total Expenditures by Category</div>
-            {this.state.expendituresData !== null ? (
-              <ExpendituresPieChartComponent data={this.state.expendituresData} />
-            ) : null}
-          </Box>
+        <Flex minWidth='max-content'>
+          <Center 
+            className={classes.chart} 
+            w='400px' 
+            borderRadius={25} 
+            border='2px' 
+            borderColor='#55185d' 
+            bg='white'
+            overflow="hidden">
+            <Box>
+              <Text className={classes.chartTitle}>Total Expenditures by Category </Text>
+              {this.state.expendituresData !== null ? (
+                <ExpendituresPieChartComponent data={this.state.expendituresData} />
+              ) : null}
+            </Box>
+          </Center>
+          <Spacer />
+          <Center
+            w='300px' 
+            borderRadius={25}
+            border='2px' 
+            borderColor='#55185d' 
+            overflow="hidden">
+            <Box>
+              <Text className={classes.displayExpendituresTitle}>Recent Expenditures</Text>
+              {this.state.expendituresData !== null ? (
+                <DisplayExpendituresComponent data={this.state.expendituresData} />
+              ) : null}
+            </Box>
+          </Center>
+          <Spacer />
           <AddExpenditureComponent setState={() => {this.getData();}} />
           <EditExpenditureComponent setState={() => {this.getData();}} />
           <RemoveExpenditureComponent setState={() => {this.getData();}} />

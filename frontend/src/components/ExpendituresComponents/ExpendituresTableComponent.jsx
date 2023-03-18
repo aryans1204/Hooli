@@ -21,6 +21,7 @@ function ExpendituresTableComponent(props) {
           <th>Memo</th>
           <th>Category</th>
           <th>Amount</th>
+          <th>Date</th>
         </tr>
       </thead>
       <tbody>
@@ -36,6 +37,7 @@ function ExpendituresTableComponent(props) {
             <td>{item.memo}</td>
             <td>{item.category}</td>
             <td>{item.amount}</td>
+            <td>{item.date}</td>
           </tr>
         ))}
       </tbody>

@@ -13,6 +13,8 @@ import {
   ModalCloseButton,
   useDisclosure,
 } from "@chakra-ui/react";
+import { Card, CardHeader, CardBody, CardFooter } from '@chakra-ui/react'
+import { Text } from '@chakra-ui/react'
 
 /**
  * Component for editing an expenditure.
@@ -123,7 +125,7 @@ export function EditExpenditureComponent(props) {
         <ModalOverlay />
         <ModalContent>
           <ModalHeader textAlign="center" fontSize="30px">
-            Edit expenditure
+            Edit Expenditure
           </ModalHeader>
           <ModalCloseButton onClick={onClose} />
           <ModalBody>
@@ -133,17 +135,8 @@ export function EditExpenditureComponent(props) {
             />
           </ModalBody>
           <ModalFooter>
-            <Button
-              colorScheme="purple"
-              h="50px"
-              w="80px"
-              d="flex"
-              onClick={getTargetItem}
-            >
+            <Button onClick={getTargetItem} colorScheme="yellow">
               Edit
-            </Button>
-            <Button onClick={onClose} colorScheme="yellow" pl="20px">
-              Close
             </Button>
           </ModalFooter>
         </ModalContent>
@@ -244,18 +237,17 @@ function EditDataComponent(props) {
 
   return (
     <div>
-      <Modal isOpen={props.isOpen}>
+      <Modal isOpen={props.isOpen} size="lg">
         <ModalOverlay />
         <ModalContent>
           <ModalHeader textAlign="center" fontSize="30px">
-            Edit expenditure
+            Edit Expenditure
           </ModalHeader>
           <ModalBody>
             Memo<br></br>
             <input
               type="text"
               placeholder="Enter expenditure details"
-              size="30"
               name="memo"
               onChange={handleInputChange}
             ></input>
@@ -303,18 +295,14 @@ function EditDataComponent(props) {
           </ModalBody>
 
           <ModalFooter>
-            <Button
-              colorScheme="purple"
-              h="50px"
-              w="80px"
-              d="flex"
-              onClick={handleSubmit}
-            >
+          <ButtonGroup spacing='4'>
+            <Button onClick={handleSubmit} variant="solid" colorScheme="purple" size="md">
               Save
             </Button>
-            <Button onClick={clearState} colorScheme="yellow" pl="20px">
+            <Button onClick={clearState} variant="outline" colorScheme="purple" size="md">
               Cancel
             </Button>
+            </ButtonGroup>
             <div>
               {(() => {
                 if (addSuccess == false) {

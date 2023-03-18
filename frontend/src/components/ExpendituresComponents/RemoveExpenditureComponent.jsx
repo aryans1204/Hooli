@@ -100,7 +100,7 @@ export function RemoveExpenditureComponent(props) {
         <ModalOverlay />
         <ModalContent>
           <ModalHeader textAlign="center" fontSize="30px">
-            Remove expenditure
+            Remove Expenditure
           </ModalHeader>
           <ModalCloseButton onClick={onClose} />
           <ModalBody>
@@ -110,17 +110,8 @@ export function RemoveExpenditureComponent(props) {
             />
           </ModalBody>
           <ModalFooter>
-            <Button
-              colorScheme="purple"
-              h="50px"
-              w="80px"
-              d="flex"
-              onClick={handleRemove}
-            >
+          <Button onClick={handleRemove} colorScheme="yellow">
               Remove
-            </Button>
-            <Button onClick={onClose} colorScheme="yellow" pl="20px">
-              Close
             </Button>
           </ModalFooter>
         </ModalContent>

@@ -2,6 +2,14 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { PieChart, Pie, Legend, Sector, Cell, ResponsiveContainer } from 'recharts';
 
+
+/**
+ * Expenditures pie chart component
+
+ * @export
+ * @param {*} props
+ * @returns {*}
+ */
 export function ExpendituresPieChartComponent(props) {
 
     const [result, setResult] = useState(null);
@@ -51,7 +59,7 @@ export function ExpendituresPieChartComponent(props) {
         <div>
             <div>
                 <div>
-                        <PieChart width={400} height={300} align="center">
+                        <PieChart width={400} height={300}>
                             <Legend layout="vertical" verticalAlign="center" align="top" />
                             <Pie
                                 data={pieData}
