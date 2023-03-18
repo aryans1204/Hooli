@@ -49,15 +49,14 @@ export function ExpendituresPieChartComponent(props) {
  
     return (
         <div>
-            <div className="row d-flex justify-content-center text-center">
-                <div className="col-md-8">
-                    <ResponsiveContainer width="40%" height={400} className="text-center">
-                        <PieChart width={400} height={400}>
-                            <Legend layout="vertical" verticalAlign="top" align="top" />
+            <div>
+                <div>
+                        <PieChart width={400} height={300} align="center">
+                            <Legend layout="vertical" verticalAlign="center" align="top" />
                             <Pie
                                 data={pieData}
-                                cx="52%"
-                                cy="7%"
+                                cx="60%"
+                                cy="10%"
                                 labelLine={false}
                                 label={renderCustomizedLabel}
                                 outerRadius={120}
@@ -69,7 +68,6 @@ export function ExpendituresPieChartComponent(props) {
                                 ))}
                             </Pie>
                         </PieChart>
-                    </ResponsiveContainer>
                 </div>
             </div>
         </div>

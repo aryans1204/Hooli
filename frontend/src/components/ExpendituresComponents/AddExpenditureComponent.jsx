@@ -23,6 +23,7 @@ export function AddExpenditureComponent(props) {
   const initialValues = {
     memo: null,
     amount: null,
+    date: null,
   };
 
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -58,6 +59,7 @@ export function AddExpenditureComponent(props) {
         memo: values.memo,
         category: category,
         amount: values.amount,
+        date: values.date,
       }),
     })
       .then((response) => {
@@ -67,6 +69,7 @@ export function AddExpenditureComponent(props) {
         } else {
           console.log("Success");
           setAddSuccess(true);
+          setValues(initialValues);
           return response.json();
         }
       })
@@ -133,6 +136,16 @@ export function AddExpenditureComponent(props) {
               size="30"
               required
               name="amount"
+              onChange={handleInputChange}
+            ></input>
+          </ModalBody>
+          <ModalBody>
+            Date<br></br>
+            <input
+              type="date"
+              size="30"
+              required
+              name="date"
               onChange={handleInputChange}
             ></input>
           </ModalBody>

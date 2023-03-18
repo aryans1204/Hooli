@@ -15,6 +15,7 @@ const mongoose = require('mongoose')
  * @property {String} memo
  * @property {Number} amount
  * @property {String} category
+ * @property {Date} date
  * @property {UserObject} expenditure_owner
  */
 const expenditureSchema = new mongoose.Schema({
@@ -38,6 +39,10 @@ const expenditureSchema = new mongoose.Schema({
 
             if (!allowedCats.includes(value)) throw new Error("Please choose one of the supported categories.")
         }
+    },
+    date: {
+        type: Date,
+        required: true
     },
     expenditure_owner: {
         type: mongoose.Schema.Types.ObjectId,

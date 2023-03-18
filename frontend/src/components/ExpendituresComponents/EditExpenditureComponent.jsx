@@ -161,6 +161,7 @@ function EditDataComponent(props) {
   const initialValues = {
     memo: null,
     amount: null,
+    date: null,
   };
   const [values, setValues] = useState(initialValues);
   const [category, setCategory] = useState("");
@@ -208,7 +209,7 @@ function EditDataComponent(props) {
    * Creates a new (edited) expenditure using post/api/expenditure
    */
   function handleSubmit() {
-    handleRemove().then(() => {
+    //handleRemove().then(() => {
       fetch("/api/expenditure", {
         method: "POST",
         headers: {
@@ -216,8 +217,10 @@ function EditDataComponent(props) {
           Authorization: `Bearer ${sessionStorage.getItem("token")}`,
         },
         body: JSON.stringify({
-          transaction_category: category,
+          memo: values.memo,
+          category: category,
           amount: values.amount,
+          date: values.date,
         }),
       })
         .then((response) => {
@@ -227,6 +230,8 @@ function EditDataComponent(props) {
           } else {
             console.log("Added new");
             setAddSuccess(true);
+            setValues(initialValues);
+            handleRemove();
             return response.json();
           }
         })
@@ -234,7 +239,7 @@ function EditDataComponent(props) {
           console.log(data);
           props.setState();
         });
-    });
+    //});
   }
 
   return (
@@ -243,7 +248,7 @@ function EditDataComponent(props) {
         <ModalOverlay />
         <ModalContent>
           <ModalHeader textAlign="center" fontSize="30px">
-            Add new expenditure
+            Edit expenditure
           </ModalHeader>
           <ModalBody>
             Memo<br></br>
@@ -286,6 +291,16 @@ function EditDataComponent(props) {
               onChange={handleInputChange}
             ></input>
           </ModalBody>
+          <ModalBody>
+            Date<br></br>
+            <input
+              type="date"
+              size="30"
+              required
+              name="date"
+              onChange={handleInputChange}
+            ></input>
+          </ModalBody>
 
           <ModalFooter>
             <Button
@@ -307,7 +322,7 @@ function EditDataComponent(props) {
                 } else if (addSuccess == true) {
                   return (
                     <div>
-                      <div>Successfully added expenditure!</div>
+                      <div>Successfully edited expenditure!</div>
                       <div>
                         <Button onClick={clearState}>OK</Button>
                       </div>

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import NavBar from './NavBar';
 import classes from './Expenditures.module.css';
 import { Navigate } from "react-router-dom";
-import { Box, Button, ButtonGroup } from "@chakra-ui/react";
+import { Box, Flex, Button, ButtonGroup, Center } from "@chakra-ui/react";
 import { AddExpenditureComponent } from "./ExpendituresComponents/AddExpenditureComponent";
 import { EditExpenditureComponent } from "./ExpendituresComponents/EditExpenditureComponent";
 import { RemoveExpenditureComponent } from "./ExpendituresComponents/RemoveExpenditureComponent";
@@ -89,26 +89,17 @@ class Expenditures extends Component {
           <NavBar />
         </div>
         <div className={classes.title}>My Expenditures</div>
-        <Box>
-          {this.state.expendituresData !== null ? (
-            <ExpendituresPieChartComponent data={this.state.expendituresData} />
-          ) : null}
-        </Box>
-        <AddExpenditureComponent
-          setState={() => {
-            this.getData();
-          }}
-        />
-        <EditExpenditureComponent
-          setState={() => {
-            this.getData();
-          }}
-        />
-        <RemoveExpenditureComponent
-          setState={() => {
-            this.getData();
-          }}
-        />
+        <Flex>
+          <Box className={classes.chart} w={400} h={300} borderRadius="lg" border='2px' borderColor='#55185d' overflow="hidden">
+            <div className={classes.chartTitle}>Total Expenditures by Category</div>
+            {this.state.expendituresData !== null ? (
+              <ExpendituresPieChartComponent data={this.state.expendituresData} />
+            ) : null}
+          </Box>
+          <AddExpenditureComponent setState={() => {this.getData();}} />
+          <EditExpenditureComponent setState={() => {this.getData();}} />
+          <RemoveExpenditureComponent setState={() => {this.getData();}} />
+        </Flex>
       </div>
     );
   }
