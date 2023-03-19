@@ -4,6 +4,7 @@ import { AddPortfolio } from "./InvestmentComponents/AddPortfolio";
 import { GetPriceData } from "./InvestmentComponents/GetPriceData";
 import PortfolioSelector from "./InvestmentComponents/PortfolioSelector";
 import NavBar from "./NavBar";
+import AssetTable from "./InvestmentComponents/AssetTable";
 import classes from "./Investments.module.css";
 
 class Investments extends Component {
@@ -34,7 +35,8 @@ class Investments extends Component {
     if (
       sessionStorage.getItem("portfolios") === "null" ||
       sessionStorage.getItem("portfolios") === "undefined" ||
-      sessionStorage.getItem("portfolios") === null
+      sessionStorage.getItem("portfolios") === null ||
+      sessionStorage.getItem("portfolios") === undefined
     ) {
       this.getPortfolioData();
     }
@@ -65,6 +67,7 @@ class Investments extends Component {
         }
       })
       .then((data) => {
+        console.log(data);
         this.setState({
           portfolio: data,
         });
@@ -114,6 +117,24 @@ class Investments extends Component {
               index={this.state.selectedIndex}
             ></GetPriceData>
           )}
+        </div>
+        <div className={classes.table}>
+          <h3>My Portfolio (click to show trend graph)</h3>
+          {(() => {
+            if (this.state.portfolio) {
+              return (
+                <div>
+                  <AssetTable
+                    data={this.state.portfolio[this.state.selectedIndex]}
+                  ></AssetTable>
+                </div>
+              );
+            } else {
+              return (
+                <div>No Data Available I'm sorry our API query limit is 5</div>
+              );
+            }
+          })()}
         </div>
       </div>
     );

@@ -164,7 +164,7 @@ router.get("/api/investments", auth, async (req, res) => {
           const date = now.slice(0, 8) + (getDay - i).toString();
           if (optionsData[index]["Time Series (Daily)"][date] !== undefined) {
             current_price = parseInt(
-              data[index]["Time Series (Daily)"][date]["1. open"]
+              optionsData[index]["Time Series (Daily)"][date]["1. open"]
             );
             portfolio.options[index].derivative_current_price = current_price;
             break;
