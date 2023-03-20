@@ -120,7 +120,7 @@ function AssetTable(props) {
                     : classes.ticker
                 }
               >
-                {commodity.commodity_type}
+                {commodity.commodity_type.replace("_", " ")}
               </td>
               <td>{commodity.commodity_price}</td>
             </tr>

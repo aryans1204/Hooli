@@ -99,7 +99,11 @@ class Investments extends Component {
           )}
         </div>
         <div>
-          <AddPortfolio />
+          <AddPortfolio
+            edit={() => {
+              this.getPortfolioData();
+            }}
+          />
         </div>
         <div className={classes.selector}>
           {this.state.portfolio && (
@@ -130,9 +134,7 @@ class Investments extends Component {
                 </div>
               );
             } else {
-              return (
-                <div>No Data Available I'm sorry our API query limit is 5</div>
-              );
+              return <div>No Data Available</div>;
             }
           })()}
         </div>
