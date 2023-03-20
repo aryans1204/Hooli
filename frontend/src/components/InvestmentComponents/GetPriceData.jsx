@@ -68,7 +68,7 @@ export function GetPriceData(props) {
               functionKey = "COPPER";
               break;
             case "aluminium":
-              functionKey = "ALUMINIUM";
+              functionKey = "ALUMINUM";
               break;
             case "wheat":
               functionKey = "WHEAT";

@@ -39,10 +39,11 @@ class Investments extends Component {
       sessionStorage.getItem("portfolios") === undefined
     ) {
       this.getPortfolioData();
+    } else {
+      const portfolios = JSON.parse(sessionStorage.getItem("portfolios"));
+      console.log(portfolios);
+      this.setState({ portfolio: portfolios });
     }
-    const portfolios = JSON.parse(sessionStorage.getItem("portfolios"));
-    console.log(portfolios);
-    this.setState({ portfolio: portfolios });
   }
 
   // gets user portfolio data from database
