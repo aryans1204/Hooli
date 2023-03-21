@@ -28,8 +28,6 @@ export function DisplayExpendituresComponent(props) {
         displayData[count].memo = sortedData[count].memo;
         displayData[count].amount = sortedData[count].amount;
     }
-    console.log(sortedData);
-    console.log(displayData);
   };
 
   return (

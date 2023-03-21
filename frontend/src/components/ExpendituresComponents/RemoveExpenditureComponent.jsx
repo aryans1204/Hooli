@@ -54,9 +54,9 @@ export function RemoveExpenditureComponent(props) {
         }
       })
       .then((data) => {
-        console.log(data);
+        console.log(data);    
+        props.setState();
       });
-    props.setState();
   }
 
   /**

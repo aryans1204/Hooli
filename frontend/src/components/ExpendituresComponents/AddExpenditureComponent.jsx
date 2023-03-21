@@ -64,6 +64,7 @@ export function AddExpenditureComponent(props) {
     })
       .then((response) => {
         if (response.status === 500) {
+          console.log(response.data)
           console.log("Some error occurred - " + response.status);
           setAddSuccess(false);
         } else {
@@ -79,7 +80,6 @@ export function AddExpenditureComponent(props) {
   }
 
   return (
-    // <ButtonGroup spacing="40px" float="left" pl="180px">
     <div>
       <Button
         onClick={onOpen}
@@ -116,6 +116,7 @@ export function AddExpenditureComponent(props) {
                 setCategory(event.target.value);
               }}
             >
+              <option value=''>Select one</option>
               <option value="Food">Food</option>
               <option value="Housing">Housing</option>
               <option value="Utilities">Utilities</option>
@@ -175,7 +176,6 @@ export function AddExpenditureComponent(props) {
           </ModalFooter>
         </ModalContent>
       </Modal>
-    {/* </ButtonGroup> */}
     </div>
   );
 }
