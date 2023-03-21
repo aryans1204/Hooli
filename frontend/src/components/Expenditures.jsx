@@ -123,16 +123,23 @@ class Expenditures extends Component {
           <VStack
             spacing={4}
             align='stretch'
+            width={450}
+            height={420}
           >
+          <Box
+            borderRadius={25}
+            border='2px' 
+            borderColor='#55185d' 
+            overflow="hidden"
+            height={350}>
+          {this.state.expendituresData !== null ? (
+              <DisplayAllExpendituresComponent items={this.state.expendituresData} />
+            ) : null}
+          </Box>
           <Box>
             <AddExpenditureComponent setState={() => {this.getData();}} />
             <EditExpenditureComponent setState={() => {this.getData();}} />
             <RemoveExpenditureComponent setState={() => {this.getData();}} />
-          </Box>
-          <Box>
-          {this.state.expendituresData !== null ? (
-              <DisplayAllExpendituresComponent items={this.state.expendituresData} />
-            ) : null}
           </Box>
         </VStack>
         </Flex>

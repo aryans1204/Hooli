@@ -19,9 +19,9 @@ import {
 function DisplayAllExpendituresComponent(props) {
 
   return (
-    <TableContainer maxWidth={400}>
+    <TableContainer>
     <Table variant="striped" colorScheme="purple" size="md">
-        <TableCaption placement="top">All My Expenditures</TableCaption>
+        {/* <TableCaption placement="top">All My Expenditures</TableCaption> */}
       <Thead>
         <Tr>
           <Th>Memo</Th>
