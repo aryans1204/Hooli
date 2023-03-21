@@ -5,6 +5,7 @@ import classes from './Forex.module.css';
 //import ForexTable from './ForexComponents/ForexTable';
 //import SGUSGraph from './ForexComponents/SGUSGraph';
 import RecentGraph from './ForexComponents/RecentGraph';
+import ForexTable2 from './ForexComponents/ForexTable2';
 
 /**
  * Forex class
@@ -53,9 +54,10 @@ class Forex extends Component {
             <div className={classes.div}>
                 <h1 className={classes.text}>FOREX</h1>
                 <div>
+                    <ForexTable2 />
                     {/* <ForexTable />
                     <SGUSGraph/> */}
-                    <RecentGraph />
+                    {/* <RecentGraph /> */}
                 </div>
             </div>
             </>
