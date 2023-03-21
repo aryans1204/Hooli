@@ -93,7 +93,7 @@ class Investments extends Component {
     return (
       <div>
         <NavBar />
-        <h1>Investments Page</h1>
+        <h1 className={classes.title}>Investments Page</h1>
         <div>
           {this.state.authenticated == false && (
             <Navigate to="/" replace={true} />

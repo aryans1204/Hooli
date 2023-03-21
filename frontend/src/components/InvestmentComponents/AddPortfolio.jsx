@@ -217,6 +217,7 @@ export function AddPortfolio(props) {
                 setCommodities(newCommodities);
               }}
             >
+              <option value="">Choose one</option>
               <option value="crude_oil">Crude Oil</option>
               <option value="natural_gas">Natural Gas</option>
               <option value="copper">Copper</option>

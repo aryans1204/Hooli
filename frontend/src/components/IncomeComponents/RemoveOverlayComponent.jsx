@@ -16,7 +16,6 @@ import { Navigate } from "react-router-dom";
 import classes from "./RemoveOverlayComponent.module.css";
 import DisplayTableComponent from "./DisplayTableComponent";
 
-
 /**
  * Overlay component for removing an income record.
  * @export
@@ -35,7 +34,7 @@ export function RemoveOverlayComponent(props) {
   function handleItemSelected(item) {
     setSelectedItem(item);
   }
-  
+
   /**
    * Removes selected income record using delete/api/income/:id.
    */
@@ -58,8 +57,8 @@ export function RemoveOverlayComponent(props) {
       })
       .then((data) => {
         console.log(data);
+        props.setState();
       });
-    props.setState();
   }
 
   /**

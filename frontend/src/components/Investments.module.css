@@ -8,3 +8,10 @@
 .table {
   padding-left: 5%;
 }
+
+.title {
+  color: black;
+  margin-left: 5%;
+  font-size: 40px;
+  text-align: left;
+}
