@@ -12,11 +12,11 @@ export function DisplayExpendituresComponent(props) {
   }, [props.data]);
 
   var displayData = [
-    {memo: 'No Expenditure Recorded', amount: null},
-    {memo: 'No Expenditure Recorded', amount: null},
-    {memo: 'No Expenditure Recorded', amount: null},
-    {memo: 'No Expenditure Recorded', amount: null},
-    {memo: 'No Expenditure Recorded', amount: null},
+    {memo: 'No Record', amount: null},
+    {memo: 'No Record', amount: null},
+    {memo: 'No Record', amount: null},
+    {memo: 'No Record', amount: null},
+    {memo: 'No Record', amount: null},
   ];
 
   if (result !== null) {

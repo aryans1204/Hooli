@@ -87,8 +87,7 @@ export function RemoveExpenditureComponent(props) {
     <div>
       <Button
         onClick={getData}
-        w="175px"
-        h="71px"
+        size="lg"
         borderRadius="50"
         color="white"
         bg="#3f2371"
