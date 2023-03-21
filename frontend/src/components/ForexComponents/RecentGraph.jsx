@@ -119,7 +119,7 @@ function RecentGraph () {
     }
     lowestRate = Math.floor(lowestRate * 1000) / 1000;
     highestRate = Math.ceil(highestRate * 1000) / 1000;
-    
+
     return (
         <>
             <p className={classes.graph}>{fromState} to {toState} Graph</p>
