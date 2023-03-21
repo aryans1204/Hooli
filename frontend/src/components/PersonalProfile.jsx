@@ -1,9 +1,6 @@
 import { Component, useState } from "react";
 import classes from "./PersonalProfile.module.css";
-import { Input, InputGroup, InputLeftElement, Button, FormControl,
-  FormLabel,
-  FormErrorMessage,
-  FormHelperText,} from '@chakra-ui/react';
+import {Button} from '@chakra-ui/react';
 import { Navigate } from "react-router-dom";
 import  {DeleteAcc}  from "./ProfileComponents/DeleteAcc";
 import NavBar from "./NavBar";
@@ -17,10 +14,12 @@ class PersonalProfile extends Component {
       newName: "",
       newEmail: "",
       newPassword: "",
+      repeatPassword: "",
       authenticated: null,
     };
     this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleProfileSubmit = this.handleProfileSubmit.bind(this);
+    this.handlePwdSubmit = this.handlePwdSubmit.bind(this);
   }
 
   async componentDidMount() {
@@ -49,9 +48,8 @@ class PersonalProfile extends Component {
     this.setState({[target.name]: target.value});
   }
 
-  handleSubmit = (e) => {
+  handleProfileSubmit = (e) => {
     e.preventDefault();
-    console.log(this.state);
     // Checks for name change
     if ((this.state.name != this.state.newName) && (this.state.newName != "")) {
       fetch("/api/users/me", {
@@ -66,7 +64,7 @@ class PersonalProfile extends Component {
       })
       .then ((response) => {
         if (response.status == 400) console.log("Error updating profile name!");
-        else console.log("Profile name update successful");
+        else {console.log("Profile name update successful"); alert("Name update sucessful");}
       })
       .catch((err) => {
         console.log(err.message);
@@ -86,14 +84,55 @@ class PersonalProfile extends Component {
         })
       })
       .then ((response) => {
-        if (response.status == 400) console.log("Error updating profile email!");
-        else console.log("Profile email update successful");
+        if (response.status == 400) {console.log("Error updating profile email!"); alert("Please enter a valid email");}
+        else {console.log("Profile email update successful"); alert("Email update sucessful");}
       })
       .catch((err) => {
         console.log(err.message);
       });
     }
-    location.reload();
+  }
+
+  handlePwdSubmit = (e) => {
+    e.preventDefault();
+    if (this.state.newPassword == this.state.repeatPassword) {
+      fetch("/api/users/me", {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${sessionStorage.getItem("token")}`
+        },
+        body: JSON.stringify({
+          password: this.state.newPassword,
+        })
+      })
+      .then ((response) => {
+        if (response.status == 400) {console.log("Error changing password!");}
+        else {
+          console.log("Password update successful");
+          alert("Password update sucessful. You will be signed out.");
+          // log out
+          fetch("/api/users/logout", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+            }
+          })
+          .then((response) => {
+            console.log(response.text);
+            if (response.status != 500) {
+              sessionStorage.clear();
+              window.location.assign("/");
+            }
+          })      
+        }
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
+    }
+    else (alert("Password does not match. Please try again."))
   }
 
   render() {
@@ -105,21 +144,20 @@ class PersonalProfile extends Component {
 
           <form className={classes.details}>
             <label htmlFor="fname">Name</label>
-            <input type="text" placeholder="Name" name="newName" defaultValue={this.state.name} onChange={this.handleChange} required></input>
+            <input type="text" placeholder="Name" name="newName" defaultValue={this.state.name} className={classes.textType} onChange={this.handleChange} required></input>
             <br/>
             <label htmlFor="email">Email</label>
-            <input type="email" placeholder="Email" name="newEmail" defaultValue={this.state.email} required></input>
-            {/* <input type="submit" value="Change Details" onSubmit={this.handleSubmit}></input> */}
-            <Button colorScheme='purple' onClick={this.handleSubmit}>Change Details</Button>
+            <input type="email" placeholder="Email" name="newEmail" onChange={this.handleChange} defaultValue={this.state.email} required></input>
+            <Button colorScheme='purple' onClick={this.handleProfileSubmit}>Change Details</Button>
           </form>
 
           <form className={classes.pwd}>
             <label htmlFor="pwd">Enter New Password</label>
-            <input type="password" placeholder="New Password" onChange={this.handleChange} required></input>
+            <input type="password" name="newPassword" placeholder="New Password" className={classes.pwdType} onChange={this.handleChange} required></input>
             <br/>
             <label htmlFor="pwd">Confirm New Password</label>
-            <input type="password" placeholder="Confirm New Password" onChange={this.handleChange} required></input>
-            <input type="submit" value="Change Password"></input>
+            <input type="password" name="repeatPassword" placeholder="Confirm New Password" className={classes.pwdType} onChange={this.handleChange} required></input>
+            <Button colorScheme='purple' onClick={this.handlePwdSubmit}>Change Password</Button>
           </form>
 
           <DeleteAcc />

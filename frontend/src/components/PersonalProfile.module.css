@@ -22,18 +22,7 @@ label {
   margin-right: 15px;
 }
 
-input[type="submit"] {
-  font-family: "Karla";
-  display: block;
-  margin: 0.5em 0 0 0;
-  background-color: #330c7a;
-  color: #fff;
-  border-radius: 5px;
-  font-size: 1.3em;
-  width: auto;
-}
-
-input[type="text"] {
+.details > .textType {
   background-color: #d9d9d9;
   text-align: left;
   width: 30%;
@@ -42,7 +31,7 @@ input[type="text"] {
   font-size: 1em;
 }
 
-input[type="email"] {
+.details > input[type="email"] {
   background-color: #d9d9d9;
   text-align: left;
   width: 30%;
@@ -52,7 +41,7 @@ input[type="email"] {
   margin-top: 1%;
 }
 
-input[type="password"] {
+.pwd > .pwdType {
   background-color: #d9d9d9;
   text-align: left;
   width: 30%;
