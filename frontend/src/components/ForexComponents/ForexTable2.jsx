@@ -228,6 +228,7 @@ function ForexTable2 () {
             setNum(num+1);
             setIsDataFetched(false);
             setDataChange(true);
+            setHasData(true);
             fetchNewEntry(fromVar, toVar);
         })
         .catch((err) => {
