@@ -18,6 +18,33 @@ function ForexTable2 () {
     const [num, setNum] = useState(0);
     const [hasData, setHasData] = useState(false);
     const [dataChange, setDataChange] = useState(false);
+    const [allSymbols, setAllSymbols] = useState([]);
+
+    /**
+     * Retrieves all available currency symbols from Fixer API and sets them in allSymbols state
+     * @async
+     * @function
+     * @throws {Error}
+     * @returns {Promise<void>}
+     */
+    async function getAvailableCurrencies() {
+        var myHeaders = new Headers();
+        myHeaders.append("apikey", import.meta.env.VITE_FIXER_API_KEY);
+      
+        var requestOptions = {
+            method: 'GET',
+            redirect: 'follow',
+            headers: myHeaders
+        };
+      
+        var url = "https://api.apilayer.com/fixer/symbols";
+        
+        const response = await fetch(url, requestOptions);
+        const result = await response.json();
+        let symResult = result.symbols;
+        const allCurSymbols = Object.keys(symResult);
+        setAllSymbols(allCurSymbols);
+    }
 
     /**
      * Checks that there are entries in the database and sets a number <= 5
@@ -67,7 +94,13 @@ function ForexTable2 () {
             });
             let fromVar = arr[0].toUpperCase();
             let toVar = arr[1].toUpperCase();
-            await postData(fromVar, toVar);
+            // check if entered data is a valid currency code
+            if (allSymbols.includes(fromVar) && allSymbols.includes(toVar)) {
+                await postData(fromVar, toVar);
+            } else {
+                alert("Data is not a valid currency code.");
+            }
+            
         }
         document.getElementById('myInput').value = '';
     }
@@ -280,12 +313,13 @@ function ForexTable2 () {
     }
 
     /**
-     * Calls {@link setupData} and sets up the component to render the table.
+     * Calls {@link setupData} and {@link getAvailableCurrencies} and sets up the component to render the table.
      * @function
-     * @effect Calls {@link setupData}
+     * @effect Calls {@link setupData} and {@link getAvailableCurrencies}
      * @returns {void}
      */
     useEffect(() => {
+        getAvailableCurrencies();
         setupData();
     }, [])
 
