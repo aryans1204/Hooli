@@ -128,7 +128,9 @@ function ForexTable2 () {
                     }
                     return 0; // a and b are equal
                   });
-                const data = await sortedData.slice(-5); // get the 5 most recent entries
+                const flippedData = await sortedData.slice(-5); // get the 5 most recent entries
+                const data = flippedData.reverse();
+                
                 console.log("recent 5 data is ", data);
     
                 // Getting currency pairs from sortedData
@@ -171,10 +173,12 @@ function ForexTable2 () {
     const fetchNewEntry = async (from, to) => {
         //console.log(fromData); console.log("sdfsdf");
         const pairRes = await getPair(from, to);
+        console.log("fromfetchNewEntry pair", pairRes);
         const flucRes = await getFluc(from, to);
+        console.log("fromfetchNewEntry fluc", flucRes);
         pairRes.change = flucRes;
         const latestResp = [pairRes];
-        console.log(latestResp); console.log("latestResp");
+        console.log("latestResp", latestResp);
 
         var data = sessionStorage.getItem("tableData");
         data = JSON.parse(data);
@@ -184,9 +188,10 @@ function ForexTable2 () {
             data.push(latestResp);
         }
         else { // num >= 5
-            var newData = data.slice(1);
+            var newData = data.reverse();
+            newData = data.slice(1);
             newData.push(latestResp);
-            data = newData;
+            data = newData.reverse();
         }
 
         console.log(data); console.log("DATA HERE");
