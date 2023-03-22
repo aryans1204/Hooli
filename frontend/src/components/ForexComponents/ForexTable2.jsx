@@ -106,7 +106,7 @@ function ForexTable2 () {
     const setupData = async () => {
         checkData();
 
-        if (localStorage.getItem("tableData") == null) {
+        if (sessionStorage.getItem("tableData") == null) {
             console.log("Getting initial data");
             try {
                 const response = await fetch('/api/currencies', {
@@ -154,7 +154,7 @@ function ForexTable2 () {
     
                 //console.log(responses); console.log("responses here");
     
-                localStorage.setItem('tableData', JSON.stringify(responses));
+                sessionStorage.setItem('tableData', JSON.stringify(responses));
                 setTableData(responses);
                 setIsDataFetched(true);
             }
@@ -163,7 +163,7 @@ function ForexTable2 () {
             }
         }
         console.log("No need to get initial data");
-        var storageData = localStorage.getItem("tableData");
+        var storageData = sessionStorage.getItem("tableData");
         setTableData(JSON.parse(storageData));
         setIsDataFetched(true);
     }
@@ -176,7 +176,7 @@ function ForexTable2 () {
         const latestResp = [pairRes];
         console.log(latestResp); console.log("latestResp");
 
-        var data = localStorage.getItem("tableData");
+        var data = sessionStorage.getItem("tableData");
         data = JSON.parse(data);
 
         // if num < 5, push like normal
@@ -190,7 +190,7 @@ function ForexTable2 () {
         }
 
         console.log(data); console.log("DATA HERE");
-        localStorage.setItem("tableData", JSON.stringify(data));
+        sessionStorage.setItem("tableData", JSON.stringify(data));
 
         setTableData(data);
         setIsDataFetched(true);
