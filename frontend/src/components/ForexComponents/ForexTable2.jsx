@@ -185,7 +185,9 @@ function ForexTable2 () {
 
         // if num < 5, push like normal
         if (num < 5) {
-            data.push(latestResp);
+            var newData = data.reverse();
+            newData.push(latestResp);
+            data = newData;
         }
         else { // num >= 5
             var newData = data.reverse();
