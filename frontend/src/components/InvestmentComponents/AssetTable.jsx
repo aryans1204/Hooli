@@ -1,9 +1,11 @@
 import { useState } from "react";
+import Chart from "chart.js/auto";
 import classes from "./AssetTable.module.css";
 
 function AssetTable(props) {
   const [activeTab, setActiveTab] = useState("equities");
   const [activeTicker, setActiveTicker] = useState(null);
+  const [chart, setChart] = useState(null);
 
   const handleTabClick = (tab) => {
     setActiveTab(tab);
@@ -132,12 +134,66 @@ function AssetTable(props) {
 
   const handleRowClick = (ticker) => {
     // handle row click here
+    const tickerData = JSON.parse(sessionStorage.getItem("tickerData"));
+    const selectedStock = tickerData.find(
+      (stock) => stock["Meta Data"]["2. Symbol"] === ticker
+    );
+    const dailyData = selectedStock["Time Series (Daily)"];
+
+    const adjustedClosePrices = [];
+
+    for (let date in dailyData) {
+      adjustedClosePrices.push(parseFloat(dailyData[date]["4. close"]));
+    }
+
+    // Destroy previous chart if it exists
+    if (chart) {
+      chart.destroy();
+    }
+
+    // Create new chart
+    const ctx = document.getElementById("myChart").getContext("2d");
+    const newChart = new Chart(ctx, {
+      type: "line",
+      data: {
+        labels: Object.keys(dailyData),
+        datasets: [
+          {
+            label: "Adjusted Close",
+            data: adjustedClosePrices,
+            backgroundColor: "rgba(255, 99, 132, 0.2)",
+            borderColor: "rgba(255, 99, 132, 1)",
+            borderWidth: 1,
+          },
+        ],
+      },
+      options: {
+        scales: {
+          y: {
+            ticks: {
+              callback: function (label, index, labels) {
+                // this thing isn't working, have to change later
+                if (index % 5 === 0) {
+                  return label;
+                } else {
+                  return "";
+                }
+              },
+            },
+          },
+        },
+      },
+    });
+
+    // Save chart instance to state
+    setChart(newChart);
     console.log(`Clicked on row for ${ticker}`);
     setActiveTicker(ticker);
   };
 
   return (
     <div>
+      <canvas id="myChart" style={{ height: "50vh", width: "50vw" }}></canvas>
       <div>
         <button onClick={() => handleTabClick("equities")}>Equities</button>
         <button onClick={() => handleTabClick("options")}>Options</button>
