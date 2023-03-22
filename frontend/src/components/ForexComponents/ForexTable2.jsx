@@ -4,6 +4,7 @@ import { Input, InputGroup, InputLeftElement, Button,
     Th, Td, TableContainer,} from '@chakra-ui/react';
     import { SearchIcon } from '@chakra-ui/icons';
 import classes from '../Forex.module.css';
+import RecentGraph from './RecentGraph';
 
 
 function ForexTable2 () {
@@ -11,8 +12,7 @@ function ForexTable2 () {
     const [tableData, setTableData] = useState([]);
     const [num, setNum] = useState(0);
     const [hasData, setHasData] = useState(false);
-    const [toData, setToData] = useState("");
-    const [fromData, setFromData] = useState("");
+    const [dataChange, setDataChange] = useState(false);
 
 
     function checkData () {
@@ -38,7 +38,6 @@ function ForexTable2 () {
         });
     }
 
-
     async function handleButton() {
         const inputElement = document.getElementById('myInput');
         var value = inputElement.value;
@@ -51,38 +50,10 @@ function ForexTable2 () {
             arr = arr.map(element => {
                 return element.trim();
             });
-            let fromVar = arr[0];
-            let toVar = arr[1];
+            let fromVar = arr[0].toUpperCase();
+            let toVar = arr[1].toUpperCase();
             await postData(fromVar, toVar);
         }
-    }
-
-    async function postData(fromVar, toVar) {
-        fetch('/api/currencies', {
-            method: 'POST',
-            body: JSON.stringify({
-                currency_from: fromVar,
-                currency_to: toVar
-            }),
-            headers: {
-                'Content-Type': 'application/json',
-                Authorization: `Bearer ${sessionStorage.getItem("token")}`
-            }
-        })
-        .then((response) => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json();
-        })
-        .then(() => {console.log("Data posted successfully");
-            setToData(toVar);
-            setFromData(fromVar);
-            setNum(num+1);
-            setIsDataFetched(false);})
-        .catch((err) => {
-            console.log(err.message);
-         });
     }
 
     const getPair = async (fromVar, toVar) => {
@@ -99,13 +70,12 @@ function ForexTable2 () {
         
         const response = await fetch(url, requestOptions);
         const result = await response.json();
-        console.log(result); console.log("PAIR RESULT IS HERE");
+        console.log("PAIR RESULT IS HERE", result);
         let key = String(Object.keys(result.rates));
         let rateData = result.rates[key].toFixed(2);
         var data = {from: fromVar, to: toVar, rate: rateData, change: null};
         return data;
     }
-  
 
     const getFluc = async (fromVar, toVar) => {
         var myHeaders = new Headers();
@@ -133,68 +103,139 @@ function ForexTable2 () {
 
     // calling for initial data and API data
     const setupData = async () => {
-        try {
-            const response = await fetch('/api/currencies', {
-              method: 'GET',
-              headers: {
+        checkData();
+
+        if (localStorage.getItem("tableData") == null) {
+            console.log("Getting initial data");
+            try {
+                const response = await fetch('/api/currencies', {
+                  method: 'GET',
+                  headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${sessionStorage.getItem('token')}`,
+                  },
+                });
+          
+                // Parase response data to get the 5 most recent entries
+                const allData = await response.json();
+                const sortedData = allData.sort((a, b) => {
+                    if (a._id < b._id) {
+                      return -1; // a should come before b
+                    }
+                    if (a._id > b._id) {
+                      return 1; // a should come after b
+                    }
+                    return 0; // a and b are equal
+                  });
+                const data = await sortedData.slice(-5); // get the 5 most recent entries
+                console.log("recent 5 data is ", data);
+    
+                // Getting currency pairs from sortedData
+                const conversions = [];
+                for (let i = 0; i < data.length; i++) {
+                  const pair = { from: data[i].currency_from, to: data[i].currency_to };
+                  conversions.push(pair);
+                }
+          
+                // Getting responses for each currency pair (rate and fluctation)
+                const responses = [];
+                for (const { from, to } of conversions) {
+                    //console.log(typeof(from), to);
+                  const pairRes = await getPair(from, to);
+                  const flucRes = await getFluc(from, to);
+                //   console.log(pairRes); console.log("PAIR DATA HERE");
+                //   console.log(flucRes); console.log("FLUC DATA HERE");
+                  pairRes.change = flucRes;
+                  const indivResp = [pairRes];
+                //   console.log(indivResp); console.log("INDIV RESP");
+                  responses.push(indivResp);
+                }
+    
+                //console.log(responses); console.log("responses here");
+    
+                localStorage.setItem('tableData', JSON.stringify(responses));
+                setTableData(responses);
+                setIsDataFetched(true);
+            }
+            catch (error) {
+                console.log(error.message);
+            }
+        }
+        console.log("No need to get initial data");
+        var storageData = localStorage.getItem("tableData");
+        setTableData(JSON.parse(storageData));
+        setIsDataFetched(true);
+    }
+
+    const fetchNewEntry = async (from, to) => {
+        //console.log(fromData); console.log("sdfsdf");
+        const pairRes = await getPair(from, to);
+        const flucRes = await getFluc(from, to);
+        pairRes.change = flucRes;
+        const latestResp = [pairRes];
+        console.log(latestResp); console.log("latestResp");
+
+        var data = localStorage.getItem("tableData");
+        data = JSON.parse(data);
+
+        // if num < 5, push like normal
+        if (num < 5) {
+            data.push(latestResp);
+        }
+        else { // num >= 5
+            var newData = data.slice(1);
+            newData.push(latestResp);
+            data = newData;
+        }
+
+        console.log(data); console.log("DATA HERE");
+        localStorage.setItem("tableData", JSON.stringify(data));
+
+        setTableData(data);
+        setIsDataFetched(true);
+    }
+
+    async function postData(fromVar, toVar) {
+        setDataChange(false);
+        fetch('/api/currencies', {
+            method: 'POST',
+            body: JSON.stringify({
+                currency_from: fromVar,
+                currency_to: toVar
+            }),
+            headers: {
                 'Content-Type': 'application/json',
-                Authorization: `Bearer ${sessionStorage.getItem('token')}`,
-              },
-            });
-      
-            // Parase response data to get the 5 most recent entries
-            const allData = await response.json();
-            const sortedData = allData.sort((a, b) => {
-                if (a._id < b._id) {
-                  return -1; // a should come before b
-                }
-                if (a._id > b._id) {
-                  return 1; // a should come after b
-                }
-                return 0; // a and b are equal
-              });
-            const data = await sortedData.slice(-5); // get the 5 most recent entries
-            console.log(data); console.log("recent 5 data above");
-
-            // Getting currency pairs from sortedData
-            const conversions = [];
-            for (let i = 0; i < data.length; i++) {
-              const pair = { from: data[i].currency_from, to: data[i].currency_to };
-              conversions.push(pair);
+                Authorization: `Bearer ${sessionStorage.getItem("token")}`
             }
-      
-            // Getting responses for each currency pair (rate and fluctation)
-            const responses = [];
-            for (const { from, to } of conversions) {
-                console.log(from, to);
-            //   const pairRes = await getPair(from, to);
-            //   const flucRes = await getFluc(from, to);
-            //   console.log(pairRes); console.log("PAIR DATA HERE");
-            //   console.log(flucRes); console.log("FLUC DATA HERE");
-            //   pairRes.change = flucRes;
-            //   const indivResp = [pairRes];
-            //   console.log(indivResp); console.log("INDIV RESP");
-            //   responses.push(indivResp);
+        })
+        .then((response) => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
             }
-
-            // console.log(responses); console.log("responses here");
-
-            // //sessionStorage.setItem('tableData', JSON.stringify(responses));
-            // setTableData(responses);
-            // setIsDataFetched(true);
-        }
-        catch (error) {
-            console.log(error.message);
-        }
+            return response.json();
+        })
+        .then(() => {console.log("Data posted successfully");
+            // setToData(toVar);
+            // setFromData(fromVar);
+            setNum(num+1);
+            setIsDataFetched(false);
+            setDataChange(true);
+            fetchNewEntry(fromVar, toVar);
+        })
+        .catch((err) => {
+            console.log(err.message);
+         });
     }
 
     useEffect(() => {
         setupData();
     }, [])
 
-    // useEffect(() => {
-    //     checkData();
+    useEffect(() => {
+        <RecentGraph />
+    }, [dataChange])
 
+    // useEffect(() => {
     //     // get API data of last entry post
     //     const fetchNewEntry = async () => {
     //         console.log(fromData); console.log("sdfsdf");
@@ -202,10 +243,11 @@ function ForexTable2 () {
     //         const flucRes = await getFluc(fromData, toData);
     //         pairRes.change = flucRes;
     //         const latestResp = [pairRes];
-    //         console.log(latestResp);
+    //         //console.log(latestResp);
 
     //         const data = sessionStorage.getItem("tableData");
     //         data.push(latestResp);
+    //         console.log(data); console.log("NEW DATA HERE");
     //         // const data = tableData;
     //         // data.push(latestResp);
     //         setTableData(data);
@@ -215,7 +257,23 @@ function ForexTable2 () {
     //   }, [num, isDataFetched]);
   
     if (!isDataFetched) {
-      return <p>Loading Table...</p>;
+      return (
+        <>
+        <div className={classes.div}>
+            <div className={classes.search}>
+                <InputGroup>
+                <InputLeftElement
+                    pointerEvents='none'
+                    children={<SearchIcon color='gray.600' />}
+                />
+                <Input placeholder='Enter Currency Pair' htmlSize={50} width='auto' variant='filled' id="myInput"/>
+                <Button colorScheme='purple' className={classes.button}>Search</Button>
+                </InputGroup>
+            </div>
+        <p>Loading Table...</p>
+        </div>
+        </>
+        )  
     }
   
     return (
