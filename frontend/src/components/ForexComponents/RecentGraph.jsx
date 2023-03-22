@@ -28,7 +28,13 @@ function RecentGraph () {
     const curDate = new Date().toISOString().slice(0, 10);
     const lastDate = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString().slice(0, 10);
 
-    // Check if there are entries in the database and take the last data entry
+    /**
+     * Retrieves the most recent entry in the database
+     * @async
+     * @function
+     * @returns {Promise<object>}
+     * @throws {Error}
+     */
     const getDBData = async () => {
         try {
             const response = await fetch('/api/currencies', {
@@ -61,6 +67,14 @@ function RecentGraph () {
         };
     }
 
+    /**
+     * Fetches data from the Fixer API and stores it in sessionStorage.
+     * Sets the graph data and isLoading state accordingly.
+     *
+     * @function
+     * @returns {Promise<void>}
+     * @throws {Error}
+     */
     const getGraphData = async () => {
         const pair = await getDBData();
         const fromVar = pair[0]["currency_from"];
@@ -83,20 +97,15 @@ function RecentGraph () {
         fetch(url, requestOptions)
         .then(response => response.json())
         .then(result => {
-            //console.log(result); console.log("IT IS HERE");
             result = result.rates;
             for (const date in result) {
                 const data = result[date][toVar];
                 graphArr.push({date: date, rate: data});
             }
 
-            //console.log(graphArr);
-
             sessionStorage.setItem("graph", JSON.stringify(graphArr)); 
             setGraphData(graphArr);
             setIsLoading(false);
-            //console.log(graphData);
-            //console.log("DATAAAAAAAA");
         })
         .catch(error => console.log('error', error));
     }
