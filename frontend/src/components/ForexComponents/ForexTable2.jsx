@@ -224,7 +224,7 @@ function ForexTable2 () {
         if (num < 5) {
             var newData = data.reverse();
             newData.push(latestResp);
-            data = newData;
+            data = newData.reverse();
         }
         else { // num >= 5
             var newData = data.reverse();
@@ -233,7 +233,6 @@ function ForexTable2 () {
             data = newData.reverse();
         }
 
-        console.log(data); console.log("DATA HERE");
         sessionStorage.setItem("tableData", JSON.stringify(data));
 
         setTableData(data);
