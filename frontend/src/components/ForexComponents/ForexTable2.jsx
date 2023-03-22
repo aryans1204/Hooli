@@ -6,7 +6,12 @@ import { Input, InputGroup, InputLeftElement, Button,
 import classes from '../Forex.module.css';
 import RecentGraph from './RecentGraph';
 
-
+/**
+ * Returns the currency pair values in a table format
+ * @export
+ * @function
+ * @returns {string}
+ */
 function ForexTable2 () {
     const [isDataFetched, setIsDataFetched] = useState(false);
     const [tableData, setTableData] = useState([]);
@@ -14,7 +19,11 @@ function ForexTable2 () {
     const [hasData, setHasData] = useState(false);
     const [dataChange, setDataChange] = useState(false);
 
-
+    /**
+     * Checks that there are entries in the database and sets a number <= 5
+     * @function
+     * @returns {}
+     */
     function checkData () {
         fetch('/api/currencies', {
             method: 'GET',
@@ -38,6 +47,12 @@ function ForexTable2 () {
         });
     }
 
+    /**
+     * Does input formatting to post data to database
+     * @async
+     * @function
+     * @returns {object} arr
+     */
     async function handleButton() {
         const inputElement = document.getElementById('myInput');
         var value = inputElement.value;
@@ -57,6 +72,15 @@ function ForexTable2 () {
         document.getElementById('myInput').value = '';
     }
 
+
+    /**
+     * Get pair response from Fixer API
+     * @async
+     * @param {string} fromVar - base currency symbol for exchange rate
+     * @param {string} toVar  - target currency symbol for exchange rate
+     * @returns {Promise<object>} - A Promise that resolves with the object of the pair data
+     * @throws {Error}
+     */
     const getPair = async (fromVar, toVar) => {
         var myHeaders = new Headers();
         myHeaders.append("apikey", import.meta.env.VITE_FIXER_API_KEY);
@@ -78,6 +102,16 @@ function ForexTable2 () {
         return data;
     }
 
+    /**
+     * Fetches fluctuation data from the API and returns the percent change value for a given currency pair within the past 7 days
+     *
+     * @async
+     * @function getFluc
+     * @param {string} fromVar - The base currency to convert from (e.g., "USD")
+     * @param {string} toVar - The target currency to convert to (e.g., "EUR")
+     * @throws {Error} When the network response is not successful
+     * @returns {Promise<number>} A Promise that resolves with the percent change value for the given currency pair within the past 7 days
+     */
     const getFluc = async (fromVar, toVar) => {
         var myHeaders = new Headers();
         myHeaders.append("apikey", import.meta.env.VITE_FIXER_API_KEY);
@@ -102,7 +136,15 @@ function ForexTable2 () {
         return changeVal;
     }
 
-    // calling for initial data and API data
+    /**
+     * Fetches the initial data from the server and API.
+     * It checks if data is already stored in session storage and fetches the data if it is not.
+     * It stores the fetched data in session storage and sets tableData and isDataFetched states
+     * @async
+     * @function setupData
+     * @throws {Error} if there is an error during the fetch call
+     * @returns {Promise<void>}
+     */
     const setupData = async () => {
         checkData();
 
@@ -117,7 +159,7 @@ function ForexTable2 () {
                   },
                 });
           
-                // Parase response data to get the 5 most recent entries
+                // Parse response data to get the 5 most recent entries
                 const allData = await response.json();
                 const sortedData = allData.sort((a, b) => {
                     if (a._id < b._id) {
@@ -170,6 +212,14 @@ function ForexTable2 () {
         setIsDataFetched(true);
     }
 
+    /**
+     * Fetches data for the new currency entry
+     * Adds new data to stored data in session storage and updates table on webpage
+     * @async
+     * @param {string} from - currency code for base
+     * @param {string} to - currency code for symbol
+     * @throws {Error}
+     */
     const fetchNewEntry = async (from, to) => {
         //console.log(fromData); console.log("sdfsdf");
         const pairRes = await getPair(from, to);
@@ -203,6 +253,15 @@ function ForexTable2 () {
         setIsDataFetched(true);
     }
 
+    /**
+     * Posts searched data to database
+     * @async
+     * @function
+     * @param {string} fromVar - base currency symbol for exchange rate
+     * @param {string} toVar  - target currency symbol for exchange rate
+     * @returns {Promise}
+     * @throws {Error}
+     */
     async function postData(fromVar, toVar) {
         setDataChange(false);
         fetch('/api/currencies', {
@@ -236,36 +295,28 @@ function ForexTable2 () {
          });
     }
 
+    /**
+     * Calls {@link setupData} and sets up the component to render the table.
+     * @function
+     * @effect Calls {@link setupData}
+     * @returns {void}
+     */
     useEffect(() => {
         setupData();
     }, [])
 
+    /**
+     * Renders <RecentGraph/> after every change of dataChange
+     * @function
+     * @param {function} callback - function to be executed after every change in dataChange
+     * @param {array} dependencies
+     * @returns {void}
+     */
     useEffect(() => {
         <RecentGraph />
     }, [dataChange])
-
-    // useEffect(() => {
-    //     // get API data of last entry post
-    //     const fetchNewEntry = async () => {
-    //         console.log(fromData); console.log("sdfsdf");
-    //         const pairRes = await getPair(fromData, toData);
-    //         const flucRes = await getFluc(fromData, toData);
-    //         pairRes.change = flucRes;
-    //         const latestResp = [pairRes];
-    //         //console.log(latestResp);
-
-    //         const data = sessionStorage.getItem("tableData");
-    //         data.push(latestResp);
-    //         console.log(data); console.log("NEW DATA HERE");
-    //         // const data = tableData;
-    //         // data.push(latestResp);
-    //         setTableData(data);
-    //         setIsDataFetched(true);
-    //     }
-    //     fetchNewEntry();
-    //   }, [num, isDataFetched]);
   
-    if (!isDataFetched) {
+    if (!isDataFetched) { // renders just the search bar
       return (
         <>
         <div className={classes.div}>
