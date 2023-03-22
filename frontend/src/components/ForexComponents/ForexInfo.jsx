@@ -12,7 +12,7 @@ import RecentGraph from './RecentGraph';
  * @function
  * @returns {string}
  */
-function ForexTable2 () {
+function ForexInfo () {
     const [isDataFetched, setIsDataFetched] = useState(false);
     const [tableData, setTableData] = useState([]);
     const [num, setNum] = useState(0);
@@ -400,4 +400,4 @@ function ForexTable2 () {
     );
   };
   
-  export default ForexTable2;
+  export default ForexInfo;
