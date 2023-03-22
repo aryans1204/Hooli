@@ -95,7 +95,6 @@ function ForexTable2 () {
         
         const response = await fetch(url, requestOptions);
         const result = await response.json();
-        console.log("PAIR RESULT IS HERE", result);
         let key = String(Object.keys(result.rates));
         let rateData = result.rates[key].toFixed(2);
         var data = {from: fromVar, to: toVar, rate: rateData, change: null};
@@ -172,8 +171,6 @@ function ForexTable2 () {
                   });
                 const flippedData = await sortedData.slice(-5); // get the 5 most recent entries
                 const data = flippedData.reverse();
-                
-                console.log("recent 5 data is ", data);
     
                 // Getting currency pairs from sortedData
                 const conversions = [];
@@ -185,18 +182,12 @@ function ForexTable2 () {
                 // Getting responses for each currency pair (rate and fluctation)
                 const responses = [];
                 for (const { from, to } of conversions) {
-                    //console.log(typeof(from), to);
                   const pairRes = await getPair(from, to);
                   const flucRes = await getFluc(from, to);
-                //   console.log(pairRes); console.log("PAIR DATA HERE");
-                //   console.log(flucRes); console.log("FLUC DATA HERE");
                   pairRes.change = flucRes;
                   const indivResp = [pairRes];
-                //   console.log(indivResp); console.log("INDIV RESP");
                   responses.push(indivResp);
                 }
-    
-                //console.log(responses); console.log("responses here");
     
                 sessionStorage.setItem('tableData', JSON.stringify(responses));
                 setTableData(responses);
@@ -221,14 +212,10 @@ function ForexTable2 () {
      * @throws {Error}
      */
     const fetchNewEntry = async (from, to) => {
-        //console.log(fromData); console.log("sdfsdf");
         const pairRes = await getPair(from, to);
-        console.log("fromfetchNewEntry pair", pairRes);
         const flucRes = await getFluc(from, to);
-        console.log("fromfetchNewEntry fluc", flucRes);
         pairRes.change = flucRes;
         const latestResp = [pairRes];
-        console.log("latestResp", latestResp);
 
         var data = sessionStorage.getItem("tableData");
         data = JSON.parse(data);
@@ -282,8 +269,6 @@ function ForexTable2 () {
             return response.json();
         })
         .then(() => {console.log("Data posted successfully");
-            // setToData(toVar);
-            // setFromData(fromVar);
             setNum(num+1);
             setIsDataFetched(false);
             setDataChange(true);
