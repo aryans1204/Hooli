@@ -54,6 +54,7 @@ function ForexTable2 () {
             let toVar = arr[1].toUpperCase();
             await postData(fromVar, toVar);
         }
+        document.getElementById('myInput').value = '';
     }
 
     const getPair = async (fromVar, toVar) => {
@@ -312,6 +313,8 @@ function ForexTable2 () {
                         </Tbody>
                         </Table>
                     </TableContainer>
+
+                    <RecentGraph/>
                     </div>
 
                 ) : (<p>No entries yet!</p>)}
