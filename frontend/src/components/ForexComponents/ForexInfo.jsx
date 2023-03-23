@@ -344,7 +344,7 @@ function ForexInfo () {
                     pointerEvents='none'
                     children={<SearchIcon color='gray.600' />}
                 />
-                <Input placeholder='Enter Currency Pair' htmlSize={50} width='auto' variant='filled' id="myInput"/>
+                <Input placeholder='Enter Currency Pair (e.g. USD/SGD)' htmlSize={50} width='auto' variant='filled' id="myInput"/>
                 <Button colorScheme='purple' className={classes.button}>Search</Button>
                 </InputGroup>
             </div>
@@ -362,7 +362,7 @@ function ForexInfo () {
                     pointerEvents='none'
                     children={<SearchIcon color='gray.600' />}
                 />
-                <Input placeholder='Enter Currency Pair' htmlSize={50} width='auto' variant='filled' id="myInput"/>
+                <Input placeholder='Enter Currency Pair (e.g. USD/SGD)' htmlSize={50} width='auto' variant='filled' id="myInput"/>
                 <Button colorScheme='purple' onClick={handleButton} className={classes.button}>Search</Button>
                 </InputGroup>
             </div>
