@@ -1,3 +1,26 @@
+.div {
+    margin-left: 80px;
+}
+
+.button {
+    margin-left: 5px;
+}
+
+.search {
+    margin: auto;
+    width: 50%;
+}
+
 .text {
     color: #000;
+    padding: 0;
+}
+
+.currencyDiv {
+    margin: 10px 70px 10px 70px;
+
+}
+
+.graph {
+    font-size: 2em;
 }
