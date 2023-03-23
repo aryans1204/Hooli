@@ -14,9 +14,14 @@ import classes from "./EditPortfolio.module.css";
 
 export default function EditPortfolio(props) {
   const [activeTab, setActiveTab] = useState("equities");
+  const [selectedItem, setSelectedItem] = useState(null);
 
   const handleTabClick = (tab) => {
     setActiveTab(tab);
+  };
+
+  const handleItemClick = (item) => {
+    setSelectedItem(item);
   };
 
   const renderEquities = () => {
@@ -28,6 +33,7 @@ export default function EditPortfolio(props) {
       <table>
         <thead>
           <tr>
+            <th></th>
             <th>Ticker</th>
             <th>Buy Price</th>
             <th>Current Price</th>
@@ -37,6 +43,13 @@ export default function EditPortfolio(props) {
         <tbody>
           {equities.map((equity, index) => (
             <tr key={index}>
+              <td>
+                <input
+                  type="checkbox"
+                  checked={selectedItem === equity}
+                  onChange={() => handleItemClick(equity)}
+                />
+              </td>
               <td>{equity.equity_ticker}</td>
               <td>{equity.equity_buy_price}</td>
               <td>{equity.equity_current_price}</td>
@@ -60,6 +73,7 @@ export default function EditPortfolio(props) {
       <table>
         <thead>
           <tr>
+            <th></th>
             <th>Ticker</th>
             <th>Option Type</th>
             <th>Current Price</th>
@@ -70,6 +84,13 @@ export default function EditPortfolio(props) {
         <tbody>
           {options.map((option, index) => (
             <tr key={index}>
+              <td>
+                <input
+                  type="checkbox"
+                  checked={selectedItem === option}
+                  onChange={() => handleItemClick(option)}
+                />
+              </td>
               <td>{option.derivative_ticker || "NA"}</td>
               <td>{option.option_type || "NA"}</td>
               <td>{option.derivative_current_price || "NA"}</td>

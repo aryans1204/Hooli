@@ -149,6 +149,7 @@ export function AddPortfolio(props) {
                 setOptions(newOptions);
               }}
             >
+              <option value="">Choose one</option>
               <option value="call">Call</option>
               <option value="put">Put</option>
             </select>
