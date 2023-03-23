@@ -174,39 +174,6 @@ router.get("/api/investments", auth, async (req, res) => {
       });
       console.log("options here");
       console.log(portfolio.options);
-      portfolio.commodities.forEach((commodity) => {
-        keys_obj = {
-          crude_oil: "BRENT",
-          natural_gas: "NATURAL_GAS",
-          copper: "COPPER",
-          aluminum: "ALUMINUM",
-          coffee: "COFFEE",
-          wheat: "WHEAT",
-        };
-
-        var url = `https://www.alphavantage.co/query?function=${
-          keys_obj[commodity.commodity_type]
-        }&interval=monthly&apikey=${process.env.ALPHA_VANTAGE_API_KEY}`;
-
-        request.get(
-          {
-            url: url,
-            json: true,
-            headers: { "User-Agent": "request" },
-          },
-          (err, res, data) => {
-            if (err) {
-              console.log("Error:", err);
-            } else if (res.statusCode !== 200) {
-              console.log("Status:", res.statusCode);
-            }
-            const current_price = data.data[0].value;
-            commodity.commodity_price = current_price;
-          }
-        );
-      });
-      console.log("commodities here");
-      console.log(portfolio.commodities);
       await portfolio.save();
     }
     res.send(portfolios);
@@ -317,65 +284,6 @@ router.patch("/api/investments/options/:id", auth, async (req, res) => {
 });
 
 /**
- * Route to update an existing commodity in a portfolio by ID.
- * @name patch/api/investments/commodities/:id
- * @async
- * @param {String} path
- * @param {Object} auth
- * @param {callback} middleware
- * @throws {NotFoundError} Portfolio cannot be found.
- * @throws {BadRequestError}
- */
-router.patch("/api/investments/commodities/:id", auth, async (req, res) => {
-  try {
-    const portfolio = await Investment.findOne({
-      _id: req.users._id,
-      portfolio_owner: req.user._id,
-    });
-    if (!portfolio) {
-      res.status(404).send();
-    }
-    keys_obj = {
-      crude_oil: "BRENT",
-      natural_gas: "NATURAL_GAS",
-      copper: "COPPER",
-      aluminum: "ALUMINUM",
-      coffee: "COFFEE",
-      wheat: "WHEAT",
-    };
-    let now = new Date();
-    var url = `https://www.alphavantage.co/query?function=${
-      keys_obj[req.body.commodity_type]
-    }&interval=monthly&apikey=${process.env.ALPHA_VANTAGE_API_KEY}`;
-
-    request.get(
-      {
-        url: url,
-        json: true,
-        headers: { "User-Agent": "request" },
-      },
-      async (err, res, data) => {
-        if (err) {
-          console.log("Error:", err);
-        } else if (res.statusCode !== 200) {
-          console.log("Status:", res.statusCode);
-        }
-        const current_price = data.data[0].value;
-
-        portfolio.commodities.concat({
-          commodity_type: req.body.commodity_type,
-          commodity_price: current_price,
-        });
-        await portfolio.save();
-        res.send(portfolio);
-      }
-    );
-  } catch (e) {
-    res.status(400).send(e);
-  }
-});
-
-/**
  * Route to delete an entire portfolio.
  * @name delete/api/investments/:id
  * @async
@@ -458,35 +366,6 @@ router.delete("/api/investments/options/:id", auth, async (req, res) => {
     portfolio.options = opt;
     await portfolio.save();
     res.send(portfolio);
-  } catch (e) {
-    res.status(500).send();
-  }
-});
-
-/**
- * Route to delete a commodity in a portfolio.
- * @name delete/api/investments/commodities/:id
- * @async
- * @param {String} path
- * @param {Object} auth
- * @param {callback} middleware
- * @throws {InternalServerError}
- */
-router.delete("/api/investments/commodities/:id", auth, async (req, res) => {
-  try {
-    const portfolio = await Investment.findOne({
-      _id: req.params._id,
-      portfolio_owner: req.user._id,
-    });
-    const com = portfolio.commodities;
-    const del_val = req.body.commodity_type;
-    com.forEach((commodity) => {
-      if (commodity.commodity_type === del_val) {
-        com.remove(com.indexOf(commodity));
-      }
-    });
-    portfolio.commodities = com;
-    await portfolio.save();
   } catch (e) {
     res.status(500).send();
   }

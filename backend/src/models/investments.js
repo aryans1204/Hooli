@@ -85,35 +85,6 @@ const investmentSchema = new mongoose.Schema(
         },
       },
     ],
-    /**
-     * @memberof Investment
-     * @property {String} commodity_type
-     * @property {Number} commodity_price
-     */
-    commodities: [
-      {
-        commodity_type: {
-          type: String,
-          required: false,
-          validate(value) {
-            const accepted_values = [
-              "crude_oil",
-              "natural_gas",
-              "copper",
-              "aluminium",
-              "wheat",
-              "coffee",
-            ];
-            if (!accepted_values.includes(value))
-              throw new Error("Commodity type not supported.");
-          },
-        },
-        commodity_price: {
-          type: Number,
-          required: false,
-        },
-      },
-    ],
     portfolio_owner: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,
