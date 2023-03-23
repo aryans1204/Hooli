@@ -11,6 +11,7 @@ import Expenditures from "./components/Expenditures";
 import Income from "./components/Income";
 import Investments from "./components/Investments";
 import Forex from "./components/Forex";
+
 import { ChakraProvider } from "@chakra-ui/react";
 
 function App() {
