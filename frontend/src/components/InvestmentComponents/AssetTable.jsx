@@ -153,6 +153,9 @@ function AssetTable(props) {
 
     // Create new chart
     const ctx = document.getElementById("myChart").getContext("2d");
+    ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+    //ctx.canvas.width = 400;
+    //ctx.canvas.height = 400;
     const newChart = new Chart(ctx, {
       type: "line",
       data: {
@@ -193,7 +196,10 @@ function AssetTable(props) {
 
   return (
     <div>
-      <canvas id="myChart" style={{ height: "50vh", width: "50vw" }}></canvas>
+      <canvas
+        id="myChart"
+        style={{ height: "500px", width: "1000px" }}
+      ></canvas>
       <div>
         <button onClick={() => handleTabClick("equities")}>Equities</button>
         <button onClick={() => handleTabClick("options")}>Options</button>

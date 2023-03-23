@@ -5,6 +5,7 @@ import { GetPriceData } from "./InvestmentComponents/GetPriceData";
 import PortfolioSelector from "./InvestmentComponents/PortfolioSelector";
 import NavBar from "./NavBar";
 import AssetTable from "./InvestmentComponents/AssetTable";
+import EditPortfolio from "./InvestmentComponents/EditPortfolio";
 import classes from "./Investments.module.css";
 
 class Investments extends Component {
@@ -99,13 +100,7 @@ class Investments extends Component {
             <Navigate to="/" replace={true} />
           )}
         </div>
-        <div>
-          <AddPortfolio
-            edit={() => {
-              this.getPortfolioData();
-            }}
-          />
-        </div>
+
         <div className={classes.selector}>
           {this.state.portfolio && (
             <PortfolioSelector
@@ -125,19 +120,37 @@ class Investments extends Component {
         </div>
         <div className={classes.table}>
           <h3>My Portfolio (click to show trend graph)</h3>
-          {(() => {
-            if (this.state.portfolio) {
-              return (
-                <div>
-                  <AssetTable
-                    data={this.state.portfolio[this.state.selectedIndex]}
-                  ></AssetTable>
-                </div>
-              );
-            } else {
-              return <div>No Data Available</div>;
+          <div>
+            {(() => {
+              if (this.state.portfolio) {
+                return (
+                  <div>
+                    <AssetTable
+                      data={this.state.portfolio[this.state.selectedIndex]}
+                    ></AssetTable>
+                  </div>
+                );
+              } else {
+                return <div>No Data Available</div>;
+              }
+            })()}
+          </div>
+        </div>
+        <div>
+          <EditPortfolio
+            data={
+              this.state.portfolio
+                ? this.state.portfolio[this.state.selectedIndex]
+                : {}
             }
-          })()}
+          />
+        </div>
+        <div>
+          <AddPortfolio
+            edit={() => {
+              this.getPortfolioData();
+            }}
+          />
         </div>
       </div>
     );
