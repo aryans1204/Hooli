@@ -11,14 +11,9 @@ export function GetPriceData(props) {
 
   useEffect(() => {
     const dataToProcess = props.data[props.index];
-
-    const commodities = dataToProcess.commodities;
     const equities = dataToProcess.equities;
     const options = dataToProcess.options;
 
-    const commodityTickers = commodities.map(
-      ({ commodity_type }) => commodity_type
-    );
     const equityTickers = equities.map(({ equity_ticker }) => equity_ticker);
     const optionTickers = options.map(
       ({ derivative_ticker }) => derivative_ticker
@@ -26,7 +21,6 @@ export function GetPriceData(props) {
 
     const tickers = {
       stocks: [...equityTickers, ...optionTickers],
-      commodities: [...commodityTickers],
     };
 
     setTickers(tickers);
@@ -49,39 +43,6 @@ export function GetPriceData(props) {
         ...tickers.stocks.map((ticker) => {
           return fetch(
             `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=${ticker}&apikey=${API_KEY}`
-          ).then((response) => response.json());
-        })
-      );
-    }
-    if (tickers.commodities && tickers.commodities.length > 0) {
-      promises.push(
-        ...tickers.commodities.map((commodity) => {
-          let functionKey;
-          switch (commodity) {
-            case "crude_oil":
-              functionKey = "BRENT";
-              break;
-            case "natural_gas":
-              functionKey = "NATURAL_GAS";
-              break;
-            case "copper":
-              functionKey = "COPPER";
-              break;
-            case "aluminium":
-              functionKey = "ALUMINUM";
-              break;
-            case "wheat":
-              functionKey = "WHEAT";
-              break;
-            case "coffee":
-              functionKey = "COFFEE";
-              break;
-            default:
-              functionKey = "WTI";
-              break;
-          }
-          return fetch(
-            `https://www.alphavantage.co/query?function=${functionKey}&interval=monthly&apikey=${API_KEY}`
           ).then((response) => response.json());
         })
       );

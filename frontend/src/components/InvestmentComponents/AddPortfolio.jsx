@@ -17,13 +17,11 @@ export function AddPortfolio(props) {
   const PortfolioForm = () => {
     const [equities, setEquities] = useState([]);
     const [options, setOptions] = useState([]);
-    const [commodities, setCommodities] = useState([]);
 
     const handleSubmit = async (event) => {
       event.preventDefault();
       console.log(equities);
       console.log(options);
-      console.log(commodities);
       fetch("/api/investments", {
         method: "POST",
         headers: {
@@ -33,7 +31,6 @@ export function AddPortfolio(props) {
         body: JSON.stringify({
           equities: equities,
           options: options,
-          commodities: commodities,
         }),
       })
         .then((response) => {
@@ -203,53 +200,10 @@ export function AddPortfolio(props) {
           </div>
         ))}
 
-        {commodities.map((commodity, index) => (
-          <div key={index}>
-            <label htmlFor={`commodity_type_${index}`}>Commodity Type:</label>
-            <select
-              id={`commodity_type_${index}`}
-              value={commodity.commodity_type || ""}
-              onChange={(event) => {
-                const newCommodities = [...commodities];
-                newCommodities[index] = {
-                  ...newCommodities[index],
-                  commodity_type: event.target.value,
-                };
-                setCommodities(newCommodities);
-              }}
-            >
-              <option value="">Choose one</option>
-              <option value="crude_oil">Crude Oil</option>
-              <option value="natural_gas">Natural Gas</option>
-              <option value="copper">Copper</option>
-              <option value="aluminium">Aluminium</option>
-              <option value="wheat">Wheat</option>
-              <option value="coffee">Coffee</option>
-            </select>
-            <label htmlFor={`commodity_price_${index}`}>Price:</label>
-            <input
-              type="number"
-              id={`commodity_price_${index}`}
-              value={commodity.commodity_price || 0}
-              onChange={(event) => {
-                const newCommodities = [...commodities];
-                newCommodities[index] = {
-                  ...newCommodities[index],
-                  commodity_price: event.target.value,
-                };
-                setCommodities(newCommodities);
-              }}
-            />
-            <hr></hr>
-          </div>
-        ))}
         <Button onClick={() => setEquities([...equities, {}])}>
           Add Equity
         </Button>
         <Button onClick={() => setOptions([...options, {}])}>Add Option</Button>
-        <Button onClick={() => setCommodities([...commodities, {}])}>
-          Add Commodity
-        </Button>
         <Button onClick={handleSubmit}>Submit</Button>
       </form>
     );

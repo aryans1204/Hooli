@@ -96,42 +96,6 @@ function AssetTable(props) {
     );
   };
 
-  const renderCommodities = () => {
-    const { commodities } = props.data;
-    if (!commodities || commodities.length === 0) {
-      return <div>No commodities data available.</div>;
-    }
-    return (
-      <table>
-        <thead>
-          <tr>
-            <th>Commodity Type</th>
-            <th>Price</th>
-          </tr>
-        </thead>
-        <tbody>
-          {commodities.map((commodity, index) => (
-            <tr
-              key={index}
-              onClick={() => handleRowClick(commodity.commodity_type)}
-            >
-              <td
-                className={
-                  commodity.commodity_type === activeTicker
-                    ? classes.activeTicker
-                    : classes.ticker
-                }
-              >
-                {commodity.commodity_type.replace("_", " ")}
-              </td>
-              <td>{commodity.commodity_price}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    );
-  };
-
   const handleRowClick = (ticker) => {
     // handle row click here
     const tickerData = JSON.parse(sessionStorage.getItem("tickerData"));
@@ -203,13 +167,9 @@ function AssetTable(props) {
       <div>
         <button onClick={() => handleTabClick("equities")}>Equities</button>
         <button onClick={() => handleTabClick("options")}>Options</button>
-        <button onClick={() => handleTabClick("commodities")}>
-          Commodities
-        </button>
       </div>
       {activeTab === "equities" && renderEquities()}
       {activeTab === "options" && renderOptions()}
-      {activeTab === "commodities" && renderCommodities()}
     </div>
   );
 }
