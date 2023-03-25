@@ -5,7 +5,7 @@ import { GetPriceData } from "./InvestmentComponents/GetPriceData";
 import PortfolioSelector from "./InvestmentComponents/PortfolioSelector";
 import NavBar from "./NavBar";
 import AssetTable from "./InvestmentComponents/AssetTable";
-import EditPortfolio from "./InvestmentComponents/EditPortfolio";
+import { EditPortfolio } from "./InvestmentComponents/EditPortfolio";
 import classes from "./Investments.module.css";
 
 class Investments extends Component {

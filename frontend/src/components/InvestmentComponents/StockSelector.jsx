@@ -21,7 +21,6 @@ export default function StockSelector(props) {
   };
 
   const handleItemClick = (item) => {
-    console.log(item);
     setSelectedItem(item);
   };
 
