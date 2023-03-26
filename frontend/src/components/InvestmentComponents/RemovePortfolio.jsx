@@ -24,6 +24,7 @@ export function RemovePortfolio(props) {
           console.log("Some error occurred - " + response.status);
         } else {
           console.log("Removed");
+          updatePortfolios();
           return response.json();
         }
       })
@@ -49,6 +50,7 @@ export function RemovePortfolio(props) {
           console.log("Some error occurred - " + response.status);
         } else {
           console.log("Removed");
+          updatePortfolios();
           return response.json();
         }
       })
@@ -70,12 +72,19 @@ export function RemovePortfolio(props) {
           console.log("Some error occurred - " + response.status);
         } else {
           console.log("Removed");
+          updatePortfolios();
           return response.json();
         }
       })
       .then((data) => {
         console.log(data);
       });
+  };
+
+  // function to refresh the portfolios in sessionStorage after a change has been made
+  const updatePortfolios = () => {
+    sessionStorage.removeItem("portfolios");
+    props.edit();
   };
 
   const handleSubmit = (item) => {

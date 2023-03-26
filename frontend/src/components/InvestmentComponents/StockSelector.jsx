@@ -169,7 +169,7 @@ export default function StockSelector(props) {
               {showConfirmation ? "Are you sure?" : "Delete Entire Portfolio"}
             </Button>
             <Button onClick={handleSubmit} colorScheme="yellow" pl="20px">
-              Submit
+              Remove
             </Button>
             <Button onClick={onClose} colorScheme="yellow" pl="20px">
               Cancel

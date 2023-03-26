@@ -144,6 +144,9 @@ class Investments extends Component {
                 ? this.state.portfolio[this.state.selectedIndex]
                 : {}
             }
+            edit={() => {
+              this.getPortfolioData();
+            }}
           />
         </div>
         <div>
