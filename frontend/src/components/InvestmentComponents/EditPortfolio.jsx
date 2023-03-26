@@ -150,7 +150,7 @@ export function EditPortfolio(props) {
           <label>
             Equity Buy Price:
             <input
-              type="text"
+              type="number"
               name="equity_buy_price"
               value={equityValues.equity_buy_price}
               onChange={handleEquityChange}
@@ -160,7 +160,7 @@ export function EditPortfolio(props) {
           <label>
             Equity Current Price:
             <input
-              type="text"
+              type="number"
               name="equity_current_price"
               value={equityValues.equity_current_price}
               onChange={handleEquityChange}

@@ -1,3 +1,7 @@
+//
+// Problem: after clicking add equity, then add option, then trying to add another equity won't load the new form
+//
+
 import { useState, useEffect } from "react";
 import { Box, Button, ButtonGroup } from "@chakra-ui/react";
 import {
@@ -69,6 +73,7 @@ export function AddPortfolio(props) {
                 setEquities(newEquities);
               }}
             />
+            <br></br>
             <label htmlFor={`equity_pnl_${index}`}>P&L:</label>
             <input
               type="text"
@@ -83,6 +88,7 @@ export function AddPortfolio(props) {
                 setEquities(newEquities);
               }}
             />
+            <br></br>
             <label htmlFor={`equity_buy_price_${index}`}>Buy Price:</label>
             <input
               type="number"
@@ -97,6 +103,7 @@ export function AddPortfolio(props) {
                 setEquities(newEquities);
               }}
             />
+            <br></br>
             <label htmlFor={`equity_current_price_${index}`}>
               <br></br>Current Price:
             </label>
@@ -133,6 +140,7 @@ export function AddPortfolio(props) {
                 setOptions(newOptions);
               }}
             />
+            <br></br>
             <label htmlFor={`option_type_${index}`}>Option Type:</label>
             <select
               id={`option_type_${index}`}
@@ -150,6 +158,7 @@ export function AddPortfolio(props) {
               <option value="call">Call</option>
               <option value="put">Put</option>
             </select>
+            <br></br>
             <label htmlFor={`strike_price_${index}`}>Strike Price:</label>
             <input
               type="number"
@@ -164,6 +173,7 @@ export function AddPortfolio(props) {
                 setOptions(newOptions);
               }}
             />
+            <br></br>
             <label htmlFor={`expiration_date_${index}`}>
               <br></br>Expiration Date:
             </label>
@@ -180,6 +190,7 @@ export function AddPortfolio(props) {
                 setOptions(newOptions);
               }}
             />
+            <br></br>
             <label htmlFor={`derivative_current_price_${index}`}>
               <br></br>Current Price:
             </label>
