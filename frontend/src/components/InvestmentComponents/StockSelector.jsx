@@ -15,6 +15,7 @@ import classes from "./StockSelector.module.css";
 export default function StockSelector(props) {
   const [activeTab, setActiveTab] = useState("equities");
   const [selectedItem, setSelectedItem] = useState(null);
+  const [showConfirmation, setShowConfirmation] = useState(false);
 
   const handleTabClick = (tab) => {
     setActiveTab(tab);
@@ -28,6 +29,18 @@ export default function StockSelector(props) {
     console.log(selectedItem);
     if (props.onSubmit) {
       props.onSubmit(selectedItem);
+    }
+  };
+
+  const handleConfirmation = () => {
+    if (showConfirmation) {
+      props.deletePortfolio();
+      console.log("Deleting entire portfolio...");
+      alert("Deleting entire portfolio...");
+      setShowConfirmation(false);
+      onClose();
+    } else {
+      setShowConfirmation(true);
     }
   };
 
@@ -152,6 +165,9 @@ export default function StockSelector(props) {
           {activeTab === "equities" && renderEquities()}
           {activeTab === "options" && renderOptions()}
           <ModalFooter>
+            <Button onClick={handleConfirmation} colorScheme="red">
+              {showConfirmation ? "Are you sure?" : "Delete Entire Portfolio"}
+            </Button>
             <Button onClick={handleSubmit} colorScheme="yellow" pl="20px">
               Submit
             </Button>

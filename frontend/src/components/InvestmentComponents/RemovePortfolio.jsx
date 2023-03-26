@@ -57,6 +57,27 @@ export function RemovePortfolio(props) {
       });
   };
 
+  const deletePortfolio = () => {
+    fetch("/api/investments/" + props.data._id, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+      },
+    })
+      .then((response) => {
+        if (response.status === 500 || response.status === 404) {
+          console.log("Some error occurred - " + response.status);
+        } else {
+          console.log("Removed");
+          return response.json();
+        }
+      })
+      .then((data) => {
+        console.log(data);
+      });
+  };
+
   const handleSubmit = (item) => {
     console.log(props.data);
     if (item.derivative_ticker) {
@@ -73,7 +94,11 @@ export function RemovePortfolio(props) {
   };
   return (
     <div>
-      <StockSelector data={props.data} onSubmit={handleSubmit} />
+      <StockSelector
+        data={props.data}
+        onSubmit={handleSubmit}
+        deletePortfolio={deletePortfolio}
+      />
       {/*<div>
           {targetFound === true ? (
             <EditEquity
