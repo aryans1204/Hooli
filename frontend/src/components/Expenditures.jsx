@@ -93,7 +93,6 @@ class Expenditures extends Component {
           <Center 
             className={classes.chart} 
             w='400px' 
-            borderRadius={25} 
             border='2px' 
             borderColor='#55185d' 
             bg='white'
@@ -108,7 +107,6 @@ class Expenditures extends Component {
           <Spacer />
           <Center
             w='250px' 
-            borderRadius={25}
             border='2px' 
             borderColor='#55185d' 
             overflow="hidden">
@@ -127,11 +125,10 @@ class Expenditures extends Component {
             height={420}
           >
           <Box
-            borderRadius={25}
             border='2px' 
             borderColor='#55185d' 
-            overflow="hidden"
-            height={350}>
+            height={350}
+            overflowY="scroll">
           {this.state.expendituresData !== null ? (
               <DisplayAllExpendituresComponent items={this.state.expendituresData} />
             ) : null}

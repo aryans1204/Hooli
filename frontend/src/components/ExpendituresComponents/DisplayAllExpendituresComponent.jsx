@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
     Table,
     Thead,
@@ -19,9 +19,7 @@ import {
 function DisplayAllExpendituresComponent(props) {
 
   return (
-    <TableContainer>
     <Table variant="striped" colorScheme="purple" size="md">
-        {/* <TableCaption placement="top">All My Expenditures</TableCaption> */}
       <Thead>
         <Tr>
           <Th>Memo</Th>
@@ -41,7 +39,6 @@ function DisplayAllExpendituresComponent(props) {
         ))}
       </Tbody>
     </Table>
-    </TableContainer>
   );
 }
 

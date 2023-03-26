@@ -11,6 +11,8 @@ export function DisplayExpendituresComponent(props) {
     setResult(props.data);
   }, [props.data]);
 
+  console.log(result);
+
   var displayData = [
     {memo: 'No Record', amount: null},
     {memo: 'No Record', amount: null},
