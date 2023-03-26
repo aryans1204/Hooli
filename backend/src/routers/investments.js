@@ -280,7 +280,17 @@ router.patch("/api/investments/options/:id", auth, async (req, res) => {
     var url = `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=${req.body.derivative_ticker}&apikey=${process.env.ALPHA_VANTAGE_API_KEY}`;
     let data = await needle("get", url);
     data = data.body;
-    const current_price = data["Time Series (Daily)"][now]["1. open"];
+    let current_price = 0;
+    let i = 0;
+    while (!current_price && i < 7) {
+      // check up to 7 days back
+      const date = now.slice(0, 8) + (getDay - i).toString();
+      if (data["Time Series (Daily)"][date] !== undefined) {
+        current_price = parseInt(data["Time Series (Daily)"][date]["1. open"]);
+        break;
+      }
+      i++;
+    }
     const temp = portfolio.options.concat({
       derivative_ticker: req.body.derivative_ticker,
       option_type: req.body.option_type,

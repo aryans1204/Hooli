@@ -108,16 +108,6 @@ export function RemovePortfolio(props) {
         onSubmit={handleSubmit}
         deletePortfolio={deletePortfolio}
       />
-      {/*<div>
-          {targetFound === true ? (
-            <EditEquity
-              data={targetData}
-              setTargetFound={setTargetFound}
-              portfolio={props.data}
-              //setState={setState}
-            />
-          ) : null}
-          </div>*/}
     </div>
   );
 }

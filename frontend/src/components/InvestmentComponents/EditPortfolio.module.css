@@ -1,0 +1,11 @@
+.tab {
+  background-color: transparent;
+}
+
+.activeTab {
+  background-color: yellowgreen;
+}
+
+input {
+  width: 30%;
+}

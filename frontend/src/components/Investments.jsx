@@ -58,8 +58,6 @@ class Investments extends Component {
       },
     })
       .then((response) => {
-        console.log("trying to log response");
-        console.log(response);
         if (response.status === 500) {
           console.log("Some error occurred - " + response.status);
           console.log(response);
@@ -139,6 +137,18 @@ class Investments extends Component {
         </div>
         <div>
           <RemovePortfolio
+            data={
+              this.state.portfolio
+                ? this.state.portfolio[this.state.selectedIndex]
+                : {}
+            }
+            edit={() => {
+              this.getPortfolioData();
+            }}
+          />
+        </div>
+        <div>
+          <EditPortfolio
             data={
               this.state.portfolio
                 ? this.state.portfolio[this.state.selectedIndex]

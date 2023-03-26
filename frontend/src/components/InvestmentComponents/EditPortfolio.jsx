@@ -17,51 +17,53 @@ import classes from "./EditPortfolio.module.css";
 // To do : After selecting some thing to edit, another overlay will appear. EditEquity attempts to open an equity overlay (not done yet)
 //
 
-function EditEquity(props) {
-  const initialValues = {
+export function EditPortfolio(props) {
+  const initialEquityValues = {
     equity_ticker: "",
     equity_pnl: "",
     equity_buy_price: 0,
     equity_current_price: 0,
   };
+  const initialOptionValues = {
+    derivative_ticker: "",
+    option_type: "",
+    strike_price: 0,
+    expiration_date: "",
+  };
+  const [equityValues, setEquityValues] = useState(initialEquityValues);
+  const [optionValues, setOptionValues] = useState(initialOptionValues);
+  //const [addSuccess, setAddSuccess] = useState(null);
+  const [activeTab, setActiveTab] = useState("equities");
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [values, setValues] = useState(initialValues);
-  const [addSuccess, setAddSuccess] = useState(null);
-  //const [targetData, setTargetData] = useState(null);
-  const [initialRender, setInitialRender] = useState(true);
-  const handleInputChange = (e) => {
+
+  // tracks input change for equity data
+  const handleEquityChange = (e) => {
     var { name, value } = e.target;
-    setValues({
-      ...values,
+    setEquityValues({
+      ...equityValues,
       [name]: value,
     });
   };
 
-  useEffect(() => {
-    onOpen();
-    console.log(props.data);
-    console.log(props.portfolios);
-  }, []);
-
-  useEffect(() => {
-    if (!initialRender && !isOpen) {
-      props.setTargetFound(false);
-    }
-    setInitialRender(false);
-  }, [isOpen]);
-
-  const clearState = () => {
-    setValues(initialValues);
-    setAddSuccess(null);
-    //props.setTargetFound(false);
-    onClose();
+  // tracks input change for option data
+  const handleOptionChange = (e) => {
+    var { name, value } = e.target;
+    setOptionValues({
+      ...optionValues,
+      [name]: value,
+    });
   };
 
-  function handleSubmit() {
-    console.log("data");
-    console.log(props.data);
-    console.log("test");
-    console.log(props.portfolio);
+  const clearState = () => {
+    //setValues(initialValues);
+    setAddSuccess(null);
+    //props.setTargetFound(false);
+  };
+
+  // function to add new equity into the database
+  function handleEquitySubmit(e) {
+    e.preventDefault();
+    console.log("SUBMIT");
     fetch("/api/investments/equities/" + props.data._id, {
       method: "PATCH",
       headers: {
@@ -69,10 +71,10 @@ function EditEquity(props) {
         Authorization: `Bearer ${sessionStorage.getItem("token")}`,
       },
       body: JSON.stringify({
-        equity_ticker: values.equity_ticker,
-        equity_pnl: values.equity_pnl,
-        equity_buy_price: values.equity_buy_price,
-        equity_current_price: values.equity_current_price,
+        equity_ticker: equityValues.equity_ticker,
+        equity_pnl: equityValues.equity_pnl,
+        equity_buy_price: equityValues.equity_buy_price,
+        equity_current_price: equityValues.equity_current_price,
       }),
     })
       .then((response) => {
@@ -80,8 +82,38 @@ function EditEquity(props) {
           console.log("Some error occurred - " + response.status);
         } else {
           console.log("Edited");
-          //setResult(result.filter((item) => item._id !== selectedItem._id));
           console.log(response);
+          updatePortfolios();
+          return response.json();
+        }
+      })
+      .then((data) => {
+        console.log(data);
+      });
+  }
+  function handleOptionSubmit(e) {
+    e.preventDefault();
+    console.log("SUBMIT");
+    fetch("/api/investments/options/" + props.data._id, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+      },
+      body: JSON.stringify({
+        derivative_ticker: optionValues.derivative_ticker,
+        option_type: optionValues.option_type,
+        strike_price: optionValues.strike_price,
+        expiration_date: optionValues.expiration_date,
+      }),
+    })
+      .then((response) => {
+        if (response.status === 400 || response.status === 404) {
+          console.log("Some error occurred - " + response.status);
+        } else {
+          console.log("Edited");
+          console.log(response);
+          updatePortfolios();
           return response.json();
         }
       })
@@ -90,179 +122,175 @@ function EditEquity(props) {
       });
   }
 
+  // function that renders the form for user to enter equity data
+  function EditEquity() {
+    return (
+      <div>
+        <form onSubmit={handleEquitySubmit}>
+          <label>
+            Equity Ticker:
+            <input
+              type="text"
+              name="equity_ticker"
+              value={equityValues.equity_ticker}
+              onChange={handleEquityChange}
+            />
+          </label>
+          <br />
+          <label>
+            Equity PNL:
+            <input
+              type="text"
+              name="equity_pnl"
+              value={equityValues.equity_pnl}
+              onChange={handleEquityChange}
+            />
+          </label>
+          <br />
+          <label>
+            Equity Buy Price:
+            <input
+              type="text"
+              name="equity_buy_price"
+              value={equityValues.equity_buy_price}
+              onChange={handleEquityChange}
+            />
+          </label>
+          <br />
+          <label>
+            Equity Current Price:
+            <input
+              type="text"
+              name="equity_current_price"
+              value={equityValues.equity_current_price}
+              onChange={handleEquityChange}
+            />
+          </label>
+          <br />
+          <Button type="submit">Submit</Button>
+        </form>
+      </div>
+    );
+  }
+
+  // function to refresh the portfolios in sessionStorage after a change has been made
+  const updatePortfolios = () => {
+    sessionStorage.removeItem("portfolios");
+    props.edit();
+  };
+
+  function EditOption() {
+    return (
+      <div>
+        <form onSubmit={handleOptionSubmit}>
+          <label>
+            Ticker:
+            <input
+              type="text"
+              name="derivative_ticker"
+              value={optionValues.derivative_ticker}
+              onChange={handleOptionChange}
+            />
+          </label>
+          <br />
+          <label>Option Type:</label>
+          <select
+            value={optionValues.option_type}
+            name="option_type"
+            onChange={handleOptionChange}
+          >
+            <option value="">Choose one</option>
+            <option value="call">Call</option>
+            <option value="put">Put</option>
+          </select>
+
+          <br />
+          <label>
+            Strike Price:
+            <input
+              type="text"
+              name="strike_price"
+              value={optionValues.strike_price}
+              onChange={handleOptionChange}
+            />
+          </label>
+          <br />
+          <label>
+            Expiration Date:
+            <input
+              type="date"
+              name="expiration_date"
+              value={optionValues.expiration_date}
+              onChange={handleOptionChange}
+            />
+          </label>
+          <br />
+          <Button type="submit">Submit</Button>
+        </form>
+      </div>
+    );
+  }
+  const handleTabClick = (tab) => {
+    setActiveTab(tab);
+    onOpen();
+  };
+
+  const closeOverlay = () => {
+    setEquityValues(initialEquityValues);
+    setOptionValues(initialOptionValues);
+    onClose();
+  };
+
   return (
     <div>
+      <Button
+        onClick={onOpen}
+        w="175px"
+        h="71px"
+        borderRadius="50"
+        color="white"
+        bg="#3f2371"
+        float="right"
+      >
+        Edit
+      </Button>
       <Modal isOpen={isOpen}>
         <ModalOverlay />
         <ModalContent>
           <ModalHeader textAlign="center" fontSize="30px">
-            Add equity
+            Update Portfolio Data
           </ModalHeader>
-          <ModalBody>
-            Ticker<br></br>
-            <input
-              type="text"
-              placeholder="ticker"
-              size="30"
-              required
-              name="equity_ticker"
-              onChange={handleInputChange}
-            ></input>
-          </ModalBody>
-          <ModalBody>
-            P&L<br></br>
-            <input
-              type="text"
-              placeholder="P&L"
-              size="30"
-              required
-              name="equity_pnl"
-              onChange={handleInputChange}
-            ></input>
-          </ModalBody>
-          <ModalBody>
-            Buy price<br></br>
-            <input
-              type="number"
-              placeholder="price"
-              size="30"
-              required
-              name="equity_buy_price"
-              onChange={handleInputChange}
-            ></input>
-          </ModalBody>
-          <ModalBody>
-            Current price<br></br>
-            <input
-              type="number"
-              placeholder="price"
-              size="30"
-              required
-              name="equity_current_price"
-              onChange={handleInputChange}
-            ></input>
-          </ModalBody>
-          <ModalFooter>
-            <Button
-              colorScheme="purple"
-              h="50px"
-              w="80px"
-              d="flex"
-              onClick={handleSubmit}
+          <ModalCloseButton onClick={onClose} />
+          <div>
+            <button
+              onClick={() => handleTabClick("equities")}
+              className={
+                activeTab === "equities" ? classes.activeTab : classes.tab
+              }
             >
-              Save
+              Equities
+            </button>
+            <button
+              onClick={() => handleTabClick("options")}
+              className={
+                activeTab === "options" ? classes.activeTab : classes.tab
+              }
+            >
+              Options
+            </button>
+          </div>
+          {activeTab === "equities" && EditEquity()}
+          {activeTab === "options" && EditOption()}
+          <ModalFooter>
+            <Button colorScheme="yellow" pl="20px">
+              Add
             </Button>
-            <Button onClick={clearState} colorScheme="yellow" pl="20px">
+            <Button onClick={closeOverlay} colorScheme="yellow" pl="20px">
               Cancel
             </Button>
-            <div>
-              {(() => {
-                if (addSuccess == false) {
-                  return <div>An error occurred. Please try again</div>;
-                } else if (addSuccess == true) {
-                  return (
-                    <div>
-                      <div>Successfully added income data!</div>
-                      <div>
-                        <Button onClick={clearState}>OK</Button>
-                      </div>
-                    </div>
-                  );
-                } else {
-                  return null;
-                }
-              })()}
-            </div>
           </ModalFooter>
         </ModalContent>
       </Modal>
-    </div>
-  );
-}
-
-//function that renders the 'Edit' button
-export function EditPortfolio(props) {
-  const [targetFound, setTargetFound] = useState(false);
-  const [targetData, setTargetData] = useState(null);
-
-  // props.data._id will be the id used to locate the portfolio containing the data we want to remove
-  const removeEquity = (item) => {
-    console.log(item);
-    fetch("/api/investments/equities/" + props.data._id, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${sessionStorage.getItem("token")}`,
-      },
-      body: JSON.stringify({
-        equity_ticker: item.equity_ticker,
-      }),
-    })
-      .then((response) => {
-        if (response.status === 500) {
-          console.log("Some error occurred - " + response.status);
-        } else {
-          console.log("Removed");
-          return response.json();
-        }
-      })
-      .then((data) => {
-        console.log(data);
-      });
-  };
-
-  const removeOption = (item) => {
-    console.log(item);
-    fetch("/api/investments/options/" + props.data._id, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${sessionStorage.getItem("token")}`,
-      },
-      body: JSON.stringify({
-        derivative_ticker: item.derivative_ticker,
-      }),
-    })
-      .then((response) => {
-        if (response.status === 500) {
-          console.log("Some error occurred - " + response.status);
-        } else {
-          console.log("Removed");
-          return response.json();
-        }
-      })
-      .then((data) => {
-        console.log(data);
-      });
-  };
-
-  const handleSubmit = (item) => {
-    console.log(props.data);
-    if (item.derivative_ticker) {
-      removeOption(item);
-      setTargetFound(true);
-      setTargetData(item);
-    } else if (item.equity_ticker) {
-      removeEquity(item);
-      setTargetFound(true);
-      setTargetData(item);
-    } else {
-      console.log("Something wrong here");
-    }
-  };
-  return (
-    <div>
-      <StockSelector data={props.data} onSubmit={handleSubmit} />
-      {/*<div>
-        {targetFound === true ? (
-          <EditEquity
-            data={targetData}
-            setTargetFound={setTargetFound}
-            portfolio={props.data}
-            //setState={setState}
-          />
-        ) : null}
-        </div>*/}
     </div>
   );
 }
