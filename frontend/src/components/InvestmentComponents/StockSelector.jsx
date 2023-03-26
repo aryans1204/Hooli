@@ -122,13 +122,13 @@ export default function StockSelector(props) {
         bg="#3f2371"
         float="right"
       >
-        Edit
+        Remove
       </Button>
       <Modal isOpen={isOpen}>
         <ModalOverlay />
         <ModalContent>
           <ModalHeader textAlign="center" fontSize="30px">
-            Edit Portfolio Data
+            Remove Portfolio Data
           </ModalHeader>
           <ModalCloseButton onClick={onClose} />
           <div>

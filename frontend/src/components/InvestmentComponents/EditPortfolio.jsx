@@ -39,6 +39,8 @@ function EditEquity(props) {
 
   useEffect(() => {
     onOpen();
+    console.log(props.data);
+    console.log(props.portfolios);
   }, []);
 
   useEffect(() => {
@@ -55,71 +57,46 @@ function EditEquity(props) {
     onClose();
   };
 
-  function handleRemove() {
-    /*console.log(props.data._id);
-    return fetch("/api/income/" + props.data._id, {
-      method: "DELETE",
+  function handleSubmit() {
+    console.log("data");
+    console.log(props.data);
+    console.log("test");
+    console.log(props.portfolio);
+    fetch("/api/investments/equities/" + props.data._id, {
+      method: "PATCH",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${sessionStorage.getItem("token")}`,
       },
+      body: JSON.stringify({
+        equity_ticker: values.equity_ticker,
+        equity_pnl: values.equity_pnl,
+        equity_buy_price: values.equity_buy_price,
+        equity_current_price: values.equity_current_price,
+      }),
     })
       .then((response) => {
-        if (response.status === 500 || response.status === 404) {
+        if (response.status === 400 || response.status === 404) {
           console.log("Some error occurred - " + response.status);
         } else {
-          console.log("Removed");
+          console.log("Edited");
           //setResult(result.filter((item) => item._id !== selectedItem._id));
+          console.log(response);
           return response.json();
         }
       })
       .then((data) => {
         console.log(data);
-      });*/
-    console.log("hello");
+      });
   }
 
-  function handleAdd() {
-    /*handleRemove().then(() => {
-      fetch("/api/income", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${sessionStorage.getItem("token")}`,
-        },
-        body: JSON.stringify({
-          industry: industry,
-          monthly_income: values.monthlyIncome,
-          start_date: values.startDate,
-          end_date: values.endDate,
-          weekly_hours: values.weeklyHours,
-          company: values.company,
-        }),
-      })
-        .then((response) => {
-          if (response.status === 500) {
-            console.log("Some error occurred - " + response.status);
-            setAddSuccess(false);
-          } else {
-            console.log("Added new");
-            setAddSuccess(true);
-            return response.json();
-          }
-        })
-        .then((data) => {
-          console.log(data);
-          props.setState();
-        });
-    });*/
-    console.log("hello again");
-  }
   return (
     <div>
       <Modal isOpen={isOpen}>
         <ModalOverlay />
         <ModalContent>
           <ModalHeader textAlign="center" fontSize="30px">
-            Edit equity
+            Add equity
           </ModalHeader>
           <ModalBody>
             Ticker<br></br>
@@ -171,7 +148,7 @@ function EditEquity(props) {
               h="50px"
               w="80px"
               d="flex"
-              onClick={handleAdd}
+              onClick={handleSubmit}
             >
               Save
             </Button>
@@ -208,35 +185,84 @@ export function EditPortfolio(props) {
   const [targetFound, setTargetFound] = useState(false);
   const [targetData, setTargetData] = useState(null);
 
+  // props.data._id will be the id used to locate the portfolio containing the data we want to remove
+  const removeEquity = (item) => {
+    console.log(item);
+    fetch("/api/investments/equities/" + props.data._id, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+      },
+      body: JSON.stringify({
+        equity_ticker: item.equity_ticker,
+      }),
+    })
+      .then((response) => {
+        if (response.status === 500) {
+          console.log("Some error occurred - " + response.status);
+        } else {
+          console.log("Removed");
+          return response.json();
+        }
+      })
+      .then((data) => {
+        console.log(data);
+      });
+  };
+
+  const removeOption = (item) => {
+    console.log(item);
+    fetch("/api/investments/options/" + props.data._id, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+      },
+      body: JSON.stringify({
+        derivative_ticker: item.derivative_ticker,
+      }),
+    })
+      .then((response) => {
+        if (response.status === 500) {
+          console.log("Some error occurred - " + response.status);
+        } else {
+          console.log("Removed");
+          return response.json();
+        }
+      })
+      .then((data) => {
+        console.log(data);
+      });
+  };
+
   const handleSubmit = (item) => {
+    console.log(props.data);
     if (item.derivative_ticker) {
-      console.log("it's an option");
+      removeOption(item);
       setTargetFound(true);
       setTargetData(item);
     } else if (item.equity_ticker) {
-      console.log("It's an equity");
+      removeEquity(item);
       setTargetFound(true);
       setTargetData(item);
     } else {
       console.log("Something wrong here");
     }
-    console.log(item);
   };
   return (
     <div>
       <StockSelector data={props.data} onSubmit={handleSubmit} />
-      <div>
+      {/*<div>
         {targetFound === true ? (
           <EditEquity
-            //isOpen={isOpen}
-            //onClose={onClose}
-            //onOpen={onOpen}
             data={targetData}
             setTargetFound={setTargetFound}
+            portfolio={props.data}
             //setState={setState}
           />
         ) : null}
-      </div>
+        </div>*/}
     </div>
   );
 }

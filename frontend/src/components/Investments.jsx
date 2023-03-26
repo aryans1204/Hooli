@@ -6,6 +6,7 @@ import PortfolioSelector from "./InvestmentComponents/PortfolioSelector";
 import NavBar from "./NavBar";
 import AssetTable from "./InvestmentComponents/AssetTable";
 import { EditPortfolio } from "./InvestmentComponents/EditPortfolio";
+import { RemovePortfolio } from "./InvestmentComponents/RemovePortfolio";
 import classes from "./Investments.module.css";
 
 class Investments extends Component {
@@ -137,7 +138,7 @@ class Investments extends Component {
           </div>
         </div>
         <div>
-          <EditPortfolio
+          <RemovePortfolio
             data={
               this.state.portfolio
                 ? this.state.portfolio[this.state.selectedIndex]
