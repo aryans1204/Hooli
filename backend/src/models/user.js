@@ -38,7 +38,7 @@ const Investment = require('./investments')
  * Expenditures module
  * @const
  */
-const Expenditures = require('./expenditure')
+const Expenditure = require('./expenditure')
 
 /**
  * Income module
@@ -107,7 +107,7 @@ userSchema.virtual('currencies', {
 
 //expenditure virtual
 userSchema.virtual('expenditures', {
-    ref: 'Expenditures',
+    ref: 'Expenditure',
     localField: '_id',
     foreignField: 'expenditure_owner'
 })
@@ -171,7 +171,7 @@ userSchema.pre('save', async function (next) {
 userSchema.pre('remove', async function (next) {
     const user = this
     await Income.deleteMany({ income_owner: user._id })
-    await Expenditures.deleteMany({ expenditure_owner: user._id })
+    await Expenditure.deleteMany({ expenditure_owner: user._id })
     await Investment.deleteMany({ portfolio_owner: user._id })
     await Currency.deleteMany({ currency_owner: user._id })
     next()
