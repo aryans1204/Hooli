@@ -259,6 +259,7 @@ function EditDataComponent(props) {
                 setCategory(event.target.value);
               }}
             >
+              <option value=''>Select one</option>
               <option value="Food">Food</option>
               <option value="Housing">Housing</option>
               <option value="Utilities">Utilities</option>
