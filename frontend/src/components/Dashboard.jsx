@@ -3,6 +3,7 @@ import classes from './Dashboard.module.css';
 import NavBar from './NavBar';
 // import ExpendituresPieChartComponent from './ExpendituresComponent/ExpendituresPieChartComponent';
 import WeeklyExpenseGraph from './DashboardComponents/WeeklyExpenseGraph';
+import MonthlyIncome from './DashboardComponents/MonthlyIncome';
 
 class Dashboard extends Component {
     /**
@@ -47,7 +48,7 @@ class Dashboard extends Component {
                 <div className={classes.container}>
                     <div className={classes.weekly}>
                         <h2>Weekly Expense</h2>
-                        <WeeklyExpenseGraph />
+                        {/* <WeeklyExpenseGraph /> */}
                     </div>
                     <div className={classes.breakdown}>
                         <h2>Expense Breakdown</h2>
@@ -55,7 +56,7 @@ class Dashboard extends Component {
                     </div>
                     <div className={classes.income}>
                         <h2>Monthly Income Trend</h2>
-
+                        <MonthlyIncome />
                     </div>
                     <div className={classes.investments}>
                         <h2>Investments</h2>
