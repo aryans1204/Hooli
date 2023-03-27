@@ -6,9 +6,11 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "start": "vite --port 8080"
   },
   "dependencies": {
+    "@chakra-ui/icons": "^2.0.17",
     "@chakra-ui/react": "^2.4.9",
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
@@ -20,7 +22,7 @@
     "react-dom": "^18.2.0",
     "react-pro-sidebar": "^1.0.0",
     "react-router-dom": "^6.8.0",
-    "recharts": "^2.3.2"
+    "recharts": "^2.4.3"
   },
   "devDependencies": {
     "@types/react": "^18.0.26",
