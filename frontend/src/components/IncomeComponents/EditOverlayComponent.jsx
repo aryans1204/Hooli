@@ -312,7 +312,7 @@ function EditDataComponent(props) {
               onChange={handleInputChange}
             ></input>
           </ModalBody>
-          <ModalBody>
+          <ModalBody className={classes.inputbox}>
             Company (optional)<br></br>
             <input
               type="text"

@@ -160,7 +160,7 @@ export function AddOverlayComponent(props) {
               onChange={handleInputChange}
             ></input>
           </ModalBody>
-          <ModalBody>
+          <ModalBody className={classes.inputbox}>
             Company (optional)<br></br>
             <input
               type="text"
