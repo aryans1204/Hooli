@@ -242,7 +242,7 @@ function EditDataComponent(props) {
           <ModalHeader textAlign="center" fontSize="30px">
             Edit Expenditure
           </ModalHeader>
-          <ModalBody>
+          <ModalBody className={classes.inputbox}>
             Memo<br></br>
             <input
               type="text"

@@ -98,12 +98,11 @@ export function AddExpenditureComponent(props) {
             Add New Expenditure
           </ModalHeader>
           <ModalCloseButton onClick={onClose} />
-          <ModalBody>
+          <ModalBody className={classes.inputbox}>
             Memo<br></br>
-            <input
+            <input 
               type="text"
               placeholder="Enter expenditure details"
-              size="30"
               name="memo"
               onChange={handleInputChange}
             ></input>
