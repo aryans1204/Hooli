@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Chart from "chart.js/auto";
 import classes from "./AssetTable.module.css";
 
@@ -6,6 +6,42 @@ function AssetTable(props) {
   const [activeTab, setActiveTab] = useState("equities");
   const [activeTicker, setActiveTicker] = useState(null);
   const [chart, setChart] = useState(null);
+
+  useEffect(() => {
+    // Create empty chart instance when component mounts
+    const ctx = document.getElementById("myChart").getContext("2d");
+    const emptyChart = new Chart(ctx, {
+      type: "line",
+      data: {
+        labels: [],
+        datasets: [],
+      },
+      options: {
+        scales: {
+          x: {
+            grid: {
+              display: true,
+            },
+          },
+          y: {
+            grid: {
+              display: true,
+            },
+            ticks: {
+              callback: function (label, index, labels) {
+                if (index % 5 === 0) {
+                  return label;
+                } else {
+                  return "";
+                }
+              },
+            },
+          },
+        },
+      },
+    });
+    setChart(emptyChart);
+  }, []);
 
   const handleTabClick = (tab) => {
     setActiveTab(tab);
@@ -118,8 +154,8 @@ function AssetTable(props) {
     // Create new chart
     const ctx = document.getElementById("myChart").getContext("2d");
     ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
-    //ctx.canvas.width = 400;
-    //ctx.canvas.height = 400;
+    ctx.canvas.width = "200px";
+    ctx.canvas.height = "30%";
     const newChart = new Chart(ctx, {
       type: "line",
       data: {
