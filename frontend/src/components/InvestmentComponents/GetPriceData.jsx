@@ -27,12 +27,16 @@ export function GetPriceData(props) {
   }, [data]);
 
   useEffect(() => {
-    console.log("I'm running");
-    console.log(tickers);
-    fetchAPIData(tickers).then((data) => {
-      console.log(data);
-      sessionStorage.setItem("tickerData", JSON.stringify(data));
-    });
+    if (!sessionStorage.getItem("tickerData") && tickers.length !== 0) {
+      fetchAPIData(tickers).then((data) => {
+        console.log(data);
+        sessionStorage.setItem("tickerData", JSON.stringify(data));
+      });
+    }
+    // fetchAPIData(tickers).then((data) => {
+    //   console.log(data);
+    //   sessionStorage.setItem("tickerData", JSON.stringify(data));
+    // });
   }, [tickers]);
 
   function fetchAPIData(tickers) {

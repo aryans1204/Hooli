@@ -44,6 +44,7 @@ const PortfolioForm = forwardRef((props, ref) => {
           console.log(response);
           setAddSuccess(true);
           sessionStorage.removeItem("portfolios");
+          sessionStorage.removeItem("tickerData");
           props.edit();
           return response.json();
         }

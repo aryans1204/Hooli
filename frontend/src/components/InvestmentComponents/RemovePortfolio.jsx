@@ -88,14 +88,36 @@ export function RemovePortfolio(props) {
     window.location.reload();
   };
 
+  function deleteTicker(targetData) {
+    // Retrieve tickerData from sessionStorage
+    const tickerData = JSON.parse(sessionStorage.getItem("tickerData"));
+
+    // Retrieve target ticker to remove
+    let ticker;
+    if (targetData.derivative_ticker) {
+      ticker = targetData.derivative_ticker;
+    } else {
+      ticker = targetData.equity_ticker;
+    }
+    // Filter out the object with the specified ticker symbol
+    const filteredData = tickerData.filter(
+      (obj) => obj["Meta Data"]["2. Symbol"] !== ticker
+    );
+
+    // Store the new tickerData back into sessionStorage
+    sessionStorage.setItem("tickerData", JSON.stringify(filteredData));
+  }
+
   const handleSubmit = (item) => {
     console.log(props.data);
     if (item.derivative_ticker) {
       removeOption(item);
+      deleteTicker(item.derivative_ticker);
       setTargetFound(true);
       setTargetData(item);
     } else if (item.equity_ticker) {
       removeEquity(item);
+      deleteTicker(item.equity_ticker);
       setTargetFound(true);
       setTargetData(item);
     } else {
