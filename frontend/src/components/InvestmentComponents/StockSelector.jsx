@@ -44,6 +44,11 @@ export default function StockSelector(props) {
     }
   };
 
+  const resetValues = () => {
+    setShowConfirmation(false);
+    onClose();
+  };
+
   const renderEquities = () => {
     const { equities } = props.data;
     if (!equities || equities.length === 0) {
@@ -171,7 +176,7 @@ export default function StockSelector(props) {
             <Button onClick={handleSubmit} colorScheme="yellow" pl="20px">
               Remove
             </Button>
-            <Button onClick={onClose} colorScheme="yellow" pl="20px">
+            <Button onClick={resetValues} colorScheme="yellow" pl="20px">
               Cancel
             </Button>
           </ModalFooter>
