@@ -7,6 +7,7 @@ class Dashboard extends Component {
         return (
             <><NavBar />
             <h1 className={classes.text}>Dashboard Page</h1>
+            
             </>
         );
     }
