@@ -79,6 +79,7 @@ const PortfolioForm = forwardRef((props, ref) => {
             }}
           />
           <br></br>
+          <br></br>
           <label htmlFor={`equity_pnl_${index}`}>P&L:</label>
           <input
             type="text"
@@ -94,6 +95,7 @@ const PortfolioForm = forwardRef((props, ref) => {
             }}
           />
           <br></br>
+          <br></br>
           <label htmlFor={`equity_buy_price_${index}`}>Buy Price:</label>
           <input
             type="number"
@@ -108,7 +110,6 @@ const PortfolioForm = forwardRef((props, ref) => {
               setEquities(newEquities);
             }}
           />
-          <br></br>
           <label htmlFor={`equity_current_price_${index}`}>
             <br></br>Current Price:
           </label>
@@ -178,7 +179,6 @@ const PortfolioForm = forwardRef((props, ref) => {
               setOptions(newOptions);
             }}
           />
-          <br></br>
           <label htmlFor={`expiration_date_${index}`}>
             <br></br>Expiration Date:
           </label>
@@ -195,7 +195,6 @@ const PortfolioForm = forwardRef((props, ref) => {
               setOptions(newOptions);
             }}
           />
-          <br></br>
           <label htmlFor={`derivative_current_price_${index}`}>
             <br></br>Current Price:
           </label>

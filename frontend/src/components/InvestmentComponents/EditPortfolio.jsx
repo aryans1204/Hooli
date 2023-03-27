@@ -125,7 +125,7 @@ export function EditPortfolio(props) {
   // function that renders the form for user to enter equity data
   function EditEquity() {
     return (
-      <div>
+      <div className={classes.editEquity}>
         <form onSubmit={handleEquitySubmit}>
           <label>
             Equity Ticker:

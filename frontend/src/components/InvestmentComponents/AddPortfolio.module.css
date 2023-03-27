@@ -3,3 +3,7 @@ hr {
   margin-top: 5%;
   margin-bottom: 5%;
 }
+
+form > div > input[type="text"] {
+  width: auto;
+}

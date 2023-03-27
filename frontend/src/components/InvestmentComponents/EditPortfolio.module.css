@@ -6,6 +6,20 @@
   background-color: yellowgreen;
 }
 
-input {
-  width: 30%;
+.editEquity form input[type="text"] {
+  width: auto;
+  margin-top: 10px;
+  margin-left: 5px;
+}
+
+.editEquity form label input[type="number"] {
+  width: auto;
+  margin-top: 10px;
+  margin-left: 5px;
+
+  outline: transparent;
+  border: none;
+
+  background-color: grey;
+  border-radius: 10px;
 }
