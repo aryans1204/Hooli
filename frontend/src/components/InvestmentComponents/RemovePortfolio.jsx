@@ -85,6 +85,7 @@ export function RemovePortfolio(props) {
   const updatePortfolios = () => {
     sessionStorage.removeItem("portfolios");
     props.edit();
+    window.location.reload();
   };
 
   const handleSubmit = (item) => {

@@ -18,6 +18,7 @@ import { useImperativeHandle } from "react";
 const PortfolioForm = forwardRef((props, ref) => {
   const [equities, setEquities] = useState([]);
   const [options, setOptions] = useState([]);
+  const [addSuccess, setAddSuccess] = useState(null);
 
   const handleSubmit = async () => {
     console.log(equities);
@@ -37,10 +38,11 @@ const PortfolioForm = forwardRef((props, ref) => {
         if (response.status === 400) {
           console.log("Some error occurred - " + response.status);
           console.log(response);
-          //setAddSuccess(false);
+          setAddSuccess(false);
         } else {
           console.log("Success");
-          //setAddSuccess(true);
+          console.log(response);
+          setAddSuccess(true);
           sessionStorage.removeItem("portfolios");
           props.edit();
           return response.json();
@@ -49,6 +51,11 @@ const PortfolioForm = forwardRef((props, ref) => {
       .then((data) => {
         //props.setState();
       });
+  };
+
+  const clearState = () => {
+    setAddSuccess(null);
+    props.onClose();
   };
 
   useImperativeHandle(ref, () => ({ handleSubmit }));
@@ -211,6 +218,26 @@ const PortfolioForm = forwardRef((props, ref) => {
 
       <Button onClick={() => setEquities([...equities, {}])}>Add Equity</Button>
       <Button onClick={() => setOptions([...options, {}])}>Add Option</Button>
+      <footer>
+        <div>
+          {(() => {
+            if (addSuccess == false) {
+              return <div>An error occurred. Please try again</div>;
+            } else if (addSuccess == true) {
+              return (
+                <div>
+                  <div>Successfully added income data!</div>
+                  <div>
+                    <Button onClick={clearState}>OK</Button>
+                  </div>
+                </div>
+              );
+            } else {
+              return null;
+            }
+          })()}
+        </div>
+      </footer>
     </form>
   );
 });
@@ -246,7 +273,11 @@ export function AddPortfolio(props) {
             Create Portfolio
           </ModalHeader>
           <ModalCloseButton onClick={onClose} />
-          <PortfolioForm ref={portfolioFormRef} edit={props.edit} />
+          <PortfolioForm
+            ref={portfolioFormRef}
+            edit={props.edit}
+            onClose={onClose}
+          />
           <ModalFooter>
             <Button onClick={handleCreatePortfolio} colorScheme="yellow">
               Submit
