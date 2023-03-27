@@ -5,7 +5,6 @@ import { PieChart, Pie, Legend, Sector, Cell, ResponsiveContainer } from 'rechar
 
 /**
  * Expenditures pie chart component
-
  * @export
  * @param {*} props
  * @returns {*}

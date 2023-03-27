@@ -36,7 +36,7 @@ function DisplayTableComponent(props) {
             </td>
             <td>{item.industry}</td>
             <td>{item.monthly_income}</td>
-            <td>{item.start_date.substring(0, 10)}</td>
+            <td>{item.start_date}</td>
           </tr>
         ))}
       </tbody>
