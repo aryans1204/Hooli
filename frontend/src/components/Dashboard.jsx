@@ -1,8 +1,19 @@
 import React, { Component } from 'react';
 import classes from './Dashboard.module.css';
 import NavBar from './NavBar';
+// import ExpendituresPieChartComponent from './ExpendituresComponent/ExpendituresPieChartComponent';
+import WeeklyExpenseGraph from './DashboardComponents/WeeklyExpenseGraph';
 
 class Dashboard extends Component {
+    /**
+     * Creates an instance of Income.
+     * @constructor
+     * @param {*} props
+     */
+    constructor(props) {
+        super(props);
+        this.state = {authenticated: null};
+      }
 
     /**
      * Retrieves user profile and checks for authentiation when component is mounted
@@ -35,17 +46,19 @@ class Dashboard extends Component {
                 <h1 className={classes.text}>Dashboard Page</h1>
                 <div className={classes.container}>
                     <div className={classes.weekly}>
-                        <p>sdfsdfs</p>
+                        <h2>Weekly Expense</h2>
+                        <WeeklyExpenseGraph />
                     </div>
                     <div className={classes.breakdown}>
-                        <p>sdfsdfs</p>
+                        <h2>Expense Breakdown</h2>
+                        {/* <ExpendituresPieChartComponent /> NEED TO HIDE DAYNAS TITLE ALSO*/} 
                     </div>
                     <div className={classes.income}>
                         <h2>Monthly Income Trend</h2>
 
                     </div>
                     <div className={classes.investments}>
-                        <p>sdfsdfs</p>
+                        <h2>Investments</h2>
                     </div>
                 </div>
             </div>
