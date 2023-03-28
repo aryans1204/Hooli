@@ -1,5 +1,5 @@
+import classes from "./AddExpenditureComponent.module.css";
 import React, { Component } from "react";
-import NavBar from "../NavBar";
 import { useState, useEffect } from "react";
 import { Box, Button, ButtonGroup } from "@chakra-ui/react";
 import {
@@ -12,27 +12,23 @@ import {
   ModalCloseButton,
   useDisclosure,
 } from "@chakra-ui/react";
-import { Navigate } from "react-router-dom";
-import classes from "./AddOverlayComponent.module.css";
 
 /**
- * Overlay component for adding an income record.
+ * Component for adding an expenditure.
  * @export
  * @param {*} props
  * @returns {*}
  */
-export function AddOverlayComponent(props) {
+export function AddExpenditureComponent(props) {
   const initialValues = {
-    monthlyIncome: null,
-    weeklyHours: null,
-    startDate: null,
-    endDate: null,
-    company: null,
+    memo: null,
+    amount: null,
+    date: null,
   };
 
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [values, setValues] = useState(initialValues);
-  const [industry, setIndustry] = useState("");
+  const [category, setCategory] = useState("");
   const [addSuccess, setAddSuccess] = useState(null);
 
   const handleInputChange = (e) => {
@@ -49,32 +45,32 @@ export function AddOverlayComponent(props) {
     onClose();
   };
 
-  /**
-   * Creates new income data when submitted using post/api/income.
+   /**
+   * Creates new expenditure when submitted using post/api/expenditure.
    */
   function handleSubmit() {
-    fetch("/api/income", {
+    fetch("/api/expenditure", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${sessionStorage.getItem("token")}`,
       },
       body: JSON.stringify({
-        industry: industry,
-        monthly_income: values.monthlyIncome,
-        start_date: values.startDate,
-        end_date: values.endDate,
-        company: values.company,
-        weekly_hours: values.weeklyHours,
+        memo: values.memo,
+        category: category,
+        amount: values.amount,
+        date: values.date,
       }),
     })
       .then((response) => {
         if (response.status === 500) {
+          console.log(response.data)
           console.log("Some error occurred - " + response.status);
           setAddSuccess(false);
         } else {
           console.log("Success");
           setAddSuccess(true);
+          setValues(initialValues);
           return response.json();
         }
       })
@@ -84,11 +80,10 @@ export function AddOverlayComponent(props) {
   }
 
   return (
-    <ButtonGroup spacing="40px" float="left" pl="180px">
+    <div>
       <Button
         onClick={onOpen}
-        w="175px"
-        h="71px"
+        size="lg"
         borderRadius="50"
         color="white"
         bg="#3f2371"
@@ -100,98 +95,73 @@ export function AddOverlayComponent(props) {
         <ModalOverlay />
         <ModalContent>
           <ModalHeader textAlign="center" fontSize="30px">
-            Add new income
+            Add New Expenditure
           </ModalHeader>
           <ModalCloseButton onClick={onClose} />
+          <ModalBody className={classes.inputbox}>
+            Memo<br></br>
+            <input 
+              type="text"
+              placeholder="Enter expenditure details"
+              name="memo"
+              onChange={handleInputChange}
+            ></input>
+          </ModalBody>
           <ModalBody>
-            Income Type<br></br>
+            Category<br></br>
             <select
-              value={industry}
+              value={category}
               onChange={(event) => {
-                setIndustry(event.target.value);
+                setCategory(event.target.value);
               }}
             >
-              <option>N.A</option>
-              <option value="manufacturing">Manufacturing</option>
-              <option value="services">Services</option>
-              <option value="construction">Construction</option>
-              <option value="others">Others</option>
+              <option value=''>Select one</option>
+              <option value="Food">Food</option>
+              <option value="Housing">Housing</option>
+              <option value="Utilities">Utilities</option>
+              <option value="Bills">Bills</option>
+              <option value="Clothes">Clothes</option>
+              <option value="Lifestyle">Lifestyle</option>
+              <option value="Transport">Transport</option>
+              <option value="Healthcare">Healthcare</option>
+              <option value="Pets">Pets</option>
+              <option value="Others">Others</option>
             </select>
           </ModalBody>
           <ModalBody>
-            Monthly income<br></br>
+            Amount<br></br>
             <input
               type="number"
-              placeholder="amount"
+              placeholder="Enter a number"
               size="30"
               required
-              name="monthlyIncome"
+              name="amount"
               onChange={handleInputChange}
             ></input>
           </ModalBody>
-
           <ModalBody>
-            Start Date<br></br>
+            Date<br></br>
             <input
               type="date"
               size="30"
               required
-              name="startDate"
-              onChange={handleInputChange}
-            ></input>
-          </ModalBody>
-          <ModalBody>
-            End Date (optional)<br></br>
-            <input
-              type="date"
-              size="30"
-              name="endDate"
-              onChange={handleInputChange}
-            ></input>
-          </ModalBody>
-          <ModalBody>
-            Weekly hours (optional)<br></br>
-            <input
-              type="number"
-              placeholder="hours"
-              size="30"
-              required
-              name="weeklyHours"
-              onChange={handleInputChange}
-            ></input>
-          </ModalBody>
-          <ModalBody className={classes.inputbox}>
-            Company (optional)<br></br>
-            <input
-              type="text"
-              placeholder="company name"
-              size="30"
-              name="company"
+              name="date"
               onChange={handleInputChange}
             ></input>
           </ModalBody>
 
           <ModalFooter>
-            <Button
-              colorScheme="purple"
-              h="50px"
-              w="80px"
-              d="flex"
-              onClick={handleSubmit}
-            >
+            <Button onClick={handleSubmit} colorScheme="yellow">
               Save
-            </Button>
-            <Button onClick={clearState} colorScheme="yellow" pl="20px">
-              Cancel
             </Button>
             <div>
               {(() => {
                 if (addSuccess == false) {
-                  return <div>An error occurred. Please try again</div>;
+                  return <div>An error occurred. Please try again.</div>;
                 } else if (addSuccess == true) {
                   return (
                     <div>
-                      <div>Successfully added income data!</div>
+                      <div>Successfully added expenditure!</div>
                       <div>
                         <Button onClick={clearState}>OK</Button>
                       </div>
@@ -205,6 +175,6 @@ export function AddOverlayComponent(props) {
           </ModalFooter>
         </ModalContent>
       </Modal>
-    </ButtonGroup>
+    </div>
   );
 }
