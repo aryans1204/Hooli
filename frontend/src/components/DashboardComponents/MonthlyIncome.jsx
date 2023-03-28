@@ -13,6 +13,7 @@ import classes from './MonthlyIncome.module.css';
 
 
 function MonthlyIncome () {
+  const [incomeData, setIncomeData] = useState([]);
 
     // Get income from the past 
     async function getYearIncome() {
@@ -36,11 +37,13 @@ function MonthlyIncome () {
 
 
           yearData.forEach(data => {
-            var month = data.start_date.slice(5, 8);
-            console.log(month);
+            var monthIndex = Number(data.start_date.slice(5, 7)) - 1;
+            var month = monthlyData[monthIndex];
+            var monthTotal = month[Object.keys(month)];
+            month[Object.keys(month)] = monthTotal + data.monthly_income;
           });
 
-          return yearData;
+          return monthlyData;
         } catch (error) {
           console.error(error);
           throw new Error('Failed to fetch expenditures');
@@ -49,7 +52,8 @@ function MonthlyIncome () {
 
     async function getGraphData () {
         const yearIncome = await getYearIncome();
-        console.log("heresssss", yearIncome);
+        setIncomeData(yearIncome);
+
     }
      
     getGraphData();
