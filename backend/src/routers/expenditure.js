@@ -11,12 +11,6 @@ const express = require('express')
 const Expenditure = require('../models/expenditure')
 
 /**
- * Transaction module
- * @const
- */
-const Transaction = require('../models/transaction')
-
-/**
  * auth module
  * @const
  */
@@ -40,13 +34,12 @@ const router = new express.Router()
  */
 router.get('/api/expenditure', auth, async (req, res) => {
     try {
-        await req.user.populate({
-            path: 'expenditures',
-        })
+        await req.user.populate('expenditures')
         res.send(req.user.expenditures)
     } catch (e) {
+        console.log(e)
         res.status(500).send()
-    } 
+    }
 })
 
 /**
@@ -60,8 +53,8 @@ router.get('/api/expenditure', auth, async (req, res) => {
  */
 router.get('/api/expenditure/:id', auth, async (req, res) => {
     try {
-        const expenditure = await Expenditure.findOne({ _id: req.params.id, expenditue_owner: req.user._id })
-        if (!expenditure) throw new Error("This expenditure does not exist.")
+        const expenditure = await Expenditure.findOne({ _id: req.params.id, expenditure_owner: req.user._id })
+        if (!expenditure) re.status(404).send()
 
         res.send(expenditure)
     } catch (e) {
@@ -79,14 +72,37 @@ router.get('/api/expenditure/:id', auth, async (req, res) => {
  * @throws {InternalServerError}
  */
 router.post('/api/expenditure', auth, async (req, res) => {
-    const expenditure = new Expenditure({
-        expenditure_owner: req.user._id
-    })
-
     try {
+        const expenditure = new Expenditure({
+            ...req.body,
+            expenditure_owner: req.user._id
+        })
         await expenditure.save()
         res.send(expenditure)
     } catch (e) {
         res.status(500).send()
     }
 })
+
+/**
+ * Route to delete an expenditure.
+ * @name delete/api/expenditure/:id
+ * @async
+ * @param {String} path
+ * @param {Object} auth
+ * @param {callback} middleware
+ * @throws {InternalServerError}
+ */
+router.delete('/api/expenditure/:id', auth, async (req, res) => {
+    try {
+        const expenditure = await Expenditure.findOneAndDelete({ _id: req.params.id, expenditure_owner: req.user._id })
+        if (!expenditure) res.status(404).send()
+
+        res.send(expenditure)
+
+    } catch (e) {
+        res.status(500).send()
+    }
+})
+
+module.exports = router
