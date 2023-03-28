@@ -35,3 +35,10 @@
     margin: 15px;
     border-radius: 15px;
 }
+
+.breakdown ExpendituresPieChartComponent {
+    margin: auto;
+  width: 50%;
+  border: 3px solid green;
+  padding: 10px;
+}

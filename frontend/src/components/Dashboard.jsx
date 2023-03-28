@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import classes from './Dashboard.module.css';
 import NavBar from './NavBar';
-// import ExpendituresPieChartComponent from './ExpendituresComponent/ExpendituresPieChartComponent';
+import { ExpendituresPieChartComponent } from "./ExpendituresComponents/ExpendituresPieChartComponent";
 import WeeklyExpenseGraph from './DashboardComponents/WeeklyExpenseGraph';
 import MonthlyIncome from './DashboardComponents/MonthlyIncome';
 
@@ -13,8 +13,9 @@ class Dashboard extends Component {
      */
     constructor(props) {
         super(props);
-        this.state = {authenticated: null};
-      }
+        this.state = {authenticated: null, expendituresData: null};
+        // this.getData = this.bind.getData();
+    }
 
     /**
      * Retrieves user profile and checks for authentiation when component is mounted
@@ -22,6 +23,7 @@ class Dashboard extends Component {
      * @returns {*}
      */
     async componentDidMount() {
+        this.getExpenseData();
         await fetch("/api/users/me", {
           method: "GET",
           headers: {
@@ -35,6 +37,28 @@ class Dashboard extends Component {
                 this.setState({ authenticated: false });
             else
                 this.setState({ authenticated: true });
+          });
+    }
+
+    getExpenseData() {
+        fetch("/api/expenditure", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+          },
+        })
+          .then((response) => {
+            if (response.status === 500) {
+              console.log("Some error occurred - " + response.status);
+            } else {
+              return response.json();
+            }
+          })
+          .then((data) => {
+            this.setState({
+              expendituresData: data,
+            });
           });
     }
 
@@ -52,7 +76,7 @@ class Dashboard extends Component {
                     </div>
                     <div className={classes.breakdown}>
                         <h2>Expense Breakdown</h2>
-                        {/* <ExpendituresPieChartComponent /> NEED TO HIDE DAYNAS TITLE ALSO*/} 
+                        <ExpendituresPieChartComponent data={this.state.expendituresData} className={classes.expenseBreakdownPie} /> 
                     </div>
                     <div className={classes.income}>
                         <h2>Monthly Income Trend</h2>
