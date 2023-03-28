@@ -67,21 +67,20 @@ function MonthlyIncome () {
       return <p>Loading Monthly Income Graph...</p>
     }
 
-    // need change below!
-
     // Get the lowest and highest rate
-    let lowestRate = Number.MAX_SAFE_INTEGER;
-    let highestRate = Number.MIN_SAFE_INTEGER;
-    for (const { rate } of incomeData) {
-        if (rate < lowestRate) {
-            lowestRate = rate;
-        }
-        if (rate > highestRate) {
-            highestRate = rate;
-        }
+    let lowestValue = Number.MAX_SAFE_INTEGER;
+    let highestValue = Number.MIN_SAFE_INTEGER;
+    for (const data of incomeData) {
+      var value = data[Object.keys(data)];
+      if (value < lowestValue) {
+        lowestValue = value;
+      }
+      if (value > highestValue) {
+        highestValue = value;
+      }
     }
-    lowestRate = Math.floor(lowestRate * 1000) / 1000;
-    highestRate = Math.ceil(highestRate * 1000) / 1000
+    lowestValue = Math.floor(lowestValue * 1000) / 1000;
+    highestValue = Math.ceil(highestValue * 1000) / 1000
 
     return (
       <div>
@@ -91,15 +90,15 @@ function MonthlyIncome () {
               <LineChart
                   width={1000}
                   height={300}
-                  data={graphData}
+                  data={incomeData}
                   margin={{left: 70, right: 70}}
               >
                   <CartesianGrid strokeDasharray="3 3" />
                   <XAxis dataKey="date" />
-                  <YAxis domain={[lowestRate, highestRate]}/>
+                  <YAxis domain={[lowestValue, highestValue]}/>
                   <Tooltip />
           <Legend />
-          <Line type="monotone" dataKey="rate" stroke="#8884d8" activeDot={{ r: 8 }} />
+          <Line type="monotone" dataKey="value" stroke="#8884d8" activeDot={{ r: 8 }} />
           </LineChart>
           </ResponsiveContainer>
           </>
