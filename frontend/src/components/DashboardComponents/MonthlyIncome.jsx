@@ -13,6 +13,8 @@ import classes from './MonthlyIncome.module.css';
 
 
 function MonthlyIncome () {
+  const [hasData, setHasData] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [incomeData, setIncomeData] = useState([]);
 
     // Get income from the past 
@@ -28,22 +30,27 @@ function MonthlyIncome () {
 
           const allData = await response.json();
 
-          // Get all income for the year
-          const year = new Date().getFullYear();
+          if (allData.length != 0) {
+            setHasData(true);
 
-          let yearData = allData.filter(data => ((data.start_date).includes(year)) == true)
+            // Get all income for the year
+            const year = new Date().getFullYear();
 
-          var monthlyData = [{"Jan": 0}, {"Feb": 0}, {"Mar": 0}, {"Apr": 0}, {"May": 0}, {"Jun": 0}, {"Jul": 0}, {"Aug": 0}, {"Sep": 0}, {"Oct": 0}, {"Nov": 0}, {"Dec": 0}];
+            let yearData = allData.filter(data => ((data.start_date).includes(year)) == true)
 
+            var monthlyData = [{"Jan": 0}, {"Feb": 0}, {"Mar": 0}, {"Apr": 0}, {"May": 0}, {"Jun": 0}, {"Jul": 0}, {"Aug": 0}, {"Sep": 0}, {"Oct": 0}, {"Nov": 0}, {"Dec": 0}];
 
-          yearData.forEach(data => {
-            var monthIndex = Number(data.start_date.slice(5, 7)) - 1;
-            var month = monthlyData[monthIndex];
-            var monthTotal = month[Object.keys(month)];
-            month[Object.keys(month)] = monthTotal + data.monthly_income;
-          });
-
-          return monthlyData;
+            yearData.forEach(data => {
+              var monthIndex = Number(data.start_date.slice(5, 7)) - 1;
+              var month = monthlyData[monthIndex];
+              var monthTotal = month[Object.keys(month)];
+              month[Object.keys(month)] = monthTotal + data.monthly_income;
+            });
+            setIsLoading(false);
+            return monthlyData;
+          } else {
+            return -1;
+          }
         } catch (error) {
           console.error(error);
           throw new Error('Failed to fetch expenditures');
@@ -53,13 +60,51 @@ function MonthlyIncome () {
     async function getGraphData () {
         const yearIncome = await getYearIncome();
         setIncomeData(yearIncome);
-
     }
      
-    getGraphData();
+    if (isLoading) {
+      getGraphData();
+      return <p>Loading Monthly Income Graph...</p>
+    }
+
+    // need change below!
+
+    // Get the lowest and highest rate
+    let lowestRate = Number.MAX_SAFE_INTEGER;
+    let highestRate = Number.MIN_SAFE_INTEGER;
+    for (const { rate } of incomeData) {
+        if (rate < lowestRate) {
+            lowestRate = rate;
+        }
+        if (rate > highestRate) {
+            highestRate = rate;
+        }
+    }
+    lowestRate = Math.floor(lowestRate * 1000) / 1000;
+    highestRate = Math.ceil(highestRate * 1000) / 1000
 
     return (
-        <p>Monthly</p>
+      <div>
+      { hasData ? (
+          <>
+          <ResponsiveContainer width="100%" height={300}>
+              <LineChart
+                  width={1000}
+                  height={300}
+                  data={graphData}
+                  margin={{left: 70, right: 70}}
+              >
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis dataKey="date" />
+                  <YAxis domain={[lowestRate, highestRate]}/>
+                  <Tooltip />
+          <Legend />
+          <Line type="monotone" dataKey="rate" stroke="#8884d8" activeDot={{ r: 8 }} />
+          </LineChart>
+          </ResponsiveContainer>
+          </>
+      ) : (<p>No income entry yet!</p>) }
+  </div>
    );
  };
 
