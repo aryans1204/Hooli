@@ -196,10 +196,7 @@ function AssetTable(props) {
 
   return (
     <div>
-      <canvas
-        id="myChart"
-        style={{ height: "500px", width: "1000px" }}
-      ></canvas>
+      <canvas id="myChart" style={{ height: "50vh", width: "90vw" }}></canvas>
       <div>
         <button onClick={() => handleTabClick("equities")}>Equities</button>
         <button onClick={() => handleTabClick("options")}>Options</button>

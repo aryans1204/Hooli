@@ -24,7 +24,7 @@ function PortfolioSelector(props) {
       <select value={selectedPortfolioIndex} onChange={handleChange}>
         {props.data.map((portfolio, index) => (
           <option key={index} value={index}>
-            {index + 1}
+            Portfolio {index + 1}
           </option>
         ))}
       </select>

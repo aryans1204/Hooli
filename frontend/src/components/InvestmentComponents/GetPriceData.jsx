@@ -27,16 +27,28 @@ export function GetPriceData(props) {
   }, [data]);
 
   useEffect(() => {
-    if (!sessionStorage.getItem("tickerData") && tickers.length !== 0) {
+    // to check if the current tickerData in sessionStorage is the same as the current portolio. If not, then force refresh
+    let refresh = false;
+
+    const tickerData = JSON.parse(sessionStorage.getItem("tickerData"));
+    if (tickerData !== null) {
+      const symbols = tickerData.map((item) => item["Meta Data"]["2. Symbol"]);
+      symbols.forEach((symbol) => {
+        if (!tickers["stocks"].includes(symbol)) {
+          refresh = true;
+        }
+      });
+    }
+
+    if (
+      (!sessionStorage.getItem("tickerData") && tickers.length !== 0) ||
+      refresh === true
+    ) {
       fetchAPIData(tickers).then((data) => {
         console.log(data);
         sessionStorage.setItem("tickerData", JSON.stringify(data));
       });
     }
-    // fetchAPIData(tickers).then((data) => {
-    //   console.log(data);
-    //   sessionStorage.setItem("tickerData", JSON.stringify(data));
-    // });
   }, [tickers]);
 
   function fetchAPIData(tickers) {

@@ -283,9 +283,6 @@ export function EditPortfolio(props) {
           {activeTab === "equities" && EditEquity()}
           {activeTab === "options" && EditOption()}
           <ModalFooter>
-            <Button colorScheme="yellow" pl="20px">
-              Add
-            </Button>
             <Button onClick={closeOverlay} colorScheme="yellow" pl="20px">
               Cancel
             </Button>
