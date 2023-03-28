@@ -7,6 +7,7 @@ import NavBar from "./NavBar";
 import AssetTable from "./InvestmentComponents/AssetTable";
 import { EditPortfolio } from "./InvestmentComponents/EditPortfolio";
 import { RemovePortfolio } from "./InvestmentComponents/RemovePortfolio";
+import { ClipLoader } from "react-spinners";
 import classes from "./Investments.module.css";
 
 class Investments extends Component {
@@ -130,7 +131,11 @@ class Investments extends Component {
                   </div>
                 );
               } else {
-                return <div>No Data Available</div>;
+                return (
+                  <div>
+                    <ClipLoader></ClipLoader>
+                  </div>
+                );
               }
             })()}
           </div>
