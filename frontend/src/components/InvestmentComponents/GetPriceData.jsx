@@ -29,9 +29,8 @@ export function GetPriceData(props) {
   useEffect(() => {
     // to check if the current tickerData in sessionStorage is the same as the current portolio. If not, then force refresh
     let refresh = false;
-
     const tickerData = JSON.parse(sessionStorage.getItem("tickerData"));
-    if (tickerData !== null) {
+    if (tickerData !== null && tickers.length !== 0) {
       const symbols = tickerData.map((item) => item["Meta Data"]["2. Symbol"]);
       symbols.forEach((symbol) => {
         if (!tickers["stocks"].includes(symbol)) {
