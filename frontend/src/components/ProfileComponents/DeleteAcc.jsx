@@ -10,11 +10,17 @@ import {
   useDisclosure
 } from '@chakra-ui/react';
 
-
+/**
+ * To delete a user account.
+ * @returns {} 
+ */
 export function DeleteAcc () {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const cancelRef = React.useRef()
 
+  /**
+   * When the user clicks the delete button, a request will be sent to the server to delete the user's account.
+   */
   async function onDelete () {
     try {
       const response = await fetch("/api/users/me", {
@@ -67,5 +73,3 @@ export function DeleteAcc () {
     </>
   )
 };
-
-//export default DeleteAcc;
