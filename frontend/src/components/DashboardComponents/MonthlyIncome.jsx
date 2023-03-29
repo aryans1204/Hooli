@@ -92,11 +92,11 @@ function MonthlyIncome () {
                   margin={{left: 70, right: 70, bottom: 10}}
               >
                   <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="month" />
-                  <YAxis domain={[lowestValue, highestValue]}/>
+                  <XAxis dataKey="month" stroke='#000'/>
+                  <YAxis domain={[lowestValue, highestValue]} stroke='#000'/>
                   <Tooltip />
           <Legend />
-          <Line type="monotone" dataKey="income" stroke="#8884d8" activeDot={{ r: 8 }} />
+          <Line type="monotone" dataKey="income" stroke="#17153d" activeDot={{ r: 8 }} />
           </LineChart>
           </ResponsiveContainer>
           </>

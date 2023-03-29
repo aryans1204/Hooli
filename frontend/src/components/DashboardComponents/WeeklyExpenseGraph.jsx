@@ -49,8 +49,6 @@ function WeeklyExpenseGraph () {
             }
           });
         });
-
-        console.log(weeklyData);
         return weeklyData;
         } catch (error) {
           console.error(error);
@@ -96,15 +94,15 @@ function WeeklyExpenseGraph () {
                   margin={{left: 70, right: 70, bottom: 10}}
               >
                   <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="date" />
-                  <YAxis domain={[lowestValue, highestValue]}/>
+                  <XAxis dataKey="date" stroke='#000' />
+                  <YAxis domain={[lowestValue, highestValue]} stroke='#000'/>
                   <Tooltip />
           <Legend />
-          <Line type="monotone" dataKey="exp" stroke="#8884d8" activeDot={{ r: 8 }} />
+          <Line type="monotone" dataKey="exp" stroke="#17153d" activeDot={{ r: 8 }} />
           </LineChart>
           </ResponsiveContainer>
           </>
-      ) : (<p>No income entry yet!</p>) }
+      ) : (<p>No Weekly Expense entry yet!</p>) }
   </div>
    );
  };

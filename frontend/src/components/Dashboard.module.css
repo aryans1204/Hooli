@@ -13,25 +13,25 @@
 }
 
 .weekly {
-    background-color: firebrick;
+    background-color: #9472d0;
     margin: 15px;
     border-radius: 15px;
 }
 
 .breakdown {
-    background-color: aqua;
+    background-color: #9472d0;
     margin: 15px;
     border-radius: 15px;
 }
 
 .income {
-    background-color: yellow;
+    background-color: #9472d0;
     margin: 15px;
     border-radius: 15px;
 }
 
 .investments {
-    background-color: seagreen;
+    background-color: #9472d0;
     margin: 15px;
     border-radius: 15px;
 }
