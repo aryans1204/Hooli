@@ -9,7 +9,7 @@ import {
     Tooltip,
     Legend
 } from "recharts";
-import classes from './WeeklyExpensesGraph.module.css';
+import classes from './WeeklyExpenseGraph.module.css';
 
 
 function WeeklyExpenseGraph () {
@@ -43,21 +43,15 @@ function WeeklyExpenseGraph () {
 
         allData.forEach(data => {
           weeklyData.forEach(indiv => {
-            if ((data.date).includes(indiv[date])) {
-              var dayTotal = 
+            if ((data.date).includes(indiv.date)) {
+              var dayTotal = indiv.exp;
+              indiv.exp = dayTotal + data.amount;
             }
           });
         });
 
-        let weekData = allData.filter(data => ((data.start_date).includes(year)) == true)
-
-          yearData.forEach(data => {
-            var monthIndex = Number(data.start_date.slice(5, 7)) - 1;
-            var month = monthlyData[monthIndex];
-            var monthTotal = month.income;
-            month.income = monthTotal + data.monthly_income;
-          });
-          return monthlyData;
+        console.log(weeklyData);
+        return weeklyData;
         } catch (error) {
           console.error(error);
           throw new Error('Failed to fetch expenditures');
@@ -65,8 +59,8 @@ function WeeklyExpenseGraph () {
     }
 
     async function getGraphData () {
-        const yearIncome = await getYearIncome();
-        setIncomeData(yearIncome);
+        const weeklyExpenses = await getExpenses();
+        setExpenseData(weeklyExpenses);
         setIsLoading(false);
     }
      
@@ -78,8 +72,8 @@ function WeeklyExpenseGraph () {
     // Get the lowest and highest rate
     let lowestValue = Number.MAX_SAFE_INTEGER;
     let highestValue = Number.MIN_SAFE_INTEGER;
-    for (const data of incomeData) {
-      var value = data.income;
+    for (const data of expenseData) {
+      var value = data.exp;
       if (value < lowestValue) {
         lowestValue = value;
       }
@@ -98,15 +92,15 @@ function WeeklyExpenseGraph () {
               <LineChart
                   width={1000}
                   height={300}
-                  data={incomeData}
+                  data={expenseData}
                   margin={{left: 70, right: 70, bottom: 10}}
               >
                   <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="month" />
+                  <XAxis dataKey="date" />
                   <YAxis domain={[lowestValue, highestValue]}/>
                   <Tooltip />
           <Legend />
-          <Line type="monotone" dataKey="income" stroke="#8884d8" activeDot={{ r: 8 }} />
+          <Line type="monotone" dataKey="exp" stroke="#8884d8" activeDot={{ r: 8 }} />
           </LineChart>
           </ResponsiveContainer>
           </>
