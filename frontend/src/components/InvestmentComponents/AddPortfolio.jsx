@@ -15,6 +15,7 @@ import { forwardRef } from "react";
 import { useImperativeHandle } from "react";
 
 // component that renders a form for the user to enter their data
+// This component is called by the AddPortfolio component (can be found at the bottom of the file)
 const PortfolioForm = forwardRef((props, ref) => {
   const [equities, setEquities] = useState([]);
   const [options, setOptions] = useState([]);
@@ -59,6 +60,7 @@ const PortfolioForm = forwardRef((props, ref) => {
     props.onClose();
   };
 
+  // Passes teh handleSubmit function to the parent component for them to use
   useImperativeHandle(ref, () => ({ handleSubmit }));
 
   return (

@@ -181,6 +181,7 @@ export function EditPortfolio(props) {
     window.location.reload();
   };
 
+  // function that renders the form for user to enter option data
   function EditOption() {
     return (
       <div>

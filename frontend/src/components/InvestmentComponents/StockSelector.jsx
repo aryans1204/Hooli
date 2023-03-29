@@ -12,11 +12,14 @@ import {
 } from "@chakra-ui/react";
 import classes from "./StockSelector.module.css";
 
+// Renders a table with 2 tabs - equity and options, where their respective data will be displayed for the user to select
+// This page is mainly used in the delete portfolio data functions
 export default function StockSelector(props) {
   const [activeTab, setActiveTab] = useState("equities");
   const [selectedItem, setSelectedItem] = useState(null);
   const [showConfirmation, setShowConfirmation] = useState(false);
 
+  // ActiveTab controls which tab will be displayed
   const handleTabClick = (tab) => {
     setActiveTab(tab);
   };
@@ -49,6 +52,7 @@ export default function StockSelector(props) {
     onClose();
   };
 
+  // equities tab
   const renderEquities = () => {
     const { equities } = props.data;
     if (!equities || equities.length === 0) {
@@ -89,6 +93,7 @@ export default function StockSelector(props) {
     );
   };
 
+  // options tab
   const renderOptions = () => {
     const { options } = props.data;
     if (!options || options.length === 0) {

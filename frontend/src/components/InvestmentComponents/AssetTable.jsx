@@ -47,6 +47,7 @@ function AssetTable(props) {
     setActiveTab(tab);
   };
 
+  // Renders the table for equity data
   const renderEquities = () => {
     const { equities } = props.data;
     if (!equities || equities.length === 0) {
@@ -109,6 +110,7 @@ function AssetTable(props) {
     );
   };
 
+  // Renders the table for option data
   const renderOptions = () => {
     const { options } = props.data;
     if (!options || options.length === 0) {
