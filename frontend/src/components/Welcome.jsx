@@ -20,18 +20,16 @@ class Welcome extends Component {
             <Link to="/signup" relative="path" className={classes.signup}>
               Get Started
             </Link>
-            {/* <Link to="/dashboard" relative="path" className={classes.signup}>Dash</Link> */}
           </div>
-          <div>
-            <h1 className={classes.title}>Welcome</h1>
-          </div>
-          <div>
+          <div className={classes.description}>
+            <p className={classes.title}>Welcome</p>
             <p className={classes.about}>
               Hooli is an online application that helps you manage your
               finances.
             </p>
           </div>
         </div>
+        
       </div>
     );
   }

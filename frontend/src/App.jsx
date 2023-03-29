@@ -1,6 +1,5 @@
 /*welcome page*/
 
-import { Component } from "react";
 import { Routes, Route } from "react-router-dom";
 import Welcome from "./components/Welcome";
 import Login from "./components/Login";
