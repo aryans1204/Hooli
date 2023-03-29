@@ -78,8 +78,27 @@ function AssetTable(props) {
                 {equity.equity_ticker}
               </td>
               <td>{equity.equity_buy_price}</td>
-              <td>{equity.equity_current_price}</td>
-              <td>
+              <td
+                style={{
+                  color:
+                    equity.equity_current_price < equity.equity_buy_price
+                      ? "red"
+                      : equity.equity_current_price > equity.equity_buy_price
+                      ? "green"
+                      : "inherit",
+                }}
+              >
+                {equity.equity_current_price}
+              </td>
+              <td
+                style={{
+                  color: equity.equity_pnl.includes("-")
+                    ? "red"
+                    : equity.equity_pnl !== "0%"
+                    ? "green"
+                    : "inherit",
+                }}
+              >
                 {parseFloat(equity.equity_pnl.replace("%", "")).toFixed(1) +
                   "%"}
               </td>
@@ -172,17 +191,8 @@ function AssetTable(props) {
       },
       options: {
         scales: {
-          y: {
-            ticks: {
-              callback: function (label, index, labels) {
-                // this thing isn't working, have to change later
-                if (index % 5 === 0) {
-                  return label;
-                } else {
-                  return "";
-                }
-              },
-            },
+          x: {
+            reverse: true,
           },
         },
       },

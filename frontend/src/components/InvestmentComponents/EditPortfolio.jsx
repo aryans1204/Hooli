@@ -178,6 +178,7 @@ export function EditPortfolio(props) {
     sessionStorage.removeItem("portfolios");
     sessionStorage.removeItem("tickerData");
     props.edit();
+    window.location.reload();
   };
 
   function EditOption() {
