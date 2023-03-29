@@ -28,7 +28,6 @@ export const ScrollBar = () => {
 
   const handleMonthClick = (month) => {
     setSelectedMonth(month);
-    console.log(month);
   };
 
   return (
