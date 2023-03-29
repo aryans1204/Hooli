@@ -9,34 +9,49 @@ import {
     Tooltip,
     Legend
 } from "recharts";
-import classes from './WeeklyExpenseGraph.module.css';
+import classes from './WeeklyExpensesGraph.module.css';
 
 
 function WeeklyExpenseGraph () {
-    const [hasData, setData] = useState(false);
-    const [isLoading, setIsLoading] = useState(true);
-    const [graphData, setGraphData] = useState([]);
+  const [hasData, setHasData] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [expenseData, setExpenseData] = useState([]);
 
-    // Get current date and date from a week ago
-    const curDate = new Date().toISOString().slice(0, 10);
-    const lastDate = new Date(Date.now() - 6 * 24 * 60 * 60 * 1000).toISOString().slice(0, 10);
+    // Get expense from the past 
+    async function getExpenses() {
+      try {
+        const response = await fetch('/api/expenditure/', {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${sessionStorage.getItem("token")}`
+          }
+        });
 
-    // Get expenses from the past 
-    async function getAllExpenditures() {
-        try {
-          const response = await fetch('/api/expenditure', {
-            method: 'GET',
-            headers: {
-              'Content-Type': 'application/json',
-              'Authorization': `Bearer ${sessionStorage.getItem("token")}`
-            }
+        const allData = await response.json();
+
+        if (allData.length != 0) {
+          setHasData(true);
+        }
+
+        // Get dates for the past week
+        let weekDate = [];
+        for (let i = 0; i < 7; i++) {
+          var date = new Date(Date.now() - i * 24 * 60 * 60 * 1000).toISOString().slice(0, 10);
+          weekDate.push(date);
+        }
+
+        let weekData = allData.filter(data => ((data.start_date).includes(year)) == true)
+
+        var monthlyData = [{month: "Jan", income: 0}, {month: "Feb", income: 0}, {month: "Mar", income: 0}, {month: "Apr", income: 0}, {month: "May", income: 0}, {month: "Jun", income: 0}, {month: "Jul", income: 0}, {month: "Aug", income: 0}, {month: "Sep", income: 0}, {month: "Oct", income: 0}, {month: "Nov", income: 0}, {month: "Dec", income: 0}];
+
+          yearData.forEach(data => {
+            var monthIndex = Number(data.start_date.slice(5, 7)) - 1;
+            var month = monthlyData[monthIndex];
+            var monthTotal = month.income;
+            month.income = monthTotal + data.monthly_income;
           });
-      
-          const data = await response.json();
-          if (allData.length != 0) {
-            setData(true);
-            }
-          return data;
+          return monthlyData;
         } catch (error) {
           console.error(error);
           throw new Error('Failed to fetch expenditures');
@@ -44,78 +59,53 @@ function WeeklyExpenseGraph () {
     }
 
     async function getGraphData () {
-        const expenditures = await getAllExpenditures();
-        console.log(expenditures);
+        const yearIncome = await getYearIncome();
+        setIncomeData(yearIncome);
+        setIsLoading(false);
     }
      
-    getGraphData();
-     
-
-    // const getGraphData = async () => {
-    //         const expenditures = await getAllExpenditures();
-    //         console.log(expenditures);
-
-    //         // Food, Housing, Utilities, Bills, Clothes, Lifestyle, Transport, Healthcare, Pets, Others
-    //         // Step 1: Get array of unique categories
-    //         //console.log("EXPENSE", data);
-            
-
-    //         // (2+3) Step 2: Split data into the separate categories
-
-    //         // Step 3: Sum up total and each category {category: amt, } format
-
-    //         // Get last data entry
-
-    //         //setGraphData(graphArr);
-    //         setIsLoading(false);
-
-    //         //setGraphData(data);
-            
-    //         return data;
-    // }
-
-    // if (isLoading) {
-    //     getGraphData();
-    //     return <p>Loading Graph...</p>
-    // }
+    if (isLoading) {
+      getGraphData();
+      return <p>Loading Monthly Income Graph...</p>
+    }
 
     // Get the lowest and highest rate
-    // let lowestRate = Number.MAX_SAFE_INTEGER;
-    // let highestRate = Number.MIN_SAFE_INTEGER;
-    // for (const { rate } of graphData) {
-    //     if (rate < lowestRate) {
-    //         lowestRate = rate;
-    //     }
-    //     if (rate > highestRate) {
-    //         highestRate = rate;
-    //     }
-    // }
-    // lowestRate = Math.floor(lowestRate * 1000) / 1000;
-    // highestRate = Math.ceil(highestRate * 1000) / 1000;
+    let lowestValue = Number.MAX_SAFE_INTEGER;
+    let highestValue = Number.MIN_SAFE_INTEGER;
+    for (const data of incomeData) {
+      var value = data.income;
+      if (value < lowestValue) {
+        lowestValue = value;
+      }
+      if (value > highestValue) {
+        highestValue = value;
+      }
+    }
+    lowestValue = Math.floor(lowestValue * 100) / 100;
+    highestValue = Math.ceil(highestValue * 100) / 100 + 15;
 
     return (
-        <p>{graphData}</p>
-        // <div>
-        //     { hasData ? (
-        //         <>
-        //         <ResponsiveContainer width="100%" height={300}>
-        //             <LineChart
-        //                 width={1000}
-        //                 height={300}
-        //                 data={graphData}
-        //                 margin={{left: 70, right: 70}}
-        //             >
-        //                 <CartesianGrid strokeDasharray="3 3" />
-        //                 <XAxis dataKey="date" />
-        //                 <YAxis domain={[lowestRate, highestRate]}/>
-        //                 <Tooltip />
-        //         <Legend />
-        //         <Line type="monotone" dataKey="rate" stroke="#8884d8" activeDot={{ r: 8 }} />
-        //         </LineChart>
-        //         </ResponsiveContainer>
-        //         </>
-        //     ) : (<p>No graph entry yet!</p>) }
-        // </div>
+      <div>
+      { hasData ? (
+          <>
+          <ResponsiveContainer width="100%" height={300}>
+              <LineChart
+                  width={1000}
+                  height={300}
+                  data={incomeData}
+                  margin={{left: 70, right: 70, bottom: 10}}
+              >
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis dataKey="month" />
+                  <YAxis domain={[lowestValue, highestValue]}/>
+                  <Tooltip />
+          <Legend />
+          <Line type="monotone" dataKey="income" stroke="#8884d8" activeDot={{ r: 8 }} />
+          </LineChart>
+          </ResponsiveContainer>
+          </>
+      ) : (<p>No income entry yet!</p>) }
+  </div>
    );
  };
 

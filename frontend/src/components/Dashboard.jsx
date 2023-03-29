@@ -14,7 +14,6 @@ class Dashboard extends Component {
     constructor(props) {
         super(props);
         this.state = {authenticated: null, expendituresData: null};
-        // this.getData = this.bind.getData();
     }
 
     /**
@@ -72,7 +71,7 @@ class Dashboard extends Component {
                 <div className={classes.container}>
                     <div className={classes.weekly}>
                         <h2>Weekly Expense</h2>
-                        {/* <WeeklyExpenseGraph /> */}
+                        <WeeklyExpenseGraph />
                     </div>
                     <div className={classes.breakdown}>
                         <h2>Expense Breakdown</h2>
