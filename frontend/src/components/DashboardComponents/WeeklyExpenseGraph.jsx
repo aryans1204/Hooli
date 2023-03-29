@@ -11,13 +11,23 @@ import {
 } from "recharts";
 import classes from './WeeklyExpenseGraph.module.css';
 
-
+/**
+ * Returns expense data over the past week in a line graph
+ * @export
+ * @function
+ * @returns {string}
+ */
 function WeeklyExpenseGraph () {
   const [hasData, setHasData] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [expenseData, setExpenseData] = useState([]);
 
-    // Get expense from the past 
+    /**
+     * Gets expense data from the past week and adds entries together
+     * @async
+     * @function
+     * @returns {arr}
+     */
     async function getExpenses() {
       try {
         const response = await fetch('/api/expenditure/', {
@@ -41,6 +51,7 @@ function WeeklyExpenseGraph () {
           weeklyData.push({date: wDate, exp: 0});
         }
 
+        // Iterates through response from server and adds the total amount
         allData.forEach(data => {
           weeklyData.forEach(indiv => {
             if ((data.date).includes(indiv.date)) {
@@ -56,6 +67,14 @@ function WeeklyExpenseGraph () {
         }
     }
 
+    /**
+     * Fetches data from the server
+     * Sets the graph data and isLoading state accordingly.
+     *
+     * @function
+     * @returns {Promise<void>}
+     * @throws {Error}
+     */
     async function getGraphData () {
         const weeklyExpenses = await getExpenses();
         setExpenseData(weeklyExpenses);

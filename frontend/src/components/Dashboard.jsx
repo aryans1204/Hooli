@@ -18,6 +18,7 @@ class Dashboard extends Component {
 
     /**
      * Retrieves user profile and checks for authentiation when component is mounted
+     * Gets weekly expense data
      * @async
      * @returns {*}
      */
@@ -39,6 +40,11 @@ class Dashboard extends Component {
           });
     }
 
+    /**
+     * Gets expenditure data from server for the expense breakdown
+     * @return {void}
+     * @throws {Error}
+     */
     getExpenseData() {
         fetch("/api/expenditure", {
           method: "GET",
@@ -75,7 +81,7 @@ class Dashboard extends Component {
                     </div>
                     <div className={classes.breakdown}>
                         <h2>Expense Breakdown</h2>
-                        <ExpendituresPieChartComponent data={this.state.expendituresData} className={classes.expenseBreakdownPie} /> 
+                        {/* <ExpendituresPieChartComponent data={this.state.expendituresData} className={classes.expenseBreakdownPie} />  */}
                     </div>
                     <div className={classes.income}>
                         <h2>Monthly Income Trend</h2>

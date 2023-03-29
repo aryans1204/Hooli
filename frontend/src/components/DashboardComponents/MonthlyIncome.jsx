@@ -11,13 +11,23 @@ import {
 } from "recharts";
 import classes from './MonthlyIncome.module.css';
 
-
+/**
+ * Returns monthly income data for the year in a line graph
+ * @export
+ * @function
+ * @returns {string}
+ */
 function MonthlyIncome () {
   const [hasData, setHasData] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [incomeData, setIncomeData] = useState([]);
 
-    // Get income from the past 
+    /**
+     * Gets income data from the year and adds entries together by the month
+     * @async
+     * @function
+     * @returns {arr}
+     */
     async function getYearIncome() {
       try {
         const response = await fetch('/api/income/', {
@@ -54,6 +64,14 @@ function MonthlyIncome () {
         }
     }
 
+    /**
+     * Fetches data from the server
+     * Sets the graph data and isLoading state accordingly.
+     *
+     * @function
+     * @returns {Promise<void>}
+     * @throws {Error}
+     */
     async function getGraphData () {
         const yearIncome = await getYearIncome();
         setIncomeData(yearIncome);
