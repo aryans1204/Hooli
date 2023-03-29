@@ -34,16 +34,22 @@ function WeeklyExpenseGraph () {
           setHasData(true);
         }
 
-        // Get dates for the past week
-        let weekDate = [];
+        // Get dates for the past week and put it in the graph structure format
+        let weeklyData = [];
         for (let i = 0; i < 7; i++) {
-          var date = new Date(Date.now() - i * 24 * 60 * 60 * 1000).toISOString().slice(0, 10);
-          weekDate.push(date);
+          var wDate = new Date(Date.now() - i * 24 * 60 * 60 * 1000).toISOString().slice(0, 10);
+          weeklyData.push({date: wDate, exp: 0});
         }
 
-        let weekData = allData.filter(data => ((data.start_date).includes(year)) == true)
+        allData.forEach(data => {
+          weeklyData.forEach(indiv => {
+            if ((data.date).includes(indiv[date])) {
+              var dayTotal = 
+            }
+          });
+        });
 
-        var monthlyData = [{month: "Jan", income: 0}, {month: "Feb", income: 0}, {month: "Mar", income: 0}, {month: "Apr", income: 0}, {month: "May", income: 0}, {month: "Jun", income: 0}, {month: "Jul", income: 0}, {month: "Aug", income: 0}, {month: "Sep", income: 0}, {month: "Oct", income: 0}, {month: "Nov", income: 0}, {month: "Dec", income: 0}];
+        let weekData = allData.filter(data => ((data.start_date).includes(year)) == true)
 
           yearData.forEach(data => {
             var monthIndex = Number(data.start_date.slice(5, 7)) - 1;
