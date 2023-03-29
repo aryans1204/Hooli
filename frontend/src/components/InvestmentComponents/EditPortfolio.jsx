@@ -176,7 +176,7 @@ export function EditPortfolio(props) {
   // function to refresh the portfolios in sessionStorage after a change has been made
   const updatePortfolios = () => {
     sessionStorage.removeItem("portfolios");
-    sessionStorage.removeItem("tickerData");
+    //sessionStorage.removeItem("tickerData");
     props.edit();
     window.location.reload();
   };
