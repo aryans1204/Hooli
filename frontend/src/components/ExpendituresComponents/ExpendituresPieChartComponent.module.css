@@ -1,0 +1,51 @@
+.barContainer {
+  display: flex;
+  align-items: center;
+  overflow-x: auto;
+  width: 100%;
+  white-space: nowrap;
+}
+
+.selectBbar {
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+.option {
+  display: inline-block;
+  margin: 0 5px;
+  padding: 5px;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: #8b5cf6;
+  color: white;
+}
+
+.arrow {
+  width: 30px;
+  height: 30px;
+  background-color: #8b5cf6;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  outline: none;
+}
+
+.left {
+  background-image: url("left-arrow.png");
+  background-repeat: no-repeat;
+  background-size: 20px 20px;
+  background-position: center;
+}
+
+.right {
+  background-image: url("right-arrow.png");
+  background-repeat: no-repeat;
+  background-size: 20px 20px;
+  background-position: center;
+}
+
+.option.selectedMonth {
+  background-color: #d6bbfc; /* Light purple background */
+  color: #8b5cf6; /* Set font color to dark purple */
+}
