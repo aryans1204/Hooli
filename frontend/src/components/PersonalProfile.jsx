@@ -5,7 +5,19 @@ import { Navigate } from "react-router-dom";
 import  {DeleteAcc}  from "./ProfileComponents/DeleteAcc";
 import NavBar from "./NavBar";
 
+
+/**
+ * PersonalProfile class
+ * @class PersonalProfile
+ * @typedef {PersonalProfile}
+ * @extends {Component}
+ */
 class PersonalProfile extends Component {
+  
+  /**
+   * Creates an instance of PersonalProfile.
+   * @param {*} props
+   */
   constructor(props) {
     super(props);
     this.state = {
@@ -22,6 +34,12 @@ class PersonalProfile extends Component {
     this.handlePwdSubmit = this.handlePwdSubmit.bind(this);
   }
 
+ 
+  /**
+   * Retrieves the user's profile after the component is rendered.
+   * @async
+   * @returns {*}
+   */
   async componentDidMount() {
     await fetch("/api/users/me", {
       method: "GET",

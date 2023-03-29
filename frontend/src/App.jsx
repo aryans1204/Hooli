@@ -14,6 +14,10 @@ import Forex from "./components/Forex";
 
 import { ChakraProvider } from "@chakra-ui/react";
 
+/**
+ * Returns a Routes component that contains Route components.
+ * @returns {*}
+ */
 function App() {
   return (
     <ChakraProvider resetCSS={false}>
