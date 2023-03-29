@@ -27,27 +27,36 @@ export function GetPriceData(props) {
   }, [data]);
 
   useEffect(() => {
-    // to check if the current tickerData in sessionStorage is the same as the current portolio. If not, then force refresh
-    let refresh = false;
-    const tickerData = JSON.parse(sessionStorage.getItem("tickerData"));
-    if (tickerData !== null && tickers.length !== 0) {
-      const symbols = tickerData.map((item) => item["Meta Data"]["2. Symbol"]);
-      symbols.forEach((symbol) => {
-        if (!tickers["stocks"].includes(symbol)) {
-          refresh = true;
-        }
-      });
-    }
+    const runAsync = async () => {
+      // to check if the current tickerData in sessionStorage is the same as the current portolio. If not, then force refresh
+      let refresh = false;
+      const tickerData = JSON.parse(sessionStorage.getItem("tickerData"));
+      if (sessionStorage.getItem("tickerData") !== null) {
+        refresh = await checkAPIData(sessionStorage.getItem("tickerData"));
+      }
+      console.log(refresh);
+      if (tickerData !== null && tickers.length !== 0 && !refresh) {
+        const symbols = tickerData.map(
+          (item) => item["Meta Data"]["2. Symbol"]
+        );
+        symbols.forEach((symbol) => {
+          if (!tickers["stocks"].includes(symbol)) {
+            refresh = true;
+          }
+        });
+      }
 
-    if (
-      (!sessionStorage.getItem("tickerData") && tickers.length !== 0) ||
-      refresh === true
-    ) {
-      fetchAPIData(tickers).then((data) => {
-        console.log(data);
-        sessionStorage.setItem("tickerData", JSON.stringify(data));
-      });
-    }
+      if (
+        (!sessionStorage.getItem("tickerData") && tickers.length !== 0) ||
+        refresh === true
+      ) {
+        fetchAPIData(tickers).then((data) => {
+          console.log(data);
+          sessionStorage.setItem("tickerData", JSON.stringify(data));
+        });
+      }
+    };
+    runAsync();
   }, [tickers]);
 
   function fetchAPIData(tickers) {
@@ -63,5 +72,34 @@ export function GetPriceData(props) {
       );
     }
     return Promise.all(promises);
+  }
+
+  /*function checkAPIData(data) {
+    const parsedData = JSON.parse(data);
+    if (tickers.length !== 0) {
+      parsedData.forEach((parsedData) => {
+        console.log(parsedData);
+        if (!parsedData["Meta Data"]) {
+          console.log("HELLO TRUE");
+          return true;
+        }
+      });
+    }
+    return false;
+  }*/
+  function checkAPIData(data) {
+    return new Promise((resolve) => {
+      const parsedData = JSON.parse(data);
+      if (tickers.length !== 0) {
+        parsedData.forEach((parsedData) => {
+          console.log(parsedData);
+          if (!parsedData["Meta Data"]) {
+            alert("API query limit reached! Please wait for 1 minute");
+            resolve(true);
+          }
+        });
+      }
+      resolve(false);
+    });
   }
 }

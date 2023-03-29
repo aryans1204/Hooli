@@ -60,6 +60,7 @@ class Investments extends Component {
     })
       .then((response) => {
         if (response.status === 500) {
+          alert("API query limit reached! Please wait for 1 minute");
           console.log("Some error occurred - " + response.status);
           console.log(response);
         } else if (response.headers.get("Content-Length") === "0") {
@@ -133,7 +134,7 @@ class Investments extends Component {
               } else {
                 return (
                   <div>
-                    <ClipLoader></ClipLoader>
+                    <div>no portfolio data available</div>
                   </div>
                 );
               }
