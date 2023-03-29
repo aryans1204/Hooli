@@ -80,11 +80,11 @@ function AssetTable(props) {
               <td>{equity.equity_buy_price}</td>
               <td
                 style={{
-                  color:
+                  backgroundColor:
                     equity.equity_current_price < equity.equity_buy_price
-                      ? "red"
+                      ? "#ff8585"
                       : equity.equity_current_price > equity.equity_buy_price
-                      ? "green"
+                      ? "#4fff84"
                       : "inherit",
                 }}
               >
@@ -92,10 +92,10 @@ function AssetTable(props) {
               </td>
               <td
                 style={{
-                  color: equity.equity_pnl.includes("-")
-                    ? "red"
+                  backgroundColor: equity.equity_pnl.includes("-")
+                    ? "#ff8585"
                     : equity.equity_pnl !== "0%"
-                    ? "green"
+                    ? "#4fff84"
                     : "inherit",
                 }}
               >
