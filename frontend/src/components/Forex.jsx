@@ -11,8 +11,9 @@ import ForexInfo from './ForexComponents/ForexInfo';
  * @extends {Component}
  */
 class Forex extends Component {
+  
     /**
-     * Creates an instance of Income.
+     * Creates an instance of Forex.
      * @constructor
      * @param {*} props
      */

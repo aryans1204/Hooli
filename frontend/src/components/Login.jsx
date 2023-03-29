@@ -12,6 +12,12 @@ import { Link } from "react-router-dom";
  * @extends {Component}
  */
 class Login extends Component {
+
+  /**
+   * Creates an instance of Login.
+   * @constructor
+   * @param {*} props
+   */
   constructor(props) {
     super(props);
     this.state = { email: "", password: "", loginSuccess: null };

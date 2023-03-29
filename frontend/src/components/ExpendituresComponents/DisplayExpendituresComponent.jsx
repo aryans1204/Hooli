@@ -4,6 +4,11 @@ import { VStack, StackDivider } from '@chakra-ui/react'
 import { Box } from '@chakra-ui/react'
 import { Text } from '@chakra-ui/react'
 
+/**
+ * Component for displaying the recent 5 expenditures
+ * @param {*} props
+ * @returns {*}
+ */
 export function DisplayExpendituresComponent(props) {
 
   const [result, setResult] = useState(null);
