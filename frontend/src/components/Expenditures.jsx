@@ -31,6 +31,7 @@ class Expenditures extends Component {
     this.state = {
       authenticated: null,
       expendituresData: null,
+      monthlyData: null,
     };
   }
 
@@ -78,8 +79,20 @@ class Expenditures extends Component {
         this.setState({
           expendituresData: data,
         });
+        const temp = this.filterDataByMonth(data, 0);
+        this.setState({ monthlyData: temp });
       });
   }
+
+  filterDataByMonth = (data, month) => {
+    const startDate = new Date(2023, month, 1);
+    const endDate = new Date(2023, month + 1, 0);
+
+    return data.filter((item) => {
+      const date = new Date(item.date);
+      return date >= startDate && date <= endDate;
+    });
+  };
 
   render() {
     return (
@@ -93,7 +106,16 @@ class Expenditures extends Component {
           <NavBar />
         </div>
         <div className={classes.title}>My Expenditures</div>
-        <ScrollBar></ScrollBar>
+        <ScrollBar
+          setMonth={(month) => {
+            this.setState({
+              monthlyData: this.filterDataByMonth(
+                this.state.expendituresData,
+                month
+              ),
+            });
+          }}
+        ></ScrollBar>
         <br></br>
         <Flex minWidth="max-content">
           <Center
@@ -108,10 +130,8 @@ class Expenditures extends Component {
               <Text className={classes.chartTitle}>
                 Total Expenditures by Category{" "}
               </Text>
-              {this.state.expendituresData !== null ? (
-                <ExpendituresPieChartComponent
-                  data={this.state.expendituresData}
-                />
+              {this.state.monthlyData !== null ? (
+                <ExpendituresPieChartComponent data={this.state.monthlyData} />
               ) : null}
             </Box>
           </Center>
