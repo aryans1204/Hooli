@@ -20,7 +20,6 @@ import classes from "./EditPortfolio.module.css";
 export function EditPortfolio(props) {
   const initialEquityValues = {
     equity_ticker: "",
-    equity_pnl: "",
     equity_buy_price: 0,
     equity_current_price: 0,
   };
@@ -133,16 +132,6 @@ export function EditPortfolio(props) {
               type="text"
               name="equity_ticker"
               value={equityValues.equity_ticker}
-              onChange={handleEquityChange}
-            />
-          </label>
-          <br />
-          <label>
-            Equity PNL:
-            <input
-              type="text"
-              name="equity_pnl"
-              value={equityValues.equity_pnl}
               onChange={handleEquityChange}
             />
           </label>

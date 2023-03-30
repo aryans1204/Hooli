@@ -36,7 +36,7 @@ const investmentSchema = new mongoose.Schema(
         },
         equity_pnl: {
           type: String, //to be represented as a percentage like 89% or -12%
-          required: true,
+          required: false,
         },
         equity_buy_price: {
           type: Number,
