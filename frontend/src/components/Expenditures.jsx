@@ -94,7 +94,7 @@ class Expenditures extends Component {
         </div>
         <div className={classes.title}>My Expenditures</div>
         <ScrollBar></ScrollBar>
-
+        <br></br>
         <Flex minWidth="max-content">
           <Center
             className={classes.chart}

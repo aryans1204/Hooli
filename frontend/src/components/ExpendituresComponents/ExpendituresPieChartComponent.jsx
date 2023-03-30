@@ -12,7 +12,7 @@ import classes from "./ExpendituresPieChartComponent.module.css";
 
 export const ScrollBar = () => {
   const [startMonth, setStartMonth] = useState(0);
-  const [selectedMonth, setSelectedMonth] = useState(null);
+  const [selectedMonth, setSelectedMonth] = useState(0);
 
   const scrollLeft = () => {
     if (startMonth > 0) {
@@ -47,18 +47,18 @@ export const ScrollBar = () => {
           >
             {
               [
-                "January",
-                "February",
-                "March",
-                "April",
+                "Jan",
+                "Feb",
+                "Mar",
+                "Apr",
                 "May",
-                "June",
-                "July",
-                "August",
-                "September",
-                "October",
-                "November",
-                "December",
+                "Jun",
+                "Jul",
+                "Aug",
+                "Sep",
+                "Oct",
+                "Nov",
+                "Dec",
               ][i]
             }
           </div>

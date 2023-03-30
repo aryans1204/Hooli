@@ -2,13 +2,14 @@
   display: flex;
   align-items: center;
   overflow-x: auto;
-  width: 100%;
+  width: 32%;
   white-space: nowrap;
+  background-color: #6d3aa4;
+  border-radius: 10px;
 }
 
-.selectBbar {
+.selectBar {
   display: flex;
-  flex-wrap: nowrap;
 }
 
 .option {
@@ -17,7 +18,6 @@
   padding: 5px;
   border-radius: 5px;
   cursor: pointer;
-  background-color: #8b5cf6;
   color: white;
 }
 
@@ -36,6 +36,7 @@
   background-repeat: no-repeat;
   background-size: 20px 20px;
   background-position: center;
+  background-image: url("./leftArrow.png");
 }
 
 .right {
@@ -43,6 +44,7 @@
   background-repeat: no-repeat;
   background-size: 20px 20px;
   background-position: center;
+  background-image: url("./rightArrow.png");
 }
 
 .option.selectedMonth {
