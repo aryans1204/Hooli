@@ -10,7 +10,7 @@ import {
 } from "recharts";
 import classes from "./ExpendituresPieChartComponent.module.css";
 
-export const ScrollBar = () => {
+export const ScrollBar = (props) => {
   const [startMonth, setStartMonth] = useState(0);
   const [selectedMonth, setSelectedMonth] = useState(0);
 
@@ -28,6 +28,7 @@ export const ScrollBar = () => {
 
   const handleMonthClick = (month) => {
     setSelectedMonth(month);
+    props.setMonth(month);
   };
 
   return (
@@ -82,6 +83,7 @@ export function ExpendituresPieChartComponent(props) {
   const [result, setResult] = useState(null);
   useEffect(() => {
     setResult(props.data);
+    console.log(props.data);
   }, [props.data]);
 
   var pieData = [
