@@ -21,3 +21,9 @@
 h3 {
   margin: 0;
 }
+
+.nav {
+  height: 100%;
+  position: fixed;
+  top: 0;
+}
