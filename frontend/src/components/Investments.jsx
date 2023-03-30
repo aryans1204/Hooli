@@ -94,7 +94,9 @@ class Investments extends Component {
   render() {
     return (
       <div>
-        <NavBar />
+        <div className={classes.nav}>
+          <NavBar />
+        </div>
         <h1 className={classes.title}>Investments Page</h1>
         <div>
           {this.state.authenticated == false && (

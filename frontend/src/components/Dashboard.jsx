@@ -68,7 +68,9 @@ class Dashboard extends Component {
   render() {
     return (
       <>
-        <NavBar />
+        <div className={classes.nav}>
+          <NavBar />
+        </div>
         {this.state.authenticated == false && (
           <Navigate to="/" replace={true} />
         )}
@@ -89,7 +91,7 @@ class Dashboard extends Component {
               <MonthlyIncome />
             </div>
             <div className={classes.investments}>
-              <h2>Investments</h2>
+              <h2>Investments overview</h2>
               <InvestmentTable />
             </div>
           </div>

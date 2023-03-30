@@ -27,12 +27,30 @@ export const InvestmentTable = () => {
     const tableRows = equities.map((equity) => {
       const equityPnl = parseFloat(equity.equity_pnl.replace("%", ""));
       const pnlColor =
-        equityPnl > 0 ? "green" : equityPnl < 0 ? "red" : "default";
+        equityPnl > 0 ? "#64F185" : equityPnl < 0 ? "red" : "default";
       const roundedEquityPnl = parseFloat(equityPnl.toFixed(2));
       return (
-        <tr style={{ backgroundColor: "white" }} key={equity.equity_ticker}>
-          <td>{equity.equity_ticker}</td>
-          <td style={{ color: pnlColor }}>{roundedEquityPnl}%</td>
+        <tr key={equity.equity_ticker}>
+          <td
+            style={{
+              color: "#FFD700",
+              backgroundColor: "#6c49bb",
+              border: "none",
+              textAlign: "center",
+            }}
+          >
+            {equity.equity_ticker}
+          </td>
+          <td
+            style={{
+              color: pnlColor,
+              backgroundColor: "#6c49bb",
+              border: "none",
+              textAlign: "center",
+            }}
+          >
+            {roundedEquityPnl}%
+          </td>
         </tr>
       );
     });
@@ -41,8 +59,24 @@ export const InvestmentTable = () => {
       <table>
         <thead>
           <tr>
-            <th>Equity Ticker</th>
-            <th>Equity Pnl</th>
+            <th
+              style={{
+                border: "none",
+                backgroundColor: "#3e286f",
+                color: "#FFD700",
+              }}
+            >
+              Equity Ticker
+            </th>
+            <th
+              style={{
+                border: "none",
+                backgroundColor: "#3e286f",
+                color: "#FFD700",
+              }}
+            >
+              Net Change
+            </th>
           </tr>
         </thead>
         <tbody>{tableRows}</tbody>
