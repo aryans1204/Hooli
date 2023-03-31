@@ -27,7 +27,6 @@ import { WeeklyIncomeComparison } from "./IncomeComponents/WeeklyIncomeCompariso
  * @extends {Component}
  */
 class Income extends Component {
-  //const { isOpen, onOpen, onClose } = useDisclosure();
 
   /**
    * Creates an instance of Income.
