@@ -18,8 +18,18 @@
   margin-left: 5px;
 
   outline: transparent;
-  border: none;
+}
 
-  background-color: grey;
-  border-radius: 10px;
+.editOption form input[type="text"] {
+  width: auto;
+  margin-top: 10px;
+  margin-left: 5px;
+}
+
+.editOption form label input[type="number"] {
+  width: auto;
+  margin-top: 10px;
+  margin-left: 5px;
+
+  outline: transparent;
 }

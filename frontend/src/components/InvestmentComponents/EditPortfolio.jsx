@@ -173,7 +173,7 @@ export function EditPortfolio(props) {
   // function that renders the form for user to enter option data
   function EditOption() {
     return (
-      <div>
+      <div className={classes.editOption}>
         <form onSubmit={handleOptionSubmit}>
           <label>
             Ticker:
