@@ -84,18 +84,16 @@ export function AddOverlayComponent(props) {
   }
 
   return (
-    <ButtonGroup spacing="40px" float="left" pl="180px">
+    <>
       <Button
         onClick={onOpen}
-        w="175px"
-        h="71px"
+        height="4em"
+        width="10em"
         borderRadius="50"
         color="white"
         bg="#3f2371"
         float="left"
-      >
-        Add
-      </Button>
+      > Add </Button>
       <Modal isOpen={isOpen}>
         <ModalOverlay />
         <ModalContent>
@@ -205,6 +203,6 @@ export function AddOverlayComponent(props) {
           </ModalFooter>
         </ModalContent>
       </Modal>
-    </ButtonGroup>
+    </>
   );
 }

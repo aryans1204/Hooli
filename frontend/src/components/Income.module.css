@@ -1,13 +1,18 @@
 .contents {
-  color: black;
-  padding-left: 20mm;
-  text-align: center;
+  color: #000;
+  margin-left: 80px;
+  margin-right: 15px;
 }
 
-.title {
-  text-align: left;
-  padding-left: 10px;
-  font-size: 40px;
+.text {
+  padding: 0;
+  color: #000;
+}
+
+.buttons {
+  background-color: red;
+  margin: 10px 0;
+  align-items: center;
 }
 
 .data {

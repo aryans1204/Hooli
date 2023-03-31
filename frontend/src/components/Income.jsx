@@ -94,15 +94,9 @@ class Income extends Component {
   render() {
     return (
       <div className={classes.contents}>
-        <div>
-          {this.state.authenticated == false && (
-            <Navigate to="/" replace={true} />
-          )}
-        </div>
-        <div>
-          <NavBar />
-        </div>
-        <div className={classes.title}>My Income</div>
+        {this.state.authenticated == false && (<Navigate to="/" replace={true} />)}
+        <NavBar />
+        <h1 className={classes.text}>MY INCOME</h1>
         <Box
           bg="rgba(148, 114, 208, 1)"
           w="50%"
@@ -110,7 +104,6 @@ class Income extends Component {
           color="white"
           p="1%"
           mt="1%"
-          ml="5%"
           borderRadius="50"
           overflow="hidden"
         >
@@ -118,22 +111,26 @@ class Income extends Component {
             <IncomeBarChartComponent data={this.state.incomeData} />
           ) : null}
         </Box>
-        <AddOverlayComponent
-          setState={() => {
-            //this function is passed in as prop and will be triggered by the child component whenever there's a change to the database
-            this.getIncomeData();
-          }}
-        />
-        <RemoveOverlayComponent
-          setState={() => {
-            this.getIncomeData();
-          }}
-        />
-        <EditOverlayComponent
-          setState={() => {
-            this.getIncomeData();
-          }}
-        />
+        
+        <div className={classes.buttons}>
+          <AddOverlayComponent
+            setState={() => {
+              //this function is passed in as prop and will be triggered by the child component whenever there's a change to the database
+              this.getIncomeData();
+            }}
+          />
+          <RemoveOverlayComponent
+            setState={() => {
+              this.getIncomeData();
+            }}
+          />
+          <EditOverlayComponent
+            setState={() => {
+              this.getIncomeData();
+            }}
+          />
+        </div>
+        
         <div className={classes.data}>
           {this.state.incomeData !== null ? (
             <WeeklyIncomeComparison data={this.state.incomeData} />

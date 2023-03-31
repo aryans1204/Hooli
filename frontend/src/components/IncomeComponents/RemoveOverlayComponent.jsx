@@ -81,6 +81,10 @@ export function RemoveOverlayComponent(props) {
         }
       })
       .then((data) => {
+        data.forEach(indiv => {
+          let longDate = indiv.start_date;
+          indiv.start_date = longDate.slice(0, 10);
+        })
         setResult(data);
       });
     onOpen();
@@ -90,8 +94,8 @@ export function RemoveOverlayComponent(props) {
     <div>
       <Button
         onClick={getData}
-        w="175px"
-        h="71px"
+        w="10em"
+        h="4em"
         borderRadius="50"
         color="white"
         bg="#3f2371"
