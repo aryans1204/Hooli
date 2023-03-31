@@ -110,10 +110,10 @@ export function AddOverlayComponent(props) {
               }}
             >
               <option>N.A</option>
-              <option value="manufacturing">Manufacturing</option>
-              <option value="services">Services</option>
-              <option value="construction">Construction</option>
-              <option value="others">Others</option>
+              <option value="Manufacturing">Manufacturing</option>
+              <option value="Services">Services</option>
+              <option value="Construction">Construction</option>
+              <option value="Others">Others</option>
             </select>
           </ModalBody>
           <ModalBody>
