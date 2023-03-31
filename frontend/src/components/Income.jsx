@@ -36,10 +36,12 @@ class Income extends Component {
    */
   constructor(props) {
     super(props);
+    var curYear = new Date().getFullYear();
+    curYear = curYear.toString();
     this.state = {
       authenticated: null,
       incomeData: [],
-      
+      year: curYear,
     };
   }
 
@@ -68,7 +70,8 @@ class Income extends Component {
   /**
    * Retrieves all income records using get/api/income and updates the state of incomeData.
    */
-  getIncomeData(year) {
+  getIncomeData() {
+    var year = this.state.year;
     fetch("/api/income", {
       method: "GET",
       headers: {
@@ -84,13 +87,30 @@ class Income extends Component {
         }
       })
       .then((data) => {
+        console.log("dataaaaaa", data);
         const tempData = data.sort(
           (a, b) => new Date(a.start_date) - new Date(b.start_date)
         );
-        this.setState({
-          incomeData: tempData,
+
+        console.log("tempData", tempData);
+        console.log("tempData", typeof(tempData));
+
+        // Get DB entries within the correct year
+        let finalData = [];
+        tempData.forEach(data => {
+          if ((data.start_date).includes(year)) {
+            console.log("HELLO");
+            finalData.push(data);
+          }
         });
-        console.log(this.state.incomeData);
+        
+        this.setState({incomeData: finalData});
+
+        console.log("final", finalData);
+
+        return finalData;
+        // console.log("final", typeof(finalData));
+
       });
   }
 
@@ -102,12 +122,13 @@ class Income extends Component {
         <h1 className={classes.text}>MY INCOME</h1>
 
         {/* {this.state.incomeData !== null ? (<IncomeBarChart data={this.state.incomeData} />) : null} */}
-
         <label htmlFor="Year">Year:</label>
         <select name="years" id="year"
           onChange={(event) => {
-            this.state.year = event.target.value;
-          }}>
+            this.setState({ year: event.target.value }, () => {
+            this.getIncomeData();
+          });
+        }}>
             <option value="2023">2023</option>
             <option value="2022">2022</option>
             <option value="2021">2021</option>
@@ -126,7 +147,9 @@ class Income extends Component {
           overflow="hidden"
         >
         {this.state.incomeData.length > 0 ? (
-          <IncomeBarChartComponent data={this.state.incomeData} />
+          <IncomeBarChartComponent setState={() => {
+              this.getIncomeData();
+            }} />
             ) : (
           <p>No income entry!</p>
             )}
@@ -136,17 +159,17 @@ class Income extends Component {
           <AddOverlayComponent
             setState={() => {
               //this function is passed in as prop and will be triggered by the child component whenever there's a change to the database
-              this.getIncomeData(year);
+              this.getIncomeData();
             }}
           />
           <RemoveOverlayComponent
             setState={() => {
-              this.getIncomeData(year);
+              this.getIncomeData();
             }}
           />
           <EditOverlayComponent
             setState={() => {
-              this.getIncomeData(year);
+              this.getIncomeData();
             }}
           />
         </div>
