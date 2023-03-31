@@ -25,4 +25,5 @@ h3 {
 .nav {
   height: 100%;
   position: fixed;
+  top: 0;
 }
