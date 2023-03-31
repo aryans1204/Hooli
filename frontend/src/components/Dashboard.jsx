@@ -59,11 +59,27 @@ class Dashboard extends Component {
         }
       })
       .then((data) => {
+        const temp = this.filterDataByCurrentMonth(data);
+        console.log(temp);
         this.setState({
-          expendituresData: data,
+          expendituresData: temp,
         });
       });
   }
+
+  //gets the current month's expenditure data
+  filterDataByCurrentMonth = (data) => {
+    const today = new Date();
+    const currentMonth = today.getMonth();
+    const currentYear = today.getFullYear();
+    const startDate = new Date(currentYear, currentMonth, 1);
+    const endDate = new Date(currentYear, currentMonth + 1, 0);
+
+    return data.filter((item) => {
+      const date = new Date(item.date);
+      return date >= startDate && date <= endDate;
+    });
+  };
 
   render() {
     return (
@@ -83,8 +99,12 @@ class Dashboard extends Component {
               <WeeklyExpenseGraph />
             </div>
             <div className={classes.breakdown}>
-              <h2>Expense Breakdown</h2>
-              {/* <ExpendituresPieChartComponent data={this.state.expendituresData} className={classes.expenseBreakdownPie} />  */}
+              <h2>This Month's Expenses</h2>
+              <div className={classes.pieChart}>
+                <ExpendituresPieChartComponent
+                  data={this.state.expendituresData}
+                />
+              </div>
             </div>
             <div className={classes.income}>
               <h2>Monthly Income Trend</h2>
