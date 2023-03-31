@@ -31,6 +31,7 @@ class Expenditures extends Component {
     this.state = {
       authenticated: null,
       expendituresData: null,
+      month: 0,
       monthlyData: null,
     };
   }
@@ -79,7 +80,7 @@ class Expenditures extends Component {
         this.setState({
           expendituresData: data,
         });
-        const temp = this.filterDataByMonth(data, 0);
+        const temp = this.filterDataByMonth(data, this.state.month);
         this.setState({ monthlyData: temp });
       });
   }
@@ -114,6 +115,7 @@ class Expenditures extends Component {
                 month
               ),
             });
+            this.setState({ month: month });
           }}
         ></ScrollBar>
         <br></br>
