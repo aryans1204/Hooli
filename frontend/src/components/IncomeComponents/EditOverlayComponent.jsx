@@ -30,6 +30,7 @@ export function EditOverlayComponent(props) {
   const [targetData, setTargetData] = useState(null); //targetData is the specific data that the user wants to edit
   const [targetFound, setTargetFound] = useState(false);
 
+  // sets result with income data of selected year
   useEffect(() => {
     setResult(props.data);
   }, [props.data]);
@@ -73,6 +74,15 @@ export function EditOverlayComponent(props) {
   useEffect(() => {
     if (targetData !== null) {
       console.log(targetData);
+      //let selVal = targetData.industry;
+      let startDateL = targetData.start_date;
+      let endDateL = targetData.endDate;
+      document.getElementById('industryList').value = targetData.industry;
+      document.getElementById("monthlyIncome").value = targetData.monthly_income;
+      document.getElementById("startDate").value = startDateL.slice(0, 10);
+      if (targetData.end_date != null) document.getElementById("endDate").value = endDateL.end_date.slice(0,10);
+      if (targetData.weekly_hours != null) document.getElementById("weeklyHours").value = targetData.weekly_hours;
+      if (targetData.company != null) document.getElementById("company").value = targetData.company;
       onOpen();
     }
   }, [targetData]);
@@ -187,7 +197,6 @@ function EditDataComponent(props) {
           console.log("Some error occurred - " + response.status);
         } else {
           console.log("Removed");
-          //setResult(result.filter((item) => item._id !== selectedItem._id));
           return response.json();
         }
       })
@@ -243,26 +252,29 @@ function EditDataComponent(props) {
           <ModalBody>
             Income Type<br></br>
             <select
+              id="industryList"
               value={industry}
               onChange={(event) => {
                 setIndustry(event.target.value);
               }}
+              
             >
               <option>N.A</option>
-              <option value="manufacturing">Manufacturing</option>
-              <option value="services">Services</option>
-              <option value="construction">Construction</option>
-              <option value="others">Others</option>
+              <option value="Manufacturing">Manufacturing</option>
+              <option value="Services">Services</option>
+              <option value="Construction">Construction</option>
+              <option value="Others">Others</option>
             </select>
           </ModalBody>
           <ModalBody>
             Monthly income<br></br>
             <input
               type="number"
-              placeholder="amount"
+              // placeholder="amount"
               size="30"
               required
               name="monthlyIncome"
+              id="monthlyIncome"
               onChange={handleInputChange}
             ></input>
           </ModalBody>
@@ -272,9 +284,10 @@ function EditDataComponent(props) {
             <input
               type="date"
               size="30"
-              required
               name="startDate"
+              id="startDate"
               onChange={handleInputChange}
+              required
             ></input>
           </ModalBody>
           <ModalBody>
@@ -283,6 +296,7 @@ function EditDataComponent(props) {
               type="date"
               size="30"
               name="endDate"
+              id="endDate"
               onChange={handleInputChange}
             ></input>
           </ModalBody>
@@ -290,10 +304,11 @@ function EditDataComponent(props) {
             Weekly hours (optional)<br></br>
             <input
               type="number"
-              placeholder="hours"
+              // placeholder="hours"
               size="30"
               required
               name="weeklyHours"
+              id="weeklyHours"
               onChange={handleInputChange}
             ></input>
           </ModalBody>
@@ -301,9 +316,10 @@ function EditDataComponent(props) {
             Company (optional)<br></br>
             <input
               type="text"
-              placeholder="company name"
+              // placeholder="company name"
               size="30"
               name="company"
+              id="company"
               onChange={handleInputChange}
             ></input>
           </ModalBody>
