@@ -41,6 +41,7 @@ class Income extends Component {
     this.state = {
       authenticated: null,
       incomeData: [],
+      yearlyData: null,
       year: curYear,
     };
   }
@@ -87,10 +88,11 @@ class Income extends Component {
         }
       })
       .then((data) => {
-        console.log("dataaaaaa", data);
         const tempData = data.sort(
           (a, b) => new Date(a.start_date) - new Date(b.start_date)
         );
+
+        this.setState({incomeData: tempData});
 
         console.log("tempData", tempData);
         console.log("tempData", typeof(tempData));
@@ -104,11 +106,9 @@ class Income extends Component {
           }
         });
         
-        this.setState({incomeData: finalData});
+        this.setState({yearlyData: finalData});
 
         console.log("final", finalData);
-
-        return finalData;
         // console.log("final", typeof(finalData));
 
       });
@@ -147,9 +147,7 @@ class Income extends Component {
           overflow="hidden"
         >
         {this.state.incomeData.length > 0 ? (
-          <IncomeBarChartComponent setState={() => {
-              this.getIncomeData();
-            }} />
+          <IncomeBarChartComponent data={this.state.yearlyData} />
             ) : (
           <p>No income entry!</p>
             )}
