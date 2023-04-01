@@ -11,7 +11,7 @@ describe('Income test suite', (token, id, _id, second_id) => {
         token = res.body.user.tokens[0].token
         id = res.body.user._id
         const response = await request(app).post('/api/income').send({
-            "industry": "services",
+            "industry": "Services",
             "monthly_income": 30000,
             "weekly_hours": 80,
             "start_date": "2002-05-17",
@@ -30,7 +30,7 @@ describe('Income test suite', (token, id, _id, second_id) => {
     })
     it('tests all employments for a user GET endpoint', async () => {
         const res = await request(app).post('/api/income').send({
-            "industry": "construction",
+            "industry": "Construction",
             "monthly_income": 2000,
             "weekly_hours": 40,
             "start_date": "2002-05-17",
