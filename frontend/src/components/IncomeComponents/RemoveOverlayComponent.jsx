@@ -40,7 +40,7 @@ export function RemoveOverlayComponent(props) {
    */
   function handleRemove() {
     console.log(selectedItem._id);
-    fetch("/api/income/" + selectedItem._id, {
+    fetch("https://hooli-backend-aryan.herokuapp.com/api/income/" + selectedItem._id, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -65,7 +65,7 @@ export function RemoveOverlayComponent(props) {
    * Retrieves all income records using get/api/income.
    */
   function getData() {
-    fetch("/api/income", {
+    fetch("https://hooli-backend-aryan.herokuapp.com/api/income", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
