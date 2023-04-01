@@ -129,8 +129,8 @@ export function EditOverlayComponent(props) {
       <Modal isOpen={isOpen}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader textAlign="center" fontSize="30px">
-            Edit income data
+          <ModalHeader textAlign="center" fontSize="2em">
+            Edit Income Data
           </ModalHeader>
           <ModalCloseButton onClick={onClose} />
           <ModalBody>
@@ -148,9 +148,6 @@ export function EditOverlayComponent(props) {
               onClick={getTargetItem}
             >
               Edit
-            </Button>
-            <Button onClick={onClose} colorScheme="yellow" pl="20px">
-              Close
             </Button>
           </ModalFooter>
         </ModalContent>
@@ -256,8 +253,8 @@ function EditDataComponent(props) {
       <Modal isOpen={props.isOpen}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader textAlign="center" fontSize="30px">
-            Add new income
+          <ModalHeader textAlign="center" fontSize="2em">
+            Edit New Income
           </ModalHeader>
           <ModalBody>
             Income Type<br></br>

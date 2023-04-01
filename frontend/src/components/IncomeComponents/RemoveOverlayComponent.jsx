@@ -125,9 +125,6 @@ export function RemoveOverlayComponent(props) {
             >
               Remove
             </Button>
-            <Button onClick={onClose} colorScheme="yellow" pl="20px">
-              Close
-            </Button>
           </ModalFooter>
         </ModalContent>
       </Modal>
