@@ -1,0 +1,12 @@
+.table {
+  display: flex;
+  flex-direction: row;
+}
+
+.ticker {
+  background-color: transparent;
+}
+
+.activeTicker {
+  background-color: #ceadf7;
+}
