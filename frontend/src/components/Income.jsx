@@ -172,7 +172,7 @@ class Income extends Component {
         </div>
         
         <div className={classes.data}>
-          {this.state.incomeData !== null ? (
+          {this.state.incomeData.length > 0 ? (
             <WeeklyIncomeComparison data={this.state.yearlyData} />
           ) : null}
         </div>
