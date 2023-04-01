@@ -27,6 +27,10 @@ export function RemoveOverlayComponent(props) {
   const [result, setResult] = useState([{}]); //result is the income data fetched with backend api
   const [selectedItem, setSelectedItem] = useState(null);
 
+  useEffect(() => {
+    setResult(props.data);
+  }, [props.data]);
+
   /**
    * Stores data of income record to be removed.
    * @param {*} item
@@ -65,27 +69,7 @@ export function RemoveOverlayComponent(props) {
    * Retrieves all income records using get/api/income.
    */
   function getData() {
-    fetch("/api/income", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${sessionStorage.getItem("token")}`,
-      },
-    })
-      .then((response) => {
-        if (response.status === 500) {
-          console.log("Some error occurred - " + response.status);
-        } else {
-          return response.json();
-        }
-      })
-      .then((data) => {
-        data.forEach(indiv => {
-          let longDate = indiv.start_date;
-          indiv.start_date = longDate.slice(0, 10);
-        })
-        setResult(data);
-      });
+    setResult(props.data);
     onOpen();
   }
 

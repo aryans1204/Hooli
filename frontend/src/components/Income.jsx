@@ -87,9 +87,14 @@ class Income extends Component {
         }
       })
       .then((data) => {
-        const tempData = data.sort(
+        var tempData = data.sort(
           (a, b) => new Date(a.start_date) - new Date(b.start_date)
         );
+
+        tempData.forEach(indiv => {
+          let longDate = indiv.start_date;
+          indiv.start_date = longDate.slice(0, 10);
+        })
 
         this.setState({incomeData: tempData});
 
@@ -163,11 +168,13 @@ class Income extends Component {
             setState={() => {
               this.getIncomeData();
             }}
+            data={this.state.yearlyData}
           />
           <EditOverlayComponent
             setState={() => {
               this.getIncomeData();
             }}
+            data={this.state.yearlyData}
           />
         </div>
         
