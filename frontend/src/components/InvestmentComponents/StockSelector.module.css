@@ -1,0 +1,7 @@
+.tab {
+  background-color: transparent;
+}
+
+.activeTab {
+  background-color: yellowgreen;
+}

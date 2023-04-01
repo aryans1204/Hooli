@@ -1,0 +1,35 @@
+.tab {
+  background-color: transparent;
+}
+
+.activeTab {
+  background-color: yellowgreen;
+}
+
+.editEquity form input[type="text"] {
+  width: auto;
+  margin-top: 10px;
+  margin-left: 5px;
+}
+
+.editEquity form label input[type="number"] {
+  width: auto;
+  margin-top: 10px;
+  margin-left: 5px;
+
+  outline: transparent;
+}
+
+.editOption form input[type="text"] {
+  width: auto;
+  margin-top: 10px;
+  margin-left: 5px;
+}
+
+.editOption form label input[type="number"] {
+  width: auto;
+  margin-top: 10px;
+  margin-left: 5px;
+
+  outline: transparent;
+}
