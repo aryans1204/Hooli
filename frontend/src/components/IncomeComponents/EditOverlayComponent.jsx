@@ -43,10 +43,6 @@ export function EditOverlayComponent(props) {
     setSelectedItem(item);
   }
 
-  function setState() {
-    props.setState();
-  }
-
   /**
    * Retrieves selected income record using get/api/income/:id.
    */
@@ -73,22 +69,21 @@ export function EditOverlayComponent(props) {
   }
   useEffect(() => {
     if (targetData !== null) {
-      console.log(targetData);
-      //let selVal = targetData.industry;
+      console.log("targetData", targetData);
       let startDateL = targetData.start_date;
-      let endDateL = targetData.endDate;
+      let endDateL = targetData.end_date;
       document.getElementById('industryList').value = targetData.industry;
       document.getElementById("monthlyIncome").value = targetData.monthly_income;
       document.getElementById("startDate").value = startDateL.slice(0, 10);
-      if (targetData.end_date != null) document.getElementById("endDate").value = endDateL.end_date.slice(0,10);
-      if (targetData.weekly_hours != null) document.getElementById("weeklyHours").value = targetData.weekly_hours;
-      if (targetData.company != null) document.getElementById("company").value = targetData.company;
+      if (targetData.end_date != null) document.getElementById("endDate").value = endDateL.slice(0,10);
+      if (targetData.weekly_hours != null) document.getElementById("weeklyHours").placeholder = targetData.weekly_hours;
+      if (targetData.company != null) document.getElementById("company").placeholder = targetData.company;
       onOpen();
     }
   }, [targetData]);
 
   /**
-   * Retrieves all income records using get/api/income.
+   * Sets state to props data of income of selected year
    */
   function getData() {
     setResult(props.data);
@@ -105,7 +100,7 @@ export function EditOverlayComponent(props) {
             onOpen={onOpen}
             data={targetData}
             setTargetFound={setTargetFound}
-            setState={setState}
+            setState={props.setState}
           />
         ) : null}
       </div>
@@ -156,25 +151,50 @@ export function EditOverlayComponent(props) {
  * @returns {*}
  */
 function EditDataComponent(props) {
-  const initialValues = {
+  const resetValues = {
     monthlyIncome: null,
     weeklyHours: null,
     startDate: null,
     endDate: null,
     company: null,
   };
-  const [values, setValues] = useState(initialValues);
+
+  const initValues = (props.data == null) ? resetValues : {
+    monthlyIncome: props.data.monthly_income,
+    weeklyHours: props.data.weekly_hours,
+    startDate: props.data.start_date,
+    endDate: props.data.end_date,
+    company: props.data.company,
+  }
+  // const initValues = {
+  //   monthlyIncome: ((props.data.monthly_income != null) ? props.data.monthly_income : null),
+  //   weeklyHours: ((props.data.weekly_hours != null) ? props.data.weekly_hours : null),
+  //   startDate: ((props.data.start_date != null) ? props.data.start_date : null),
+  //   endDate: ((props.data.end_date != null) ? props.data.end_date : null),
+  //   company: ((props.data.company != null) ? props.data.company : null),
+  // };
+
+  // console.log("initValues", initValues);
+
+  console.log("prop data", props.data);
+
+  const [values, setValues] = useState(initValues);
+  // const[val, setVal] = useState(initValues);
   const [industry, setIndustry] = useState("");
   const [addSuccess, setAddSuccess] = useState(null);
+
+  console.log("vales", values);
+
   const handleInputChange = (e) => {
     var { name, value } = e.target;
+    // replaces value
     setValues({
       ...values,
-      [name]: value,
-    });
+      [name]: value
+    })
   };
   const clearState = () => {
-    setValues(initialValues);
+    setValues(resetValues);
     setAddSuccess(null);
     props.setTargetFound(false);
     props.onClose();
