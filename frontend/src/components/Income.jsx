@@ -19,7 +19,6 @@ import { RemoveOverlayComponent } from "./IncomeComponents/RemoveOverlayComponen
 import { IncomeBarChartComponent } from "./IncomeComponents/IncomeBarChartComponent";
 import { EditOverlayComponent } from "./IncomeComponents/EditOverlayComponent";
 import { WeeklyIncomeComparison } from "./IncomeComponents/WeeklyIncomeComparison";
-import { IncomeBarChart } from "./IncomeComponents/IncomeBarChart";
 
 /**
  * Income class
@@ -174,7 +173,7 @@ class Income extends Component {
         
         <div className={classes.data}>
           {this.state.incomeData !== null ? (
-            <WeeklyIncomeComparison data={this.state.incomeData} />
+            <WeeklyIncomeComparison data={this.state.yearlyData} />
           ) : null}
         </div>
       </div>
