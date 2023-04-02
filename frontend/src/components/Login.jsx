@@ -60,39 +60,38 @@ class Login extends Component {
 
   render() {
     return (
-      <div className={classes.row}>
-        <div className={classes.column + " " + classes["dark-purple"]}>
+      <div className={classes.container}>
+        <div className={classes["col", "leftCol"]}>
           <img className={classes.logo} src={logo} alt="Hooli" />
         </div>
-        <div className={classes.column}>
+        <div className={classes["col", "rightCol"]}>
           <div className={classes.login}>
             <h2>Sign In</h2>
             <form onSubmit={this.handleSubmit}>
-              <label>
-                <h3>Email</h3>
-                <input
-                  type="text"
-                  placeholder="email"
-                  name="email"
-                  value={this.state.email}
-                  onChange={this.handleChange}
-                  required
-                />
-              </label>
-              <label>
-                <h3>Password</h3>
-                <input
-                  type="password"
-                  placeholder="password"
-                  name="password"
-                  value={this.state.password}
-                  onChange={this.handleChange}
-                  required
-                />
-              </label>
-              <label>
-                <input type="submit" value="Log In" />
-              </label>
+              <div className={classes.fields}>
+                <label>
+                  <h3>Email</h3>
+                  <input
+                    type="text"
+                    name="email"
+                    value={this.state.email}
+                    onChange={this.handleChange}
+                    required
+                  />
+                </label>
+                <label>
+                  <h3>Password</h3>
+                  <input
+                    type="password"
+                    name="password"
+                    value={this.state.password}
+                    onChange={this.handleChange}
+                    required
+                  />
+                </label>
+              
+                <input type="submit" value="Log In"/>
+              </div>
               <p>
                 Don't have an account?{" "}
                 <Link
