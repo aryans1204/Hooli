@@ -220,7 +220,7 @@ function EditDataComponent(props) {
    */
   function handleSubmit() {
     handleRemove().then(() => {
-      fetch("/api/income", {
+      fetch("https://hooli-backend-aryan.herokuapp.com/api/income", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

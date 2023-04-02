@@ -86,7 +86,7 @@ export const InvestmentTable = () => {
 
   // gets user portfolio data from database
   const getPortfolioData = () => {
-    fetch("/api/investments", {
+    fetch("https://hooli-backend-aryan.herokuapp.com/api/investments", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

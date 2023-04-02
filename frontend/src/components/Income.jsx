@@ -52,7 +52,7 @@ class Income extends Component {
    */
   async componentDidMount() {
     this.getIncomeData();
-    await fetch("/api/users/me", {
+    await fetch("https://hooli-backend-aryan.herokuapp.com/api/users/me", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

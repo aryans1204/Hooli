@@ -63,19 +63,23 @@ export function EditPortfolio(props) {
   function handleEquitySubmit(e) {
     e.preventDefault();
     console.log("SUBMIT");
-    fetch("/api/investments/equities/" + props.data._id, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${sessionStorage.getItem("token")}`,
-      },
-      body: JSON.stringify({
-        equity_ticker: equityValues.equity_ticker,
-        equity_pnl: equityValues.equity_pnl,
-        equity_buy_price: equityValues.equity_buy_price,
-        equity_current_price: equityValues.equity_current_price,
-      }),
-    })
+    fetch(
+      "https://hooli-backend-aryan.herokuapp.com/api/investments/equities/" +
+        props.data._id,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+        },
+        body: JSON.stringify({
+          equity_ticker: equityValues.equity_ticker,
+          equity_pnl: equityValues.equity_pnl,
+          equity_buy_price: equityValues.equity_buy_price,
+          equity_current_price: equityValues.equity_current_price,
+        }),
+      }
+    )
       .then((response) => {
         if (response.status === 400 || response.status === 404) {
           console.log("Some error occurred - " + response.status);
@@ -93,19 +97,23 @@ export function EditPortfolio(props) {
   function handleOptionSubmit(e) {
     e.preventDefault();
     console.log("SUBMIT");
-    fetch("/api/investments/options/" + props.data._id, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${sessionStorage.getItem("token")}`,
-      },
-      body: JSON.stringify({
-        derivative_ticker: optionValues.derivative_ticker,
-        option_type: optionValues.option_type,
-        strike_price: optionValues.strike_price,
-        expiration_date: optionValues.expiration_date,
-      }),
-    })
+    fetch(
+      "https://hooli-backend-aryan.herokuapp.com/api/investments/options/" +
+        props.data._id,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+        },
+        body: JSON.stringify({
+          derivative_ticker: optionValues.derivative_ticker,
+          option_type: optionValues.option_type,
+          strike_price: optionValues.strike_price,
+          expiration_date: optionValues.expiration_date,
+        }),
+      }
+    )
       .then((response) => {
         if (response.status === 400 || response.status === 404) {
           console.log("Some error occurred - " + response.status);

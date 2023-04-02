@@ -32,19 +32,23 @@ export function RemoveExpenditureComponent(props) {
   function handleItemSelected(item) {
     setSelectedItem(item);
   }
-  
+
   /**
    * Removes selected expenditure using delete/api/expenditure/:id.
    */
   function handleRemove() {
     console.log(selectedItem._id);
-    fetch("/api/expenditure/" + selectedItem._id, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${sessionStorage.getItem("token")}`,
-      },
-    })
+    fetch(
+      "https://hooli-backend-aryan.herokuapp.com/api/expenditure/" +
+        selectedItem._id,
+      {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+        },
+      }
+    )
       .then((response) => {
         if (response.status === 500 || response.status === 404) {
           console.log("Some error occurred - " + response.status);
@@ -54,7 +58,7 @@ export function RemoveExpenditureComponent(props) {
         }
       })
       .then((data) => {
-        console.log(data);    
+        console.log(data);
         props.setState();
       });
   }
@@ -63,7 +67,7 @@ export function RemoveExpenditureComponent(props) {
    * Retrieves all expenditures using get/api/income.
    */
   function getData() {
-    fetch("/api/expenditure", {
+    fetch("https://hooli-backend-aryan.herokuapp.com/api/expenditure", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -109,7 +113,7 @@ export function RemoveExpenditureComponent(props) {
             />
           </ModalBody>
           <ModalFooter>
-          <Button onClick={handleRemove} colorScheme="yellow">
+            <Button onClick={handleRemove} colorScheme="yellow">
               Remove
             </Button>
           </ModalFooter>

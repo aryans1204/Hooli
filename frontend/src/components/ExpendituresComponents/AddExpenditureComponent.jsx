@@ -45,11 +45,11 @@ export function AddExpenditureComponent(props) {
     onClose();
   };
 
-   /**
+  /**
    * Creates new expenditure when submitted using post/api/expenditure.
    */
   function handleSubmit() {
-    fetch("/api/expenditure", {
+    fetch("https://hooli-backend-aryan.herokuapp.com/api/expenditure", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -64,7 +64,7 @@ export function AddExpenditureComponent(props) {
     })
       .then((response) => {
         if (response.status === 500) {
-          console.log(response.data)
+          console.log(response.data);
           console.log("Some error occurred - " + response.status);
           setAddSuccess(false);
         } else {
@@ -100,7 +100,7 @@ export function AddExpenditureComponent(props) {
           <ModalCloseButton onClick={onClose} />
           <ModalBody className={classes.inputbox}>
             Memo<br></br>
-            <input 
+            <input
               type="text"
               placeholder="Enter expenditure details"
               name="memo"
@@ -115,7 +115,7 @@ export function AddExpenditureComponent(props) {
                 setCategory(event.target.value);
               }}
             >
-              <option value=''>Select one</option>
+              <option value="">Select one</option>
               <option value="Food">Food</option>
               <option value="Housing">Housing</option>
               <option value="Utilities">Utilities</option>

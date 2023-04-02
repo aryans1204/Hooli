@@ -53,7 +53,7 @@ export function AddOverlayComponent(props) {
    * Creates new income data when submitted using post/api/income.
    */
   function handleSubmit() {
-    fetch("/api/income", {
+    fetch("https://hooli-backend-aryan.herokuapp.com/api/income", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -93,7 +93,10 @@ export function AddOverlayComponent(props) {
         color="white"
         bg="#3f2371"
         float="left"
-      > Add </Button>
+      >
+        {" "}
+        Add{" "}
+      </Button>
       <Modal isOpen={isOpen}>
         <ModalOverlay />
         <ModalContent>

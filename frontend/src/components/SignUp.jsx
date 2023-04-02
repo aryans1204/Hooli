@@ -29,7 +29,7 @@ class SignUp extends Component {
         password: this.state.password,
       })
     );
-    fetch("/api/users", {
+    fetch("https://hooli-backend-aryan.herokuapp.com/api/users", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

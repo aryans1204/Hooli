@@ -7,34 +7,35 @@ import {
   AlertDialogContent,
   AlertDialogOverlay,
   Button,
-  useDisclosure
-} from '@chakra-ui/react';
+  useDisclosure,
+} from "@chakra-ui/react";
 
+export function DeleteAcc() {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const cancelRef = React.useRef();
 
-export function DeleteAcc () {
-  const { isOpen, onOpen, onClose } = useDisclosure()
-  const cancelRef = React.useRef()
-
-  async function onDelete () {
+  async function onDelete() {
     try {
-      const response = await fetch("/api/users/me", {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${sessionStorage.getItem("token")}`,
-        },
-      })
+      const response = await fetch(
+        "https://hooli-backend-aryan.herokuapp.com/api/users/me",
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+          },
+        }
+      );
       console.log("Account deleted successfully");
       location.reload();
-    }
-    catch (error) {
+    } catch (error) {
       console.log(error.message);
     }
   }
 
   return (
     <>
-      <Button colorScheme='red' onClick={onOpen}>
+      <Button colorScheme="red" onClick={onOpen}>
         Delete Account
       </Button>
 
@@ -45,7 +46,7 @@ export function DeleteAcc () {
       >
         <AlertDialogOverlay>
           <AlertDialogContent>
-            <AlertDialogHeader fontSize='lg' fontWeight='bold'>
+            <AlertDialogHeader fontSize="lg" fontWeight="bold">
               Delete Account
             </AlertDialogHeader>
 
@@ -57,7 +58,7 @@ export function DeleteAcc () {
               <Button ref={cancelRef} onClick={onClose}>
                 Cancel
               </Button>
-              <Button colorScheme='red' onClick={onDelete} ml={3}>
+              <Button colorScheme="red" onClick={onDelete} ml={3}>
                 Delete
               </Button>
             </AlertDialogFooter>
@@ -65,7 +66,7 @@ export function DeleteAcc () {
         </AlertDialogOverlay>
       </AlertDialog>
     </>
-  )
-};
+  );
+}
 
 //export default DeleteAcc;

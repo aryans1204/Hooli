@@ -9,16 +9,20 @@ export function RemovePortfolio(props) {
   // props.data._id will be the id used to locate the portfolio containing the data we want to remove
   const removeEquity = (item) => {
     console.log(item);
-    fetch("/api/investments/equities/" + props.data._id, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${sessionStorage.getItem("token")}`,
-      },
-      body: JSON.stringify({
-        equity_ticker: item.equity_ticker,
-      }),
-    })
+    fetch(
+      "https://hooli-backend-aryan.herokuapp.com/api/investments/equities/" +
+        props.data._id,
+      {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+        },
+        body: JSON.stringify({
+          equity_ticker: item.equity_ticker,
+        }),
+      }
+    )
       .then((response) => {
         if (response.status === 500) {
           console.log("Some error occurred - " + response.status);
@@ -35,16 +39,20 @@ export function RemovePortfolio(props) {
 
   const removeOption = (item) => {
     console.log(item);
-    fetch("/api/investments/options/" + props.data._id, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${sessionStorage.getItem("token")}`,
-      },
-      body: JSON.stringify({
-        derivative_ticker: item.derivative_ticker,
-      }),
-    })
+    fetch(
+      "https://hooli-backend-aryan.herokuapp.com/api/investments/options/" +
+        props.data._id,
+      {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+        },
+        body: JSON.stringify({
+          derivative_ticker: item.derivative_ticker,
+        }),
+      }
+    )
       .then((response) => {
         if (response.status === 500) {
           console.log("Some error occurred - " + response.status);
@@ -60,13 +68,17 @@ export function RemovePortfolio(props) {
   };
 
   const deletePortfolio = () => {
-    fetch("/api/investments/" + props.data._id, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${sessionStorage.getItem("token")}`,
-      },
-    })
+    fetch(
+      "https://hooli-backend-aryan.herokuapp.com/api/investments/" +
+        props.data._id,
+      {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+        },
+      }
+    )
       .then((response) => {
         if (response.status === 500 || response.status === 404) {
           console.log("Some error occurred - " + response.status);
