@@ -30,6 +30,11 @@ export function EditOverlayComponent(props) {
   const [targetData, setTargetData] = useState(null); //targetData is the specific data that the user wants to edit
   const [targetFound, setTargetFound] = useState(false);
 
+  // sets result with income data of selected year
+  useEffect(() => {
+    setResult(props.data);
+  }, [props.data]);
+
   /**
    * Stores data of income record to be removed.
    * @param {*} item
@@ -38,21 +43,21 @@ export function EditOverlayComponent(props) {
     setSelectedItem(item);
   }
 
-  function setState() {
-    props.setState();
-  }
-
   /**
    * Retrieves selected income record using get/api/income/:id.
    */
   function getTargetItem() {
-    fetch("https://hooli-backend-aryan.herokuapp.com/api/income/" + selectedItem._id, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${sessionStorage.getItem("token")}`,
-      },
-    })
+    fetch(
+      "https://hooli-backend-aryan.herokuapp.com/api/income/" +
+        selectedItem._id,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+        },
+      }
+    )
       .then((response) => {
         if (response.status === 500 || response.status === 404) {
           console.log("Some error occurred - " + response.status);
@@ -66,55 +71,34 @@ export function EditOverlayComponent(props) {
         console.log(data);
       });
   }
-  useEffect(() => {
-    if (targetData !== null) {
-      console.log(targetData);
-      onOpen();
-    }
-  }, [targetData]);
 
   /**
-   * Retrieves all income records using get/api/income.
+   * Sets state to props data of income of selected year
    */
   function getData() {
-    fetch("https://hooli-backend-aryan.herokuapp.com/api/income", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${sessionStorage.getItem("token")}`,
-      },
-    })
-      .then((response) => {
-        if (response.status === 500) {
-          console.log("Some error occurred - " + response.status);
-        } else {
-          return response.json();
-        }
-      })
-      .then((data) => {
-        setResult(data);
-      });
+    setResult(props.data);
     onOpen();
   }
 
   return (
     <div>
       <div>
-        {targetFound === true ? (
+        {targetFound === true && targetData !== null ? (
           <EditDataComponent
             isOpen={isOpen}
             onClose={onClose}
             onOpen={onOpen}
             data={targetData}
             setTargetFound={setTargetFound}
-            setState={setState}
+            setTargetData={setTargetData}
+            setState={props.setState}
           />
         ) : null}
       </div>
       <Button
         onClick={getData}
-        w="175px"
-        h="71px"
+        w="10em"
+        h="4em"
         borderRadius="50"
         color="white"
         bg="#3f2371"
@@ -125,8 +109,8 @@ export function EditOverlayComponent(props) {
       <Modal isOpen={isOpen}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader textAlign="center" fontSize="30px">
-            Edit income data
+          <ModalHeader textAlign="center" fontSize="2em">
+            Edit Income Data
           </ModalHeader>
           <ModalCloseButton onClick={onClose} />
           <ModalBody>
@@ -145,9 +129,6 @@ export function EditOverlayComponent(props) {
             >
               Edit
             </Button>
-            <Button onClick={onClose} colorScheme="yellow" pl="20px">
-              Close
-            </Button>
           </ModalFooter>
         </ModalContent>
       </Modal>
@@ -161,27 +142,48 @@ export function EditOverlayComponent(props) {
  * @returns {*}
  */
 function EditDataComponent(props) {
-  const initialValues = {
+  const resetValues = {
     monthlyIncome: null,
     weeklyHours: null,
     startDate: null,
     endDate: null,
     company: null,
   };
-  const [values, setValues] = useState(initialValues);
-  const [industry, setIndustry] = useState("");
+
+  let initValues =
+    props.data === null
+      ? resetValues
+      : {
+          monthlyIncome: props.data.monthly_income,
+          weeklyHours: props.data.weekly_hours,
+          startDate: props.data.start_date.slice(0, 10),
+          endDate:
+            props.data.end_date !== null
+              ? props.data.end_date.slice(0, 10)
+              : null,
+          company: props.data.company,
+        };
+
+  useEffect(() => {}, [props.data]);
+
+  const [values, setValues] = useState(initValues);
+  const [industry, setIndustry] = useState(props.data.industry);
   const [addSuccess, setAddSuccess] = useState(null);
+  console.log(values);
+
   const handleInputChange = (e) => {
     var { name, value } = e.target;
+    // replaces value
     setValues({
       ...values,
       [name]: value,
     });
   };
   const clearState = () => {
-    setValues(initialValues);
+    setValues(resetValues);
     setAddSuccess(null);
     props.setTargetFound(false);
+    props.setTargetData(null);
     props.onClose();
   };
 
@@ -190,19 +192,21 @@ function EditDataComponent(props) {
    */
   function handleRemove() {
     console.log(props.data._id);
-    return fetch("https://hooli-backend-aryan.herokuapp.com/api/income/" + props.data._id, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${sessionStorage.getItem("token")}`,
-      },
-    })
+    return fetch(
+      "https://hooli-backend-aryan.herokuapp.com/api/income/" + props.data._id,
+      {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+        },
+      }
+    )
       .then((response) => {
         if (response.status === 500 || response.status === 404) {
           console.log("Some error occurred - " + response.status);
         } else {
           console.log("Removed");
-          //setResult(result.filter((item) => item._id !== selectedItem._id));
           return response.json();
         }
       })
@@ -248,37 +252,39 @@ function EditDataComponent(props) {
     });
   }
   return (
-    <div>
+    <>
       <Modal isOpen={props.isOpen}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader textAlign="center" fontSize="30px">
-            Add new income
+          <ModalHeader textAlign="center" fontSize="2em">
+            Edit Income
           </ModalHeader>
           <ModalBody>
             Income Type<br></br>
             <select
+              id="industryList"
               value={industry}
               onChange={(event) => {
                 setIndustry(event.target.value);
               }}
             >
               <option>N.A</option>
-              <option value="manufacturing">Manufacturing</option>
-              <option value="services">Services</option>
-              <option value="construction">Construction</option>
-              <option value="others">Others</option>
+              <option value="Manufacturing">Manufacturing</option>
+              <option value="Services">Services</option>
+              <option value="Construction">Construction</option>
+              <option value="Others">Others</option>
             </select>
           </ModalBody>
           <ModalBody>
             Monthly income<br></br>
             <input
               type="number"
-              placeholder="amount"
               size="30"
               required
               name="monthlyIncome"
+              id="monthlyIncome"
               onChange={handleInputChange}
+              value={values.monthlyIncome}
             ></input>
           </ModalBody>
 
@@ -287,9 +293,11 @@ function EditDataComponent(props) {
             <input
               type="date"
               size="30"
-              required
               name="startDate"
+              id="startDate"
               onChange={handleInputChange}
+              value={values.startDate}
+              required
             ></input>
           </ModalBody>
           <ModalBody>
@@ -298,28 +306,34 @@ function EditDataComponent(props) {
               type="date"
               size="30"
               name="endDate"
+              id="endDate"
               onChange={handleInputChange}
+              value={values.endDate || ""}
             ></input>
           </ModalBody>
           <ModalBody>
             Weekly hours (optional)<br></br>
             <input
               type="number"
-              placeholder="hours"
+              // placeholder="hours"
               size="30"
               required
               name="weeklyHours"
+              id="weeklyHours"
               onChange={handleInputChange}
+              value={values.weeklyHours || ""}
             ></input>
           </ModalBody>
           <ModalBody className={classes.inputbox}>
             Company (optional)<br></br>
             <input
               type="text"
-              placeholder="company name"
+              // placeholder="company name"
               size="30"
               name="company"
+              id="company"
               onChange={handleInputChange}
+              value={values.company || ""}
             ></input>
           </ModalBody>
 
@@ -357,6 +371,6 @@ function EditDataComponent(props) {
           </ModalFooter>
         </ModalContent>
       </Modal>
-    </div>
+    </>
   );
 }
