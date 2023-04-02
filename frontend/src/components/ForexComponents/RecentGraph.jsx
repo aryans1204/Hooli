@@ -37,7 +37,7 @@ function RecentGraph () {
      */
     const getDBData = async () => {
         try {
-            const response = await fetch('/api/currencies', {
+            const response = await fetch('https://hooli-backend-aryan.herokuapp.com/api/currencies', {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',

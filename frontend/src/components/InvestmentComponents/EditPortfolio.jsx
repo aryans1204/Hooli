@@ -63,7 +63,7 @@ export function EditPortfolio(props) {
   function handleEquitySubmit(e) {
     e.preventDefault();
     console.log("SUBMIT");
-    fetch("/api/investments/equities/" + props.data._id, {
+    fetch("https://hooli-backend-aryan.herokuapp.com/api/investments/equities/" + props.data._id, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
@@ -93,7 +93,7 @@ export function EditPortfolio(props) {
   function handleOptionSubmit(e) {
     e.preventDefault();
     console.log("SUBMIT");
-    fetch("/api/investments/options/" + props.data._id, {
+    fetch("https://hooli-backend-aryan.herokuapp.com/api/investments/options/" + props.data._id, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",

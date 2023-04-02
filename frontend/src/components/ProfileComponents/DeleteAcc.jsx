@@ -17,7 +17,7 @@ export function DeleteAcc () {
 
   async function onDelete () {
     try {
-      const response = await fetch("/api/users/me", {
+      const response = await fetch("https://hooli-backend-aryan.herokuapp.com/api/users/me", {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
