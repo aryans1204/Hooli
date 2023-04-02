@@ -24,7 +24,7 @@ const incomeSchema = new mongoose.Schema({
         type: String,
         required: true,
         validate(value) {
-            const allowedSet = ["manufacturing", "services", "construction", "others"] 
+            const allowedSet = ["Manufacturing", "Services", "Construction", "Others"] 
             if (!allowedSet.includes(value)) throw new Error("Only supported industries are allowed.")
         }
     },

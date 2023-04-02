@@ -84,18 +84,16 @@ export function AddOverlayComponent(props) {
   }
 
   return (
-    <ButtonGroup spacing="40px" float="left" pl="180px">
+    <>
       <Button
         onClick={onOpen}
-        w="175px"
-        h="71px"
+        height="4em"
+        width="10em"
         borderRadius="50"
         color="white"
         bg="#3f2371"
         float="left"
-      >
-        Add
-      </Button>
+      > Add </Button>
       <Modal isOpen={isOpen}>
         <ModalOverlay />
         <ModalContent>
@@ -111,11 +109,11 @@ export function AddOverlayComponent(props) {
                 setIndustry(event.target.value);
               }}
             >
-              <option>N.A</option>
-              <option value="manufacturing">Manufacturing</option>
-              <option value="services">Services</option>
-              <option value="construction">Construction</option>
-              <option value="others">Others</option>
+              <option>N.A.</option>
+              <option value="Manufacturing">Manufacturing</option>
+              <option value="Services">Services</option>
+              <option value="Construction">Construction</option>
+              <option value="Others">Others</option>
             </select>
           </ModalBody>
           <ModalBody>
@@ -205,6 +203,6 @@ export function AddOverlayComponent(props) {
           </ModalFooter>
         </ModalContent>
       </Modal>
-    </ButtonGroup>
+    </>
   );
 }

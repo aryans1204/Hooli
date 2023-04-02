@@ -27,6 +27,10 @@ export function RemoveOverlayComponent(props) {
   const [result, setResult] = useState([{}]); //result is the income data fetched with backend api
   const [selectedItem, setSelectedItem] = useState(null);
 
+  useEffect(() => {
+    setResult(props.data);
+  }, [props.data]);
+
   /**
    * Stores data of income record to be removed.
    * @param {*} item
@@ -40,13 +44,17 @@ export function RemoveOverlayComponent(props) {
    */
   function handleRemove() {
     console.log(selectedItem._id);
-    fetch("https://hooli-backend-aryan.herokuapp.com/api/income/" + selectedItem._id, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${sessionStorage.getItem("token")}`,
-      },
-    })
+    fetch(
+      "https://hooli-backend-aryan.herokuapp.com/api/income/" +
+        selectedItem._id,
+      {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+        },
+      }
+    )
       .then((response) => {
         if (response.status === 500 || response.status === 404) {
           console.log("Some error occurred - " + response.status);
@@ -65,23 +73,7 @@ export function RemoveOverlayComponent(props) {
    * Retrieves all income records using get/api/income.
    */
   function getData() {
-    fetch("https://hooli-backend-aryan.herokuapp.com/api/income", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${sessionStorage.getItem("token")}`,
-      },
-    })
-      .then((response) => {
-        if (response.status === 500) {
-          console.log("Some error occurred - " + response.status);
-        } else {
-          return response.json();
-        }
-      })
-      .then((data) => {
-        setResult(data);
-      });
+    setResult(props.data);
     onOpen();
   }
 
@@ -89,8 +81,8 @@ export function RemoveOverlayComponent(props) {
     <div>
       <Button
         onClick={getData}
-        w="175px"
-        h="71px"
+        w="10em"
+        h="4em"
         borderRadius="50"
         color="white"
         bg="#3f2371"
@@ -120,9 +112,6 @@ export function RemoveOverlayComponent(props) {
               onClick={handleRemove}
             >
               Remove
-            </Button>
-            <Button onClick={onClose} colorScheme="yellow" pl="20px">
-              Close
             </Button>
           </ModalFooter>
         </ModalContent>
