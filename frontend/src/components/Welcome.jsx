@@ -23,31 +23,6 @@ class Welcome extends Component {
           </div>
         </div>
       </div>
-
-
-      // <div className={classes.app}>
-      //   <div className={classes["purple-column"]}>
-      //     <img className={classes.logo} src={logo} alt="Hooli" />
-      //   </div>
-      //   <div className={classes["yellow-column"]}>
-      //     <div className={classes.nav}>
-      //       <Link to="/login" relative="path" className={classes.link}>
-      //         Login
-      //       </Link>
-      //       <Link to="/signup" relative="path" className={classes.signup}>
-      //         Get Started
-      //       </Link>
-      //     </div>
-      //     <div className={classes.description}>
-      //       <p className={classes.title}>Welcome</p>
-      //       <p className={classes.about}>
-      //         Hooli is an online application that helps you manage your
-      //         finances.
-      //       </p>
-      //     </div>
-      //   </div>
-        
-      // </div>
     );
   }
 }
