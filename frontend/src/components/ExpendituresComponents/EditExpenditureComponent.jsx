@@ -13,8 +13,8 @@ import {
   ModalCloseButton,
   useDisclosure,
 } from "@chakra-ui/react";
-import { Card, CardHeader, CardBody, CardFooter } from '@chakra-ui/react'
-import { Text } from '@chakra-ui/react'
+import { Card, CardHeader, CardBody, CardFooter } from "@chakra-ui/react";
+import { Text } from "@chakra-ui/react";
 
 /**
  * Component for editing an expenditure.
@@ -45,13 +45,17 @@ export function EditExpenditureComponent(props) {
    * Retrieves selected expenditure using get/api/expenditure/:id.
    */
   function getTargetItem() {
-    fetch("https://hooli-backend-aryan.herokuapp.com/api/expenditure/" + selectedItem._id, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${sessionStorage.getItem("token")}`,
-      },
-    })
+    fetch(
+      "https://hooli-backend-aryan.herokuapp.com/api/expenditure/" +
+        selectedItem._id,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+        },
+      }
+    )
       .then((response) => {
         if (response.status === 500 || response.status === 404) {
           console.log("Some error occurred - " + response.status);
@@ -177,13 +181,17 @@ function EditDataComponent(props) {
    */
   function handleRemove() {
     console.log(props.data._id);
-    return fetch("https://hooli-backend-aryan.herokuapp.com/api/expenditure/" + props.data._id, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${sessionStorage.getItem("token")}`,
-      },
-    })
+    return fetch(
+      "https://hooli-backend-aryan.herokuapp.com/api/expenditure/" +
+        props.data._id,
+      {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+        },
+      }
+    )
       .then((response) => {
         if (response.status === 500 || response.status === 404) {
           console.log("Some error occurred - " + response.status);
@@ -202,35 +210,35 @@ function EditDataComponent(props) {
    */
   function handleSubmit() {
     //handleRemove().then(() => {
-      fetch("https://hooli-backend-aryan.herokuapp.com/api/expenditure", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${sessionStorage.getItem("token")}`,
-        },
-        body: JSON.stringify({
-          memo: values.memo,
-          category: category,
-          amount: values.amount,
-          date: values.date,
-        }),
+    fetch("https://hooli-backend-aryan.herokuapp.com/api/expenditure", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+      },
+      body: JSON.stringify({
+        memo: values.memo,
+        category: category,
+        amount: values.amount,
+        date: values.date,
+      }),
+    })
+      .then((response) => {
+        if (response.status === 500) {
+          console.log("Some error occurred - " + response.status);
+          setAddSuccess(false);
+        } else {
+          console.log("Added new");
+          setAddSuccess(true);
+          setValues(initialValues);
+          handleRemove();
+          return response.json();
+        }
       })
-        .then((response) => {
-          if (response.status === 500) {
-            console.log("Some error occurred - " + response.status);
-            setAddSuccess(false);
-          } else {
-            console.log("Added new");
-            setAddSuccess(true);
-            setValues(initialValues);
-            handleRemove();
-            return response.json();
-          }
-        })
-        .then((data) => {
-          console.log(data);
-          props.setState();
-        });
+      .then((data) => {
+        console.log(data);
+        props.setState();
+      });
     //});
   }
 
@@ -259,7 +267,7 @@ function EditDataComponent(props) {
                 setCategory(event.target.value);
               }}
             >
-              <option value=''>Select one</option>
+              <option value="">Select one</option>
               <option value="Food">Food</option>
               <option value="Housing">Housing</option>
               <option value="Utilities">Utilities</option>
@@ -295,13 +303,23 @@ function EditDataComponent(props) {
           </ModalBody>
 
           <ModalFooter>
-          <ButtonGroup spacing='4'>
-            <Button onClick={handleSubmit} variant="solid" colorScheme="purple" size="md">
-              Save
-            </Button>
-            <Button onClick={clearState} variant="outline" colorScheme="purple" size="md">
-              Cancel
-            </Button>
+            <ButtonGroup spacing="4">
+              <Button
+                onClick={handleSubmit}
+                variant="solid"
+                colorScheme="purple"
+                size="md"
+              >
+                Save
+              </Button>
+              <Button
+                onClick={clearState}
+                variant="outline"
+                colorScheme="purple"
+                size="md"
+              >
+                Cancel
+              </Button>
             </ButtonGroup>
             <div>
               {(() => {

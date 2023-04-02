@@ -24,7 +24,6 @@ const PortfolioForm = forwardRef((props, ref) => {
   const handleSubmit = async () => {
     console.log(equities);
     console.log(options);
-    console.log(sessionStorage.getItem("token"));
     fetch("https://hooli-backend-aryan.herokuapp.com/api/investments", {
       method: "POST",
       headers: {
@@ -100,23 +99,6 @@ const PortfolioForm = forwardRef((props, ref) => {
               setEquities(newEquities);
             }}
           />
-          <label htmlFor={`equity_current_price_${index}`}>
-            <br></br>Current Price:
-          </label>
-          <input
-            type="number"
-            id={`equity_current_price_${index}`}
-            value={equity.equity_current_price || ""}
-            onChange={(event) => {
-              const newEquities = [...equities];
-              const value = event.target.value !== "" ? event.target.value : 0;
-              newEquities[index] = {
-                ...newEquities[index],
-                equity_current_price: value,
-              };
-              setEquities(newEquities);
-            }}
-          />
           <hr></hr>
         </div>
       ))}
@@ -187,23 +169,6 @@ const PortfolioForm = forwardRef((props, ref) => {
               setOptions(newOptions);
             }}
           />
-          <label htmlFor={`derivative_current_price_${index}`}>
-            <br></br>Current Price:
-          </label>
-          <input
-            type="number"
-            id={`derivative_current_price_${index}`}
-            value={option.derivative_current_price || ""}
-            onChange={(event) => {
-              const newOptions = [...options];
-              const value = event.target.value !== "" ? event.target.value : 0;
-              newOptions[index] = {
-                ...newOptions[index],
-                derivative_current_price: value,
-              };
-              setOptions(newOptions);
-            }}
-          />
           <hr></hr>
         </div>
       ))}
@@ -218,7 +183,7 @@ const PortfolioForm = forwardRef((props, ref) => {
             } else if (addSuccess == true) {
               return (
                 <div>
-                  <div>Successfully added income data!</div>
+                  <div>Successfully added portfolio!</div>
                   <div>
                     <Button onClick={clearState}>OK</Button>
                   </div>

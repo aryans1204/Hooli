@@ -110,7 +110,7 @@ class SignUp extends Component {
                 {(() => {
                   if (this.state.signUpSuccessful == false) {
                     return (
-                      <div>Account creation unsuccessful. Please try again</div>
+                      <div>ACcount creation unsuccessful. Please try again</div>
                     );
                   } else {
                     return null;
