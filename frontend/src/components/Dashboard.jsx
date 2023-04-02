@@ -25,7 +25,7 @@ class Dashboard extends Component {
    */
   async componentDidMount() {
     this.getExpenseData();
-    await fetch("/api/users/me", {
+    await fetch("https://hooli-backend-aryan.herokuapp.com/api/users/me", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -44,7 +44,7 @@ class Dashboard extends Component {
    * @throws {Error}
    */
   getExpenseData() {
-    fetch("/api/expenditure", {
+    fetch("https://hooli-backend-aryan.herokuapp.com/api/expenditure", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
