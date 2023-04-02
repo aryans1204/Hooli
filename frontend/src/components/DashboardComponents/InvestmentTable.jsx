@@ -19,6 +19,7 @@ export const InvestmentTable = () => {
 
   useEffect(() => {
     if (portfolioData !== null) {
+      console.log(portfolioData);
       setEquities(portfolioData[0].equities);
     }
   }, [portfolioData]);

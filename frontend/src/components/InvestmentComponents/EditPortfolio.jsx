@@ -21,7 +21,6 @@ export function EditPortfolio(props) {
   const initialEquityValues = {
     equity_ticker: "",
     equity_buy_price: 0,
-    equity_current_price: 0,
   };
   const initialOptionValues = {
     derivative_ticker: "",
@@ -74,9 +73,7 @@ export function EditPortfolio(props) {
         },
         body: JSON.stringify({
           equity_ticker: equityValues.equity_ticker,
-          equity_pnl: equityValues.equity_pnl,
           equity_buy_price: equityValues.equity_buy_price,
-          equity_current_price: equityValues.equity_current_price,
         }),
       }
     )
@@ -150,16 +147,6 @@ export function EditPortfolio(props) {
               type="number"
               name="equity_buy_price"
               value={equityValues.equity_buy_price}
-              onChange={handleEquityChange}
-            />
-          </label>
-          <br />
-          <label>
-            Equity Current Price:
-            <input
-              type="number"
-              name="equity_current_price"
-              value={equityValues.equity_current_price}
               onChange={handleEquityChange}
             />
           </label>

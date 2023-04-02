@@ -99,23 +99,6 @@ const PortfolioForm = forwardRef((props, ref) => {
               setEquities(newEquities);
             }}
           />
-          <label htmlFor={`equity_current_price_${index}`}>
-            <br></br>Current Price:
-          </label>
-          <input
-            type="number"
-            id={`equity_current_price_${index}`}
-            value={equity.equity_current_price || ""}
-            onChange={(event) => {
-              const newEquities = [...equities];
-              const value = event.target.value !== "" ? event.target.value : 0;
-              newEquities[index] = {
-                ...newEquities[index],
-                equity_current_price: value,
-              };
-              setEquities(newEquities);
-            }}
-          />
           <hr></hr>
         </div>
       ))}
@@ -182,23 +165,6 @@ const PortfolioForm = forwardRef((props, ref) => {
               newOptions[index] = {
                 ...newOptions[index],
                 expiration_date: event.target.value,
-              };
-              setOptions(newOptions);
-            }}
-          />
-          <label htmlFor={`derivative_current_price_${index}`}>
-            <br></br>Current Price:
-          </label>
-          <input
-            type="number"
-            id={`derivative_current_price_${index}`}
-            value={option.derivative_current_price || ""}
-            onChange={(event) => {
-              const newOptions = [...options];
-              const value = event.target.value !== "" ? event.target.value : 0;
-              newOptions[index] = {
-                ...newOptions[index],
-                derivative_current_price: value,
               };
               setOptions(newOptions);
             }}
