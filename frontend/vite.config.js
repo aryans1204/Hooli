@@ -11,7 +11,7 @@ export default defineConfig(({ mode }) => {
     server: {
       proxy: {
         "/api": {
-          target: "https://hooli-backend-aryan.herokuapp.com",
+          target: `http://localhost:${env.VITE_PORT}`,
           changeOrigin: true,
           secure: false,
           withCredentials: true,

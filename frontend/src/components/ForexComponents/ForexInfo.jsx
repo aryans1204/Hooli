@@ -52,7 +52,7 @@ function ForexInfo () {
      * @returns {}
      */
     function checkData () {
-        fetch('https://hooli-backend-aryan.herokuapp.com/api/currencies', {
+        fetch('/api/currencies', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -183,7 +183,7 @@ function ForexInfo () {
         if (sessionStorage.getItem("tableData") == null) {
             console.log("Getting initial data");
             try {
-                const response = await fetch('https://hooli-backend-aryan.herokuapp.com/api/currencies', {
+                const response = await fetch('/api/currencies', {
                   method: 'GET',
                   headers: {
                     'Content-Type': 'application/json',
@@ -283,7 +283,7 @@ function ForexInfo () {
      */
     async function postData(fromVar, toVar) {
         setDataChange(false);
-        fetch('https://hooli-backend-aryan.herokuapp.com/api/currencies', {
+        fetch('/api/currencies', {
             method: 'POST',
             body: JSON.stringify({
                 currency_from: fromVar,

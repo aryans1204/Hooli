@@ -9,7 +9,7 @@ export function RemovePortfolio(props) {
   // props.data._id will be the id used to locate the portfolio containing the data we want to remove
   const removeEquity = (item) => {
     console.log(item);
-    fetch("https://hooli-backend-aryan.herokuapp.com/api/investments/equities/" + props.data._id, {
+    fetch("/api/investments/equities/" + props.data._id, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -35,7 +35,7 @@ export function RemovePortfolio(props) {
 
   const removeOption = (item) => {
     console.log(item);
-    fetch("https://hooli-backend-aryan.herokuapp.com/api/investments/options/" + props.data._id, {
+    fetch("/api/investments/options/" + props.data._id, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -60,7 +60,7 @@ export function RemovePortfolio(props) {
   };
 
   const deletePortfolio = () => {
-    fetch("https://hooli-backend-aryan.herokuapp.com/api/investments/" + props.data._id, {
+    fetch("/api/investments/" + props.data._id, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",

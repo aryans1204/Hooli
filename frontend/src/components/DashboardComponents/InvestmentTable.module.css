@@ -1,0 +1,11 @@
+td {
+  border: "none";
+}
+th {
+  border: "none";
+}
+
+.tableData {
+  border: "none";
+  background-color: "transparent";
+}
