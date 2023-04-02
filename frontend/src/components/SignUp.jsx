@@ -60,15 +60,15 @@ class SignUp extends Component {
   };
   render() {
     return (
-      <div className={classes.app}>
-        <div className={classes.row}>
-          <div className={classes.column + " " + classes.darkPurple}>
+      <div className={classes.container}>
+          <div className={classes["col", "leftCol"]}>
             <img className={classes.logo} src={logo} alt="Hooli" />
           </div>
-          <div className={classes.column}>
-            <div className={classes.login}>
+          <div className={classes["col", "rightCol"]}>
+            <div className={classes.signup}>
               <h2>Sign Up</h2>
               <form onSubmit={this.handleSubmit}>
+              <div className={classes.fields}>
                 <label>
                   <h3>Name</h3>
                   <input
@@ -99,9 +99,8 @@ class SignUp extends Component {
                     onChange={this.handleChange}
                   />
                 </label>
-                <label>
-                  <input type="submit" value="Sign up" />
-                </label>
+                <input type="submit" value="Register" />
+              </div>
               </form>
               <div>
                 {(() => {
@@ -119,7 +118,6 @@ class SignUp extends Component {
               )}
             </div>
           </div>
-        </div>
       </div>
     );
   }

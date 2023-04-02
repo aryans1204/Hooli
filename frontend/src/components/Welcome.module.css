@@ -46,14 +46,24 @@
 }
 
 .login {
+  text-decoration: none;
   color: #000;
   font-size: 1.5em;
 }
 
+.login:visited {
+  text-decoration: none;
+}
+
 .signup {
+  text-decoration: none;
   color: #000;
   font-size: 1.5em;
   margin-left: 1.5em;
+}
+
+.signup:visited {
+  text-decoration: none;
 }
 
 .description {
