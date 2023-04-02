@@ -67,20 +67,25 @@ export function EditOverlayComponent(props) {
         console.log(data);
       });
   }
-  useEffect(() => {
+  /*useEffect(() => {
     if (targetData !== null) {
       console.log("targetData", targetData);
       let startDateL = targetData.start_date;
       let endDateL = targetData.end_date;
-      document.getElementById('industryList').value = targetData.industry;
-      document.getElementById("monthlyIncome").value = targetData.monthly_income;
+      document.getElementById("industryList").value = targetData.industry;
+      document.getElementById("monthlyIncome").value =
+        targetData.monthly_income;
       document.getElementById("startDate").value = startDateL.slice(0, 10);
-      if (targetData.end_date != null) document.getElementById("endDate").value = endDateL.slice(0,10);
-      if (targetData.weekly_hours != null) document.getElementById("weeklyHours").placeholder = targetData.weekly_hours;
-      if (targetData.company != null) document.getElementById("company").placeholder = targetData.company;
+      if (targetData.end_date != null)
+        document.getElementById("endDate").value = endDateL.slice(0, 10);
+      if (targetData.weekly_hours != null)
+        document.getElementById("weeklyHours").placeholder =
+          targetData.weekly_hours;
+      if (targetData.company != null)
+        document.getElementById("company").placeholder = targetData.company;
       onOpen();
     }
-  }, [targetData]);
+  }, [targetData]);*/
 
   /**
    * Sets state to props data of income of selected year
@@ -93,13 +98,14 @@ export function EditOverlayComponent(props) {
   return (
     <div>
       <div>
-        {targetFound === true ? (
+        {targetFound === true && targetData !== null ? (
           <EditDataComponent
             isOpen={isOpen}
             onClose={onClose}
             onOpen={onOpen}
             data={targetData}
             setTargetFound={setTargetFound}
+            setTargetData={setTargetData}
             setState={props.setState}
           />
         ) : null}
@@ -159,44 +165,40 @@ function EditDataComponent(props) {
     company: null,
   };
 
-  const initValues = (props.data == null) ? resetValues : {
-    monthlyIncome: props.data.monthly_income,
-    weeklyHours: props.data.weekly_hours,
-    startDate: props.data.start_date,
-    endDate: props.data.end_date,
-    company: props.data.company,
-  }
-  // const initValues = {
-  //   monthlyIncome: ((props.data.monthly_income != null) ? props.data.monthly_income : null),
-  //   weeklyHours: ((props.data.weekly_hours != null) ? props.data.weekly_hours : null),
-  //   startDate: ((props.data.start_date != null) ? props.data.start_date : null),
-  //   endDate: ((props.data.end_date != null) ? props.data.end_date : null),
-  //   company: ((props.data.company != null) ? props.data.company : null),
-  // };
+  let initValues =
+    props.data === null
+      ? resetValues
+      : {
+          monthlyIncome: props.data.monthly_income,
+          weeklyHours: props.data.weekly_hours,
+          startDate: props.data.start_date.slice(0, 10),
+          endDate:
+            props.data.end_date !== null
+              ? props.data.end_date.slice(0, 10)
+              : null,
+          company: props.data.company,
+        };
 
-  // console.log("initValues", initValues);
-
-  var fData = props.data;
-
-  console.log("prop data", fData);
+  useEffect(() => {}, [props.data]);
 
   const [values, setValues] = useState(initValues);
-  // const[val, setVal] = useState(initValues);
-  const [industry, setIndustry] = useState("");
+  const [industry, setIndustry] = useState(props.data.industry);
   const [addSuccess, setAddSuccess] = useState(null);
+  console.log(values);
 
   const handleInputChange = (e) => {
     var { name, value } = e.target;
     // replaces value
     setValues({
       ...values,
-      [name]: value
-    }).then(console.log("onchange", values));
+      [name]: value,
+    });
   };
   const clearState = () => {
     setValues(resetValues);
     setAddSuccess(null);
     props.setTargetFound(false);
+    props.setTargetData(null);
     props.onClose();
   };
 
@@ -267,7 +269,7 @@ function EditDataComponent(props) {
         <ModalOverlay />
         <ModalContent>
           <ModalHeader textAlign="center" fontSize="2em">
-            Edit New Income
+            Edit Income
           </ModalHeader>
           <ModalBody>
             Income Type<br></br>
@@ -277,7 +279,6 @@ function EditDataComponent(props) {
               onChange={(event) => {
                 setIndustry(event.target.value);
               }}
-              
             >
               <option>N.A</option>
               <option value="Manufacturing">Manufacturing</option>
@@ -290,12 +291,12 @@ function EditDataComponent(props) {
             Monthly income<br></br>
             <input
               type="number"
-              // placeholder="amount"
               size="30"
               required
               name="monthlyIncome"
               id="monthlyIncome"
               onChange={handleInputChange}
+              value={values.monthlyIncome}
             ></input>
           </ModalBody>
 
@@ -307,6 +308,7 @@ function EditDataComponent(props) {
               name="startDate"
               id="startDate"
               onChange={handleInputChange}
+              value={values.startDate}
               required
             ></input>
           </ModalBody>
@@ -318,6 +320,7 @@ function EditDataComponent(props) {
               name="endDate"
               id="endDate"
               onChange={handleInputChange}
+              value={values.endDate || ""}
             ></input>
           </ModalBody>
           <ModalBody>
@@ -330,6 +333,7 @@ function EditDataComponent(props) {
               name="weeklyHours"
               id="weeklyHours"
               onChange={handleInputChange}
+              value={values.weeklyHours || ""}
             ></input>
           </ModalBody>
           <ModalBody className={classes.inputbox}>
@@ -341,6 +345,7 @@ function EditDataComponent(props) {
               name="company"
               id="company"
               onChange={handleInputChange}
+              value={values.company || ""}
             ></input>
           </ModalBody>
 
