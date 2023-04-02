@@ -44,13 +44,17 @@ export function RemoveOverlayComponent(props) {
    */
   function handleRemove() {
     console.log(selectedItem._id);
-    fetch("/api/income/" + selectedItem._id, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${sessionStorage.getItem("token")}`,
-      },
-    })
+    fetch(
+      "https://hooli-backend-aryan.herokuapp.com/api/income/" +
+        selectedItem._id,
+      {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+        },
+      }
+    )
       .then((response) => {
         if (response.status === 500 || response.status === 404) {
           console.log("Some error occurred - " + response.status);

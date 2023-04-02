@@ -39,7 +39,7 @@ class Expenditures extends Component {
    */
   async componentDidMount() {
     this.getData();
-    await fetch("/api/users/me", {
+    await fetch("https://hooli-backend-aryan.herokuapp.com/api/users/me", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -58,7 +58,7 @@ class Expenditures extends Component {
    * Retrieves all expenditures using get/api/expenditure and updates the state of incomeData.
    */
   getData() {
-    fetch("/api/expenditure", {
+    fetch("https://hooli-backend-aryan.herokuapp.com/api/expenditure", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

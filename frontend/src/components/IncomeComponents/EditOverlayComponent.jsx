@@ -47,13 +47,17 @@ export function EditOverlayComponent(props) {
    * Retrieves selected income record using get/api/income/:id.
    */
   function getTargetItem() {
-    fetch("/api/income/" + selectedItem._id, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${sessionStorage.getItem("token")}`,
-      },
-    })
+    fetch(
+      "https://hooli-backend-aryan.herokuapp.com/api/income/" +
+        selectedItem._id,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+        },
+      }
+    )
       .then((response) => {
         if (response.status === 500 || response.status === 404) {
           console.log("Some error occurred - " + response.status);
@@ -67,25 +71,6 @@ export function EditOverlayComponent(props) {
         console.log(data);
       });
   }
-  /*useEffect(() => {
-    if (targetData !== null) {
-      console.log("targetData", targetData);
-      let startDateL = targetData.start_date;
-      let endDateL = targetData.end_date;
-      document.getElementById("industryList").value = targetData.industry;
-      document.getElementById("monthlyIncome").value =
-        targetData.monthly_income;
-      document.getElementById("startDate").value = startDateL.slice(0, 10);
-      if (targetData.end_date != null)
-        document.getElementById("endDate").value = endDateL.slice(0, 10);
-      if (targetData.weekly_hours != null)
-        document.getElementById("weeklyHours").placeholder =
-          targetData.weekly_hours;
-      if (targetData.company != null)
-        document.getElementById("company").placeholder = targetData.company;
-      onOpen();
-    }
-  }, [targetData]);*/
 
   /**
    * Sets state to props data of income of selected year
@@ -207,13 +192,16 @@ function EditDataComponent(props) {
    */
   function handleRemove() {
     console.log(props.data._id);
-    return fetch("/api/income/" + props.data._id, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${sessionStorage.getItem("token")}`,
-      },
-    })
+    return fetch(
+      "https://hooli-backend-aryan.herokuapp.com/api/income/" + props.data._id,
+      {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+        },
+      }
+    )
       .then((response) => {
         if (response.status === 500 || response.status === 404) {
           console.log("Some error occurred - " + response.status);
@@ -232,7 +220,7 @@ function EditDataComponent(props) {
    */
   function handleSubmit() {
     handleRemove().then(() => {
-      fetch("/api/income", {
+      fetch("https://hooli-backend-aryan.herokuapp.com/api/income", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

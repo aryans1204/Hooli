@@ -24,7 +24,8 @@ const PortfolioForm = forwardRef((props, ref) => {
   const handleSubmit = async () => {
     console.log(equities);
     console.log(options);
-    fetch("/api/investments", {
+    console.log(sessionStorage.getItem("token"));
+    fetch("https://hooli-backend-aryan.herokuapp.com/api/investments", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
