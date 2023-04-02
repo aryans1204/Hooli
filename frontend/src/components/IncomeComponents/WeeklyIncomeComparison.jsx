@@ -28,7 +28,7 @@ function filterDataByQuarterAndIndustry(data, filters) {
     return filters.some((filter) => {
       const itemQuarter = item.quarter;
       const itemIndustry = item.industry1.toLowerCase();
-      return itemQuarter === filter.quarter && itemIndustry === filter.industry;
+      return itemQuarter === filter.quarter && itemIndustry === (filter.industry.toLowerCase());
     });
   });
 }
@@ -43,6 +43,9 @@ export function WeeklyIncomeComparison(props) {
   const [apiData, setapiData] = useState(null); //data retrieved from api
   const [userData, setuserData] = useState(null); //user data passed in from parent class as prop
   const [filteredData, setFilteredData] = useState(null);
+
+
+  // gets latest data from props and adds the quarter data to them every thing the props data changes
   useEffect(() => {
     let tempData = props.data.sort(
       (a, b) => new Date(b.start_date) - new Date(a.start_date)
@@ -81,6 +84,8 @@ export function WeeklyIncomeComparison(props) {
         console.error(error);
       });
   }, [props.data]);
+
+  // runs everytime apiData is changed
   useEffect(() => {
     if (apiData != null) {
       const filteredDatas = filterDataByQuarterAndIndustry(
@@ -93,11 +98,12 @@ export function WeeklyIncomeComparison(props) {
 
   const getRecommendedHours = (quarter, industry) => {
     const finalData = filteredData.find(
-      (data) => data.quarter === quarter && data.industry1 === industry
+      (data) => data.quarter === quarter && data.industry1 === (industry.toLowerCase())
     );
     return finalData ? finalData.total_paid_hours : "N.A.";
   };
 
+  // Formats date to just yyyy-mm-dd format
   const formatDate = (dateString) => {
     const date = dateString.slice(0, 10);
     return date;

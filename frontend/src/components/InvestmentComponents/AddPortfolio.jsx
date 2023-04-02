@@ -217,7 +217,7 @@ const PortfolioForm = forwardRef((props, ref) => {
             } else if (addSuccess == true) {
               return (
                 <div>
-                  <div>Successfully added income data!</div>
+                  <div>Successfully added portfolio!</div>
                   <div>
                     <Button onClick={clearState}>OK</Button>
                   </div>
