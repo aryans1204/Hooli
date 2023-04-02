@@ -27,7 +27,6 @@ import { WeeklyIncomeComparison } from "./IncomeComponents/WeeklyIncomeCompariso
  * @extends {Component}
  */
 class Income extends Component {
-
   /**
    * Creates an instance of Income.
    * @constructor
@@ -42,6 +41,7 @@ class Income extends Component {
       incomeData: [],
       yearlyData: null,
       year: curYear,
+      yearOptions: [],
     };
   }
 
@@ -91,54 +91,68 @@ class Income extends Component {
           (a, b) => new Date(a.start_date) - new Date(b.start_date)
         );
 
-        tempData.forEach(indiv => {
+        tempData.forEach((indiv) => {
           let longDate = indiv.start_date;
           indiv.start_date = longDate.slice(0, 10);
-        })
+        });
 
-        this.setState({incomeData: tempData});
+        this.setState({ incomeData: tempData });
 
         console.log("tempData", tempData);
-        console.log("tempData", typeof(tempData));
+        console.log("tempData", typeof tempData);
 
         // Get DB entries within the correct year
         let finalData = [];
-        tempData.forEach(data => {
-          if ((data.start_date).includes(year)) {
+        tempData.forEach((data) => {
+          if (data.start_date.includes(year)) {
             console.log("HELLO");
             finalData.push(data);
           }
         });
-        
-        this.setState({yearlyData: finalData});
+
+        this.setState({ yearlyData: finalData });
 
         console.log("final", finalData);
         // console.log("final", typeof(finalData));
 
+        let uniqueYears = [];
+        tempData.forEach((data) => {
+          let year = new Date(data.start_date).getFullYear().toString();
+          if (!uniqueYears.includes(year)) {
+            uniqueYears.push(year);
+          }
+        });
+        uniqueYears.reverse();
+        this.setState({ yearOptions: uniqueYears });
       });
   }
 
   render() {
+    const yearOptions = this.state.yearOptions.map((year) => (
+      <option key={year} value={year}>
+        {year}
+      </option>
+    ));
     return (
       <div className={classes.contents}>
-        {this.state.authenticated == false && (<Navigate to="/" replace={true} />)}
+        {this.state.authenticated == false && (
+          <Navigate to="/" replace={true} />
+        )}
         <NavBar />
         <h1 className={classes.text}>MY INCOME</h1>
 
-        {/* {this.state.incomeData !== null ? (<IncomeBarChart data={this.state.incomeData} />) : null} */}
         <label htmlFor="Year">Year:</label>
-        <select name="years" id="year"
+        <select
+          name="years"
+          id="year"
           onChange={(event) => {
             this.setState({ year: event.target.value }, () => {
-            this.getIncomeData();
-          });
-        }}>
-            <option value="2023">2023</option>
-            <option value="2022">2022</option>
-            <option value="2021">2021</option>
+              this.getIncomeData();
+            });
+          }}
+        >
+          {yearOptions}
         </select>
-
-        
 
         <Box
           bg="rgba(148, 114, 208, 1)"
@@ -150,13 +164,13 @@ class Income extends Component {
           borderRadius="50"
           overflow="hidden"
         >
-        {this.state.incomeData.length > 0 ? (
-          <IncomeBarChartComponent data={this.state.yearlyData} />
-            ) : (
-          <p>No income entry!</p>
-            )}
+          {this.state.incomeData.length > 0 ? (
+            <IncomeBarChartComponent data={this.state.yearlyData} />
+          ) : (
+            <p>No income entry!</p>
+          )}
         </Box>
-        
+
         <div className={classes.buttons}>
           <AddOverlayComponent
             setState={() => {
@@ -177,7 +191,7 @@ class Income extends Component {
             data={this.state.yearlyData}
           />
         </div>
-        
+
         <div className={classes.data}>
           {this.state.incomeData.length > 0 ? (
             <WeeklyIncomeComparison data={this.state.yearlyData} />
