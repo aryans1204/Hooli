@@ -73,7 +73,6 @@ class SignUp extends Component {
                   <h3>Name</h3>
                   <input
                     type="text"
-                    placeholder="name"
                     name="name"
                     value={this.state.name}
                     required
@@ -84,7 +83,6 @@ class SignUp extends Component {
                   <h3>Email</h3>
                   <input
                     type="text"
-                    placeholder="email"
                     name="email"
                     value={this.state.email}
                     required
@@ -95,7 +93,6 @@ class SignUp extends Component {
                   <h3>Password</h3>
                   <input
                     type="password"
-                    placeholder="password"
                     name="password"
                     value={this.state.password}
                     required
