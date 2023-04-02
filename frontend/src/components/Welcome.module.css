@@ -1,25 +1,80 @@
-.app {
+.container {
+  margin: 0;
+  padding: 0;
   height: 100%;
+  width: 100vw;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.col {
+  flex: 1;
+  width: 50%;
+}
+
+.leftCol {
+  background-color: #330C7A;
+  width: 50%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.rightCol {
+  background-color: #fcdd2c;
+  height: 100vh;
+  width: 50%;
+}
+
+.leftCol img {
+  position: absolute;
+  width: 30%;
+  /* top: 0;
+  bottom: 0; */
+  margin: auto;
+  display: block;
+}
+
+@media screen and (max-width: 655px) {
+  .container {
+    flex-direction: column;
+  }
+
+  .rightCol {
+    width: 100%;
+  }
+
+  .rightCol {
+    width: 100%;
+  }
+}
+
+
+
+/* .app {
+  height: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
 }
 
 .purple-column {
   background-color: #330c7a;
   height: 100vh;
-  float: left;
-  width: 50%;
 }
 
 .yellow-column {
   background-color: rgb(252, 221, 44);
   height: 100vh;
-  float: right;
-  width: 50%;
+
 }
 
 .description {
-  position: relative;
+  margin: 0;
+  position: absolute;
   top: 50%;
-  transform: translateY(-50%);
+  display: inline-block;
+  margin: 0 auto;
 }
 
 .description .title  {
@@ -27,42 +82,55 @@
   padding: 0;
   font-family: "Montserrat", sans-serif;
   font-weight: 700;
-  text-align: center;
   color: black;
   font-size: 4em;
 }
 
 .description .about {
   color: black;
-  font-family: "karla";
-  text-align: left;
-  padding-left: 15%;
+  font-family: "Karla", sans-serif;
+  padding: 0 15%;
+  margin: 0;
   font-size: 1.5em;
 }
 
 .logo {
   display: block;
-  margin-top: 50%;
-  margin-bottom: 50%;
-  margin-left: auto;
-  margin-right: auto;
+  margin: 50% auto;
   width: 50%;
 }
 
 .nav {
-  font-family: "karla";
+  font-family: "Karla", sans-serif;
+  color: black;
   text-align: right;
-  padding-right: 5px;
-  font-size: 2em;
+  margin-right: 15px;
+  float: right;
+  font-size: 1.5em;
+  display: flex;
+  justify-content: space-evenly;
 }
 
 .link {
   color: black;
-  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
 .signup {
   color: black;
-  margin-left: 10%;
-  font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
+
+@media screen and (max-width: 655px) {
+  .app {
+    display: grid;
+  }
+
+  .purple-column {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .yellow-column {
+    display: flex;
+    flex-direction: column;
+  }
+} */
