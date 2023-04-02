@@ -80,7 +80,7 @@ p {
   margin-bottom: 10px;
   padding: 5px;
   border-radius: 10px;
-  font-size: 1.25em;
+  font-size: 1em;
 }
 
 .container .rightCol .login .fields input[type="password"] {
@@ -91,7 +91,7 @@ p {
   margin-bottom: 25px;
   padding: 5px;
   border-radius: 10px;
-  font-size: 1.25em;
+  font-size: 1em;
 }
 
 .container .rightCol .login .fields input[type="submit"] {
