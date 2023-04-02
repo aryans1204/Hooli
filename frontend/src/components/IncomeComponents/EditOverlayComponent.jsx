@@ -176,14 +176,14 @@ function EditDataComponent(props) {
 
   // console.log("initValues", initValues);
 
-  console.log("prop data", props.data);
+  var fData = props.data;
+
+  console.log("prop data", fData);
 
   const [values, setValues] = useState(initValues);
   // const[val, setVal] = useState(initValues);
   const [industry, setIndustry] = useState("");
   const [addSuccess, setAddSuccess] = useState(null);
-
-  console.log("vales", values);
 
   const handleInputChange = (e) => {
     var { name, value } = e.target;
@@ -191,7 +191,7 @@ function EditDataComponent(props) {
     setValues({
       ...values,
       [name]: value
-    })
+    }).then(console.log("onchange", values));
   };
   const clearState = () => {
     setValues(resetValues);
