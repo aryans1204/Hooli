@@ -1,3 +1,29 @@
 .text {
-    color: #000;
+  color: #000;
+}
+.selector {
+  padding-left: 10%;
+}
+
+.table {
+  padding-left: 5%;
+}
+
+.title {
+  color: black;
+  margin-left: 5%;
+  font-size: 40px;
+  text-align: left;
+  margin-bottom: 0;
+  margin-top: 0;
+}
+
+h3 {
+  margin: 0;
+}
+
+.nav {
+  height: 100%;
+  position: fixed;
+  top: 0;
 }
