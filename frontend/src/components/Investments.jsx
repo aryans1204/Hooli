@@ -122,7 +122,7 @@ class Investments extends Component {
           )}
         </div>
         <div className={classes.table}>
-          <h3>My Portfolio (click to show trend graph)</h3>
+          <h3>click to show trend graph</h3>
           <div>
             {(() => {
               if (this.state.portfolio) {

@@ -28,7 +28,10 @@ function filterDataByQuarterAndIndustry(data, filters) {
     return filters.some((filter) => {
       const itemQuarter = item.quarter;
       const itemIndustry = item.industry1.toLowerCase();
-      return itemQuarter === filter.quarter && itemIndustry === (filter.industry.toLowerCase());
+      return (
+        itemQuarter === filter.quarter &&
+        itemIndustry === filter.industry.toLowerCase()
+      );
     });
   });
 }
@@ -43,7 +46,6 @@ export function WeeklyIncomeComparison(props) {
   const [apiData, setapiData] = useState(null); //data retrieved from api
   const [userData, setuserData] = useState(null); //user data passed in from parent class as prop
   const [filteredData, setFilteredData] = useState(null);
-
 
   // gets latest data from props and adds the quarter data to them every thing the props data changes
   useEffect(() => {
@@ -65,7 +67,6 @@ export function WeeklyIncomeComparison(props) {
     const resource_id = "1109b8a4-dafe-42af-840e-0cf447147d5e";
     const query_params = {
       resource_id: resource_id,
-      limit: 30,
       sort: "quarter desc",
     };
 
@@ -98,7 +99,8 @@ export function WeeklyIncomeComparison(props) {
 
   const getRecommendedHours = (quarter, industry) => {
     const finalData = filteredData.find(
-      (data) => data.quarter === quarter && data.industry1 === (industry.toLowerCase())
+      (data) =>
+        data.quarter === quarter && data.industry1 === industry.toLowerCase()
     );
     return finalData ? finalData.total_paid_hours : "N.A.";
   };
