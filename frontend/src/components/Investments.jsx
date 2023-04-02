@@ -22,7 +22,7 @@ class Investments extends Component {
 
   //checks if the user is authenticated
   async componentDidMount() {
-    await fetch("https://hooli-backend-aryan.herokuapp.com/api/users/me", {
+    await fetch("/api/users/me", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -51,7 +51,7 @@ class Investments extends Component {
 
   // gets user portfolio data from database
   getPortfolioData() {
-    fetch("https://hooli-backend-aryan.herokuapp.com/api/investments", {
+    fetch("/api/investments", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

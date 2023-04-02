@@ -24,7 +24,7 @@ function NavBar() {
   const [logoutSuccess, setLogoutSuccess] = useState(null);
   async function handleLogout() {
     alert("Logging out");
-    await fetch("https://hooli-backend-aryan.herokuapp.com/api/users/logout", {
+    await fetch("/api/users/logout", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

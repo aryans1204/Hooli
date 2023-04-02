@@ -29,7 +29,7 @@ class SignUp extends Component {
         password: this.state.password,
       })
     );
-    fetch("https://hooli-backend-aryan.herokuapp.com/api/users", {
+    fetch("/api/users", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -110,7 +110,7 @@ class SignUp extends Component {
                 {(() => {
                   if (this.state.signUpSuccessful == false) {
                     return (
-                      <div>Account creation unsuccessful. Please try again</div>
+                      <div>ACcount creation unsuccessful. Please try again</div>
                     );
                   } else {
                     return null;

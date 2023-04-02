@@ -46,7 +46,7 @@ export function EditOverlayComponent(props) {
    * Retrieves selected income record using get/api/income/:id.
    */
   function getTargetItem() {
-    fetch("https://hooli-backend-aryan.herokuapp.com/api/income/" + selectedItem._id, {
+    fetch("/api/income/" + selectedItem._id, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -77,7 +77,7 @@ export function EditOverlayComponent(props) {
    * Retrieves all income records using get/api/income.
    */
   function getData() {
-    fetch("https://hooli-backend-aryan.herokuapp.com/api/income", {
+    fetch("/api/income", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -190,7 +190,7 @@ function EditDataComponent(props) {
    */
   function handleRemove() {
     console.log(props.data._id);
-    return fetch("https://hooli-backend-aryan.herokuapp.com/api/income/" + props.data._id, {
+    return fetch("/api/income/" + props.data._id, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -216,7 +216,7 @@ function EditDataComponent(props) {
    */
   function handleSubmit() {
     handleRemove().then(() => {
-      fetch("https://hooli-backend-aryan.herokuapp.com/api/income", {
+      fetch("/api/income", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
