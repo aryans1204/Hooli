@@ -148,7 +148,7 @@ export const InvestmentTable = () => {
           {equities ? (
             <EquitiesTable equities={equities}></EquitiesTable>
           ) : (
-            <div style={{ textAlign: "center" }}>no data</div>
+            <div style={{ textAlign: "center" }}>No Investment Data</div>
           )}
         </div>
       )}

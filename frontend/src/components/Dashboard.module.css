@@ -53,3 +53,31 @@
 h2 {
   text-align: center;
 }
+
+@media screen and (max-width: 655px) {
+  .div {
+    width: inherit;
+    margin-right: 15px;
+  }
+
+  .container {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .weekly {
+    width: 100vh;
+  }
+
+  .breakdown {
+    width: 100vh;
+  }
+
+  .income {
+    width: 100vh;
+  }
+
+  .investments {
+    width: 100vh;
+  }
+}
