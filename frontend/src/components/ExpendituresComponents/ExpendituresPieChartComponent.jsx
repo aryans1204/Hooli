@@ -187,7 +187,11 @@ export function ExpendituresPieChartComponent(props) {
             </PieChart>
           ) : (
             <div>
-              <Spinners.BeatLoader loading={loading} size={20} />
+              <Spinners.BeatLoader
+                loading={loading}
+                size={20}
+                color="#805AD5"
+              />
             </div>
           )}
         </div>
