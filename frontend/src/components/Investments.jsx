@@ -7,7 +7,7 @@ import NavBar from "./NavBar";
 import AssetTable from "./InvestmentComponents/AssetTable";
 import { EditPortfolio } from "./InvestmentComponents/EditPortfolio";
 import { RemovePortfolio } from "./InvestmentComponents/RemovePortfolio";
-import { ClipLoader } from "react-spinners";
+import * as Spinners from "react-spinners";
 import classes from "./Investments.module.css";
 
 class Investments extends Component {
@@ -17,6 +17,7 @@ class Investments extends Component {
       authenticated: null,
       portfolio: null, //stores all portfolios retrieved from the database
       selectedIndex: 0, //index to access particular portfolio
+      loading: true,
     };
   }
 
@@ -45,7 +46,7 @@ class Investments extends Component {
     } else {
       const portfolios = JSON.parse(sessionStorage.getItem("portfolios"));
       console.log(portfolios);
-      this.setState({ portfolio: portfolios });
+      this.setState({ portfolio: portfolios, loading: false });
     }
   }
 
@@ -73,6 +74,7 @@ class Investments extends Component {
         console.log(data);
         this.setState({
           portfolio: data,
+          loading: false,
         });
         const tempData = JSON.stringify(data);
         if (
@@ -134,10 +136,19 @@ class Investments extends Component {
                     </div>
                   );
                 } else {
-                  return (
-                    <div>
-                      <div>no portfolio data available</div>
+                  return this.state.loading ? (
+                    <div
+                      style={{
+                        alignItems: "center",
+                        display: "flex",
+                        justifyContent: "center",
+                        height: "100%",
+                      }}
+                    >
+                      <Spinners.BeatLoader color="#805AD5" />
                     </div>
+                  ) : (
+                    <div>no portfolio data available</div>
                   );
                 }
               })()}
