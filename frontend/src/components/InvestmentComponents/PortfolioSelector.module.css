@@ -1,0 +1,13 @@
+.menu {
+  font-family: "Karla", sans-serif;
+  font-weight: 600;
+  font-size: larger;
+}
+
+.menu select {
+  font-weight: bold;
+  color: white;
+  border: 3px solid blueviolet;
+  border-radius: 10px;
+  background-color: #a587c9;
+}

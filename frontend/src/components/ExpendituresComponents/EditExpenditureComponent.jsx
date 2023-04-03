@@ -209,37 +209,36 @@ function EditDataComponent(props) {
    * Creates a new (edited) expenditure using post/api/expenditure
    */
   function handleSubmit() {
-    //handleRemove().then(() => {
-    fetch("https://hooli-backend-aryan.herokuapp.com/api/expenditure", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${sessionStorage.getItem("token")}`,
-      },
-      body: JSON.stringify({
-        memo: values.memo,
-        category: category,
-        amount: values.amount,
-        date: values.date,
-      }),
-    })
-      .then((response) => {
-        if (response.status === 500) {
-          console.log("Some error occurred - " + response.status);
-          setAddSuccess(false);
-        } else {
-          console.log("Added new");
-          setAddSuccess(true);
-          setValues(initialValues);
-          handleRemove();
-          return response.json();
-        }
+    handleRemove().then(() => {
+      fetch("https://hooli-backend-aryan.herokuapp.com/api/expenditure", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+        },
+        body: JSON.stringify({
+          memo: values.memo,
+          category: category,
+          amount: values.amount,
+          date: values.date,
+        }),
       })
-      .then((data) => {
-        console.log(data);
-        props.setState();
-      });
-    //});
+        .then((response) => {
+          if (response.status === 500) {
+            console.log("Some error occurred - " + response.status);
+            setAddSuccess(false);
+          } else {
+            console.log("Added new");
+            setAddSuccess(true);
+            setValues(initialValues);
+            return response.json();
+          }
+        })
+        .then((data) => {
+          console.log(data);
+          props.setState();
+        });
+    });
   }
 
   return (
