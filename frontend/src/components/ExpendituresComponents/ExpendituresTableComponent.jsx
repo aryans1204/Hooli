@@ -36,7 +36,7 @@ function ExpendituresTableComponent(props) {
             </td>
             <td>{item.memo}</td>
             <td>{item.category}</td>
-            <td>{item.amount}</td>
+            <td>${item.amount}</td>
             <td>
               {String(item.date).slice(0, 10) !== "undefined"
                 ? String(item.date).slice(0, 10)

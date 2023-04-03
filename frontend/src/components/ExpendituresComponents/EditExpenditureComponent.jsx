@@ -250,16 +250,15 @@ function EditDataComponent(props) {
             Edit Expenditure
           </ModalHeader>
           <ModalBody className={classes.inputbox}>
-            Memo<br></br>
+          <div className={classes["field-text", "required"]}>Memo</div>
             <input
               type="text"
-              placeholder="Enter expenditure details"
               name="memo"
               onChange={handleInputChange}
             ></input>
           </ModalBody>
           <ModalBody>
-            Category<br></br>
+          <div className={classes["field-text", "required"]}>Category</div>
             <select
               value={category}
               onChange={(event) => {
@@ -280,10 +279,9 @@ function EditDataComponent(props) {
             </select>
           </ModalBody>
           <ModalBody>
-            Amount<br></br>
+          <div className={classes["field-text", "required"]}>Amount</div>
             <input
               type="number"
-              placeholder="Enter a number"
               size="30"
               required
               name="amount"
@@ -291,7 +289,7 @@ function EditDataComponent(props) {
             ></input>
           </ModalBody>
           <ModalBody>
-            Date<br></br>
+          <div className={classes["field-text", "required"]}>Date</div>
             <input
               type="date"
               size="30"

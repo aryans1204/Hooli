@@ -99,7 +99,7 @@ export function AddExpenditureComponent(props) {
           </ModalHeader>
           <ModalCloseButton onClick={onClose} />
           <ModalBody className={classes.inputbox}>
-            Memo<br></br>
+          <div className={classes["field-text", "required"]}>Memo</div>
             <input
               type="text"
               placeholder="Enter expenditure details"
@@ -108,7 +108,7 @@ export function AddExpenditureComponent(props) {
             ></input>
           </ModalBody>
           <ModalBody>
-            Category<br></br>
+          <div className={classes["field-text", "required"]}>Category</div>
             <select
               value={category}
               onChange={(event) => {
@@ -129,7 +129,7 @@ export function AddExpenditureComponent(props) {
             </select>
           </ModalBody>
           <ModalBody>
-            Amount<br></br>
+          <div className={classes["field-text", "required"]}>Amount</div>
             <input
               type="number"
               placeholder="Enter a number"
@@ -140,7 +140,7 @@ export function AddExpenditureComponent(props) {
             ></input>
           </ModalBody>
           <ModalBody>
-            Date<br></br>
+          <div className={classes["field-text", "required"]}>Date</div>
             <input
               type="date"
               size="30"
