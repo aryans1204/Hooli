@@ -148,7 +148,7 @@ class Investments extends Component {
                       <Spinners.BeatLoader color="#805AD5" />
                     </div>
                   ) : (
-                    <div>no portfolio data available</div>
+                    <div>No Portfolio Data Available</div>
                   );
                 }
               })()}
