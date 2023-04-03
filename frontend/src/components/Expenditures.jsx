@@ -145,7 +145,7 @@ class Expenditures extends Component {
                       height: "100%",
                     }}
                   >
-                    <Spinners.BeatLoader />
+                    <Spinners.BeatLoader color="#805AD5" />
                   </div>
                 )}
               </Box>
@@ -175,7 +175,7 @@ class Expenditures extends Component {
                       height: "100%",
                     }}
                   >
-                    <Spinners.BeatLoader />
+                    <Spinners.BeatLoader color="#805AD5" />
                   </div>
                 )}
               </Box>
@@ -202,7 +202,7 @@ class Expenditures extends Component {
                       height: "100%",
                     }}
                   >
-                    <Spinners.BeatLoader />
+                    <Spinners.BeatLoader color="#805AD5" />
                   </div>
                 )}
               </Box>

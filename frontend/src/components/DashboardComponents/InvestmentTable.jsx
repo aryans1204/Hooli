@@ -141,7 +141,7 @@ export const InvestmentTable = () => {
             width: "100%",
           }}
         >
-          <Spinners.BeatLoader />
+          <Spinners.BeatLoader color="#805AD5" />
         </div>
       ) : (
         <div>
