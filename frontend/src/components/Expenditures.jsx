@@ -13,6 +13,7 @@ import {
 } from "./ExpendituresComponents/ExpendituresPieChartComponent";
 import { DisplayExpendituresComponent } from "./ExpendituresComponents/DisplayExpendituresComponent";
 import DisplayAllExpendituresComponent from "./ExpendituresComponents/DisplayAllExpendituresComponent";
+import * as Spinners from "react-spinners";
 
 /**
  * Expenditures class
@@ -135,7 +136,18 @@ class Expenditures extends Component {
                   <ExpendituresPieChartComponent
                     data={this.state.monthlyData}
                   />
-                ) : null}
+                ) : (
+                  <div
+                    style={{
+                      alignItems: "center",
+                      display: "flex",
+                      justifyContent: "center",
+                      height: "100%",
+                    }}
+                  >
+                    <Spinners.BeatLoader />
+                  </div>
+                )}
               </Box>
             </Center>
             <Spacer />
@@ -154,7 +166,18 @@ class Expenditures extends Component {
                   <DisplayExpendituresComponent
                     data={this.state.expendituresData}
                   />
-                ) : null}
+                ) : (
+                  <div
+                    style={{
+                      alignItems: "center",
+                      display: "flex",
+                      justifyContent: "center",
+                      height: "100%",
+                    }}
+                  >
+                    <Spinners.BeatLoader />
+                  </div>
+                )}
               </Box>
             </Center>
             <Spacer />
@@ -170,7 +193,18 @@ class Expenditures extends Component {
                   <DisplayAllExpendituresComponent
                     items={this.state.expendituresData}
                   />
-                ) : null}
+                ) : (
+                  <div
+                    style={{
+                      alignItems: "center",
+                      display: "flex",
+                      justifyContent: "center",
+                      height: "100%",
+                    }}
+                  >
+                    <Spinners.BeatLoader />
+                  </div>
+                )}
               </Box>
               <Box>
                 <AddExpenditureComponent

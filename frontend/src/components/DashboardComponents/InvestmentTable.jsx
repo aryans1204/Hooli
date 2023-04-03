@@ -1,8 +1,10 @@
 import React, { Component, useEffect, useState } from "react";
+import * as Spinners from "react-spinners";
 
 export const InvestmentTable = () => {
   const [portfolioData, setPortfolioData] = useState(null);
   const [equities, setEquities] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     if (
@@ -14,6 +16,7 @@ export const InvestmentTable = () => {
       getPortfolioData();
     } else {
       setPortfolioData(JSON.parse(sessionStorage.getItem("portfolios")));
+      setIsLoading(false);
     }
   }, []);
 
@@ -114,6 +117,7 @@ export const InvestmentTable = () => {
       .then((data) => {
         console.log(data);
         setPortfolioData(data);
+        setIsLoading(false);
         const tempData = JSON.stringify(data);
         if (
           sessionStorage.getItem("portfolios") === "null" ||
@@ -128,10 +132,25 @@ export const InvestmentTable = () => {
 
   return (
     <div>
-      {equities ? (
-        <EquitiesTable equities={equities}></EquitiesTable>
+      {isLoading ? (
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            width: "100%",
+          }}
+        >
+          <Spinners.BeatLoader />
+        </div>
       ) : (
-        <div style={{ textAlign: "center" }}>no data</div>
+        <div>
+          {equities ? (
+            <EquitiesTable equities={equities}></EquitiesTable>
+          ) : (
+            <div style={{ textAlign: "center" }}>no data</div>
+          )}
+        </div>
       )}
     </div>
   );
