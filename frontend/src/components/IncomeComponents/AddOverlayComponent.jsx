@@ -123,7 +123,6 @@ export function AddOverlayComponent(props) {
           <div className={classes["field-text", "required"]}>Monthly Income</div>
             <input
               type="number"
-              placeholder="Amount"
               size="30"
               required
               name="monthlyIncome"
@@ -154,7 +153,6 @@ export function AddOverlayComponent(props) {
             Weekly hours (optional)<br></br>
             <input
               type="number"
-              placeholder="Hours"
               size="30"
               name="weeklyHours"
               onChange={handleInputChange}
@@ -164,7 +162,6 @@ export function AddOverlayComponent(props) {
             Company (optional)<br></br>
             <input
               type="text"
-              placeholder="Company Name"
               size="30"
               name="company"
               onChange={handleInputChange}

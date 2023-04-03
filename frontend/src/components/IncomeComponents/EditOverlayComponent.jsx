@@ -260,7 +260,7 @@ function EditDataComponent(props) {
             Edit Income
           </ModalHeader>
           <ModalBody>
-            Income Type<br></br>
+          <div className={classes["field-text", "required"]}>Income Type</div>
             <select
               id="industryList"
               value={industry}
@@ -276,7 +276,7 @@ function EditDataComponent(props) {
             </select>
           </ModalBody>
           <ModalBody>
-            Monthly income<br></br>
+          <div className={classes["field-text", "required"]}>Monthly Income</div>
             <input
               type="number"
               size="30"
@@ -289,7 +289,7 @@ function EditDataComponent(props) {
           </ModalBody>
 
           <ModalBody>
-            Start Date<br></br>
+          <div className={classes["field-text", "required"]}>Start Date</div>
             <input
               type="date"
               size="30"
@@ -340,14 +340,13 @@ function EditDataComponent(props) {
           <ModalFooter>
             <Button
               colorScheme="purple"
-              h="50px"
-              w="80px"
+              size="md"
               d="flex"
               onClick={handleSubmit}
             >
               Save
             </Button>
-            <Button onClick={clearState} colorScheme="yellow" pl="20px">
+            <Button onClick={clearState} colorScheme="yellow" size="md">
               Cancel
             </Button>
             <div>

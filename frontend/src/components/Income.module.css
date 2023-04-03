@@ -9,8 +9,10 @@
   color: #000;
 }
 
-.custom-select select {
-  padding: 50px;
+.custom {
+  padding: 0.5em;
+  font-family: "Karla", sans-serif;
+  font-size: 1.15em;
 }
 
 .buttons {

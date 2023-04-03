@@ -143,6 +143,7 @@ class Income extends Component {
 
         <label htmlFor="Year">Year:</label>
         <select
+          className={classes.custom}
           name="years"
           id="year"
           onChange={(event) => {
@@ -155,7 +156,7 @@ class Income extends Component {
         </select>
 
         <Box
-          bg="rgba(148, 114, 208, 1)"
+          bg="#E9D8FD"
           w="50%"
           h="50%"
           color="white"
