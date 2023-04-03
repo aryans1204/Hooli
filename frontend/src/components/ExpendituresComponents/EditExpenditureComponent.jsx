@@ -45,7 +45,7 @@ export function EditExpenditureComponent(props) {
    * Retrieves selected expenditure using get/api/expenditure/:id.
    */
   function getTargetItem() {
-    fetch("/api/expenditure/" + selectedItem._id, {
+    fetch("https://hooli-backend-aryan.herokuapp.com/api/expenditure/" + selectedItem._id, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -76,7 +76,7 @@ export function EditExpenditureComponent(props) {
    * Retrieves all expenditures using get/api/expenditure.
    */
   function getData() {
-    fetch("/api/expenditure", {
+    fetch("https://hooli-backend-aryan.herokuapp.com/api/expenditure", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -177,7 +177,7 @@ function EditDataComponent(props) {
    */
   function handleRemove() {
     console.log(props.data._id);
-    return fetch("/api/expenditure/" + props.data._id, {
+    return fetch("https://hooli-backend-aryan.herokuapp.com/api/expenditure/" + props.data._id, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -201,7 +201,12 @@ function EditDataComponent(props) {
    * Creates a new (edited) expenditure using post/api/expenditure
    */
   function handleSubmit() {
+<<<<<<< HEAD
       fetch("/api/expenditure", {
+=======
+    //handleRemove().then(() => {
+      fetch("https://hooli-backend-aryan.herokuapp.com/api/expenditure", {
+>>>>>>> main
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -38,7 +38,7 @@ export function RemoveExpenditureComponent(props) {
    */
   function handleRemove() {
     console.log(selectedItem._id);
-    fetch("/api/expenditure/" + selectedItem._id, {
+    fetch("https://hooli-backend-aryan.herokuapp.com/api/expenditure/" + selectedItem._id, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -63,7 +63,7 @@ export function RemoveExpenditureComponent(props) {
    * Retrieves all expenditures using get/api/income.
    */
   function getData() {
-    fetch("/api/expenditure", {
+    fetch("https://hooli-backend-aryan.herokuapp.com/api/expenditure", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

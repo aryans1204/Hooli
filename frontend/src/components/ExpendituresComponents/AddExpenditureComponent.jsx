@@ -49,7 +49,7 @@ export function AddExpenditureComponent(props) {
    * Creates new expenditure when submitted using post/api/expenditure.
    */
   function handleSubmit() {
-    fetch("/api/expenditure", {
+    fetch("https://hooli-backend-aryan.herokuapp.com/api/expenditure", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

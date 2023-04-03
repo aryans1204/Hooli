@@ -16,7 +16,6 @@ import { Navigate } from "react-router-dom";
 import classes from "./RemoveOverlayComponent.module.css";
 import DisplayTableComponent from "./DisplayTableComponent";
 
-
 /**
  * Overlay component for removing an income record.
  * @export
@@ -35,13 +34,13 @@ export function RemoveOverlayComponent(props) {
   function handleItemSelected(item) {
     setSelectedItem(item);
   }
-  
+
   /**
    * Removes selected income record using delete/api/income/:id.
    */
   function handleRemove() {
     console.log(selectedItem._id);
-    fetch("/api/income/" + selectedItem._id, {
+    fetch("https://hooli-backend-aryan.herokuapp.com/api/income/" + selectedItem._id, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -58,15 +57,15 @@ export function RemoveOverlayComponent(props) {
       })
       .then((data) => {
         console.log(data);
+        props.setState();
       });
-    props.setState();
   }
 
   /**
    * Retrieves all income records using get/api/income.
    */
   function getData() {
-    fetch("/api/income", {
+    fetch("https://hooli-backend-aryan.herokuapp.com/api/income", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

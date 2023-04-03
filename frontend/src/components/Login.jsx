@@ -50,7 +50,7 @@ class Login extends Component {
         password: this.state.password,
       })
     );
-    fetch("/api/users/login", {
+    fetch("https://hooli-backend-aryan.herokuapp.com/api/users/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
