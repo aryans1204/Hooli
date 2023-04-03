@@ -140,63 +140,64 @@ class Income extends Component {
         )}
         <NavBar />
         <h1 className={classes.text}>My Income</h1>
+        <div className={classes.info}>
+          <div className={classes.left}>
 
-        <label htmlFor="Year">Year:</label>
-        <select
-          className={classes.custom}
-          name="years"
-          id="year"
-          onChange={(event) => {
-            this.setState({ year: event.target.value }, () => {
-              this.getIncomeData();
-            });
-          }}
-        >
-          {yearOptions}
-        </select>
+            <label htmlFor="Year">Year:</label>
+            <select
+              className={classes.custom}
+              name="years"
+              id="year"
+              onChange={(event) => {
+                this.setState({ year: event.target.value }, () => {
+                  this.getIncomeData();
+                });
+              }}
+            >
+              {yearOptions}
+            </select>
 
-        <Box
-          bg="#E9D8FD"
-          w="50%"
-          h="50%"
-          color="white"
-          p="1%"
-          mt="1%"
-          borderRadius="50"
-          overflow="hidden"
-        >
-          {this.state.incomeData.length > 0 ? (
-            <IncomeBarChartComponent data={this.state.yearlyData} />
-          ) : (
-            <p>No income entry!</p>
-          )}
-        </Box>
+            <Box
+              bg="#E9D8FD"
+              p="2%"
+              mt="1%"
+              borderRadius="40"
+              marginRight="15px"
+            >
+              {this.state.incomeData.length > 0 ? (
+                <IncomeBarChartComponent data={this.state.yearlyData} />
+              ) : (
+                <p>No income entry!</p>
+              )}
+            </Box>
 
-        <div className={classes.buttons}>
-          <AddOverlayComponent
-            setState={() => {
-              //this function is passed in as prop and will be triggered by the child component whenever there's a change to the database
-              this.getIncomeData();
-            }}
-          />
-          <RemoveOverlayComponent
-            setState={() => {
-              this.getIncomeData();
-            }}
-            data={this.state.yearlyData}
-          />
-          <EditOverlayComponent
-            setState={() => {
-              this.getIncomeData();
-            }}
-            data={this.state.yearlyData}
-          />
-        </div>
+            <div className={classes.buttons}>
+              <AddOverlayComponent
+                setState={() => {
+                  //this function is passed in as prop and will be triggered by the child component whenever there's a change to the database
+                  this.getIncomeData();
+                }}
+              />
+              <RemoveOverlayComponent
+                setState={() => {
+                  this.getIncomeData();
+                }}
+                data={this.state.yearlyData}
+              />
+              <EditOverlayComponent
+                setState={() => {
+                  this.getIncomeData();
+                }}
+                data={this.state.yearlyData}
+              />
+            </div>
+          </div>
 
-        <div className={classes.data}>
-          {this.state.incomeData.length > 0 ? (
-            <WeeklyIncomeComparison data={this.state.yearlyData} />
-          ) : <p>No Weekly Income Comparison!</p>}
+          <div className={classes.data}>
+            {this.state.incomeData.length > 0 ? (
+              <WeeklyIncomeComparison data={this.state.yearlyData} />
+            ) : <p>No Weekly Income Comparison!</p>}
+          </div>
         </div>
       </div>
     );

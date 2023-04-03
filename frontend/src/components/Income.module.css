@@ -4,6 +4,12 @@
   margin-right: 15px;
 }
 
+.info {
+  display: flex;
+  flex-wrap: wrap;
+  margin-right: 15px;
+}
+
 .text {
   padding: 0;
   color: #000;
@@ -16,16 +22,42 @@
 }
 
 .buttons {
-  background-color: red;
   margin: 10px 0;
   align-items: center;
 }
 
+.left {
+  width: 50%;
+  height: 100vh;
+}
+
 .data {
-  position: absolute;
+  position: relative;
   top: 0;
   right: 0;
-  padding-right: 5%;
+  padding-left: 5%;
   padding-top: 5%;
   width: 35%;
+}
+
+@media screen and (max-width: 655px) {
+  .contents {
+    width: inherit;
+    margin-right: 15px;
+  }
+
+  .info {
+    flex-direction: column;
+  }
+
+  .left {
+    width: 100vh;
+  }
+
+  .data {
+    width: 100vh;
+    margin: 0;
+    padding: 0;
+    margin-right: 15px;
+  }
 }
