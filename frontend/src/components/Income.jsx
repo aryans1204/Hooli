@@ -143,6 +143,7 @@ class Income extends Component {
 
         <label htmlFor="Year">Year:</label>
         <select
+          className={classes.custom-select}
           name="years"
           id="year"
           onChange={(event) => {
@@ -195,7 +196,7 @@ class Income extends Component {
         <div className={classes.data}>
           {this.state.incomeData.length > 0 ? (
             <WeeklyIncomeComparison data={this.state.yearlyData} />
-          ) : null}
+          ) : <p>No Weekly Income Comparison!</p>}
         </div>
       </div>
     );
