@@ -5,9 +5,12 @@
 }
 
 .menu select {
+  text-align: center;
   font-weight: bold;
   color: white;
   border: 3px solid blueviolet;
-  border-radius: 10px;
+  border-radius: 15px;
   background-color: #a587c9;
+  height: 2rem;
+  width: 8rem;
 }
