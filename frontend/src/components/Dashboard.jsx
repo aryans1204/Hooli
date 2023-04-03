@@ -92,7 +92,7 @@ class Dashboard extends Component {
         )}
 
         <div className={classes.div}>
-          <h1 className={classes.text}>Dashboard Page</h1>
+          <h1 className={classes.text}>MY DASHBOARD</h1>
           <div className={classes.container}>
             <div className={classes.weekly}>
               <h2>Weekly Expense</h2>
@@ -111,7 +111,7 @@ class Dashboard extends Component {
               <MonthlyIncome />
             </div>
             <div className={classes.investments}>
-              <h2>Investments overview</h2>
+              <h2>Investments Overview</h2>
               <InvestmentTable />
             </div>
           </div>

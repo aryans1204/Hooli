@@ -1,6 +1,17 @@
 import React, { Component } from "react";
 import NavBar from "../NavBar";
 import { useState, useEffect } from "react";
+import {
+  Table,
+  Thead,
+  Tbody,
+  Tfoot,
+  Tr,
+  Th,
+  Td,
+  TableCaption,
+  TableContainer,
+} from '@chakra-ui/react'
 import classes from "./WeeklyIncomeComparison.module.css";
 
 //provides the quarter data for the input date e.g. 2022-Q1
@@ -115,32 +126,32 @@ export function WeeklyIncomeComparison(props) {
     <div>
       <h3>Weekly hours comparison</h3>
       {userData !== null && filteredData !== null ? (
-        <table>
-          <thead>
-            <tr>
-              <th>Quarter</th>
-              <th>Start Date</th>
-              <th>Industry</th>
-              <th>Company</th>
-              <th>My Weekly Hours</th>
-              <th>
+        <Table variant="striped" colorScheme="purple" size="sm">
+          <Thead>
+            <Tr>
+              <Th>Quarter</Th>
+              <Th>Start Date</Th>
+              <Th>Industry</Th>
+              <Th>Company</Th>
+              <Th>My Weekly Hours</Th>
+              <Th>
                 Average weekly hours per employee by industry in Singapore
-              </th>
-            </tr>
-          </thead>
-          <tbody>
+              </Th>
+            </Tr>
+          </Thead>
+          <Tbody>
             {userData.map((data) => (
-              <tr key={data._id}>
-                <td>{data.quarter}</td>
-                <td>{formatDate(data.start_date)}</td>
-                <td>{data.industry}</td>
-                <td>{data.company ? data.company : "N.A."}</td>
-                <td>{data.weekly_hours ? data.weekly_hours : "N.A."}</td>
-                <td>{getRecommendedHours(data.quarter, data.industry)}</td>
-              </tr>
+              <Tr key={data._id}>
+                <Td>{data.quarter}</Td>
+                <Td>{formatDate(data.start_date)}</Td>
+                <Td>{data.industry}</Td>
+                <Td>{data.company ? data.company : "N.A."}</Td>
+                <Td>{data.weekly_hours ? data.weekly_hours : "N.A."}</Td>
+                <Td>{getRecommendedHours(data.quarter, data.industry)}</Td>
+              </Tr>
             ))}
-          </tbody>
-        </table>
+          </Tbody>
+        </Table>
       ) : null}
     </div>
   );

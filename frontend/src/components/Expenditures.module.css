@@ -1,22 +1,19 @@
 .contents {
-    color: black;
-    padding-left: 20mm;
-    padding-right: 1em;
-    text-align: center;
-  }
-  
+  color: black;
+  margin-left: 80px;
+  margin-right: 20px;
+  margin-top: 64px;
+}
+
 .title {
-  text-align: left;
-  padding-top: 20px;
-  padding-left: 20px;
-  padding-bottom: 30px;
-  font-family: 'Gill Sans MT', sans-serif;
-  font-size: 40px;
-  font-weight: bold;
+  color: #000;
+  padding: 0;
+  font-family: 'Vidaloka', serif;
+  letter-spacing: 1px;
 }
 
 .chartTitle {
-  font-family: 'Gill Sans MT', sans-serif;
+  font-family: "Karla", sans-serif;
   font-size: 25px;
   text-align: center;
   padding-bottom: 10px;
@@ -28,6 +25,6 @@
 }
 
 .displayExpendituresTitle {
-  font-family: 'Gill Sans MT', sans-serif;
+  font-family: "Karla", sans-serif;
   font-size: 25px;
 }

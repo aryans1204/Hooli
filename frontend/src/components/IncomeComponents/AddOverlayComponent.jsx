@@ -101,11 +101,11 @@ export function AddOverlayComponent(props) {
         <ModalOverlay />
         <ModalContent>
           <ModalHeader textAlign="center" fontSize="30px">
-            Add new income
+            Add New Income
           </ModalHeader>
           <ModalCloseButton onClick={clearState} />
           <ModalBody>
-            Income Type<br></br>
+            <div className={classes["field-text", "required"]}>Income Type</div>
             <select
               value={industry}
               onChange={(event) => {
@@ -120,10 +120,9 @@ export function AddOverlayComponent(props) {
             </select>
           </ModalBody>
           <ModalBody>
-            Monthly income<br></br>
+          <div className={classes["field-text", "required"]}>Monthly Income</div>
             <input
               type="number"
-              placeholder="amount"
               size="30"
               required
               name="monthlyIncome"
@@ -132,7 +131,7 @@ export function AddOverlayComponent(props) {
           </ModalBody>
 
           <ModalBody>
-            Start Date<br></br>
+          <div className={classes["field-text", "required"]}>Start Date</div>
             <input
               type="date"
               size="30"
@@ -154,9 +153,7 @@ export function AddOverlayComponent(props) {
             Weekly hours (optional)<br></br>
             <input
               type="number"
-              placeholder="hours"
               size="30"
-              required
               name="weeklyHours"
               onChange={handleInputChange}
             ></input>
@@ -165,7 +162,6 @@ export function AddOverlayComponent(props) {
             Company (optional)<br></br>
             <input
               type="text"
-              placeholder="company name"
               size="30"
               name="company"
               onChange={handleInputChange}
@@ -175,14 +171,13 @@ export function AddOverlayComponent(props) {
           <ModalFooter>
             <Button
               colorScheme="purple"
-              h="50px"
-              w="80px"
+              size="md"
               d="flex"
               onClick={handleSubmit}
             >
               Save
             </Button>
-            <Button onClick={clearState} colorScheme="yellow" pl="20px">
+            <Button onClick={clearState} colorScheme="yellow" size="md">
               Cancel
             </Button>
             <div>

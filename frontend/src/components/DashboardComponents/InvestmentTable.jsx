@@ -1,8 +1,10 @@
 import React, { Component, useEffect, useState } from "react";
+import * as Spinners from "react-spinners";
 
 export const InvestmentTable = () => {
   const [portfolioData, setPortfolioData] = useState(null);
   const [equities, setEquities] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     if (
@@ -14,11 +16,18 @@ export const InvestmentTable = () => {
       getPortfolioData();
     } else {
       setPortfolioData(JSON.parse(sessionStorage.getItem("portfolios")));
+      setIsLoading(false);
     }
   }, []);
 
   useEffect(() => {
-    if (portfolioData !== null) {
+    if (
+      sessionStorage.getItem("portfolios") !== "null" &&
+      sessionStorage.getItem("portfolios") !== "undefined" &&
+      sessionStorage.getItem("portfolios") !== null &&
+      sessionStorage.getItem("portfolios") !== undefined &&
+      portfolioData !== null
+    ) {
       console.log(portfolioData);
       setEquities(portfolioData[0].equities);
     }
@@ -35,7 +44,7 @@ export const InvestmentTable = () => {
           <td
             style={{
               color: "#FFD700",
-              backgroundColor: "#6c49bb",
+              backgroundColor: "#B794F4",
               border: "none",
               textAlign: "center",
             }}
@@ -45,7 +54,7 @@ export const InvestmentTable = () => {
           <td
             style={{
               color: pnlColor,
-              backgroundColor: "#6c49bb",
+              backgroundColor: "#B794F4",
               border: "none",
               textAlign: "center",
             }}
@@ -63,7 +72,7 @@ export const InvestmentTable = () => {
             <th
               style={{
                 border: "none",
-                backgroundColor: "#3e286f",
+                backgroundColor: "#805AD5",
                 color: "#FFD700",
               }}
             >
@@ -72,7 +81,7 @@ export const InvestmentTable = () => {
             <th
               style={{
                 border: "none",
-                backgroundColor: "#3e286f",
+                backgroundColor: "#805AD5",
                 color: "#FFD700",
               }}
             >
@@ -108,6 +117,7 @@ export const InvestmentTable = () => {
       .then((data) => {
         console.log(data);
         setPortfolioData(data);
+        setIsLoading(false);
         const tempData = JSON.stringify(data);
         if (
           sessionStorage.getItem("portfolios") === "null" ||
@@ -122,10 +132,25 @@ export const InvestmentTable = () => {
 
   return (
     <div>
-      {equities ? (
-        <EquitiesTable equities={equities}></EquitiesTable>
+      {isLoading ? (
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            width: "100%",
+          }}
+        >
+          <Spinners.BeatLoader color="#805AD5" />
+        </div>
       ) : (
-        <div>no data</div>
+        <div>
+          {equities ? (
+            <EquitiesTable equities={equities}></EquitiesTable>
+          ) : (
+            <div style={{ textAlign: "center" }}>No Investment Data</div>
+          )}
+        </div>
       )}
     </div>
   );

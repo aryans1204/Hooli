@@ -132,7 +132,7 @@ export function EditPortfolio(props) {
       <div className={classes.editEquity}>
         <form onSubmit={handleEquitySubmit}>
           <label>
-            Equity Ticker:
+          <div className={classes["field-text", "required"]}>Equity Ticker:</div>
             <input
               type="text"
               name="equity_ticker"
@@ -142,7 +142,7 @@ export function EditPortfolio(props) {
           </label>
           <br />
           <label>
-            Equity Buy Price:
+          <div className={classes["field-text", "required"]}>Equity Buy Price:</div>
             <input
               type="number"
               name="equity_buy_price"
@@ -171,7 +171,7 @@ export function EditPortfolio(props) {
       <div className={classes.editOption}>
         <form onSubmit={handleOptionSubmit}>
           <label>
-            Ticker:
+          <div className={classes["field-text", "required"]}>Ticker:</div>
             <input
               type="text"
               name="derivative_ticker"
@@ -180,7 +180,7 @@ export function EditPortfolio(props) {
             />
           </label>
           <br />
-          <label>Option Type:</label>
+          <div className={classes["field-text", "required"]}><label>Option Type:</label></div>
           <select
             value={optionValues.option_type}
             name="option_type"
@@ -193,7 +193,7 @@ export function EditPortfolio(props) {
 
           <br />
           <label>
-            Strike Price:
+          <div className={classes["field-text", "required"]}>Strike Price:</div>
             <input
               type="text"
               name="strike_price"
@@ -203,7 +203,7 @@ export function EditPortfolio(props) {
           </label>
           <br />
           <label>
-            Expiration Date:
+          <div className={classes["field-text", "required"]}>Expiration Date:</div>
             <input
               type="date"
               name="expiration_date"

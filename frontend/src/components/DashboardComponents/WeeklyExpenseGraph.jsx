@@ -9,6 +9,7 @@ import {
   Tooltip,
   Legend,
 } from "recharts";
+import * as Spinners from "react-spinners";
 import classes from "./WeeklyExpenseGraph.module.css";
 
 /**
@@ -88,7 +89,18 @@ function WeeklyExpenseGraph() {
 
   if (isLoading) {
     getGraphData();
-    return <p>Loading Monthly Income Graph...</p>;
+    return (
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          width: "100%",
+        }}
+      >
+        <Spinners.BeatLoader color="#805AD5" />
+      </div>
+    );
   }
 
   // Get the lowest and highest rate

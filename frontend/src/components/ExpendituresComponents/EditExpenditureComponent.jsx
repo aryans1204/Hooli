@@ -209,37 +209,36 @@ function EditDataComponent(props) {
    * Creates a new (edited) expenditure using post/api/expenditure
    */
   function handleSubmit() {
-    //handleRemove().then(() => {
-    fetch("https://hooli-backend-aryan.herokuapp.com/api/expenditure", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${sessionStorage.getItem("token")}`,
-      },
-      body: JSON.stringify({
-        memo: values.memo,
-        category: category,
-        amount: values.amount,
-        date: values.date,
-      }),
-    })
-      .then((response) => {
-        if (response.status === 500) {
-          console.log("Some error occurred - " + response.status);
-          setAddSuccess(false);
-        } else {
-          console.log("Added new");
-          setAddSuccess(true);
-          setValues(initialValues);
-          handleRemove();
-          return response.json();
-        }
+    handleRemove().then(() => {
+      fetch("https://hooli-backend-aryan.herokuapp.com/api/expenditure", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+        },
+        body: JSON.stringify({
+          memo: values.memo,
+          category: category,
+          amount: values.amount,
+          date: values.date,
+        }),
       })
-      .then((data) => {
-        console.log(data);
-        props.setState();
-      });
-    //});
+        .then((response) => {
+          if (response.status === 500) {
+            console.log("Some error occurred - " + response.status);
+            setAddSuccess(false);
+          } else {
+            console.log("Added new");
+            setAddSuccess(true);
+            setValues(initialValues);
+            return response.json();
+          }
+        })
+        .then((data) => {
+          console.log(data);
+          props.setState();
+        });
+    });
   }
 
   return (
@@ -251,16 +250,15 @@ function EditDataComponent(props) {
             Edit Expenditure
           </ModalHeader>
           <ModalBody className={classes.inputbox}>
-            Memo<br></br>
+          <div className={classes["field-text", "required"]}>Memo</div>
             <input
               type="text"
-              placeholder="Enter expenditure details"
               name="memo"
               onChange={handleInputChange}
             ></input>
           </ModalBody>
           <ModalBody>
-            Category<br></br>
+          <div className={classes["field-text", "required"]}>Category</div>
             <select
               value={category}
               onChange={(event) => {
@@ -281,10 +279,9 @@ function EditDataComponent(props) {
             </select>
           </ModalBody>
           <ModalBody>
-            Amount<br></br>
+          <div className={classes["field-text", "required"]}>Amount</div>
             <input
               type="number"
-              placeholder="Enter a number"
               size="30"
               required
               name="amount"
@@ -292,7 +289,7 @@ function EditDataComponent(props) {
             ></input>
           </ModalBody>
           <ModalBody>
-            Date<br></br>
+          <div className={classes["field-text", "required"]}>Date</div>
             <input
               type="date"
               size="30"

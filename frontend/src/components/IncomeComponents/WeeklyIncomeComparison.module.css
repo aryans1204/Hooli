@@ -3,21 +3,17 @@
   padding: 0;
 }
 
-table {
+Table {
   border-collapse: collapse;
   width: 100%;
 }
 
-thead th {
+Thead Th {
   border: 1px solid #ddd;
   padding: 8px;
 }
 
-tbody td {
+Tbody Td {
   border: 1px solid #ddd;
   padding: 8px;
-}
-
-tbody td:nth-child(even) {
-  background-color: #f2f2f2;
 }

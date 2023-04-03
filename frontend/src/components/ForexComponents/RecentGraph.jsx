@@ -145,8 +145,8 @@ function RecentGraph() {
   return (
     <div>
       {hasData ? (
-        <>
-          <p className={classes.graph}>
+        <div className={classes.graph}>
+          <p className={classes.text}>
             {fromState} to {toState} Graph
           </p>
           <ResponsiveContainer width="100%" height={300}>
@@ -156,7 +156,7 @@ function RecentGraph() {
               data={graphData}
               margin={{ left: 70, right: 70 }}
             >
-              <CartesianGrid strokeDasharray="3 3" />
+              <CartesianGrid strokeDasharray="3 3" fill="#E9D8FD"/>
               <XAxis dataKey="date" />
               <YAxis domain={[lowestRate, highestRate]} />
               <Tooltip />
@@ -169,7 +169,7 @@ function RecentGraph() {
               />
             </LineChart>
           </ResponsiveContainer>
-        </>
+        </div>
       ) : (
         <p>No graph entry yet!</p>
       )}
