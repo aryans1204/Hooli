@@ -97,98 +97,100 @@ class Expenditures extends Component {
 
   render() {
     return (
-      <div className={classes.contents}>
-        <div>
-          {this.state.authenticated == false && (
-            <Navigate to="/" replace={true} />
-          )}
-        </div>
-        <div>
-          <NavBar />
-        </div>
-        <div className={classes.title}>My Expenditures</div>
-        <ScrollBar
-          setMonth={(month) => {
-            this.setState({
-              monthlyData: this.filterDataByMonth(
-                this.state.expendituresData,
-                month
-              ),
-            });
-            this.setState({ month: month });
-          }}
-        ></ScrollBar>
-        <br></br>
-        <Flex minWidth="max-content">
-          <Center
-            className={classes.chart}
-            w="400px"
-            border="2px"
-            borderColor="#55185d"
-            bg="white"
-            overflow="hidden"
-          >
-            <Box>
-              <Text className={classes.chartTitle}>
-                Total Expenditures by Category{" "}
-              </Text>
-              {this.state.monthlyData !== null ? (
-                <ExpendituresPieChartComponent data={this.state.monthlyData} />
-              ) : null}
-            </Box>
-          </Center>
-          <Spacer />
-          <Center
-            w="250px"
-            border="2px"
-            borderColor="#55185d"
-            overflow="hidden"
-          >
-            <Box>
-              <Text className={classes.displayExpendituresTitle}>
-                Recent Expenditures
-              </Text>
-              {this.state.expendituresData !== null ? (
-                <DisplayExpendituresComponent
-                  data={this.state.expendituresData}
-                />
-              ) : null}
-            </Box>
-          </Center>
-          <Spacer />
-          <VStack spacing={4} align="stretch" width={450} height={420}>
-            <Box
+      <>
+        <NavBar />
+        <div className={classes.contents}>
+          <div>
+            {this.state.authenticated == false && (
+              <Navigate to="/" replace={true} />
+            )}
+          </div>
+          <h1 className={classes.title}>My Expenditures</h1>
+          <ScrollBar
+            setMonth={(month) => {
+              this.setState({
+                monthlyData: this.filterDataByMonth(
+                  this.state.expendituresData,
+                  month
+                ),
+              });
+              this.setState({ month: month });
+            }}
+          ></ScrollBar>
+          <br></br>
+          <Flex minWidth="max-content">
+            <Center
+              className={classes.chart}
+              w="400px"
               border="2px"
               borderColor="#55185d"
-              height={350}
-              overflowY="scroll"
+              bg="white"
+              overflow="hidden"
             >
-              {this.state.expendituresData !== null ? (
-                <DisplayAllExpendituresComponent
-                  items={this.state.expendituresData}
+              <Box>
+                <Text className={classes.chartTitle}>
+                  Total Expenditures by Category{" "}
+                </Text>
+                {this.state.monthlyData !== null ? (
+                  <ExpendituresPieChartComponent
+                    data={this.state.monthlyData}
+                  />
+                ) : null}
+              </Box>
+            </Center>
+            <Spacer />
+            <Center
+              w="250px"
+              border="2px"
+              borderColor="#55185d"
+              overflow="hidden"
+            >
+              <Box>
+                <Text className={classes.displayExpendituresTitle}>
+                  Recent Expenditures
+                </Text>
+                {this.state.expendituresData !== null ? (
+                  <DisplayExpendituresComponent
+                    data={this.state.expendituresData}
+                  />
+                ) : null}
+              </Box>
+            </Center>
+            <Spacer />
+            <VStack spacing={4} align="stretch" width={450} height={420}>
+              <Box
+                border="2px"
+                borderColor="#55185d"
+                height={350}
+                overflowY="scroll"
+              >
+                {this.state.expendituresData !== null ? (
+                  <DisplayAllExpendituresComponent
+                    items={this.state.expendituresData}
+                  />
+                ) : null}
+              </Box>
+              <Box>
+                <AddExpenditureComponent
+                  setState={() => {
+                    this.getData();
+                  }}
                 />
-              ) : null}
-            </Box>
-            <Box>
-              <AddExpenditureComponent
-                setState={() => {
-                  this.getData();
-                }}
-              />
-              <EditExpenditureComponent
-                setState={() => {
-                  this.getData();
-                }}
-              />
-              <RemoveExpenditureComponent
-                setState={() => {
-                  this.getData();
-                }}
-              />
-            </Box>
-          </VStack>
-        </Flex>
-      </div>
+                <EditExpenditureComponent
+                  setState={() => {
+                    this.getData();
+                  }}
+                />
+                <RemoveExpenditureComponent
+                  setState={() => {
+                    this.getData();
+                  }}
+                />
+              </Box>
+            </VStack>
+          </Flex>
+        </div>
+      </>
     );
   }
 }

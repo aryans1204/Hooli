@@ -1,21 +1,10 @@
 .text {
   color: #000;
 }
-.selector {
-  padding-left: 5%;
-}
-
-.table {
-  padding-left: 5%;
-}
 
 .title {
-  color: black;
-  margin-left: 5%;
-  font-size: 40px;
-  text-align: left;
-  margin-bottom: 0;
-  margin-top: 0;
+  color: #000;
+  padding: 0;
 }
 
 h3 {
@@ -26,4 +15,9 @@ h3 {
   height: 100%;
   position: fixed;
   top: 0;
+}
+
+.contents {
+  margin-left: 80px;
+  margin-right: 20px;
 }

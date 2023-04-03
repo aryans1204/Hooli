@@ -151,7 +151,7 @@ class PersonalProfile extends Component {
       <>
         <NavBar />
         <div className={classes.contents}>
-          <h1 className={classes.title}>Personal Profile</h1>
+          <h1 className={classes.title}>My Profile</h1>
 
           <form className={classes.details}>
             <label htmlFor="fname">Name</label>
