@@ -5,18 +5,6 @@
 const express = require('express')
 
 /**
- * mongoose module
- * @const
- */
-const mongoose = require('mongoose')
-
-/**
- * jsonwebtoken module
- * @const
- */
-const jsonwebtoken = require('jsonwebtoken')
-
-/**
  * User module
  * @const
  */
@@ -70,7 +58,6 @@ router.post('/api/users', async (req, res) => {
         res.status(201).send({ user, token })
     } catch (e) {
         res.send(e)
-        //res.status(400).send(e)
     }
 })
 

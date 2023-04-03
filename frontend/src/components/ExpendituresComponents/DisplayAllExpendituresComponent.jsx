@@ -12,7 +12,7 @@ import {
   } from '@chakra-ui/react'
 
 /**
- * Component for expenditures table.
+ * Component for displaying all expenditures in a table.
  * @param {*} props
  * @returns {*}
  */
