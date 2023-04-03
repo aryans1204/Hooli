@@ -1,8 +1,8 @@
 import { Component, useState } from "react";
 import classes from "./PersonalProfile.module.css";
-import {Button} from '@chakra-ui/react';
+import { Button } from "@chakra-ui/react";
 import { Navigate } from "react-router-dom";
-import  {DeleteAcc}  from "./ProfileComponents/DeleteAcc";
+import { DeleteAcc } from "./ProfileComponents/DeleteAcc";
 import NavBar from "./NavBar";
 
 class PersonalProfile extends Component {
@@ -23,7 +23,7 @@ class PersonalProfile extends Component {
   }
 
   async componentDidMount() {
-    await fetch("/api/users/me", {
+    await fetch("https://hooli-backend-aryan.herokuapp.com/api/users/me", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -45,119 +45,167 @@ class PersonalProfile extends Component {
   handleChange(event) {
     event.preventDefault();
     const target = event.target;
-    this.setState({[target.name]: target.value});
+    this.setState({ [target.name]: target.value });
   }
 
   handleProfileSubmit = (e) => {
     e.preventDefault();
     // Checks for name change
-    if ((this.state.name != this.state.newName) && (this.state.newName != "")) {
-      fetch("/api/users/me", {
+    if (this.state.name != this.state.newName && this.state.newName != "") {
+      fetch("https://hooli-backend-aryan.herokuapp.com/api/users/me", {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${sessionStorage.getItem("token")}`
+          Authorization: `Bearer ${sessionStorage.getItem("token")}`,
         },
         body: JSON.stringify({
           name: this.state.newName,
+        }),
+      })
+        .then((response) => {
+          if (response.status == 400)
+            console.log("Error updating profile name!");
+          else {
+            console.log("Profile name update successful");
+            alert("Name update sucessful");
+          }
         })
-      })
-      .then ((response) => {
-        if (response.status == 400) console.log("Error updating profile name!");
-        else {console.log("Profile name update successful"); alert("Name update sucessful");}
-      })
-      .catch((err) => {
-        console.log(err.message);
-      });
+        .catch((err) => {
+          console.log(err.message);
+        });
     }
 
     // Checks for email change
-    if ((this.state.email != this.state.newEmail) && (this.state.newEmail != "")) {
-      fetch("/api/users/me", {
+    if (this.state.email != this.state.newEmail && this.state.newEmail != "") {
+      fetch("https://hooli-backend-aryan.herokuapp.com/api/users/me", {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${sessionStorage.getItem("token")}`
+          Authorization: `Bearer ${sessionStorage.getItem("token")}`,
         },
         body: JSON.stringify({
           email: this.state.newEmail,
+        }),
+      })
+        .then((response) => {
+          if (response.status == 400) {
+            console.log("Error updating profile email!");
+            alert("Please enter a valid email");
+          } else {
+            console.log("Profile email update successful");
+            alert("Email update sucessful");
+          }
         })
-      })
-      .then ((response) => {
-        if (response.status == 400) {console.log("Error updating profile email!"); alert("Please enter a valid email");}
-        else {console.log("Profile email update successful"); alert("Email update sucessful");}
-      })
-      .catch((err) => {
-        console.log(err.message);
-      });
+        .catch((err) => {
+          console.log(err.message);
+        });
     }
-  }
+  };
 
   handlePwdSubmit = (e) => {
     e.preventDefault();
-    if (this.state.newPassword == this.state.repeatPassword) {
-      fetch("/api/users/me", {
+    if ((this.state.newPassword == this.state.repeatPassword)) {
+      if (((this.state.newPassword).length >= 7)) {
+      fetch("https://hooli-backend-aryan.herokuapp.com/api/users/me", {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${sessionStorage.getItem("token")}`
+          Authorization: `Bearer ${sessionStorage.getItem("token")}`,
         },
         body: JSON.stringify({
           password: this.state.newPassword,
+        }),
+      })
+        .then((response) => {
+          if (response.status == 400) {
+            console.log("Error changing password!");
+          } else {
+            console.log("Password update successful");
+            alert("Password update sucessful. You will be signed out.");
+            // log out
+            fetch(
+              "https://hooli-backend-aryan.herokuapp.com/api/users/logout",
+              {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                  Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+                },
+              }
+            ).then((response) => {
+              console.log(response.text);
+              if (response.status != 500) {
+                sessionStorage.clear();
+                window.location.assign("/");
+              }
+            });
+          }
         })
-      })
-      .then ((response) => {
-        if (response.status == 400) {console.log("Error changing password!");}
-        else {
-          console.log("Password update successful");
-          alert("Password update sucessful. You will be signed out.");
-          // log out
-          fetch("/api/users/logout", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${sessionStorage.getItem("token")}`,
-            }
-          })
-          .then((response) => {
-            console.log(response.text);
-            if (response.status != 500) {
-              sessionStorage.clear();
-              window.location.assign("/");
-            }
-          })      
-        }
-      })
-      .catch((err) => {
-        console.log(err.message);
-      });
-    }
-    else (alert("Password does not match. Please try again."))
-  }
+        .catch((err) => {
+          console.log(err.message);
+        });
+      } else {
+        alert("Password length must be at least 7 characters long. Please try again.");
+      }
+    } else alert("Password does not match. Please try again.");
+  };
 
   render() {
     return (
       <>
         <NavBar />
         <div className={classes.contents}>
-          <h1 className={classes.title}>Personal Profile</h1>
+          <h1 className={classes.title}>MY PROFILE</h1>
 
           <form className={classes.details}>
             <label htmlFor="fname">Name</label>
-            <input type="text" placeholder="Name" name="newName" defaultValue={this.state.name} className={classes.textType} onChange={this.handleChange} required></input>
-            <br/>
+            <input
+              type="text"
+              placeholder="Name"
+              name="newName"
+              defaultValue={this.state.name}
+              className={classes.textType}
+              onChange={this.handleChange}
+              required
+            ></input>
+            <br />
             <label htmlFor="email">Email</label>
-            <input type="email" placeholder="Email" name="newEmail" onChange={this.handleChange} defaultValue={this.state.email} required></input>
-            <Button colorScheme='purple' onClick={this.handleProfileSubmit}>Change Details</Button>
+            <input
+              type="email"
+              placeholder="Email"
+              name="newEmail"
+              onChange={this.handleChange}
+              defaultValue={this.state.email}
+              required
+            ></input>
+            <Button colorScheme="purple" onClick={this.handleProfileSubmit}>
+              Change Details
+            </Button>
           </form>
 
           <form className={classes.pwd}>
             <label htmlFor="pwd">Enter New Password</label>
-            <input type="password" name="newPassword" placeholder="New Password" className={classes.pwdType} onChange={this.handleChange} required></input>
-            <br/>
+            <input
+              type="password"
+              name="newPassword"
+              placeholder="New Password"
+              className={classes.pwdType}
+              onChange={this.handleChange}
+              required
+            ></input>
+            <br />
             <label htmlFor="pwd">Confirm New Password</label>
-            <input type="password" name="repeatPassword" placeholder="Confirm New Password" className={classes.pwdType} onChange={this.handleChange} required></input>
-            <Button colorScheme='purple' onClick={this.handlePwdSubmit}>Change Password</Button>
+            <input
+              type="password"
+              name="repeatPassword"
+              placeholder="Confirm New Password"
+              className={classes.pwdType}
+              onChange={this.handleChange}
+              required
+            ></input>
+            <Button colorScheme="purple" onClick={this.handlePwdSubmit}>
+              Change Password
+            </Button>
           </form>
 
           <DeleteAcc />

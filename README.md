@@ -1,5 +1,5 @@
 # An app to optimize the way people manage their personal finances XDDDDDDDDDDDDDDDDDDDDDDDDDDD
-.
+
 ## Prerequisites:
 
 - You need to ensure that the latest LTS of `node` and `npm` is installed on your machine.

@@ -153,7 +153,7 @@ export default function StockSelector(props) {
           <ModalHeader textAlign="center" fontSize="30px">
             Remove Portfolio Data
           </ModalHeader>
-          <ModalCloseButton onClick={onClose} />
+          <ModalCloseButton onClick={resetValues} />
           <div>
             <button
               onClick={() => handleTabClick("equities")}

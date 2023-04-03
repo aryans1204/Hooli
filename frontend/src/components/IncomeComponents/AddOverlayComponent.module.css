@@ -3,3 +3,15 @@
     font-size: 1em;
     width: 90%;
 }
+
+.field-text {
+    font-size: 1em;
+    text-align: left;
+    margin: 0;
+    padding: 0;
+}
+
+.required:after {
+    content:" *";
+    color: rgb(255, 0, 0);
+}

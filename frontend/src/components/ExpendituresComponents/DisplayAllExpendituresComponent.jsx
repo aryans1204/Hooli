@@ -33,7 +33,7 @@ function DisplayAllExpendituresComponent(props) {
           <Tr key={item._id}>
             <Td>{item.memo}</Td>
             <Td>{item.category}</Td>
-            <Td>{item.amount}</Td>
+            <Td>${item.amount}</Td>
             <Td>{item.date.slice(0,10)}</Td>
           </Tr>
         ))}

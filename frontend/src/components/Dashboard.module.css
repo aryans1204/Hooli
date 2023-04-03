@@ -1,3 +1,86 @@
+.div {
+  margin-left: 80px;
+  margin-top: 64px;
+}
+
+.nav {
+  height: 100%;
+  position: fixed;
+  top: 0;
+}
+
 .text {
-    color: #000;
+  color: #000;
+  padding: 0;
+  font-family: 'Vidaloka', serif;
+  letter-spacing: 1px;
+}
+
+.container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.weekly {
+  background-color: #e9d8fd;
+  margin: 15px;
+  border-radius: 15px;
+}
+
+.breakdown {
+  background-color: #e9d8fd;
+  margin: 15px;
+  border-radius: 15px;
+}
+
+.income {
+  background-color: #e9d8fd;
+  margin: 15px;
+  border-radius: 15px;
+}
+
+.investments {
+  background-color: #e9d8fd;
+  margin: 15px;
+  border-radius: 15px;
+}
+.investments InvestmentTable {
+  border: "none";
+}
+
+.pieChart {
+  display: flex;
+  justify-content: center;
+}
+
+h2 {
+  text-align: center;
+}
+
+@media screen and (max-width: 655px) {
+  .div {
+    width: inherit;
+    margin-right: 15px;
+  }
+
+  .container {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .weekly {
+    width: 100vh;
+  }
+
+  .breakdown {
+    width: 100vh;
+  }
+
+  .income {
+    width: 100vh;
+  }
+
+  .investments {
+    width: 100vh;
+  }
 }

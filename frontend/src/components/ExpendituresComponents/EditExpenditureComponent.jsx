@@ -13,8 +13,8 @@ import {
   ModalCloseButton,
   useDisclosure,
 } from "@chakra-ui/react";
-import { Card, CardHeader, CardBody, CardFooter } from '@chakra-ui/react'
-import { Text } from '@chakra-ui/react'
+import { Card, CardHeader, CardBody, CardFooter } from "@chakra-ui/react";
+import { Text } from "@chakra-ui/react";
 
 /**
  * Component for editing an expenditure.
@@ -45,13 +45,17 @@ export function EditExpenditureComponent(props) {
    * Retrieves selected expenditure using get/api/expenditure/:id.
    */
   function getTargetItem() {
-    fetch("https://hooli-backend-aryan.herokuapp.com/api/expenditure/" + selectedItem._id, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${sessionStorage.getItem("token")}`,
-      },
-    })
+    fetch(
+      "https://hooli-backend-aryan.herokuapp.com/api/expenditure/" +
+        selectedItem._id,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+        },
+      }
+    )
       .then((response) => {
         if (response.status === 500 || response.status === 404) {
           console.log("Some error occurred - " + response.status);
@@ -177,13 +181,17 @@ function EditDataComponent(props) {
    */
   function handleRemove() {
     console.log(props.data._id);
-    return fetch("https://hooli-backend-aryan.herokuapp.com/api/expenditure/" + props.data._id, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${sessionStorage.getItem("token")}`,
-      },
-    })
+    return fetch(
+      "https://hooli-backend-aryan.herokuapp.com/api/expenditure/" +
+        props.data._id,
+      {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+        },
+      }
+    )
       .then((response) => {
         if (response.status === 500 || response.status === 404) {
           console.log("Some error occurred - " + response.status);
@@ -222,7 +230,6 @@ function EditDataComponent(props) {
             console.log("Added new");
             setAddSuccess(true);
             setValues(initialValues);
-            handleRemove();
             return response.json();
           }
         })
@@ -241,23 +248,22 @@ function EditDataComponent(props) {
             Edit Expenditure
           </ModalHeader>
           <ModalBody className={classes.inputbox}>
-            Memo<br></br>
+          <div className={classes["field-text", "required"]}>Memo</div>
             <input
               type="text"
-              placeholder="Enter expenditure details"
               name="memo"
               onChange={handleInputChange}
             ></input>
           </ModalBody>
           <ModalBody>
-            Category<br></br>
+          <div className={classes["field-text", "required"]}>Category</div>
             <select
               value={category}
               onChange={(event) => {
                 setCategory(event.target.value);
               }}
             >
-              <option value=''>Select one</option>
+              <option value="">Select one</option>
               <option value="Food">Food</option>
               <option value="Housing">Housing</option>
               <option value="Utilities">Utilities</option>
@@ -271,10 +277,9 @@ function EditDataComponent(props) {
             </select>
           </ModalBody>
           <ModalBody>
-            Amount<br></br>
+          <div className={classes["field-text", "required"]}>Amount</div>
             <input
               type="number"
-              placeholder="Enter a number"
               size="30"
               required
               name="amount"
@@ -282,7 +287,7 @@ function EditDataComponent(props) {
             ></input>
           </ModalBody>
           <ModalBody>
-            Date<br></br>
+          <div className={classes["field-text", "required"]}>Date</div>
             <input
               type="date"
               size="30"
@@ -293,13 +298,23 @@ function EditDataComponent(props) {
           </ModalBody>
 
           <ModalFooter>
-          <ButtonGroup spacing='4'>
-            <Button onClick={handleSubmit} variant="solid" colorScheme="purple" size="md">
-              Save
-            </Button>
-            <Button onClick={clearState} variant="outline" colorScheme="purple" size="md">
-              Cancel
-            </Button>
+            <ButtonGroup spacing="4">
+              <Button
+                onClick={handleSubmit}
+                variant="solid"
+                colorScheme="purple"
+                size="md"
+              >
+                Save
+              </Button>
+              <Button
+                onClick={clearState}
+                variant="outline"
+                colorScheme="purple"
+                size="md"
+              >
+                Cancel
+              </Button>
             </ButtonGroup>
             <div>
               {(() => {

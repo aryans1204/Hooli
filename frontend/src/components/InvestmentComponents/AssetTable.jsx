@@ -210,8 +210,24 @@ function AssetTable(props) {
     <div>
       <canvas id="myChart" style={{ height: "25vh", width: "90vw" }}></canvas>
       <div>
-        <button onClick={() => handleTabClick("equities")}>Equities</button>
-        <button onClick={() => handleTabClick("options")}>Options</button>
+        <button
+          className={
+            activeTab === "equities" ? classes.active : classes.nonactive
+          }
+          onClick={() => {
+            handleTabClick("equities");
+          }}
+        >
+          Equities
+        </button>
+        <button
+          className={
+            activeTab === "options" ? classes.active : classes.nonactive
+          }
+          onClick={() => handleTabClick("options")}
+        >
+          Options
+        </button>
       </div>
       {activeTab === "equities" && renderEquities()}
       {activeTab === "options" && renderOptions()}
