@@ -18,8 +18,12 @@ export const InvestmentTable = () => {
   }, []);
 
   useEffect(() => {
-    if (portfolioData !== null) {
-      console.log(portfolioData);
+    if (
+      sessionStorage.getItem("portfolios") !== "null" &&
+      sessionStorage.getItem("portfolios") !== "undefined" &&
+      sessionStorage.getItem("portfolios") !== null &&
+      sessionStorage.getItem("portfolios") !== undefined
+    ) {
       setEquities(portfolioData[0].equities);
     }
   }, [portfolioData]);
