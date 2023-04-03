@@ -55,7 +55,7 @@ class Forex extends Component {
         )}
         <NavBar />
         <div className={classes.div}>
-          <h1 className={classes.text}>My Forex</h1>
+          <h1 className={classes.text}>MY FOREX</h1>
           <div>
             <ForexInfo />
           </div>

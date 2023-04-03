@@ -13,6 +13,8 @@
 .text {
   padding: 0;
   color: #000;
+  font-family: 'Vidaloka', serif;
+  letter-spacing: 1px;
 }
 
 .custom {

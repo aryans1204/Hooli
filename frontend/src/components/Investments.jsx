@@ -100,7 +100,7 @@ class Investments extends Component {
           <NavBar />
         </div>
         <div className={classes.contents}>
-          <h1 className={classes.title}>My Investments</h1>
+          <h1 className={classes.title}>MY INVESTMENTS</h1>
           <div>
             {this.state.authenticated == false && (
               <Navigate to="/" replace={true} />

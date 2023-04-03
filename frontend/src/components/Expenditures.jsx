@@ -106,7 +106,7 @@ class Expenditures extends Component {
               <Navigate to="/" replace={true} />
             )}
           </div>
-          <h1 className={classes.title}>My Expenditures</h1>
+          <h1 className={classes.title}>MY EXPENDITURES</h1>
           <ScrollBar
             setMonth={(month) => {
               this.setState({

@@ -141,7 +141,7 @@ class Income extends Component {
           <Navigate to="/" replace={true} />
         )}
         <NavBar />
-        <h1 className={classes.text}>My Income</h1>
+        <h1 className={classes.text}>MY INCOME</h1>
         <div className={classes.info}>
           <div className={classes.left}>
             <label htmlFor="Year">Year:</label>
