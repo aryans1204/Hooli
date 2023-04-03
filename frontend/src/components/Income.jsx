@@ -143,7 +143,6 @@ class Income extends Component {
 
         <label htmlFor="Year">Year:</label>
         <select
-          className={classes.custom-select}
           name="years"
           id="year"
           onChange={(event) => {
