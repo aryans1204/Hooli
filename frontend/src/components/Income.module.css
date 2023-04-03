@@ -9,6 +9,10 @@
   color: #000;
 }
 
+.custom-select select {
+  padding: 50px;
+}
+
 .buttons {
   background-color: red;
   margin: 10px 0;
