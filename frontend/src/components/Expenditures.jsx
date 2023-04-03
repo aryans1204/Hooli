@@ -121,7 +121,7 @@ class Expenditures extends Component {
           <Flex minWidth="max-content">
             <Center
               className={classes.chart}
-              w="400px"
+              w="30%"
               border="2px"
               borderColor="#55185d"
               bg="white"
@@ -140,7 +140,7 @@ class Expenditures extends Component {
             </Center>
             <Spacer />
             <Center
-              w="250px"
+              w="20%"
               border="2px"
               borderColor="#55185d"
               overflow="hidden"
@@ -157,7 +157,7 @@ class Expenditures extends Component {
               </Box>
             </Center>
             <Spacer />
-            <VStack spacing={4} align="stretch" width={450} height={420}>
+            <VStack spacing={4} align="stretch" width={"30%"} height={420}>
               <Box
                 border="2px"
                 borderColor="#55185d"
