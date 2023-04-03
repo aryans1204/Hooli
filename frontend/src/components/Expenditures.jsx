@@ -122,9 +122,9 @@ class Expenditures extends Component {
             <Center
               className={classes.chart}
               w="30%"
-              border="2px"
-              borderColor="#55185d"
-              bg="white"
+              border="none"
+              bg="#E9D8FD"
+              borderRadius="20px"
               overflow="hidden"
             >
               <Box>
@@ -140,9 +140,10 @@ class Expenditures extends Component {
             </Center>
             <Spacer />
             <Center
-              w="20%"
-              border="2px"
-              borderColor="#55185d"
+              w="30%"
+              border="none"
+              bg="#D6BCFA"
+              borderRadius="20px"
               overflow="hidden"
             >
               <Box>
@@ -159,10 +160,11 @@ class Expenditures extends Component {
             <Spacer />
             <VStack spacing={4} align="stretch" width={"30%"} height={420}>
               <Box
-                border="2px"
+                border="none"
                 borderColor="#55185d"
                 height={350}
                 overflowY="scroll"
+                //bg="#E9D8FD"
               >
                 {this.state.expendituresData !== null ? (
                   <DisplayAllExpendituresComponent

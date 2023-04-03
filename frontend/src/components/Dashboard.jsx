@@ -111,7 +111,7 @@ class Dashboard extends Component {
               <MonthlyIncome />
             </div>
             <div className={classes.investments}>
-              <h2>Investments overview</h2>
+              <h2>Investments Overview</h2>
               <InvestmentTable />
             </div>
           </div>

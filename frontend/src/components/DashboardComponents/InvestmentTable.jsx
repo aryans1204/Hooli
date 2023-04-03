@@ -41,7 +41,7 @@ export const InvestmentTable = () => {
           <td
             style={{
               color: "#FFD700",
-              backgroundColor: "#6c49bb",
+              backgroundColor: "#B794F4",
               border: "none",
               textAlign: "center",
             }}
@@ -51,7 +51,7 @@ export const InvestmentTable = () => {
           <td
             style={{
               color: pnlColor,
-              backgroundColor: "#6c49bb",
+              backgroundColor: "#B794F4",
               border: "none",
               textAlign: "center",
             }}
@@ -69,7 +69,7 @@ export const InvestmentTable = () => {
             <th
               style={{
                 border: "none",
-                backgroundColor: "#3e286f",
+                backgroundColor: "#805AD5",
                 color: "#FFD700",
               }}
             >
@@ -78,7 +78,7 @@ export const InvestmentTable = () => {
             <th
               style={{
                 border: "none",
-                backgroundColor: "#3e286f",
+                backgroundColor: "#805AD5",
                 color: "#FFD700",
               }}
             >
