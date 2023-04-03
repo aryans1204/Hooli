@@ -15,7 +15,6 @@ const validator = require("validator");
  * @class Investment
  * @property {Object} equities
  * @property {Object} options
- * @property {Object} commodities
  * @property {UserObject} portfolio_owner
  * @property {} timestamps
  */
@@ -99,12 +98,8 @@ const investmentSchema = new mongoose.Schema(
 
 const Investment = mongoose.model("Investment", investmentSchema);
 
-<<<<<<< HEAD
 /**
  * Investment module
  * @module Investment
  */
 module.exports = Investment
-=======
-module.exports = Investment;
->>>>>>> main

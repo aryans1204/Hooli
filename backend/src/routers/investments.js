@@ -23,17 +23,10 @@ const Investment = require("../models/investments");
 const auth = require("../authentication/auth");
 
 /**
- * date-and-time module
- * @const
- */
-const date = require("date-and-time");
-
-/**
- * request module
+ * needle module
  * @const
  */
 const needle = require("needle");
-const request = require("request");
 
 /**
  * Express router to mount user related functions on.
@@ -64,6 +57,7 @@ const fetchData = async (params, type) => {
 
   return data;
 };
+
 /**
  * Route to create a new portfolio.
  * @name post/api/investments
@@ -118,12 +112,7 @@ router.get("/api/investments", auth, async (req, res) => {
       console.log("current portfolio: ");
       console.log(portfolio);
       const data = await fetchData(portfolio.equities, "equities");
-      //console.log(data);
       portfolio.equities.forEach((equity, index) => {
-        //console.log(data[index]["Time Series (Daily)"]["2022-12-07"]);
-        /*const current_price = parseInt(
-        data[index]["Time Series (Daily)"][now]["1. open"]
-      );*/
         let current_price = 0;
         let i = 0;
         while (!current_price && i < 7) {
@@ -153,10 +142,6 @@ router.get("/api/investments", auth, async (req, res) => {
       console.log(portfolio.equities);
       const optionsData = await fetchData(portfolio.options, "options");
       portfolio.options.forEach((option, index) => {
-        /*const current_price = parseInt(
-        optionsData[index]["Time Series (Daily)"][now]["1. open"]
-      );
-      portfolio.options[index].derivative_current_price = current_price;*/
         let current_price = 0;
         let i = 0;
         while (!current_price && i < 7) {

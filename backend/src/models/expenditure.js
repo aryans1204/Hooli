@@ -5,12 +5,6 @@
 const mongoose = require('mongoose')
 
 /**
- * validator module
- * @const
- */
-//const validator = require('validator')
-
-/**
  * @typedef {Object} Expenditure
  * @property {String} memo
  * @property {Number} amount

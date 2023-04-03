@@ -5,12 +5,6 @@
 const mongoose = require('mongoose')
 
 /**
- * validator module
- * @const
- */
-const validator = require('validator')
-
-/**
  * currencySchema schema
  * @class Currency
  * @property {String} currency_from
