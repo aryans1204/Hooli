@@ -19,6 +19,7 @@ import { RemoveOverlayComponent } from "./IncomeComponents/RemoveOverlayComponen
 import { IncomeBarChartComponent } from "./IncomeComponents/IncomeBarChartComponent";
 import { EditOverlayComponent } from "./IncomeComponents/EditOverlayComponent";
 import { WeeklyIncomeComparison } from "./IncomeComponents/WeeklyIncomeComparison";
+import * as Spinners from "react-spinners";
 
 /**
  * Income class
@@ -42,6 +43,7 @@ class Income extends Component {
       yearlyData: null,
       year: curYear,
       yearOptions: [],
+      loading: true,
     };
   }
 
@@ -123,7 +125,7 @@ class Income extends Component {
           }
         });
         uniqueYears.reverse();
-        this.setState({ yearOptions: uniqueYears });
+        this.setState({ yearOptions: uniqueYears, loading: false });
       });
   }
 
@@ -142,7 +144,6 @@ class Income extends Component {
         <h1 className={classes.text}>My Income</h1>
         <div className={classes.info}>
           <div className={classes.left}>
-
             <label htmlFor="Year">Year:</label>
             <select
               className={classes.custom}
@@ -166,6 +167,17 @@ class Income extends Component {
             >
               {this.state.incomeData.length > 0 ? (
                 <IncomeBarChartComponent data={this.state.yearlyData} />
+              ) : this.state.loading ? (
+                <div
+                  style={{
+                    alignItems: "center",
+                    display: "flex",
+                    justifyContent: "center",
+                    height: "100%",
+                  }}
+                >
+                  <Spinners.BeatLoader color="#805AD5" />
+                </div>
               ) : (
                 <p>No income entry!</p>
               )}
@@ -196,7 +208,20 @@ class Income extends Component {
           <div className={classes.data}>
             {this.state.incomeData.length > 0 ? (
               <WeeklyIncomeComparison data={this.state.yearlyData} />
-            ) : <p>No Weekly Income Comparison!</p>}
+            ) : this.state.loading ? (
+              <div
+                style={{
+                  alignItems: "center",
+                  display: "flex",
+                  justifyContent: "center",
+                  height: "100%",
+                }}
+              >
+                <Spinners.MoonLoader color="#805AD5" />
+              </div>
+            ) : (
+              <p>No Weekly Income Comparison!</p>
+            )}
           </div>
         </div>
       </div>
