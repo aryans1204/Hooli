@@ -22,8 +22,10 @@ export const InvestmentTable = () => {
       sessionStorage.getItem("portfolios") !== "null" &&
       sessionStorage.getItem("portfolios") !== "undefined" &&
       sessionStorage.getItem("portfolios") !== null &&
-      sessionStorage.getItem("portfolios") !== undefined
+      sessionStorage.getItem("portfolios") !== undefined &&
+      portfolioData !== null
     ) {
+      console.log(portfolioData);
       setEquities(portfolioData[0].equities);
     }
   }, [portfolioData]);
@@ -129,7 +131,7 @@ export const InvestmentTable = () => {
       {equities ? (
         <EquitiesTable equities={equities}></EquitiesTable>
       ) : (
-        <div>no data</div>
+        <div style={{ textAlign: "center" }}>no data</div>
       )}
     </div>
   );
