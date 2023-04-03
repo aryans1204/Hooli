@@ -216,7 +216,6 @@ function AssetTable(props) {
           }
           onClick={() => {
             handleTabClick("equities");
-            console.log(activeTab);
           }}
         >
           Equities
