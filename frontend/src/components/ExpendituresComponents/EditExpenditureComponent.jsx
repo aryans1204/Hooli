@@ -201,7 +201,6 @@ function EditDataComponent(props) {
    * Creates a new (edited) expenditure using post/api/expenditure
    */
   function handleSubmit() {
-    //handleRemove().then(() => {
       fetch("https://hooli-backend-aryan.herokuapp.com/api/expenditure", {
         method: "POST",
         headers: {
@@ -231,7 +230,6 @@ function EditDataComponent(props) {
           console.log(data);
           props.setState();
         });
-    //});
   }
 
   return (
