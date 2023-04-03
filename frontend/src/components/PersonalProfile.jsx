@@ -104,7 +104,8 @@ class PersonalProfile extends Component {
 
   handlePwdSubmit = (e) => {
     e.preventDefault();
-    if ((this.state.newPassword == this.state.repeatPassword) && ((this.state.newPassword).length >= 7)) {
+    if ((this.state.newPassword == this.state.repeatPassword)) {
+      if (((this.state.newPassword).length >= 7)) {
       fetch("https://hooli-backend-aryan.herokuapp.com/api/users/me", {
         method: "PATCH",
         headers: {
@@ -143,10 +144,10 @@ class PersonalProfile extends Component {
         .catch((err) => {
           console.log(err.message);
         });
-    } else if ((this.state.newPassword == this.state.repeatPassword) && ((this.state.newPassword).length < 7)) {
-      alert("Password length must be at least 7 characters long. Please try again.");
-    }
-    else alert("Password does not match. Please try again.");
+      } else {
+        alert("Password length must be at least 7 characters long. Please try again.");
+      }
+    } else alert("Password does not match. Please try again.");
   };
 
   render() {

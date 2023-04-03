@@ -22,5 +22,11 @@
 }
 
 .graph {
+    background-color: #E9D8FD;
+    border-radius: 40px;
+    margin: 15px 0;
+}
+
+.text {
     font-size: 2em;
 }
