@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   ResponsiveContainer,
   LineChart,
@@ -10,7 +10,6 @@ import {
   Legend,
 } from "recharts";
 import * as Spinners from "react-spinners";
-import classes from "./WeeklyExpenseGraph.module.css";
 
 /**
  * Returns expense data over the past week in a line graph

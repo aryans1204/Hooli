@@ -1,15 +1,12 @@
-import { Component, useState } from "react";
+import { useState } from "react";
 
 import SideNav, {
-  Toggle,
-  Nav,
   NavItem,
   NavIcon,
   NavText,
 } from "@trendmicro/react-sidenav";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import classes from "./NavBar.module.css";
-import logo from "../assets/icons/hooli-logo.png";
 import home from "../assets/icons/home.png";
 import expense from "../assets/icons/expense.png";
 import forex from "../assets/icons/forex.png";
@@ -45,9 +42,7 @@ function NavBar() {
   return (
     <SideNav
       className={classes.nav}
-      /*onSelect={ (selected) => {console.log(selected); navigate('/' + selected)}}*/
       onSelect={(selected) => {
-        console.log(selected);
         if (selected === "logout") {
           handleLogout();
           navigate("/");

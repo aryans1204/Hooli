@@ -1,7 +1,7 @@
 import classes from "./AddExpenditureComponent.module.css";
-import React, { Component } from "react";
-import { useState, useEffect } from "react";
-import { Box, Button, ButtonGroup } from "@chakra-ui/react";
+import React from "react";
+import { useState } from "react";
+import { Button } from "@chakra-ui/react";
 import {
   Modal,
   ModalOverlay,
@@ -64,11 +64,8 @@ export function AddExpenditureComponent(props) {
     })
       .then((response) => {
         if (response.status === 500) {
-          console.log(response.data);
-          console.log("Some error occurred - " + response.status);
           setAddSuccess(false);
         } else {
-          console.log("Success");
           setAddSuccess(true);
           setValues(initialValues);
           return response.json();

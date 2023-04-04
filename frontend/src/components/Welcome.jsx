@@ -1,5 +1,3 @@
-/*welcome page*/
-
 import { React, Component } from "react";
 import { Link } from "react-router-dom";
 import classes from "./Welcome.module.css";

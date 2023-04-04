@@ -1,7 +1,6 @@
-import React, { Component } from "react";
-import NavBar from "../NavBar";
-import { useState, useEffect } from "react";
-import { Box, Button, ButtonGroup } from "@chakra-ui/react";
+import React from "react";
+import { useState } from "react";
+import { Button } from "@chakra-ui/react";
 import {
   Modal,
   ModalOverlay,
@@ -12,7 +11,6 @@ import {
   ModalCloseButton,
   useDisclosure,
 } from "@chakra-ui/react";
-import { Navigate } from "react-router-dom";
 import classes from "./AddOverlayComponent.module.css";
 
 /**
@@ -73,7 +71,6 @@ export function AddOverlayComponent(props) {
           console.log("Some error occurred - " + response.status);
           setAddSuccess(false);
         } else {
-          console.log("Success");
           setAddSuccess(true);
           return response.json();
         }

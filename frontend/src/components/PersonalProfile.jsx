@@ -1,4 +1,4 @@
-import { Component, useState } from "react";
+import { Component } from "react";
 import classes from "./PersonalProfile.module.css";
 import { Button } from "@chakra-ui/react";
 import { Navigate } from "react-router-dom";
@@ -31,7 +31,6 @@ class PersonalProfile extends Component {
       },
     })
       .then((response) => {
-        console.log(response.status);
         if (response.status == 401) this.setState({ authenticated: false });
         else this.setState({ authenticated: true });
         return response.json();
@@ -89,10 +88,8 @@ class PersonalProfile extends Component {
       })
         .then((response) => {
           if (response.status == 400) {
-            console.log("Error updating profile email!");
             alert("Please enter a valid email");
           } else {
-            console.log("Profile email update successful");
             alert("Email update sucessful");
           }
         })
@@ -120,7 +117,6 @@ class PersonalProfile extends Component {
           if (response.status == 400) {
             console.log("Error changing password!");
           } else {
-            console.log("Password update successful");
             alert("Password update sucessful. You will be signed out.");
             // log out
             fetch(
@@ -133,7 +129,6 @@ class PersonalProfile extends Component {
                 },
               }
             ).then((response) => {
-              console.log(response.text);
               if (response.status != 500) {
                 sessionStorage.clear();
                 window.location.assign("/");

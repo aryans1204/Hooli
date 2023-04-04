@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 
 export function GetPriceData(props) {
   const [data, setData] = useState(props.data[props.index]); //the specific portfolio data that the user wants to see
-  const [apiData, setApiData] = useState(null);
   const [tickers, setTickers] = useState([]);
 
   // Sets the data hook to the current selected portfolio's data
@@ -54,7 +53,6 @@ export function GetPriceData(props) {
         refresh === true
       ) {
         fetchAPIData(tickers).then((data) => {
-          console.log(data);
           sessionStorage.setItem("tickerData", JSON.stringify(data));
         });
       }
@@ -85,7 +83,6 @@ export function GetPriceData(props) {
       const parsedData = JSON.parse(data);
       if (tickers.length !== 0) {
         parsedData.forEach((parsedData) => {
-          console.log(parsedData);
           if (!parsedData["Meta Data"]) {
             // This part means the API call returned a string telling us the limit is reached
             alert("API query limit reached! Please wait for 1 minute");

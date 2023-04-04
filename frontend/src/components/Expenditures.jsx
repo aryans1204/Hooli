@@ -3,7 +3,7 @@ import NavBar from "./NavBar";
 import classes from "./Expenditures.module.css";
 import { Navigate } from "react-router-dom";
 import { Box, Flex, Spacer, Text, Center } from "@chakra-ui/react";
-import { Stack, HStack, VStack } from "@chakra-ui/react";
+import { VStack } from "@chakra-ui/react";
 import { AddExpenditureComponent } from "./ExpendituresComponents/AddExpenditureComponent";
 import { EditExpenditureComponent } from "./ExpendituresComponents/EditExpenditureComponent";
 import { RemoveExpenditureComponent } from "./ExpendituresComponents/RemoveExpenditureComponent";

@@ -202,7 +202,6 @@ function AssetTable(props) {
 
     // Save chart instance to state
     setChart(newChart);
-    console.log(`Clicked on row for ${ticker}`);
     setActiveTicker(ticker);
   };
 

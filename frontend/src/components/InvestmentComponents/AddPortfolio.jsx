@@ -1,12 +1,11 @@
-import { useState, useEffect, useRef } from "react";
-import { Box, Button, ButtonGroup } from "@chakra-ui/react";
+import { useState, useRef } from "react";
+import { Button } from "@chakra-ui/react";
 import {
   Modal,
   ModalOverlay,
   ModalContent,
   ModalHeader,
   ModalFooter,
-  ModalBody,
   ModalCloseButton,
   useDisclosure,
 } from "@chakra-ui/react";
@@ -22,8 +21,6 @@ const PortfolioForm = forwardRef((props, ref) => {
   const [addSuccess, setAddSuccess] = useState(null);
 
   const handleSubmit = async () => {
-    console.log(equities);
-    console.log(options);
     fetch("https://hooli-backend-aryan.herokuapp.com/api/investments", {
       method: "POST",
       headers: {
@@ -38,11 +35,8 @@ const PortfolioForm = forwardRef((props, ref) => {
       .then((response) => {
         if (response.status === 400) {
           console.log("Some error occurred - " + response.status);
-          console.log(response);
           setAddSuccess(false);
         } else {
-          console.log("Success");
-          console.log(response);
           setAddSuccess(true);
           sessionStorage.removeItem("portfolios");
           sessionStorage.removeItem("tickerData");
@@ -203,7 +197,6 @@ const PortfolioForm = forwardRef((props, ref) => {
 export function AddPortfolio(props) {
   const handleCreatePortfolio = () => {
     // Call the handleSubmit function defined in the child component
-    console.log(portfolioFormRef.current);
     if (portfolioFormRef.current) {
       portfolioFormRef.current.handleSubmit();
     }

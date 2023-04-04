@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import StockSelector from "./StockSelector";
 
 //function that renders the 'Edit' button
@@ -8,7 +8,6 @@ export function RemovePortfolio(props) {
 
   // props.data._id will be the id used to locate the portfolio containing the data we want to remove
   const removeEquity = (item) => {
-    console.log(item);
     fetch(
       "https://hooli-backend-aryan.herokuapp.com/api/investments/equities/" +
         props.data._id,
@@ -27,7 +26,6 @@ export function RemovePortfolio(props) {
         if (response.status === 500) {
           console.log("Some error occurred - " + response.status);
         } else {
-          console.log("Removed");
           updatePortfolios();
           return response.json();
         }
@@ -38,7 +36,6 @@ export function RemovePortfolio(props) {
   };
 
   const removeOption = (item) => {
-    console.log(item);
     fetch(
       "https://hooli-backend-aryan.herokuapp.com/api/investments/options/" +
         props.data._id,
@@ -57,7 +54,6 @@ export function RemovePortfolio(props) {
         if (response.status === 500) {
           console.log("Some error occurred - " + response.status);
         } else {
-          console.log("Removed");
           updatePortfolios();
           return response.json();
         }
@@ -83,7 +79,6 @@ export function RemovePortfolio(props) {
         if (response.status === 500 || response.status === 404) {
           console.log("Some error occurred - " + response.status);
         } else {
-          console.log("Removed");
           updatePortfolios();
           return response.json();
         }
@@ -121,7 +116,6 @@ export function RemovePortfolio(props) {
   }
 
   const handleSubmit = (item) => {
-    console.log(props.data);
     if (item.derivative_ticker) {
       removeOption(item);
       deleteTicker(item.derivative_ticker);

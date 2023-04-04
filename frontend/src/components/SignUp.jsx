@@ -22,13 +22,6 @@ class SignUp extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    console.log(
-      JSON.stringify({
-        name: this.state.name,
-        email: this.state.email,
-        password: this.state.password,
-      })
-    );
     fetch("https://hooli-backend-aryan.herokuapp.com/api/users", {
       method: "POST",
       headers: {
@@ -42,19 +35,16 @@ class SignUp extends Component {
     })
       .then((response) => {
         if (response.status === 201) {
-          console.log("Sign up successful!");
           this.setState({ signUpSuccessful: true });
           return response.json();
         } else {
           this.setState({ signUpSuccessful: false });
-          console.log("Error occurred: error" + response.status);
         }
       })
       .then((data) => {
         if (this.state.signUpSuccessful == true) {
           sessionStorage.setItem("token", data.token);
           window.location.reload();
-          console.log("DATA STORED");
         }
       });
   };

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import classes from "../Forex.module.css";
 import {
   ResponsiveContainer,
@@ -120,7 +120,7 @@ function RecentGraph() {
         setGraphData(graphArr);
         setIsLoading(false);
       })
-      .catch((error) => console.log("error", error));
+      .catch((error) => console.log(error));
   };
 
   if (isLoading) {

@@ -1,4 +1,4 @@
-import React, { Component, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import * as Spinners from "react-spinners";
 
 export const InvestmentTable = () => {
@@ -28,7 +28,6 @@ export const InvestmentTable = () => {
       sessionStorage.getItem("portfolios") !== undefined &&
       portfolioData !== null
     ) {
-      console.log(portfolioData);
       setEquities(portfolioData[0].equities);
     }
   }, [portfolioData]);
@@ -115,7 +114,6 @@ export const InvestmentTable = () => {
         }
       })
       .then((data) => {
-        console.log(data);
         setPortfolioData(data);
         setIsLoading(false);
         const tempData = JSON.stringify(data);

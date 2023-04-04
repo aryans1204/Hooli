@@ -1,21 +1,15 @@
-import { useState, useEffect } from "react";
-import { Box, Button, ButtonGroup } from "@chakra-ui/react";
+import { useState } from "react";
+import { Button } from "@chakra-ui/react";
 import {
   Modal,
   ModalOverlay,
   ModalContent,
   ModalHeader,
   ModalFooter,
-  ModalBody,
   ModalCloseButton,
   useDisclosure,
 } from "@chakra-ui/react";
-import StockSelector from "./StockSelector";
 import classes from "./EditPortfolio.module.css";
-
-//
-// To do : After selecting some thing to edit, another overlay will appear. EditEquity attempts to open an equity overlay (not done yet)
-//
 
 export function EditPortfolio(props) {
   const initialEquityValues = {
@@ -30,7 +24,6 @@ export function EditPortfolio(props) {
   };
   const [equityValues, setEquityValues] = useState(initialEquityValues);
   const [optionValues, setOptionValues] = useState(initialOptionValues);
-  //const [addSuccess, setAddSuccess] = useState(null);
   const [activeTab, setActiveTab] = useState("equities");
   const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -53,15 +46,12 @@ export function EditPortfolio(props) {
   };
 
   const clearState = () => {
-    //setValues(initialValues);
     setAddSuccess(null);
-    //props.setTargetFound(false);
   };
 
   // function to add new equity into the database
   function handleEquitySubmit(e) {
     e.preventDefault();
-    console.log("SUBMIT");
     fetch(
       "https://hooli-backend-aryan.herokuapp.com/api/investments/equities/" +
         props.data._id,
@@ -81,8 +71,6 @@ export function EditPortfolio(props) {
         if (response.status === 400 || response.status === 404) {
           console.log("Some error occurred - " + response.status);
         } else {
-          console.log("Edited");
-          console.log(response);
           updatePortfolios();
           return response.json();
         }
@@ -93,7 +81,6 @@ export function EditPortfolio(props) {
   }
   function handleOptionSubmit(e) {
     e.preventDefault();
-    console.log("SUBMIT");
     fetch(
       "https://hooli-backend-aryan.herokuapp.com/api/investments/options/" +
         props.data._id,
@@ -115,8 +102,6 @@ export function EditPortfolio(props) {
         if (response.status === 400 || response.status === 404) {
           console.log("Some error occurred - " + response.status);
         } else {
-          console.log("Edited");
-          console.log(response);
           updatePortfolios();
           return response.json();
         }
@@ -160,7 +145,6 @@ export function EditPortfolio(props) {
   // function to refresh the portfolios in sessionStorage after a change has been made
   const updatePortfolios = () => {
     sessionStorage.removeItem("portfolios");
-    //sessionStorage.removeItem("tickerData");
     props.edit();
     window.location.reload();
   };

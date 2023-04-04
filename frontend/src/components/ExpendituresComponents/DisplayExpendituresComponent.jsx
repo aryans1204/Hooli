@@ -1,6 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { VStack, StackDivider } from '@chakra-ui/react'
+import { VStack } from '@chakra-ui/react'
 import { Box } from '@chakra-ui/react'
 import { Text } from '@chakra-ui/react'
 
@@ -15,8 +15,6 @@ export function DisplayExpendituresComponent(props) {
   useEffect(() => {
     setResult(props.data);
   }, [props.data]);
-
-  console.log(result);
 
   var displayData = [
     {memo: 'No Record', amount: null},

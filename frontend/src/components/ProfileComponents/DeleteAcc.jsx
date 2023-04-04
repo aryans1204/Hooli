@@ -1,4 +1,4 @@
-import React, { Component, useState } from "react";
+import React from "react";
 import {
   AlertDialog,
   AlertDialogBody,
@@ -26,7 +26,6 @@ export function DeleteAcc() {
           },
         }
       );
-      console.log("Account deleted successfully");
       location.reload();
     } catch (error) {
       console.log(error.message);

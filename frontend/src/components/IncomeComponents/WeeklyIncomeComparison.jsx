@@ -1,16 +1,12 @@
-import React, { Component } from "react";
-import NavBar from "../NavBar";
+import React from "react";
 import { useState, useEffect } from "react";
 import {
   Table,
   Thead,
   Tbody,
-  Tfoot,
   Tr,
   Th,
   Td,
-  TableCaption,
-  TableContainer,
 } from '@chakra-ui/react'
 import classes from "./WeeklyIncomeComparison.module.css";
 
@@ -63,7 +59,6 @@ export function WeeklyIncomeComparison(props) {
     let tempData = props.data.sort(
       (a, b) => new Date(b.start_date) - new Date(a.start_date)
     );
-    console.log(tempData.length);
     if (tempData.length > 5) {
       tempData = tempData.slice(0, 5); //temporary variable to store 5 latest data
     }

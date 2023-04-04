@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import classes from "./Dashboard.module.css";
 import NavBar from "./NavBar";
+import { Navigate } from "react-router-dom";
 import { ExpendituresPieChartComponent } from "./ExpendituresComponents/ExpendituresPieChartComponent";
 import WeeklyExpenseGraph from "./DashboardComponents/WeeklyExpenseGraph";
 import MonthlyIncome from "./DashboardComponents/MonthlyIncome";
@@ -31,11 +32,13 @@ class Dashboard extends Component {
         "Content-Type": "application/json",
         Authorization: `Bearer ${sessionStorage.getItem("token")}`,
       },
-    }).then((response) => {
-      console.log(response.status);
-      if (response.status == 401) this.setState({ authenticated: false });
-      else this.setState({ authenticated: true });
-    });
+    })
+      .then((response) => {
+        if (response.status == 401) this.setState({ authenticated: false });
+        else this.setState({ authenticated: true });
+        return response.json();
+      })
+      .then((data) => {});
   }
 
   /**
@@ -60,7 +63,6 @@ class Dashboard extends Component {
       })
       .then((data) => {
         const temp = this.filterDataByCurrentMonth(data);
-        console.log(temp);
         this.setState({
           expendituresData: temp,
         });
@@ -84,12 +86,12 @@ class Dashboard extends Component {
   render() {
     return (
       <>
-        <div className={classes.nav}>
-          <NavBar />
-        </div>
         {this.state.authenticated == false && (
           <Navigate to="/" replace={true} />
         )}
+        <div className={classes.nav}>
+          <NavBar />
+        </div>
 
         <div className={classes.div}>
           <h1 className={classes.text}>MY DASHBOARD</h1>

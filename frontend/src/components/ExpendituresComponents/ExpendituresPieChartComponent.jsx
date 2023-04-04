@@ -4,9 +4,7 @@ import {
   PieChart,
   Pie,
   Legend,
-  Sector,
   Cell,
-  ResponsiveContainer,
 } from "recharts";
 import * as Spinners from "react-spinners";
 import classes from "./ExpendituresPieChartComponent.module.css";
@@ -86,8 +84,6 @@ export function ExpendituresPieChartComponent(props) {
 
   useEffect(() => {
     setResult(props.data);
-    console.log(props.data);
-    console.log(loading);
   }, [props.data]);
 
   useEffect(() => {

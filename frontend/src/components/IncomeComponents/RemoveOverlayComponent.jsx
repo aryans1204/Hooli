@@ -1,7 +1,6 @@
-import React, { Component } from "react";
-import NavBar from "../NavBar";
+import React from "react";
 import { useState, useEffect } from "react";
-import { Box, Button, ButtonGroup } from "@chakra-ui/react";
+import { Button } from "@chakra-ui/react";
 import {
   Modal,
   ModalOverlay,
@@ -12,8 +11,6 @@ import {
   ModalCloseButton,
   useDisclosure,
 } from "@chakra-ui/react";
-import { Navigate } from "react-router-dom";
-import classes from "./RemoveOverlayComponent.module.css";
 import DisplayTableComponent from "./DisplayTableComponent";
 
 /**
@@ -43,7 +40,6 @@ export function RemoveOverlayComponent(props) {
    * Removes selected income record using delete/api/income/:id.
    */
   function handleRemove() {
-    console.log(selectedItem._id);
     fetch(
       "https://hooli-backend-aryan.herokuapp.com/api/income/" +
         selectedItem._id,
@@ -64,7 +60,6 @@ export function RemoveOverlayComponent(props) {
         }
       })
       .then((data) => {
-        console.log(data);
         props.setState();
       });
   }

@@ -1,8 +1,8 @@
 import classes from "./EditExpenditureComponent.module.css";
 import ExpendituresTableComponent from "./ExpendituresTableComponent";
-import React, { Component } from "react";
+import React from "react";
 import { useState, useEffect } from "react";
-import { Box, Button, ButtonGroup } from "@chakra-ui/react";
+import { Button, ButtonGroup } from "@chakra-ui/react";
 import {
   Modal,
   ModalOverlay,
@@ -13,8 +13,6 @@ import {
   ModalCloseButton,
   useDisclosure,
 } from "@chakra-ui/react";
-import { Card, CardHeader, CardBody, CardFooter } from "@chakra-ui/react";
-import { Text } from "@chakra-ui/react";
 
 /**
  * Component for editing an expenditure.
@@ -66,12 +64,10 @@ export function EditExpenditureComponent(props) {
       })
       .then((data) => {
         setTargetData(data);
-        console.log(data);
       });
   }
   useEffect(() => {
     if (targetData !== null) {
-      console.log(targetData);
       onOpen();
     }
   }, [targetData]);
@@ -180,7 +176,6 @@ function EditDataComponent(props) {
    * Remove an expenditure using delete/api/expenditure/:id.
    */
   function handleRemove() {
-    console.log(props.data._id);
     return fetch(
       "https://hooli-backend-aryan.herokuapp.com/api/expenditure/" +
         props.data._id,
@@ -209,7 +204,8 @@ function EditDataComponent(props) {
    * Creates a new (edited) expenditure using post/api/expenditure
    */
   function handleSubmit() {
-      fetch("https://hooli-backend-aryan.herokuapp.com/api/expenditure", {
+      handleRemove().then(
+        fetch("https://hooli-backend-aryan.herokuapp.com/api/expenditure", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -234,9 +230,9 @@ function EditDataComponent(props) {
           }
         })
         .then((data) => {
-          console.log(data);
           props.setState();
-        });
+        })
+      )
   }
 
   return (

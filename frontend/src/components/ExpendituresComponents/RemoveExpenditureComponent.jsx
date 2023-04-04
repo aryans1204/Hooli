@@ -1,8 +1,7 @@
-import classes from "./RemoveExpenditureComponent.module.css";
 import ExpendituresTableComponent from "./ExpendituresTableComponent";
-import React, { Component } from "react";
-import { useState, useEffect } from "react";
-import { Box, Button, ButtonGroup } from "@chakra-ui/react";
+import React from "react";
+import { useState } from "react";
+import { Button } from "@chakra-ui/react";
 import {
   Modal,
   ModalOverlay,
@@ -37,7 +36,6 @@ export function RemoveExpenditureComponent(props) {
    * Removes selected expenditure using delete/api/expenditure/:id.
    */
   function handleRemove() {
-    console.log(selectedItem._id);
     fetch(
       "https://hooli-backend-aryan.herokuapp.com/api/expenditure/" +
         selectedItem._id,
@@ -58,7 +56,6 @@ export function RemoveExpenditureComponent(props) {
         }
       })
       .then((data) => {
-        console.log(data);
         props.setState();
       });
   }

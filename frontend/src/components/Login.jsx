@@ -1,4 +1,4 @@
-import { Component, useState } from "react";
+import { Component } from "react";
 import classes from "./Login.module.css";
 import logo from "../assets/icons/hooli-logo.png";
 import { Navigate } from "react-router-dom";
@@ -22,12 +22,6 @@ class Login extends Component {
   }
   handleSubmit = (e) => {
     e.preventDefault();
-    console.log(
-      JSON.stringify({
-        email: this.state.email,
-        password: this.state.password,
-      })
-    );
     fetch("https://hooli-backend-aryan.herokuapp.com/api/users/login", {
       method: "POST",
       headers: {
@@ -40,11 +34,8 @@ class Login extends Component {
     })
       .then((response) => {
         if (response.status === 400) {
-          console.log(response.json().error);
-          console.log("fail");
           this.setState({ loginSuccess: false });
         } else {
-          console.log("Login successful");
           this.setState({ loginSuccess: true });
           return response.json();
         }
@@ -53,7 +44,6 @@ class Login extends Component {
         if (this.state.loginSuccess == true) {
           sessionStorage.setItem("token", data.token);
           window.location.reload();
-          console.log("DATA STORED");
         }
       });
   };
