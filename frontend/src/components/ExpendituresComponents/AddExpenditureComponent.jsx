@@ -45,7 +45,7 @@ export function AddExpenditureComponent(props) {
     onClose();
   };
 
-   /**
+  /**
    * Creates new expenditure when submitted using post/api/expenditure.
    */
   function handleSubmit() {
@@ -64,7 +64,7 @@ export function AddExpenditureComponent(props) {
     })
       .then((response) => {
         if (response.status === 500) {
-          console.log(response.data)
+          console.log(response.data);
           console.log("Some error occurred - " + response.status);
           setAddSuccess(false);
         } else {
@@ -99,8 +99,8 @@ export function AddExpenditureComponent(props) {
           </ModalHeader>
           <ModalCloseButton onClick={onClose} />
           <ModalBody className={classes.inputbox}>
-            Memo<br></br>
-            <input 
+          <div className={classes["field-text", "required"]}>Memo</div>
+            <input
               type="text"
               placeholder="Enter expenditure details"
               name="memo"
@@ -108,14 +108,14 @@ export function AddExpenditureComponent(props) {
             ></input>
           </ModalBody>
           <ModalBody>
-            Category<br></br>
+          <div className={classes["field-text", "required"]}>Category</div>
             <select
               value={category}
               onChange={(event) => {
                 setCategory(event.target.value);
               }}
             >
-              <option value=''>Select one</option>
+              <option value="">Select one</option>
               <option value="Food">Food</option>
               <option value="Housing">Housing</option>
               <option value="Utilities">Utilities</option>
@@ -129,7 +129,7 @@ export function AddExpenditureComponent(props) {
             </select>
           </ModalBody>
           <ModalBody>
-            Amount<br></br>
+          <div className={classes["field-text", "required"]}>Amount</div>
             <input
               type="number"
               placeholder="Enter a number"
@@ -140,7 +140,7 @@ export function AddExpenditureComponent(props) {
             ></input>
           </ModalBody>
           <ModalBody>
-            Date<br></br>
+          <div className={classes["field-text", "required"]}>Date</div>
             <input
               type="date"
               size="30"

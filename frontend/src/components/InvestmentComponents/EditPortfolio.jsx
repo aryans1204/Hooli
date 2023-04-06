@@ -21,7 +21,6 @@ export function EditPortfolio(props) {
   const initialEquityValues = {
     equity_ticker: "",
     equity_buy_price: 0,
-    equity_current_price: 0,
   };
   const initialOptionValues = {
     derivative_ticker: "",
@@ -63,19 +62,21 @@ export function EditPortfolio(props) {
   function handleEquitySubmit(e) {
     e.preventDefault();
     console.log("SUBMIT");
-    fetch("https://hooli-backend-aryan.herokuapp.com/api/investments/equities/" + props.data._id, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${sessionStorage.getItem("token")}`,
-      },
-      body: JSON.stringify({
-        equity_ticker: equityValues.equity_ticker,
-        equity_pnl: equityValues.equity_pnl,
-        equity_buy_price: equityValues.equity_buy_price,
-        equity_current_price: equityValues.equity_current_price,
-      }),
-    })
+    fetch(
+      "https://hooli-backend-aryan.herokuapp.com/api/investments/equities/" +
+        props.data._id,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+        },
+        body: JSON.stringify({
+          equity_ticker: equityValues.equity_ticker,
+          equity_buy_price: equityValues.equity_buy_price,
+        }),
+      }
+    )
       .then((response) => {
         if (response.status === 400 || response.status === 404) {
           console.log("Some error occurred - " + response.status);
@@ -93,19 +94,23 @@ export function EditPortfolio(props) {
   function handleOptionSubmit(e) {
     e.preventDefault();
     console.log("SUBMIT");
-    fetch("https://hooli-backend-aryan.herokuapp.com/api/investments/options/" + props.data._id, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${sessionStorage.getItem("token")}`,
-      },
-      body: JSON.stringify({
-        derivative_ticker: optionValues.derivative_ticker,
-        option_type: optionValues.option_type,
-        strike_price: optionValues.strike_price,
-        expiration_date: optionValues.expiration_date,
-      }),
-    })
+    fetch(
+      "https://hooli-backend-aryan.herokuapp.com/api/investments/options/" +
+        props.data._id,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+        },
+        body: JSON.stringify({
+          derivative_ticker: optionValues.derivative_ticker,
+          option_type: optionValues.option_type,
+          strike_price: optionValues.strike_price,
+          expiration_date: optionValues.expiration_date,
+        }),
+      }
+    )
       .then((response) => {
         if (response.status === 400 || response.status === 404) {
           console.log("Some error occurred - " + response.status);
@@ -127,7 +132,7 @@ export function EditPortfolio(props) {
       <div className={classes.editEquity}>
         <form onSubmit={handleEquitySubmit}>
           <label>
-            Equity Ticker:
+          <div className={classes["field-text", "required"]}>Equity Ticker:</div>
             <input
               type="text"
               name="equity_ticker"
@@ -137,21 +142,11 @@ export function EditPortfolio(props) {
           </label>
           <br />
           <label>
-            Equity Buy Price:
+          <div className={classes["field-text", "required"]}>Equity Buy Price:</div>
             <input
               type="number"
               name="equity_buy_price"
               value={equityValues.equity_buy_price}
-              onChange={handleEquityChange}
-            />
-          </label>
-          <br />
-          <label>
-            Equity Current Price:
-            <input
-              type="number"
-              name="equity_current_price"
-              value={equityValues.equity_current_price}
               onChange={handleEquityChange}
             />
           </label>
@@ -176,7 +171,7 @@ export function EditPortfolio(props) {
       <div className={classes.editOption}>
         <form onSubmit={handleOptionSubmit}>
           <label>
-            Ticker:
+          <div className={classes["field-text", "required"]}>Ticker:</div>
             <input
               type="text"
               name="derivative_ticker"
@@ -185,7 +180,7 @@ export function EditPortfolio(props) {
             />
           </label>
           <br />
-          <label>Option Type:</label>
+          <div className={classes["field-text", "required"]}><label>Option Type:</label></div>
           <select
             value={optionValues.option_type}
             name="option_type"
@@ -198,7 +193,7 @@ export function EditPortfolio(props) {
 
           <br />
           <label>
-            Strike Price:
+          <div className={classes["field-text", "required"]}>Strike Price:</div>
             <input
               type="text"
               name="strike_price"
@@ -208,7 +203,7 @@ export function EditPortfolio(props) {
           </label>
           <br />
           <label>
-            Expiration Date:
+          <div className={classes["field-text", "required"]}>Expiration Date:</div>
             <input
               type="date"
               name="expiration_date"

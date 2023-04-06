@@ -42,10 +42,10 @@ export function IncomeBarChartComponent(props) {
    * Industry types
    */
   const industry = [
-    { industry: "manufacturing" },
-    { industry: "services" },
-    { industry: "construction" },
-    { industry: "others" },
+    { industry: "Manufacturing" },
+    { industry: "Services" },
+    { industry: "Construction" },
+    { industry: "Others" },
   ];
 
   
@@ -53,10 +53,10 @@ export function IncomeBarChartComponent(props) {
    * Colors for industry types
    */
   const colors = {
-    manufacturing: "purple",
-    services: "brown",
-    construction: "red",
-    others: "yellow",
+    Manufacturing: "purple",
+    Services: "brown",
+    Construction: "red",
+    Others: "yellow",
   };
 
   /**
@@ -64,7 +64,7 @@ export function IncomeBarChartComponent(props) {
    * @returns {{ manufacturing: number; services: number; construction: number; others: number; }}
    */
   function industryObj() {
-    return { manufacturing: 0, services: 0, construction: 0, others: 0 };
+    return { Manufacturing: 0, Services: 0, Construction: 0, Others: 0 };
   }
 
   

@@ -7,7 +7,7 @@ import NavBar from "./NavBar";
 import AssetTable from "./InvestmentComponents/AssetTable";
 import { EditPortfolio } from "./InvestmentComponents/EditPortfolio";
 import { RemovePortfolio } from "./InvestmentComponents/RemovePortfolio";
-import { ClipLoader } from "react-spinners";
+import * as Spinners from "react-spinners";
 import classes from "./Investments.module.css";
 
 class Investments extends Component {
@@ -17,6 +17,7 @@ class Investments extends Component {
       authenticated: null,
       portfolio: null, //stores all portfolios retrieved from the database
       selectedIndex: 0, //index to access particular portfolio
+      loading: true,
     };
   }
 
@@ -45,7 +46,7 @@ class Investments extends Component {
     } else {
       const portfolios = JSON.parse(sessionStorage.getItem("portfolios"));
       console.log(portfolios);
-      this.setState({ portfolio: portfolios });
+      this.setState({ portfolio: portfolios, loading: false });
     }
   }
 
@@ -73,6 +74,7 @@ class Investments extends Component {
         console.log(data);
         this.setState({
           portfolio: data,
+          loading: false,
         });
         const tempData = JSON.stringify(data);
         if (
@@ -93,88 +95,98 @@ class Investments extends Component {
 
   render() {
     return (
-      <div>
+      <>
         <div className={classes.nav}>
           <NavBar />
         </div>
-        <h1 className={classes.title}>Investments Page</h1>
-        <div>
-          {this.state.authenticated == false && (
-            <Navigate to="/" replace={true} />
-          )}
-        </div>
-
-        <div className={classes.selector}>
-          {this.state.portfolio && (
-            <PortfolioSelector
-              data={this.state.portfolio}
-              index={this.state.selectedIndex}
-              onIndexChange={this.handleSelectedIndexChange}
-            ></PortfolioSelector>
-          )}
-        </div>
-        <div>
-          {this.state.portfolio && (
-            <GetPriceData
-              data={this.state.portfolio}
-              index={this.state.selectedIndex}
-            ></GetPriceData>
-          )}
-        </div>
-        <div className={classes.table}>
-          <h3>My Portfolio (click to show trend graph)</h3>
+        <div className={classes.contents}>
+          <h1 className={classes.title}>MY INVESTMENTS</h1>
           <div>
-            {(() => {
-              if (this.state.portfolio) {
-                return (
-                  <div>
-                    <AssetTable
-                      data={this.state.portfolio[this.state.selectedIndex]}
-                    ></AssetTable>
-                  </div>
-                );
-              } else {
-                return (
-                  <div>
-                    <div>no portfolio data available</div>
-                  </div>
-                );
+            {this.state.authenticated == false && (
+              <Navigate to="/" replace={true} />
+            )}
+          </div>
+
+          <div>
+            {this.state.portfolio && (
+              <PortfolioSelector
+                data={this.state.portfolio}
+                index={this.state.selectedIndex}
+                onIndexChange={this.handleSelectedIndexChange}
+              ></PortfolioSelector>
+            )}
+          </div>
+          <div>
+            {this.state.portfolio && (
+              <GetPriceData
+                data={this.state.portfolio}
+                index={this.state.selectedIndex}
+              ></GetPriceData>
+            )}
+          </div>
+          <div>
+            <div>
+              {(() => {
+                if (this.state.portfolio) {
+                  return (
+                    <div>
+                      <AssetTable
+                        data={this.state.portfolio[this.state.selectedIndex]}
+                      ></AssetTable>
+                    </div>
+                  );
+                } else {
+                  return this.state.loading ? (
+                    <div
+                      style={{
+                        alignItems: "center",
+                        display: "flex",
+                        justifyContent: "center",
+                        height: "100%",
+                      }}
+                    >
+                      <Spinners.BeatLoader color="#805AD5" />
+                    </div>
+                  ) : (
+                    <div>No Portfolio Data Available</div>
+                  );
+                }
+              })()}
+            </div>
+          </div>
+          <div>
+            <RemovePortfolio
+              data={
+                this.state.portfolio
+                  ? this.state.portfolio[this.state.selectedIndex]
+                  : {}
               }
-            })()}
+              edit={() => {
+                this.getPortfolioData();
+              }}
+            />
+          </div>
+          <div>
+            <EditPortfolio
+              data={
+                this.state.portfolio
+                  ? this.state.portfolio[this.state.selectedIndex]
+                  : {}
+              }
+              edit={() => {
+                this.getPortfolioData();
+              }}
+            />
+          </div>
+          <div>
+            <AddPortfolio
+              edit={() => {
+                this.getPortfolioData();
+              }}
+            />
           </div>
         </div>
-        <div>
-          <RemovePortfolio
-            data={
-              this.state.portfolio
-                ? this.state.portfolio[this.state.selectedIndex]
-                : {}
-            }
-            edit={() => {
-              this.getPortfolioData();
-            }}
-          />
-        </div>
-        <div>
-          <EditPortfolio
-            data={
-              this.state.portfolio
-                ? this.state.portfolio[this.state.selectedIndex]
-                : {}
-            }
-            edit={() => {
-              this.getPortfolioData();
-            }}
-          />
-        </div>
-        <div>
-          <AddPortfolio
-            edit={() => {
-              this.getPortfolioData();
-            }}
-          />
-        </div>
-      </div>
+      </>
     );
   }
 }

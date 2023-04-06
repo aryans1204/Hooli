@@ -19,6 +19,7 @@ import { RemoveOverlayComponent } from "./IncomeComponents/RemoveOverlayComponen
 import { IncomeBarChartComponent } from "./IncomeComponents/IncomeBarChartComponent";
 import { EditOverlayComponent } from "./IncomeComponents/EditOverlayComponent";
 import { WeeklyIncomeComparison } from "./IncomeComponents/WeeklyIncomeComparison";
+import * as Spinners from "react-spinners";
 
 /**
  * Income class
@@ -27,8 +28,6 @@ import { WeeklyIncomeComparison } from "./IncomeComponents/WeeklyIncomeCompariso
  * @extends {Component}
  */
 class Income extends Component {
-  //const { isOpen, onOpen, onClose } = useDisclosure();
-
   /**
    * Creates an instance of Income.
    * @constructor
@@ -36,9 +35,15 @@ class Income extends Component {
    */
   constructor(props) {
     super(props);
+    var curYear = new Date().getFullYear();
+    curYear = curYear.toString();
     this.state = {
       authenticated: null,
-      incomeData: null,
+      incomeData: [],
+      yearlyData: null,
+      year: curYear,
+      yearOptions: [],
+      loading: true,
     };
   }
 
@@ -68,6 +73,7 @@ class Income extends Component {
    * Retrieves all income records using get/api/income and updates the state of incomeData.
    */
   getIncomeData() {
+    var year = this.state.year;
     fetch("https://hooli-backend-aryan.herokuapp.com/api/income", {
       method: "GET",
       headers: {
@@ -83,62 +89,140 @@ class Income extends Component {
         }
       })
       .then((data) => {
-        const tempData = data.sort(
+        var tempData = data.sort(
           (a, b) => new Date(a.start_date) - new Date(b.start_date)
         );
-        this.setState({
-          incomeData: tempData,
+
+        tempData.forEach((indiv) => {
+          let longDate = indiv.start_date;
+          indiv.start_date = longDate.slice(0, 10);
         });
+
+        this.setState({ incomeData: tempData });
+
+        console.log("tempData", tempData);
+        console.log("tempData", typeof tempData);
+
+        // Get DB entries within the correct year
+        let finalData = [];
+        tempData.forEach((data) => {
+          if (data.start_date.includes(year)) {
+            console.log("HELLO");
+            finalData.push(data);
+          }
+        });
+
+        this.setState({ yearlyData: finalData });
+
+        console.log("final", finalData);
+        // console.log("final", typeof(finalData));
+
+        let uniqueYears = [];
+        tempData.forEach((data) => {
+          let year = new Date(data.start_date).getFullYear().toString();
+          if (!uniqueYears.includes(year)) {
+            uniqueYears.push(year);
+          }
+        });
+        uniqueYears.reverse();
+        this.setState({ yearOptions: uniqueYears, loading: false });
       });
   }
 
   render() {
+    const yearOptions = this.state.yearOptions.map((year) => (
+      <option key={year} value={year}>
+        {year}
+      </option>
+    ));
     return (
       <div className={classes.contents}>
-        <div>
-          {this.state.authenticated == false && (
-            <Navigate to="/" replace={true} />
-          )}
-        </div>
-        <div>
-          <NavBar />
-        </div>
-        <div className={classes.title}>My Income</div>
-        <Box
-          bg="rgba(148, 114, 208, 1)"
-          w="50%"
-          h="50%"
-          color="white"
-          p="1%"
-          mt="1%"
-          ml="5%"
-          borderRadius="50"
-          overflow="hidden"
-        >
-          {this.state.incomeData !== null ? (
-            <IncomeBarChartComponent data={this.state.incomeData} />
-          ) : null}
-        </Box>
-        <AddOverlayComponent
-          setState={() => {
-            //this function is passed in as prop and will be triggered by the child component whenever there's a change to the database
-            this.getIncomeData();
-          }}
-        />
-        <RemoveOverlayComponent
-          setState={() => {
-            this.getIncomeData();
-          }}
-        />
-        <EditOverlayComponent
-          setState={() => {
-            this.getIncomeData();
-          }}
-        />
-        <div className={classes.data}>
-          {this.state.incomeData !== null ? (
-            <WeeklyIncomeComparison data={this.state.incomeData} />
-          ) : null}
+        {this.state.authenticated == false && (
+          <Navigate to="/" replace={true} />
+        )}
+        <NavBar />
+        <h1 className={classes.text}>MY INCOME</h1>
+        <div className={classes.info}>
+          <div className={classes.left}>
+            <label htmlFor="Year">Year:</label>
+            <select
+              className={classes.custom}
+              name="years"
+              id="year"
+              onChange={(event) => {
+                this.setState({ year: event.target.value }, () => {
+                  this.getIncomeData();
+                });
+              }}
+            >
+              {yearOptions}
+            </select>
+
+            <Box
+              bg="#E9D8FD"
+              p="2%"
+              mt="1%"
+              borderRadius="40"
+              marginRight="15px"
+            >
+              {this.state.incomeData.length > 0 ? (
+                <IncomeBarChartComponent data={this.state.yearlyData} />
+              ) : this.state.loading ? (
+                <div
+                  style={{
+                    alignItems: "center",
+                    display: "flex",
+                    justifyContent: "center",
+                    height: "100%",
+                  }}
+                >
+                  <Spinners.BeatLoader color="#805AD5" />
+                </div>
+              ) : (
+                <p>No income entry!</p>
+              )}
+            </Box>
+
+            <div className={classes.buttons}>
+              <AddOverlayComponent
+                setState={() => {
+                  //this function is passed in as prop and will be triggered by the child component whenever there's a change to the database
+                  this.getIncomeData();
+                }}
+              />
+              <RemoveOverlayComponent
+                setState={() => {
+                  this.getIncomeData();
+                }}
+                data={this.state.yearlyData}
+              />
+              <EditOverlayComponent
+                setState={() => {
+                  this.getIncomeData();
+                }}
+                data={this.state.yearlyData}
+              />
+            </div>
+          </div>
+
+          <div className={classes.data}>
+            {this.state.incomeData.length > 0 ? (
+              <WeeklyIncomeComparison data={this.state.yearlyData} />
+            ) : this.state.loading ? (
+              <div
+                style={{
+                  alignItems: "center",
+                  display: "flex",
+                  justifyContent: "center",
+                  height: "100%",
+                }}
+              >
+                <Spinners.MoonLoader color="#805AD5" />
+              </div>
+            ) : (
+              <p>No Weekly Income Comparison!</p>
+            )}
+          </div>
         </div>
       </div>
     );

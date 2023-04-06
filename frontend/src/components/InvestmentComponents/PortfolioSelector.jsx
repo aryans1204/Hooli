@@ -20,7 +20,8 @@ function PortfolioSelector(props) {
   };
 
   return (
-    <div>
+    <div className={classes.menu}>
+      Current Portfolio:{" "}
       <select value={selectedPortfolioIndex} onChange={handleChange}>
         {props.data.map((portfolio, index) => (
           <option key={index} value={index}>
@@ -28,6 +29,7 @@ function PortfolioSelector(props) {
           </option>
         ))}
       </select>
+      <br></br>
     </div>
   );
 }

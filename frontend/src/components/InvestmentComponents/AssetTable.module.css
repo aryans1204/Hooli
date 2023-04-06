@@ -10,3 +10,27 @@
 .activeTicker {
   background-color: #ceadf7;
 }
+
+.active {
+  background-color: #d6bcfa;
+  font-size: large;
+  border-radius: 10px;
+  width: 10%;
+  font-family: "Karla", sans-serif;
+}
+
+.nonactive {
+  background-color: transparent;
+  font-size: large;
+  border-radius: 10px;
+  width: 10%;
+  font-family: "Karla", sans-serif;
+}
+
+th {
+  background-color: #faf5ff;
+}
+
+td {
+  text-align: center;
+}

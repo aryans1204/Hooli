@@ -24,7 +24,6 @@ const PortfolioForm = forwardRef((props, ref) => {
   const handleSubmit = async () => {
     console.log(equities);
     console.log(options);
-    console.log(sessionStorage.getItem("token"));
     fetch("https://hooli-backend-aryan.herokuapp.com/api/investments", {
       method: "POST",
       headers: {
@@ -68,7 +67,7 @@ const PortfolioForm = forwardRef((props, ref) => {
     <form onSubmit={handleSubmit}>
       {equities.map((equity, index) => (
         <div key={index}>
-          <label htmlFor={`equity_ticker_${index}`}>Ticker:</label>
+        <div className={classes["field-text", "required"]}><label htmlFor={`equity_ticker_${index}`}>Ticker:</label></div>
           <input
             type="text"
             id={`equity_ticker_${index}`}
@@ -85,7 +84,7 @@ const PortfolioForm = forwardRef((props, ref) => {
           <br></br>
           <br></br>
 
-          <label htmlFor={`equity_buy_price_${index}`}>Buy Price:</label>
+          <div className={classes["field-text", "required"]}><label htmlFor={`equity_buy_price_${index}`}>Buy Price:</label></div>
           <input
             type="number"
             id={`equity_buy_price_${index}`}
@@ -100,30 +99,13 @@ const PortfolioForm = forwardRef((props, ref) => {
               setEquities(newEquities);
             }}
           />
-          <label htmlFor={`equity_current_price_${index}`}>
-            <br></br>Current Price:
-          </label>
-          <input
-            type="number"
-            id={`equity_current_price_${index}`}
-            value={equity.equity_current_price || ""}
-            onChange={(event) => {
-              const newEquities = [...equities];
-              const value = event.target.value !== "" ? event.target.value : 0;
-              newEquities[index] = {
-                ...newEquities[index],
-                equity_current_price: value,
-              };
-              setEquities(newEquities);
-            }}
-          />
           <hr></hr>
         </div>
       ))}
 
       {options.map((option, index) => (
         <div key={index}>
-          <label htmlFor={`derivative_ticker_${index}`}>Ticker:</label>
+        <div className={classes["field-text", "required"]}><label htmlFor={`derivative_ticker_${index}`}>Ticker:</label></div>
           <input
             type="text"
             id={`derivative_ticker_${index}`}
@@ -138,7 +120,7 @@ const PortfolioForm = forwardRef((props, ref) => {
             }}
           />
           <br></br>
-          <label htmlFor={`option_type_${index}`}>Option Type:</label>
+          <div className={classes["field-text", "required"]}><label htmlFor={`option_type_${index}`}>Option Type:</label></div>
           <select
             id={`option_type_${index}`}
             value={option.option_type || ""}
@@ -156,7 +138,7 @@ const PortfolioForm = forwardRef((props, ref) => {
             <option value="put">Put</option>
           </select>
           <br></br>
-          <label htmlFor={`strike_price_${index}`}>Strike Price:</label>
+          <div className={classes["field-text", "required"]}><label htmlFor={`strike_price_${index}`}>Strike Price:</label></div>
           <input
             type="number"
             id={`strike_price_${index}`}
@@ -171,9 +153,10 @@ const PortfolioForm = forwardRef((props, ref) => {
               setOptions(newOptions);
             }}
           />
-          <label htmlFor={`expiration_date_${index}`}>
-            <br></br>Expiration Date:
+          <div className={classes["field-text", "required"]}><label htmlFor={`expiration_date_${index}`}>
+          Expiration Date:
           </label>
+          </div>
           <input
             type="date"
             id={`expiration_date_${index}`}
@@ -183,23 +166,6 @@ const PortfolioForm = forwardRef((props, ref) => {
               newOptions[index] = {
                 ...newOptions[index],
                 expiration_date: event.target.value,
-              };
-              setOptions(newOptions);
-            }}
-          />
-          <label htmlFor={`derivative_current_price_${index}`}>
-            <br></br>Current Price:
-          </label>
-          <input
-            type="number"
-            id={`derivative_current_price_${index}`}
-            value={option.derivative_current_price || ""}
-            onChange={(event) => {
-              const newOptions = [...options];
-              const value = event.target.value !== "" ? event.target.value : 0;
-              newOptions[index] = {
-                ...newOptions[index],
-                derivative_current_price: value,
               };
               setOptions(newOptions);
             }}
@@ -218,7 +184,7 @@ const PortfolioForm = forwardRef((props, ref) => {
             } else if (addSuccess == true) {
               return (
                 <div>
-                  <div>Successfully added income data!</div>
+                  <div>Successfully added portfolio!</div>
                   <div>
                     <Button onClick={clearState}>OK</Button>
                   </div>

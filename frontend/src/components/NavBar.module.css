@@ -12,6 +12,8 @@
     font-family: "Montserrat", sans-serif;
     font-size: 60px;
     text-align: center;
+    position: fixed !important;
+    float: left;
 }
 
 .text {
