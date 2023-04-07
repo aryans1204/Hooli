@@ -1,11 +1,26 @@
-import { Component, useState } from "react";
+import { Component } from "react";
 import classes from "./PersonalProfile.module.css";
 import { Button } from "@chakra-ui/react";
 import { Navigate } from "react-router-dom";
 import { DeleteAcc } from "./ProfileComponents/DeleteAcc";
 import NavBar from "./NavBar";
 
+/**
+* PersonalProfile class
+* @class PersonalProfile
+* @typedef {PersonalProfile}
+* @extends {Component}
+*/
 class PersonalProfile extends Component {
+  /**
+   * Creates an instance of PersonalProfile.
+   * Initialises state of the component with name, email, newName, newEmail, newPassword, 
+   * repeatPassword and authenticated.
+   * Binds the component's handleChange(), handleProfileSubmit() and handlePwdSubmit() 
+   * methods to the component.
+   * @constructor
+   * @param {*} props
+   */
   constructor(props) {
     super(props);
     this.state = {
@@ -22,6 +37,12 @@ class PersonalProfile extends Component {
     this.handlePwdSubmit = this.handlePwdSubmit.bind(this);
   }
 
+  /**
+   * Retrieves user profile and checks for authentiation when component is mounted
+   * Sets state for profile name and email
+   * @async
+   * @returns {*}
+   */
   async componentDidMount() {
     await fetch("https://hooli-backend-aryan.herokuapp.com/api/users/me", {
       method: "GET",
@@ -31,7 +52,6 @@ class PersonalProfile extends Component {
       },
     })
       .then((response) => {
-        console.log(response.status);
         if (response.status == 401) this.setState({ authenticated: false });
         else this.setState({ authenticated: true });
         return response.json();
@@ -42,12 +62,21 @@ class PersonalProfile extends Component {
       });
   }
 
+
+   /**
+   * Method that handles changes to the input fields.
+   * @param {Object} event 
+   */
   handleChange(event) {
     event.preventDefault();
     const target = event.target;
     this.setState({ [target.name]: target.value });
   }
 
+    /**
+   * Method that handles form submission for name and email in the component.
+   * @param {Object} e 
+   */
   handleProfileSubmit = (e) => {
     e.preventDefault();
     // Checks for name change
@@ -89,10 +118,8 @@ class PersonalProfile extends Component {
       })
         .then((response) => {
           if (response.status == 400) {
-            console.log("Error updating profile email!");
             alert("Please enter a valid email");
           } else {
-            console.log("Profile email update successful");
             alert("Email update sucessful");
           }
         })
@@ -102,6 +129,10 @@ class PersonalProfile extends Component {
     }
   };
 
+    /**
+   * Method that handles form submission for password in the component.
+   * @param {Object} e 
+   */
   handlePwdSubmit = (e) => {
     e.preventDefault();
     if ((this.state.newPassword == this.state.repeatPassword)) {
@@ -120,7 +151,6 @@ class PersonalProfile extends Component {
           if (response.status == 400) {
             console.log("Error changing password!");
           } else {
-            console.log("Password update successful");
             alert("Password update sucessful. You will be signed out.");
             // log out
             fetch(
@@ -133,7 +163,6 @@ class PersonalProfile extends Component {
                 },
               }
             ).then((response) => {
-              console.log(response.text);
               if (response.status != 500) {
                 sessionStorage.clear();
                 window.location.assign("/");

@@ -11,9 +11,11 @@ const mongoose = require('mongoose')
 const validator = require('validator')
 
 /**
- * @typedef {Object} Income
- * @property {String} income_type
+ * incomeSchema schema
+ * @class Income
+ * @property {String} industry
  * @property {Number} monthly_income
+ * @property {Number} weekly_hours
  * @property {Date} start_date
  * @property {Date} end_date
  * @property {String} company
@@ -65,4 +67,9 @@ const incomeSchema = new mongoose.Schema({
 })
 
 const Income = mongoose.model('Income', incomeSchema)
+
+/**
+ * Income module
+ * @module Income
+ */
 module.exports = Income

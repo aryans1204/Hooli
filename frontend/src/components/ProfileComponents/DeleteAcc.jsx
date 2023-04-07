@@ -1,4 +1,4 @@
-import React, { Component, useState } from "react";
+import React from "react";
 import {
   AlertDialog,
   AlertDialogBody,
@@ -10,10 +10,23 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 
+/**
+ * Deletes user account.
+ * @export
+ * @function
+ * @returns {string}
+ */
 export function DeleteAcc() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const cancelRef = React.useRef();
 
+  /**
+   * Function to delete user account from database.
+   * @async
+   * @function
+   * @throws {Error}
+   * @returns {Promise<void>}
+   */
   async function onDelete() {
     try {
       const response = await fetch(
@@ -26,7 +39,6 @@ export function DeleteAcc() {
           },
         }
       );
-      console.log("Account deleted successfully");
       location.reload();
     } catch (error) {
       console.log(error.message);
@@ -68,5 +80,3 @@ export function DeleteAcc() {
     </>
   );
 }
-
-//export default DeleteAcc;

@@ -1,23 +1,20 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import {
     Table,
     Thead,
     Tbody,
-    Tfoot,
     Tr,
     Th,
     Td,
-    TableCaption,
-    TableContainer,
   } from '@chakra-ui/react'
 
 /**
- * Component for expenditures table.
+ * Component for displaying all expenditures in a table.
+ * @function
  * @param {*} props
- * @returns {*}
+ * @returns {JSX.Element}
  */
 function DisplayAllExpendituresComponent(props) {
-
   return (
     <Table variant="striped" colorScheme="purple" size="md">
       <Thead>

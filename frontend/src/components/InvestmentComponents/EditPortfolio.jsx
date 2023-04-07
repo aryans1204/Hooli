@@ -1,36 +1,29 @@
-import { useState, useEffect } from "react";
-import { Box, Button, ButtonGroup } from "@chakra-ui/react";
+import { useState } from "react";
+import { Button } from "@chakra-ui/react";
 import {
   Modal,
   ModalOverlay,
   ModalContent,
   ModalHeader,
   ModalFooter,
-  ModalBody,
   ModalCloseButton,
   useDisclosure,
 } from "@chakra-ui/react";
-import StockSelector from "./StockSelector";
 import classes from "./EditPortfolio.module.css";
-
-//
-// To do : After selecting some thing to edit, another overlay will appear. EditEquity attempts to open an equity overlay (not done yet)
-//
 
 export function EditPortfolio(props) {
   const initialEquityValues = {
     equity_ticker: "",
-    equity_buy_price: 0,
+    equity_buy_price: "",
   };
   const initialOptionValues = {
     derivative_ticker: "",
     option_type: "",
-    strike_price: 0,
+    strike_price: "",
     expiration_date: "",
   };
   const [equityValues, setEquityValues] = useState(initialEquityValues);
   const [optionValues, setOptionValues] = useState(initialOptionValues);
-  //const [addSuccess, setAddSuccess] = useState(null);
   const [activeTab, setActiveTab] = useState("equities");
   const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -53,77 +46,75 @@ export function EditPortfolio(props) {
   };
 
   const clearState = () => {
-    //setValues(initialValues);
     setAddSuccess(null);
-    //props.setTargetFound(false);
   };
 
   // function to add new equity into the database
-  function handleEquitySubmit(e) {
+  async function handleEquitySubmit(e) {
     e.preventDefault();
-    console.log("SUBMIT");
-    fetch(
-      "https://hooli-backend-aryan.herokuapp.com/api/investments/equities/" +
-        props.data._id,
-      {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${sessionStorage.getItem("token")}`,
-        },
-        body: JSON.stringify({
-          equity_ticker: equityValues.equity_ticker,
-          equity_buy_price: equityValues.equity_buy_price,
-        }),
-      }
-    )
-      .then((response) => {
-        if (response.status === 400 || response.status === 404) {
-          console.log("Some error occurred - " + response.status);
-        } else {
-          console.log("Edited");
-          console.log(response);
-          updatePortfolios();
-          return response.json();
+    const isValid = await checkTicker(equityValues.equity_ticker);
+    if (isValid) {
+      fetch(
+        "https://hooli-backend-aryan.herokuapp.com/api/investments/equities/" +
+          props.data._id,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+          },
+          body: JSON.stringify({
+            equity_ticker: equityValues.equity_ticker,
+            equity_buy_price: equityValues.equity_buy_price,
+          }),
         }
-      })
-      .then((data) => {
-        console.log(data);
-      });
+      )
+        .then((response) => {
+          if (response.status === 400 || response.status === 404) {
+            console.log("Some error occurred - " + response.status);
+          } else {
+            updatePortfolios();
+            return response.json();
+          }
+        })
+        .then((data) => {
+          console.log(data);
+        });
+    }
   }
-  function handleOptionSubmit(e) {
+  async function handleOptionSubmit(e) {
     e.preventDefault();
-    console.log("SUBMIT");
-    fetch(
-      "https://hooli-backend-aryan.herokuapp.com/api/investments/options/" +
-        props.data._id,
-      {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${sessionStorage.getItem("token")}`,
-        },
-        body: JSON.stringify({
-          derivative_ticker: optionValues.derivative_ticker,
-          option_type: optionValues.option_type,
-          strike_price: optionValues.strike_price,
-          expiration_date: optionValues.expiration_date,
-        }),
-      }
-    )
-      .then((response) => {
-        if (response.status === 400 || response.status === 404) {
-          console.log("Some error occurred - " + response.status);
-        } else {
-          console.log("Edited");
-          console.log(response);
-          updatePortfolios();
-          return response.json();
+    const isValid = await checkTicker(optionValues.derivative_ticker);
+    if (isValid) {
+      fetch(
+        "https://hooli-backend-aryan.herokuapp.com/api/investments/options/" +
+          props.data._id,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+          },
+          body: JSON.stringify({
+            derivative_ticker: optionValues.derivative_ticker,
+            option_type: optionValues.option_type,
+            strike_price: optionValues.strike_price,
+            expiration_date: optionValues.expiration_date,
+          }),
         }
-      })
-      .then((data) => {
-        console.log(data);
-      });
+      )
+        .then((response) => {
+          if (response.status === 400 || response.status === 404) {
+            console.log("Some error occurred - " + response.status);
+          } else {
+            updatePortfolios();
+            return response.json();
+          }
+        })
+        .then((data) => {
+          console.log(data);
+        });
+    }
   }
 
   // function that renders the form for user to enter equity data
@@ -132,8 +123,12 @@ export function EditPortfolio(props) {
       <div className={classes.editEquity}>
         <form onSubmit={handleEquitySubmit}>
           <label>
-          <div className={classes["field-text", "required"]}>Equity Ticker:</div>
+            <div className={classes[("field-text", "required")]}>
+              Equity Ticker:
+            </div>
             <input
+              required
+              placeholder="e.g. AAPL"
               type="text"
               name="equity_ticker"
               value={equityValues.equity_ticker}
@@ -142,8 +137,12 @@ export function EditPortfolio(props) {
           </label>
           <br />
           <label>
-          <div className={classes["field-text", "required"]}>Equity Buy Price:</div>
+            <div className={classes[("field-text", "required")]}>
+              Equity Buy Price:
+            </div>
             <input
+              required
+              placeholder="0"
               type="number"
               name="equity_buy_price"
               value={equityValues.equity_buy_price}
@@ -160,7 +159,6 @@ export function EditPortfolio(props) {
   // function to refresh the portfolios in sessionStorage after a change has been made
   const updatePortfolios = () => {
     sessionStorage.removeItem("portfolios");
-    //sessionStorage.removeItem("tickerData");
     props.edit();
     window.location.reload();
   };
@@ -171,8 +169,10 @@ export function EditPortfolio(props) {
       <div className={classes.editOption}>
         <form onSubmit={handleOptionSubmit}>
           <label>
-          <div className={classes["field-text", "required"]}>Ticker:</div>
+            <div className={classes[("field-text", "required")]}>Ticker:</div>
             <input
+              required
+              placeholder="e.g. AAPL"
               type="text"
               name="derivative_ticker"
               value={optionValues.derivative_ticker}
@@ -180,7 +180,9 @@ export function EditPortfolio(props) {
             />
           </label>
           <br />
-          <div className={classes["field-text", "required"]}><label>Option Type:</label></div>
+          <div className={classes[("field-text", "required")]}>
+            <label>Option Type:</label>
+          </div>
           <select
             value={optionValues.option_type}
             name="option_type"
@@ -193,8 +195,12 @@ export function EditPortfolio(props) {
 
           <br />
           <label>
-          <div className={classes["field-text", "required"]}>Strike Price:</div>
+            <div className={classes[("field-text", "required")]}>
+              Strike Price:
+            </div>
             <input
+              required
+              placeholder="0"
               type="text"
               name="strike_price"
               value={optionValues.strike_price}
@@ -203,8 +209,11 @@ export function EditPortfolio(props) {
           </label>
           <br />
           <label>
-          <div className={classes["field-text", "required"]}>Expiration Date:</div>
+            <div className={classes[("field-text", "required")]}>
+              Expiration Date:
+            </div>
             <input
+              required
               type="date"
               name="expiration_date"
               value={optionValues.expiration_date}
@@ -217,6 +226,28 @@ export function EditPortfolio(props) {
       </div>
     );
   }
+
+  // Checks whether user input ticker is valid :)
+  const checkTicker = async (symbol) => {
+    const API_KEY = import.meta.env.VITE_ALPHA_VANTAGE_API_KEY;
+    const response = await fetch(
+      `https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=${symbol}&apikey=${API_KEY}`
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        const found = data.bestMatches.some(
+          (match) => match["1. symbol"].toLowerCase() === symbol.toLowerCase()
+        );
+        if (found) {
+          console.log(`${symbol} was found!`);
+        } else {
+          alert(`${symbol} is not a valid ticker.`);
+        }
+        return found;
+      });
+    return response;
+  };
+
   const handleTabClick = (tab) => {
     setActiveTab(tab);
     onOpen();

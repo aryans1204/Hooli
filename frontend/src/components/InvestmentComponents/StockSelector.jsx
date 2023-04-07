@@ -1,12 +1,11 @@
-import { useState, useEffect } from "react";
-import { Box, Button, ButtonGroup } from "@chakra-ui/react";
+import { useState } from "react";
+import { Button } from "@chakra-ui/react";
 import {
   Modal,
   ModalOverlay,
   ModalContent,
   ModalHeader,
   ModalFooter,
-  ModalBody,
   ModalCloseButton,
   useDisclosure,
 } from "@chakra-ui/react";
@@ -29,7 +28,6 @@ export default function StockSelector(props) {
   };
 
   const handleSubmit = () => {
-    console.log(selectedItem);
     if (props.onSubmit) {
       props.onSubmit(selectedItem);
     }
@@ -38,7 +36,6 @@ export default function StockSelector(props) {
   const handleConfirmation = () => {
     if (showConfirmation) {
       props.deletePortfolio();
-      console.log("Deleting entire portfolio...");
       alert("Deleting entire portfolio...");
       setShowConfirmation(false);
       onClose();

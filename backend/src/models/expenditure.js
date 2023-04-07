@@ -5,12 +5,6 @@
 const mongoose = require('mongoose')
 
 /**
- * validator module
- * @const
- */
-//const validator = require('validator')
-
-/**
  * @typedef {Object} Expenditure
  * @property {String} memo
  * @property {Number} amount
@@ -52,4 +46,9 @@ const expenditureSchema = new mongoose.Schema({
 })
 
 const Expenditure = mongoose.model('Expenditure', expenditureSchema)
+
+/**
+ * Expenditure module
+ * @module Expenditure
+ */
 module.exports = Expenditure

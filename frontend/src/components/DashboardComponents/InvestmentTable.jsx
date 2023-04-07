@@ -1,11 +1,25 @@
-import React, { Component, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import * as Spinners from "react-spinners";
 
+/**
+ * Returns table of investments
+ * @export
+ * @function
+ * @returns {JSX.Element}
+ */
 export const InvestmentTable = () => {
   const [portfolioData, setPortfolioData] = useState(null);
   const [equities, setEquities] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
+  /**
+   * React Hook that fetches portfolio data
+   * If portfolio data is found in sessionStorage, it sets the state with the data from session storage.
+   * If not found, it calls getPortfolioData()
+   * @function
+   * @name useEffect
+   * @returns {void}
+   */
   useEffect(() => {
     if (
       sessionStorage.getItem("portfolios") === "null" ||
@@ -20,6 +34,13 @@ export const InvestmentTable = () => {
     }
   }, []);
 
+  /**
+   * React Hook that updates the equities state when portolioData changes
+   * @function
+   * @name useEffect
+   * @param {array} portfolioData
+   * @returns {void}
+   */
   useEffect(() => {
     if (
       sessionStorage.getItem("portfolios") !== "null" &&
@@ -28,11 +49,16 @@ export const InvestmentTable = () => {
       sessionStorage.getItem("portfolios") !== undefined &&
       portfolioData !== null
     ) {
-      console.log(portfolioData);
       setEquities(portfolioData[0].equities);
     }
   }, [portfolioData]);
 
+  /**
+   * Renders a table of equities with their respective P&L (profit and loss) data
+   * @function
+   * @param {Array} equities
+   * @returns {JSX.Element}
+   */
   const EquitiesTable = ({ equities }) => {
     const tableRows = equities.map((equity) => {
       const equityPnl = parseFloat(equity.equity_pnl.replace("%", ""));
@@ -94,7 +120,11 @@ export const InvestmentTable = () => {
     );
   };
 
-  // gets user portfolio data from database
+  /**
+   * Fetches portfolio data from the backend API and updates state
+   * @function
+   * @returns {void}
+   */
   const getPortfolioData = () => {
     fetch("https://hooli-backend-aryan.herokuapp.com/api/investments", {
       method: "GET",
@@ -115,7 +145,6 @@ export const InvestmentTable = () => {
         }
       })
       .then((data) => {
-        console.log(data);
         setPortfolioData(data);
         setIsLoading(false);
         const tempData = JSON.stringify(data);

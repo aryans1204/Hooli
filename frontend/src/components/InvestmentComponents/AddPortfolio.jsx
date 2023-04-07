@@ -1,12 +1,11 @@
-import { useState, useEffect, useRef } from "react";
-import { Box, Button, ButtonGroup } from "@chakra-ui/react";
+import { useState, useRef } from "react";
+import { Button } from "@chakra-ui/react";
 import {
   Modal,
   ModalOverlay,
   ModalContent,
   ModalHeader,
   ModalFooter,
-  ModalBody,
   ModalCloseButton,
   useDisclosure,
 } from "@chakra-ui/react";
@@ -22,8 +21,6 @@ const PortfolioForm = forwardRef((props, ref) => {
   const [addSuccess, setAddSuccess] = useState(null);
 
   const handleSubmit = async () => {
-    console.log(equities);
-    console.log(options);
     fetch("https://hooli-backend-aryan.herokuapp.com/api/investments", {
       method: "POST",
       headers: {
@@ -38,11 +35,8 @@ const PortfolioForm = forwardRef((props, ref) => {
       .then((response) => {
         if (response.status === 400) {
           console.log("Some error occurred - " + response.status);
-          console.log(response);
           setAddSuccess(false);
         } else {
-          console.log("Success");
-          console.log(response);
           setAddSuccess(true);
           sessionStorage.removeItem("portfolios");
           sessionStorage.removeItem("tickerData");
@@ -67,8 +61,12 @@ const PortfolioForm = forwardRef((props, ref) => {
     <form onSubmit={handleSubmit}>
       {equities.map((equity, index) => (
         <div key={index}>
-        <div className={classes["field-text", "required"]}><label htmlFor={`equity_ticker_${index}`}>Ticker:</label></div>
+          <div className={classes[("field-text", "required")]}>
+            <label htmlFor={`equity_ticker_${index}`}>Ticker:</label>
+          </div>
           <input
+            required
+            placeholder="e.g. AAPL"
             type="text"
             id={`equity_ticker_${index}`}
             value={equity.equity_ticker || ""}
@@ -84,9 +82,13 @@ const PortfolioForm = forwardRef((props, ref) => {
           <br></br>
           <br></br>
 
-          <div className={classes["field-text", "required"]}><label htmlFor={`equity_buy_price_${index}`}>Buy Price:</label></div>
+          <div className={classes[("field-text", "required")]}>
+            <label htmlFor={`equity_buy_price_${index}`}>Buy Price:</label>
+          </div>
           <input
+            required
             type="number"
+            placeholder="0"
             id={`equity_buy_price_${index}`}
             value={equity.equity_buy_price || ""}
             onChange={(event) => {
@@ -105,8 +107,12 @@ const PortfolioForm = forwardRef((props, ref) => {
 
       {options.map((option, index) => (
         <div key={index}>
-        <div className={classes["field-text", "required"]}><label htmlFor={`derivative_ticker_${index}`}>Ticker:</label></div>
+          <div className={classes[("field-text", "required")]}>
+            <label htmlFor={`derivative_ticker_${index}`}>Ticker:</label>
+          </div>
           <input
+            required
+            placeholder="e.g. AAPL"
             type="text"
             id={`derivative_ticker_${index}`}
             value={option.derivative_ticker || ""}
@@ -120,7 +126,9 @@ const PortfolioForm = forwardRef((props, ref) => {
             }}
           />
           <br></br>
-          <div className={classes["field-text", "required"]}><label htmlFor={`option_type_${index}`}>Option Type:</label></div>
+          <div className={classes[("field-text", "required")]}>
+            <label htmlFor={`option_type_${index}`}>Option Type:</label>
+          </div>
           <select
             id={`option_type_${index}`}
             value={option.option_type || ""}
@@ -138,8 +146,12 @@ const PortfolioForm = forwardRef((props, ref) => {
             <option value="put">Put</option>
           </select>
           <br></br>
-          <div className={classes["field-text", "required"]}><label htmlFor={`strike_price_${index}`}>Strike Price:</label></div>
+          <div className={classes[("field-text", "required")]}>
+            <label htmlFor={`strike_price_${index}`}>Strike Price:</label>
+          </div>
           <input
+            required
+            placeholder="0"
             type="number"
             id={`strike_price_${index}`}
             value={option.strike_price || ""}
@@ -153,11 +165,11 @@ const PortfolioForm = forwardRef((props, ref) => {
               setOptions(newOptions);
             }}
           />
-          <div className={classes["field-text", "required"]}><label htmlFor={`expiration_date_${index}`}>
-          Expiration Date:
-          </label>
+          <div className={classes[("field-text", "required")]}>
+            <label htmlFor={`expiration_date_${index}`}>Expiration Date:</label>
           </div>
           <input
+            required
             type="date"
             id={`expiration_date_${index}`}
             value={option.expiration_date || ""}
@@ -203,7 +215,6 @@ const PortfolioForm = forwardRef((props, ref) => {
 export function AddPortfolio(props) {
   const handleCreatePortfolio = () => {
     // Call the handleSubmit function defined in the child component
-    console.log(portfolioFormRef.current);
     if (portfolioFormRef.current) {
       portfolioFormRef.current.handleSubmit();
     }

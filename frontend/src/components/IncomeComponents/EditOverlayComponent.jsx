@@ -1,8 +1,7 @@
 import classes from "./EditOverlayComponent.module.css";
-import React, { Component } from "react";
-import NavBar from "../NavBar";
+import React from "react";
 import { useState, useEffect } from "react";
-import { Box, Button, ButtonGroup } from "@chakra-ui/react";
+import { Button } from "@chakra-ui/react";
 import {
   Modal,
   ModalOverlay,
@@ -13,9 +12,7 @@ import {
   ModalCloseButton,
   useDisclosure,
 } from "@chakra-ui/react";
-import { Navigate } from "react-router-dom";
 import DisplayTableComponent from "./DisplayTableComponent";
-import { AddOverlayComponent } from "./AddOverlayComponent";
 
 /**
  * Overlay component for editing an income record.
@@ -68,7 +65,6 @@ export function EditOverlayComponent(props) {
       })
       .then((data) => {
         setTargetData(data);
-        console.log(data);
       });
   }
 
@@ -169,7 +165,6 @@ function EditDataComponent(props) {
   const [values, setValues] = useState(initValues);
   const [industry, setIndustry] = useState(props.data.industry);
   const [addSuccess, setAddSuccess] = useState(null);
-  console.log(values);
 
   const handleInputChange = (e) => {
     var { name, value } = e.target;
@@ -191,7 +186,6 @@ function EditDataComponent(props) {
    * Removea an income record using delete/api/income/:id.
    */
   function handleRemove() {
-    console.log(props.data._id);
     return fetch(
       "https://hooli-backend-aryan.herokuapp.com/api/income/" + props.data._id,
       {
@@ -206,7 +200,6 @@ function EditDataComponent(props) {
         if (response.status === 500 || response.status === 404) {
           console.log("Some error occurred - " + response.status);
         } else {
-          console.log("Removed");
           return response.json();
         }
       })
@@ -240,13 +233,11 @@ function EditDataComponent(props) {
             console.log("Some error occurred - " + response.status);
             setAddSuccess(false);
           } else {
-            console.log("Added new");
             setAddSuccess(true);
             return response.json();
           }
         })
         .then((data) => {
-          console.log(data);
           props.setState();
         });
     });

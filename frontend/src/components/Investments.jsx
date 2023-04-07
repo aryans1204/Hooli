@@ -10,7 +10,19 @@ import { RemovePortfolio } from "./InvestmentComponents/RemovePortfolio";
 import * as Spinners from "react-spinners";
 import classes from "./Investments.module.css";
 
+/**
+ * Investments class
+ * @class Investments
+ * @typedef {Investments}
+ * @extends {Component}
+ */
 class Investments extends Component {
+  /**
+   * Creates an instance of Investments.
+   * Initialises the component's state with authenticated, portfolio, selectedIndex and loading.
+   * @constructor
+   * @param {*} props
+   */
   constructor(props) {
     super(props);
     this.state = {
@@ -21,7 +33,13 @@ class Investments extends Component {
     };
   }
 
-  //checks if the user is authenticated
+  /**
+   * Retrieves user profile and checks for authentiation when component is mounted.
+   * Gets portfolio data if sessionStorage for portfolios is null or undefined.
+   * Sets state for portfolio if in sessionStorage.
+   * @async
+   * @returns {*}
+   */
   async componentDidMount() {
     await fetch("https://hooli-backend-aryan.herokuapp.com/api/users/me", {
       method: "GET",
@@ -45,12 +63,13 @@ class Investments extends Component {
       this.getPortfolioData();
     } else {
       const portfolios = JSON.parse(sessionStorage.getItem("portfolios"));
-      console.log(portfolios);
       this.setState({ portfolio: portfolios, loading: false });
     }
   }
 
-  // gets user portfolio data from database
+  /**
+   * Fetches user's portfolio data from the database and sets state of component for portfolio and loading.
+   */
   getPortfolioData() {
     fetch("https://hooli-backend-aryan.herokuapp.com/api/investments", {
       method: "GET",
@@ -63,7 +82,6 @@ class Investments extends Component {
         if (response.status === 500) {
           alert("API query limit reached! Please wait for 1 minute");
           console.log("Some error occurred - " + response.status);
-          console.log(response);
         } else if (response.headers.get("Content-Length") === "0") {
           console.log("No portfolio found");
         } else {
@@ -71,7 +89,6 @@ class Investments extends Component {
         }
       })
       .then((data) => {
-        console.log(data);
         this.setState({
           portfolio: data,
           loading: false,
@@ -88,7 +105,10 @@ class Investments extends Component {
       });
   }
 
-  //sets the index of the portolio that the user wants to display
+  /**
+   * Sets the component's state for selectedIndex to the index of the portolio that the user wants to display
+   * @param {Number} index 
+   */
   handleSelectedIndexChange = (index) => {
     this.setState({ selectedIndex: index });
   };
@@ -96,16 +116,16 @@ class Investments extends Component {
   render() {
     return (
       <>
+        <div>
+          {this.state.authenticated == false && (
+            <Navigate to="/" replace={true} />
+          )}
+        </div>
         <div className={classes.nav}>
           <NavBar />
         </div>
         <div className={classes.contents}>
           <h1 className={classes.title}>MY INVESTMENTS</h1>
-          <div>
-            {this.state.authenticated == false && (
-              <Navigate to="/" replace={true} />
-            )}
-          </div>
 
           <div>
             {this.state.portfolio && (

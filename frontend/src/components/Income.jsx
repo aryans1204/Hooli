@@ -1,18 +1,7 @@
 import React, { Component } from "react";
 import NavBar from "./NavBar";
 import classes from "./Income.module.css";
-import { useState, useEffect } from "react";
-import { Box, Button, ButtonGroup } from "@chakra-ui/react";
-import {
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalFooter,
-  ModalBody,
-  ModalCloseButton,
-  useDisclosure,
-} from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
 import { Navigate } from "react-router-dom";
 import { AddOverlayComponent } from "./IncomeComponents/AddOverlayComponent";
 import { RemoveOverlayComponent } from "./IncomeComponents/RemoveOverlayComponent";
@@ -100,22 +89,15 @@ class Income extends Component {
 
         this.setState({ incomeData: tempData });
 
-        console.log("tempData", tempData);
-        console.log("tempData", typeof tempData);
-
         // Get DB entries within the correct year
         let finalData = [];
         tempData.forEach((data) => {
           if (data.start_date.includes(year)) {
-            console.log("HELLO");
             finalData.push(data);
           }
         });
 
         this.setState({ yearlyData: finalData });
-
-        console.log("final", finalData);
-        // console.log("final", typeof(finalData));
 
         let uniqueYears = [];
         tempData.forEach((data) => {

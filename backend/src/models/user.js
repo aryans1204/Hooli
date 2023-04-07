@@ -47,7 +47,8 @@ const Expenditure = require('./expenditure')
 const Income = require('./income')
 
 /**
- * @typedef {Object} User
+ * userSchema schema
+ * @tclass userSchema
  * @property {String} name
  * @property {String} email
  * @property {String} password
@@ -91,46 +92,57 @@ const userSchema = new mongoose.Schema({
     timestamps:true
 })
 
-//portfolio virtual
+/**
+ * Investments virtual
+ */
 userSchema.virtual('investments', {
     ref: 'Investment',
     localField: '_id',
     foreignField: 'portfolio_owner'
 })
 
-//currencies virtual
+/**
+ * Currencies virtual
+ */
 userSchema.virtual('currencies', {
     ref: 'Currency',
     localField: '_id',
     foreignField: 'currency_owner'
 })
 
-//expenditure virtual
+/**
+ * Expenditures virtual
+ */
 userSchema.virtual('expenditures', {
     ref: 'Expenditure',
     localField: '_id',
     foreignField: 'expenditure_owner'
 })
 
-//income virtual
+/**
+ * Income virtual
+ */
 userSchema.virtual('income', {
     ref: 'Income',
     localField: '_id',
     foreignField: 'income_owner'
 })
 
-//toJSON method for User
+/**
+ * toJSON method for User
+ */
 userSchema.methods.toJSON = function () {
     const user = this
     const userObject = user.toObject()
 
     delete userObject.password
-    //delete userObject.tokens
 
     return userObject
 }
 
-//generating JWT auth tokens for a user
+/**
+ * Generate JWT auth tokens for a user.
+ */
 userSchema.methods.generateAuthToken = async function() {
     const user = this
     const token = jwt.sign({ _id: user._id.toString() }, process.env.JWT_SECRET)
@@ -141,7 +153,12 @@ userSchema.methods.generateAuthToken = async function() {
     return token
 }
 
-//find user by email credentials
+/**
+ * Find a user by email credentials.
+ * @async
+ * @param {String} email
+ * @param {String} password
+ */
 userSchema.statics.findByCredentials = async (email, password) => {
     const user = await User.findOne({ email: email })
     if (!user) {
@@ -156,7 +173,9 @@ userSchema.statics.findByCredentials = async (email, password) => {
     return user
 }
 
-//password encryption after changing password
+/**
+ * Encrypt password after changing password.
+ */
 userSchema.pre('save', async function (next) {
     const user = this
 
@@ -167,7 +186,9 @@ userSchema.pre('save', async function (next) {
     next()
 })
 
-//delete user portfolios, currencies, expenditures and income
+/**
+ * Delete user income records, expenditure records, investment records and currencies.
+ */
 userSchema.pre('remove', async function (next) {
     const user = this
     await Income.deleteMany({ income_owner: user._id })
@@ -179,4 +200,8 @@ userSchema.pre('remove', async function (next) {
 
 const User = mongoose.model('User', userSchema)
 
+/**
+ * User module
+ * @module User
+ */
 module.exports = User

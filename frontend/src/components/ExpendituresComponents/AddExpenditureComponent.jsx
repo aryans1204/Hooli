@@ -1,7 +1,7 @@
 import classes from "./AddExpenditureComponent.module.css";
-import React, { Component } from "react";
-import { useState, useEffect } from "react";
-import { Box, Button, ButtonGroup } from "@chakra-ui/react";
+import React from "react";
+import { useState } from "react";
+import { Button } from "@chakra-ui/react";
 import {
   Modal,
   ModalOverlay,
@@ -17,7 +17,7 @@ import {
  * Component for adding an expenditure.
  * @export
  * @param {*} props
- * @returns {*}
+ * @returns {JSX.Element}
  */
 export function AddExpenditureComponent(props) {
   const initialValues = {
@@ -31,6 +31,12 @@ export function AddExpenditureComponent(props) {
   const [category, setCategory] = useState("");
   const [addSuccess, setAddSuccess] = useState(null);
 
+   /**
+   * Method that handles changes to the input fields.
+   * @function
+   * @param {Object} e 
+   * @returns {void}
+   */
   const handleInputChange = (e) => {
     var { name, value } = e.target;
     setValues({
@@ -39,6 +45,13 @@ export function AddExpenditureComponent(props) {
     });
   };
 
+   /**
+   * Method that clears state and sets them to their initial values.
+   * Sets addSuccess to null.
+   * Invokes onClose() function.
+   * @function
+   * @returns {void}
+   */
   const clearState = () => {
     setValues(initialValues);
     setAddSuccess(null);
@@ -46,7 +59,9 @@ export function AddExpenditureComponent(props) {
   };
 
   /**
-   * Creates new expenditure when submitted using post/api/expenditure.
+   * Sends a POST request to the database to add expenditure record.
+   * @function
+   * @returns {Object}
    */
   function handleSubmit() {
     fetch("https://hooli-backend-aryan.herokuapp.com/api/expenditure", {
@@ -64,11 +79,8 @@ export function AddExpenditureComponent(props) {
     })
       .then((response) => {
         if (response.status === 500) {
-          console.log(response.data);
-          console.log("Some error occurred - " + response.status);
           setAddSuccess(false);
         } else {
-          console.log("Success");
           setAddSuccess(true);
           setValues(initialValues);
           return response.json();

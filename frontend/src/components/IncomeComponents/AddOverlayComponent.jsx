@@ -1,7 +1,6 @@
-import React, { Component } from "react";
-import NavBar from "../NavBar";
-import { useState, useEffect } from "react";
-import { Box, Button, ButtonGroup } from "@chakra-ui/react";
+import React from "react";
+import { useState } from "react";
+import { Button } from "@chakra-ui/react";
 import {
   Modal,
   ModalOverlay,
@@ -12,7 +11,6 @@ import {
   ModalCloseButton,
   useDisclosure,
 } from "@chakra-ui/react";
-import { Navigate } from "react-router-dom";
 import classes from "./AddOverlayComponent.module.css";
 
 /**
@@ -52,7 +50,8 @@ export function AddOverlayComponent(props) {
   /**
    * Creates new income data when submitted using post/api/income.
    */
-  function handleSubmit() {
+  function handleSubmit(event) {
+    event.preventDefault();
     fetch("https://hooli-backend-aryan.herokuapp.com/api/income", {
       method: "POST",
       headers: {
@@ -73,7 +72,6 @@ export function AddOverlayComponent(props) {
           console.log("Some error occurred - " + response.status);
           setAddSuccess(false);
         } else {
-          console.log("Success");
           setAddSuccess(true);
           return response.json();
         }
@@ -112,7 +110,7 @@ export function AddOverlayComponent(props) {
                 setIndustry(event.target.value);
               }}
             >
-              <option>N.A.</option>
+              <option>Select One</option>
               <option value="Manufacturing">Manufacturing</option>
               <option value="Services">Services</option>
               <option value="Construction">Construction</option>
@@ -173,7 +171,7 @@ export function AddOverlayComponent(props) {
               colorScheme="purple"
               size="md"
               d="flex"
-              onClick={handleSubmit}
+              onClick={(event) => handleSubmit(event)}
             >
               Save
             </Button>

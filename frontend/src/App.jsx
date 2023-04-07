@@ -1,5 +1,3 @@
-/*welcome page*/
-
 import { Routes, Route } from "react-router-dom";
 import Welcome from "./components/Welcome";
 import Login from "./components/Login";
@@ -15,6 +13,7 @@ import { ChakraProvider } from "@chakra-ui/react";
 
 function App() {
   return (
+    // routing for the different pages
     <ChakraProvider resetCSS={false}>
       <Routes>
         <Route exact path="/" element={<Welcome />} />

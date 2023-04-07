@@ -17,12 +17,6 @@ const Income = require('../models/income')
 const auth = require('../authentication/auth')
 
 /**
- * date-and-time module
- * @const
- */
-const date = require('date-and-time')
-
-/**
  * Express router to mount user related functions on.
  * @type {object}
  * @const

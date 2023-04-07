@@ -17,18 +17,6 @@ const Currency = require('../models/currency')
 const auth = require('../authentication/auth')
 
 /**
- * date-and-time module
- * @const
- */
-const date = require('date-and-time')
-
-/**
- * request module
- * @const
- */
-const request = require('request')
-
-/**
  * Express router to mount user related functions on.
  * @type {object}
  * @const
@@ -56,12 +44,6 @@ router.get('/api/currencies', auth, async (req, res) => {
     }
 
 })
-
-//GET endpoint to get a specific currency of User, this would be done via fetch in frontend
-
-
-//GET endpoint for historic monthly forex/crypto data, used for charts, done via fetch in frontend
-
 
 /**
  * Route to get a specific currency for a user by ID.

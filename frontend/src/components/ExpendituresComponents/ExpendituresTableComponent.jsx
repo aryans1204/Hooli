@@ -3,11 +3,16 @@ import React, { useState } from "react";
 /**
  * Component for expenditures table.
  * @param {*} props
- * @returns {*}
+ * @returns {JSX.Element}
  */
 function ExpendituresTableComponent(props) {
   const [selectedItem, setSelectedItem] = useState(null);
 
+  /**
+   * Method that sets selected item to item
+   * @param {*} item 
+   * @returns {void}
+   */
   function handleItemClick(item) {
     setSelectedItem(item);
     props.onItemSelected(item);

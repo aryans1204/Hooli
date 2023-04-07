@@ -20,7 +20,7 @@ import RecentGraph from "./RecentGraph";
  * Returns the currency pair values in a table format
  * @export
  * @function
- * @returns {string}
+ * @returns {JSX.Element}
  */
 function ForexInfo() {
   const [isDataFetched, setIsDataFetched] = useState(false);
@@ -206,7 +206,7 @@ function ForexInfo() {
     checkData();
 
     if (sessionStorage.getItem("tableData") == null) {
-      console.log("Getting initial data");
+      // Getting initial data
       try {
         const response = await fetch(
           "https://hooli-backend-aryan.herokuapp.com/api/currencies",
@@ -257,7 +257,7 @@ function ForexInfo() {
         console.log(error.message);
       }
     }
-    console.log("No need to get initial data");
+    // No need to get initial data
     var storageData = sessionStorage.getItem("tableData");
     setTableData(JSON.parse(storageData));
     setIsDataFetched(true);
@@ -328,7 +328,7 @@ function ForexInfo() {
         return response.json();
       })
       .then(() => {
-        console.log("Data posted successfully");
+        // Data posted successfully
         setNum(num + 1);
         setIsDataFetched(false);
         setDataChange(true);

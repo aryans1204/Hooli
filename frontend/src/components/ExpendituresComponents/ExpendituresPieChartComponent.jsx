@@ -4,29 +4,48 @@ import {
   PieChart,
   Pie,
   Legend,
-  Sector,
   Cell,
-  ResponsiveContainer,
 } from "recharts";
 import * as Spinners from "react-spinners";
 import classes from "./ExpendituresPieChartComponent.module.css";
 
+/**
+ * Component for scrollbar of months.
+ * @export
+ * @param {*} props
+ * @returns {JSX.Element}
+ */
 export const ScrollBar = (props) => {
   const [startMonth, setStartMonth] = useState(0);
   const [selectedMonth, setSelectedMonth] = useState(0);
 
+  /**
+   * Sets months when scrolling to the left
+   * @function
+   * @returns {void}
+   */
   const scrollLeft = () => {
     if (startMonth > 0) {
       setStartMonth(startMonth - 1);
     }
   };
 
+  /**
+   * Sets months when scrolling to the right
+   * @function
+   * @returns {void}
+   */
   const scrollRight = () => {
     if (startMonth < 4) {
       setStartMonth(startMonth + 1);
     }
   };
 
+  /**
+   * Method that handles the selected month
+   * @function
+   * @returns {void}
+   */
   const handleMonthClick = (month) => {
     setSelectedMonth(month);
     props.setMonth(month);
@@ -75,21 +94,33 @@ export const ScrollBar = (props) => {
 };
 
 /**
- * Expenditures pie chart component
+ * Component for displaying expenditures by category in a pie chart.
  * @export
  * @param {*} props
- * @returns {*}
+ * @returns {JSX.Element}
  */
 export function ExpendituresPieChartComponent(props) {
   const [result, setResult] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  /**
+   * React hook that sets result to props data.
+   * Is triggered with every change in props data.
+   * @function
+   * @param {array} dependencies
+   * @returns {void}
+   */
   useEffect(() => {
     setResult(props.data);
-    console.log(props.data);
-    console.log(loading);
   }, [props.data]);
 
+  /**
+   * React hook that sets loading to false if there are results.
+   * Is triggered with every change in result.
+   * @function
+   * @param {array} dependencies
+   * @returns {void}
+   */
   useEffect(() => {
     if (result) {
       setLoading(false);
@@ -118,6 +149,7 @@ export function ExpendituresPieChartComponent(props) {
     });
   }
 
+  // Setting colors for piechart
   const COLORS = [
     "#37b067",
     "#6296bc",
@@ -132,6 +164,19 @@ export function ExpendituresPieChartComponent(props) {
   ];
 
   const RADIAN = Math.PI / 180;
+
+  /**
+   * Renders a customized label for each piechart slice in <PortfolioCompositionChart/>.
+   * @function
+   * @param {number} cx
+   * @param {number} cy
+   * @param {number} midAngle
+   * @param {number} innerRadius
+   * @param {number} outerRadius
+   * @param {number} percent
+   * @param {number} index
+   * @returns {JSX.Element}
+   */
   const renderCustomizedLabel = ({
     cx,
     cy,

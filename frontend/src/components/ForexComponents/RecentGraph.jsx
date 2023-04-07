@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import classes from "../Forex.module.css";
 import {
   ResponsiveContainer,
@@ -15,7 +15,7 @@ import {
  * Returns the rates between the lastest currency in the database over the past week in a line graph
  * @export
  * @function
- * @returns {string}
+ * @returns {JSX.Element}
  */
 function RecentGraph() {
   const [hasData, setData] = useState(false);
@@ -120,7 +120,7 @@ function RecentGraph() {
         setGraphData(graphArr);
         setIsLoading(false);
       })
-      .catch((error) => console.log("error", error));
+      .catch((error) => console.log(error));
   };
 
   if (isLoading) {

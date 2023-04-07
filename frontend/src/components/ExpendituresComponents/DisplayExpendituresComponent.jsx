@@ -1,17 +1,29 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { VStack, StackDivider } from '@chakra-ui/react'
+import { VStack } from '@chakra-ui/react'
 import { Box } from '@chakra-ui/react'
 import { Text } from '@chakra-ui/react'
 
+/**
+ * Component for displaying most recent 5 expenditures.
+ * @export
+ * @function
+ * @param {*} props 
+ * @returns {JSX.Element}
+ */
 export function DisplayExpendituresComponent(props) {
 
   const [result, setResult] = useState(null);
+  /**
+   * React hook that sets result with props data.
+   * Is triggered with every change in props data.
+   * @function
+   * @param {array} dependencies
+   * @returns {void}
+   */
   useEffect(() => {
     setResult(props.data);
   }, [props.data]);
-
-  console.log(result);
 
   var displayData = [
     {memo: 'No Record', amount: null},
