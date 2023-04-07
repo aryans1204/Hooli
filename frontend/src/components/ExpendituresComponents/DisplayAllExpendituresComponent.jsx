@@ -10,11 +10,11 @@ import {
 
 /**
  * Component for displaying all expenditures in a table.
+ * @function
  * @param {*} props
- * @returns {*}
+ * @returns {JSX.Element}
  */
 function DisplayAllExpendituresComponent(props) {
-
   return (
     <Table variant="striped" colorScheme="purple" size="md">
       <Thead>

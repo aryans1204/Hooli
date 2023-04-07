@@ -17,8 +17,9 @@ import {
 /**
  * Component for editing an expenditure.
  * @export
+ * @function
  * @param {*} props
- * @returns {*}
+ * @returns {JSX.Element}
  */
 export function EditExpenditureComponent(props) {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -29,18 +30,17 @@ export function EditExpenditureComponent(props) {
 
   /**
    * Stores data of expenditure to be removed.
+   * @function
    * @param {*} item
    */
   function handleItemSelected(item) {
     setSelectedItem(item);
   }
 
-  function setState() {
-    props.setState();
-  }
-
   /**
-   * Retrieves selected expenditure using get/api/expenditure/:id.
+   * Retrieves selected expenditure using get/api/expenditure/:id from a GET request
+   * @function
+   * @returns {Object}
    */
   function getTargetItem() {
     fetch(
@@ -66,6 +66,14 @@ export function EditExpenditureComponent(props) {
         setTargetData(data);
       });
   }
+
+  /**
+   * React hook that invokes onOpen() function if the targetData is not null.
+   * Is triggered with every change in targetData
+   * @function
+   * @param {array} dependencies
+   * @returns {void}
+   */
   useEffect(() => {
     if (targetData !== null) {
       onOpen();
@@ -73,7 +81,9 @@ export function EditExpenditureComponent(props) {
   }, [targetData]);
 
   /**
-   * Retrieves all expenditures using get/api/expenditure.
+   * Retrieves all expenditures using get/api/expenditure with a GET request
+   * @function
+   * @returns {Object}
    */
   function getData() {
     fetch("https://hooli-backend-aryan.herokuapp.com/api/expenditure", {
@@ -106,7 +116,7 @@ export function EditExpenditureComponent(props) {
             onOpen={onOpen}
             data={targetData}
             setTargetFound={setTargetFound}
-            setState={setState}
+            setState={props.setState()}
           />
         ) : null}
       </div>
@@ -146,8 +156,9 @@ export function EditExpenditureComponent(props) {
 
 /**
  * Component for editing an expenditure.
+ * @function
  * @param {*} props
- * @returns {*}
+ * @returns {JSX.Element}
  */
 function EditDataComponent(props) {
   const initialValues = {
@@ -155,9 +166,17 @@ function EditDataComponent(props) {
     amount: null,
     date: null,
   };
+
   const [values, setValues] = useState(initialValues);
   const [category, setCategory] = useState("");
   const [addSuccess, setAddSuccess] = useState(null);
+
+  /**
+   * Method that handles changes to the input fields.
+   * @function
+   * @param {Object} e 
+   * @returns {void}
+   */        
   const handleInputChange = (e) => {
     var { name, value } = e.target;
     setValues({
@@ -165,6 +184,12 @@ function EditDataComponent(props) {
       [name]: value,
     });
   };
+
+    /**
+   * Method that clears state by setting values back to their initial values.
+   * @function
+   * @returns {void}
+   */
   const clearState = () => {
     setValues(initialValues);
     setAddSuccess(null);
@@ -173,7 +198,9 @@ function EditDataComponent(props) {
   };
 
   /**
-   * Remove an expenditure using delete/api/expenditure/:id.
+   * Method that deletes expenditure record using a DELETE method to the database.
+   * @function
+   * @returns {Object}
    */
   function handleRemove() {
     return fetch(
@@ -201,7 +228,9 @@ function EditDataComponent(props) {
   }
 
   /**
-   * Creates a new (edited) expenditure using post/api/expenditure
+   * Sends a POST request to the database to add expenditure record after deleting old record.
+   * @function
+   * @returns {Object}
    */
   function handleSubmit() {
       handleRemove().then(

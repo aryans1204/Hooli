@@ -6,12 +6,21 @@ import { Text } from '@chakra-ui/react'
 
 /**
  * Component for displaying most recent 5 expenditures.
+ * @export
+ * @function
  * @param {*} props 
- * @returns {*}
+ * @returns {JSX.Element}
  */
 export function DisplayExpendituresComponent(props) {
 
   const [result, setResult] = useState(null);
+  /**
+   * React hook that sets result with props data.
+   * Is triggered with every change in props data.
+   * @function
+   * @param {array} dependencies
+   * @returns {void}
+   */
   useEffect(() => {
     setResult(props.data);
   }, [props.data]);

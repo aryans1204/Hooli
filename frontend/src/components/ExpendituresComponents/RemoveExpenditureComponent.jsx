@@ -16,8 +16,9 @@ import {
 /**
  * Component for removing an expenditure.
  * @export
+ * @function
  * @param {*} props
- * @returns {*}
+ * @returns {JSX.Element}
  */
 export function RemoveExpenditureComponent(props) {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -26,7 +27,9 @@ export function RemoveExpenditureComponent(props) {
 
   /**
    * Stores data of expenditure to be removed.
+   * @function
    * @param {*} item
+   * @returns {void}
    */
   function handleItemSelected(item) {
     setSelectedItem(item);
@@ -34,6 +37,8 @@ export function RemoveExpenditureComponent(props) {
 
   /**
    * Removes selected expenditure using delete/api/expenditure/:id.
+   * @function
+   * @returns {object}
    */
   function handleRemove() {
     fetch(
@@ -62,6 +67,8 @@ export function RemoveExpenditureComponent(props) {
 
   /**
    * Retrieves all expenditures using get/api/income.
+   * @function
+   * @returns {object}
    */
   function getData() {
     fetch("https://hooli-backend-aryan.herokuapp.com/api/expenditure", {
