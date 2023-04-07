@@ -15,7 +15,7 @@ import * as Spinners from "react-spinners";
  * Returns expense data over the past week in a line graph
  * @export
  * @function
- * @returns {string}
+ * @returns {JSX.Element}
  */
 function WeeklyExpenseGraph() {
   const [hasData, setHasData] = useState(false);

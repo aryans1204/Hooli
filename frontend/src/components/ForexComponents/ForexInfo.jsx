@@ -20,7 +20,7 @@ import RecentGraph from "./RecentGraph";
  * Returns the currency pair values in a table format
  * @export
  * @function
- * @returns {string}
+ * @returns {JSX.Element}
  */
 function ForexInfo() {
   const [isDataFetched, setIsDataFetched] = useState(false);

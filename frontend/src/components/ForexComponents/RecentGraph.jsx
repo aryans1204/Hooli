@@ -15,7 +15,7 @@ import {
  * Returns the rates between the lastest currency in the database over the past week in a line graph
  * @export
  * @function
- * @returns {string}
+ * @returns {JSX.Element}
  */
 function RecentGraph() {
   const [hasData, setData] = useState(false);

@@ -20,7 +20,7 @@ import "@trendmicro/react-sidenav/dist/react-sidenav.css";
  * Renders the navigation bar for the application and handles navigation logic.
  * @export
  * @function
- * @returns {string}
+ * @returns {JSX.Element}
  */
 function NavBar() {
   const navigate = useNavigate();
