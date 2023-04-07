@@ -6,6 +6,14 @@ export const InvestmentTable = () => {
   const [equities, setEquities] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
+  /**
+   * React Hook that fetches portfolio data
+   * If portfolio data is found in sessionStorage, it sets the state with the data from session storage.
+   * If not found, it calls getPortfolioData()
+   * @function
+   * @name useEffect
+   * @returns {void}
+   */
   useEffect(() => {
     if (
       sessionStorage.getItem("portfolios") === "null" ||
@@ -20,6 +28,13 @@ export const InvestmentTable = () => {
     }
   }, []);
 
+  /**
+   * React Hook that updates the equities state when portolioData changes
+   * @function
+   * @name useEffect
+   * @param {array} portfolioData
+   * @returns {void}
+   */
   useEffect(() => {
     if (
       sessionStorage.getItem("portfolios") !== "null" &&
@@ -32,6 +47,12 @@ export const InvestmentTable = () => {
     }
   }, [portfolioData]);
 
+  /**
+   * Renders a table of equities with their respective P&L (profit and loss) data
+   * @function
+   * @param {Array} equities
+   * @returns {JSX.Element}
+   */
   const EquitiesTable = ({ equities }) => {
     const tableRows = equities.map((equity) => {
       const equityPnl = parseFloat(equity.equity_pnl.replace("%", ""));
