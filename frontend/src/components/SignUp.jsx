@@ -3,7 +3,20 @@ import classes from "./SignUp.module.css";
 import logo from "../assets/icons/hooli-logo.png";
 import { Navigate } from "react-router-dom";
 
+/**
+ * SignUp class
+ * @class SignUp
+ * @typedef {SignUp}
+ * @extends {Component}
+ */
 class SignUp extends Component {
+  /**
+   * Creates an instance of SignUp.
+   * Initialises the state of the component with name, email, password and signUpSuccessful
+   * Binds the component's handleChange() and handleSubmit() methods to the component instance
+   * @constructor
+   * @param {*} props
+   */
   constructor(props) {
     super(props);
     this.state = { name: "", email: "", password: "", signUpSuccessful: null };
@@ -12,6 +25,10 @@ class SignUp extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
+  /**
+   * Method that handles changes to the input fields.
+   * @param {Object} event 
+   */
   handleChange(event) {
     event.preventDefault();
     const target = event.target;
@@ -20,8 +37,13 @@ class SignUp extends Component {
     });
   }
 
+  /**
+   * Method that handles form submission in the component.
+   * @param {Object} e 
+   */
   handleSubmit = (e) => {
     e.preventDefault();
+    // Posts fields to the database to create a new user
     fetch("https://hooli-backend-aryan.herokuapp.com/api/users", {
       method: "POST",
       headers: {

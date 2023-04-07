@@ -16,9 +16,22 @@ import profile from "../assets/icons/user.png";
 import logout from "../assets/icons/logout.png";
 import "@trendmicro/react-sidenav/dist/react-sidenav.css";
 
+/**
+ * Renders the navigation bar for the application and handles navigation logic.
+ * @export
+ * @function
+ * @returns {string}
+ */
 function NavBar() {
   const navigate = useNavigate();
   const [logoutSuccess, setLogoutSuccess] = useState(null);
+
+  /**
+   * Logs out user
+   * @async
+   * @function
+   * @returns {Promise<object>}
+   */
   async function handleLogout() {
     alert("Logging out");
     await fetch("https://hooli-backend-aryan.herokuapp.com/api/users/logout", {

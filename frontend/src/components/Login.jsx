@@ -4,7 +4,20 @@ import logo from "../assets/icons/hooli-logo.png";
 import { Navigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 
+/**
+ * Login class
+ * @class Login
+ * @typedef {Login}
+ * @extends {Component}
+ */
 class Login extends Component {
+  /**
+   * Creates an instance of Login.
+   * Initialises state of component for email, password and loginSuccess.
+   * Binds the handleChange() and handleSubmit() methods to the component instance.
+   * @constructor
+   * @param {*} props
+   */
   constructor(props) {
     super(props);
     this.state = { email: "", password: "", loginSuccess: null };
@@ -13,6 +26,10 @@ class Login extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
+  /**
+   * Method that handles changes to the input fields.
+   * @param {Object} event 
+   */
   handleChange(event) {
     event.preventDefault();
     const target = event.target;
@@ -20,6 +37,11 @@ class Login extends Component {
       [target.name]: target.value,
     });
   }
+
+  /**
+   * Method that handles form submission in the component.
+   * @param {Object} e 
+   */
   handleSubmit = (e) => {
     e.preventDefault();
     fetch("https://hooli-backend-aryan.herokuapp.com/api/users/login", {

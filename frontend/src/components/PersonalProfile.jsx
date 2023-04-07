@@ -5,7 +5,22 @@ import { Navigate } from "react-router-dom";
 import { DeleteAcc } from "./ProfileComponents/DeleteAcc";
 import NavBar from "./NavBar";
 
+/**
+* PersonalProfile class
+* @class PersonalProfile
+* @typedef {PersonalProfile}
+* @extends {Component}
+*/
 class PersonalProfile extends Component {
+  /**
+   * Creates an instance of PersonalProfile.
+   * Initialises state of the component with name, email, newName, newEmail, newPassword, 
+   * repeatPassword and authenticated.
+   * Binds the component's handleChange(), handleProfileSubmit() and handlePwdSubmit() 
+   * methods to the component.
+   * @constructor
+   * @param {*} props
+   */
   constructor(props) {
     super(props);
     this.state = {
@@ -22,6 +37,12 @@ class PersonalProfile extends Component {
     this.handlePwdSubmit = this.handlePwdSubmit.bind(this);
   }
 
+  /**
+   * Retrieves user profile and checks for authentiation when component is mounted
+   * Sets state for profile name and email
+   * @async
+   * @returns {*}
+   */
   async componentDidMount() {
     await fetch("https://hooli-backend-aryan.herokuapp.com/api/users/me", {
       method: "GET",
@@ -41,12 +62,21 @@ class PersonalProfile extends Component {
       });
   }
 
+
+   /**
+   * Method that handles changes to the input fields.
+   * @param {Object} event 
+   */
   handleChange(event) {
     event.preventDefault();
     const target = event.target;
     this.setState({ [target.name]: target.value });
   }
 
+    /**
+   * Method that handles form submission for name and email in the component.
+   * @param {Object} e 
+   */
   handleProfileSubmit = (e) => {
     e.preventDefault();
     // Checks for name change
@@ -99,6 +129,10 @@ class PersonalProfile extends Component {
     }
   };
 
+    /**
+   * Method that handles form submission for password in the component.
+   * @param {Object} e 
+   */
   handlePwdSubmit = (e) => {
     e.preventDefault();
     if ((this.state.newPassword == this.state.repeatPassword)) {

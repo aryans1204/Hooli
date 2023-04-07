@@ -10,7 +10,19 @@ import { RemovePortfolio } from "./InvestmentComponents/RemovePortfolio";
 import * as Spinners from "react-spinners";
 import classes from "./Investments.module.css";
 
+/**
+ * Investments class
+ * @class Investments
+ * @typedef {Investments}
+ * @extends {Component}
+ */
 class Investments extends Component {
+  /**
+   * Creates an instance of Investments.
+   * Initialises the component's state with authenticated, portfolio, selectedIndex and loading.
+   * @constructor
+   * @param {*} props
+   */
   constructor(props) {
     super(props);
     this.state = {
@@ -21,7 +33,13 @@ class Investments extends Component {
     };
   }
 
-  //checks if the user is authenticated
+  /**
+   * Retrieves user profile and checks for authentiation when component is mounted.
+   * Gets portfolio data if sessionStorage for portfolios is null or undefined.
+   * Sets state for portfolio if in sessionStorage.
+   * @async
+   * @returns {*}
+   */
   async componentDidMount() {
     await fetch("https://hooli-backend-aryan.herokuapp.com/api/users/me", {
       method: "GET",
@@ -49,7 +67,9 @@ class Investments extends Component {
     }
   }
 
-  // gets user portfolio data from database
+  /**
+   * Fetches user's portfolio data from the database and sets state of component for portfolio and loading.
+   */
   getPortfolioData() {
     fetch("https://hooli-backend-aryan.herokuapp.com/api/investments", {
       method: "GET",
@@ -85,7 +105,10 @@ class Investments extends Component {
       });
   }
 
-  //sets the index of the portolio that the user wants to display
+  /**
+   * Sets the component's state for selectedIndex to the index of the portolio that the user wants to display
+   * @param {Number} index 
+   */
   handleSelectedIndexChange = (index) => {
     this.setState({ selectedIndex: index });
   };

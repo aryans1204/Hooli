@@ -86,6 +86,12 @@ class Expenditures extends Component {
       });
   }
 
+  /**
+   * Returns an array of objects filtered by the current month
+   * @param {Array} data 
+   * @param {Number} month 
+   * @returns {Array} An array of objects with dates within the month
+   */
   filterDataByMonth = (data, month) => {
     const startDate = new Date(2023, month, 1);
     const endDate = new Date(2023, month + 1, 0);
@@ -187,7 +193,6 @@ class Expenditures extends Component {
                 borderColor="#55185d"
                 height={350}
                 overflowY="scroll"
-                //bg="#E9D8FD"
               >
                 {this.state.expendituresData !== null ? (
                   <DisplayAllExpendituresComponent

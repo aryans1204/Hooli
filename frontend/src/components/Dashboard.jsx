@@ -7,6 +7,12 @@ import WeeklyExpenseGraph from "./DashboardComponents/WeeklyExpenseGraph";
 import MonthlyIncome from "./DashboardComponents/MonthlyIncome";
 import { InvestmentTable } from "./DashboardComponents/InvestmentTable";
 
+/**
+ * Dashboard class
+ * @class Dashboard
+ * @typedef {Dashboard}
+ * @extends {Component}
+ */
 class Dashboard extends Component {
   /**
    * Creates an instance of Income.
