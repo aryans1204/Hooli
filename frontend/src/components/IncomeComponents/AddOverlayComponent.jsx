@@ -50,7 +50,8 @@ export function AddOverlayComponent(props) {
   /**
    * Creates new income data when submitted using post/api/income.
    */
-  function handleSubmit() {
+  function handleSubmit(event) {
+    event.preventDefault();
     fetch("https://hooli-backend-aryan.herokuapp.com/api/income", {
       method: "POST",
       headers: {
@@ -170,7 +171,7 @@ export function AddOverlayComponent(props) {
               colorScheme="purple"
               size="md"
               d="flex"
-              onClick={handleSubmit}
+              onClick={(event) => handleSubmit(event)}
             >
               Save
             </Button>
