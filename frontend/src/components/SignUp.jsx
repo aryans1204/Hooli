@@ -1,4 +1,4 @@
-import { Component, useState } from "react";
+import { Component } from "react";
 import classes from "./SignUp.module.css";
 import logo from "../assets/icons/hooli-logo.png";
 import { Navigate } from "react-router-dom";
