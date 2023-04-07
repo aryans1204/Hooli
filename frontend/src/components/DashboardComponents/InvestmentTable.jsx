@@ -1,6 +1,12 @@
 import React, { useEffect, useState } from "react";
 import * as Spinners from "react-spinners";
 
+/**
+ * Returns table of investments
+ * @export
+ * @function
+ * @returns {JSX.Element}
+ */
 export const InvestmentTable = () => {
   const [portfolioData, setPortfolioData] = useState(null);
   const [equities, setEquities] = useState(null);
@@ -114,7 +120,11 @@ export const InvestmentTable = () => {
     );
   };
 
-  // gets user portfolio data from database
+  /**
+   * Fetches portfolio data from the backend API and updates state
+   * @function
+   * @returns {void}
+   */
   const getPortfolioData = () => {
     fetch("https://hooli-backend-aryan.herokuapp.com/api/investments", {
       method: "GET",
