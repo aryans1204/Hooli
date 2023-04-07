@@ -110,7 +110,7 @@ export function AddOverlayComponent(props) {
                 setIndustry(event.target.value);
               }}
             >
-              <option>N.A.</option>
+              <option>Select One</option>
               <option value="Manufacturing">Manufacturing</option>
               <option value="Services">Services</option>
               <option value="Construction">Construction</option>
