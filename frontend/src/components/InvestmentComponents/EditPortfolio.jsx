@@ -11,6 +11,11 @@ import {
 } from "@chakra-ui/react";
 import classes from "./EditPortfolio.module.css";
 
+/**
+ * Component to edit a portfolio.
+ * @param {*} props 
+ * @returns {JSX.Element}
+ */
 export function EditPortfolio(props) {
   const initialEquityValues = {
     equity_ticker: "",
@@ -27,7 +32,9 @@ export function EditPortfolio(props) {
   const [activeTab, setActiveTab] = useState("equities");
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  // tracks input change for equity data
+  /** 
+   * Tracks input change for equity data. 
+   */
   const handleEquityChange = (e) => {
     var { name, value } = e.target;
     setEquityValues({
@@ -36,7 +43,9 @@ export function EditPortfolio(props) {
     });
   };
 
-  // tracks input change for option data
+  /** 
+   * Tracks input change for option data. 
+   */
   const handleOptionChange = (e) => {
     var { name, value } = e.target;
     setOptionValues({
@@ -49,7 +58,9 @@ export function EditPortfolio(props) {
     setAddSuccess(null);
   };
 
-  // function to add new equity into the database
+  /** 
+   * Adds new equity to the database. 
+   */
   async function handleEquitySubmit(e) {
     e.preventDefault();
     const isValid = await checkTicker(equityValues.equity_ticker);
@@ -117,7 +128,9 @@ export function EditPortfolio(props) {
     }
   }
 
-  // function that renders the form for user to enter equity data
+  /** 
+   * Renders a form for user to enter equity data. 
+   */
   function EditEquity() {
     return (
       <div className={classes.editEquity}>
@@ -156,14 +169,18 @@ export function EditPortfolio(props) {
     );
   }
 
-  // function to refresh the portfolios in sessionStorage after a change has been made
+  /** 
+   * Refreshes the portfolios in sessionStorage after a change has been made. 
+   */
   const updatePortfolios = () => {
     sessionStorage.removeItem("portfolios");
     props.edit();
     window.location.reload();
   };
 
-  // function that renders the form for user to enter option data
+  /** 
+   * Renders a form for user to enter option data.
+   */
   function EditOption() {
     return (
       <div className={classes.editOption}>
@@ -248,11 +265,17 @@ export function EditPortfolio(props) {
     return response;
   };
 
+  /**
+   * Sets the active tab and triggers "onOpen" when a tab is clicked.
+   */
   const handleTabClick = (tab) => {
     setActiveTab(tab);
     onOpen();
   };
 
+  /**
+   * Resets equity and option values to their initial values and closes the overlay.
+   */
   const closeOverlay = () => {
     setEquityValues(initialEquityValues);
     setOptionValues(initialOptionValues);

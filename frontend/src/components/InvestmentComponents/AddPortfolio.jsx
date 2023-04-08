@@ -13,13 +13,18 @@ import classes from "./AddPortfolio.module.css";
 import { forwardRef } from "react";
 import { useImperativeHandle } from "react";
 
-// component that renders a form for the user to enter their data
-// This component is called by the AddPortfolio component (can be found at the bottom of the file)
+/**
+ * Component that renders a form for the user to enter their data.
+ * @returns {JSX.Element}
+ */
 const PortfolioForm = forwardRef((props, ref) => {
   const [equities, setEquities] = useState([]);
   const [options, setOptions] = useState([]);
   const [addSuccess, setAddSuccess] = useState(null);
 
+  /**
+   * Creates new portfolio when submitted using post/api/investments.
+   */
   const handleSubmit = async () => {
     fetch("https://hooli-backend-aryan.herokuapp.com/api/investments", {
       method: "POST",
@@ -54,7 +59,9 @@ const PortfolioForm = forwardRef((props, ref) => {
     props.onClose();
   };
 
-  // Passes teh handleSubmit function to the parent component for them to use
+  /** 
+   * Passes handleSubmit function to the parent component to use.
+   */ 
   useImperativeHandle(ref, () => ({ handleSubmit }));
 
   return (
@@ -212,6 +219,11 @@ const PortfolioForm = forwardRef((props, ref) => {
   );
 });
 
+/**
+ * Component to add a portfolio.
+ * @param {*} props 
+ * @returns {JSX.Element}
+ */
 export function AddPortfolio(props) {
   const handleCreatePortfolio = () => {
     // Call the handleSubmit function defined in the child component

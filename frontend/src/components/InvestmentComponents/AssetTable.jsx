@@ -2,13 +2,20 @@ import { useState, useEffect } from "react";
 import Chart from "chart.js/auto";
 import classes from "./AssetTable.module.css";
 
+/**
+ * Component to display assets in a table.
+ * @param {*} props 
+ * @returns {JSX.Element}
+ */
 function AssetTable(props) {
   const [activeTab, setActiveTab] = useState("equities");
   const [activeTicker, setActiveTicker] = useState(null);
   const [chart, setChart] = useState(null);
 
   useEffect(() => {
-    // Create empty chart instance when component mounts
+    /**
+     * Creates an empty chart instance when component is mounted.
+     */
     const ctx = document.getElementById("myChart").getContext("2d");
     const emptyChart = new Chart(ctx, {
       type: "line",
@@ -47,7 +54,9 @@ function AssetTable(props) {
     setActiveTab(tab);
   };
 
-  // Renders the table for equity data
+  /**
+   * Renders the table for equity data.
+   */
   const renderEquities = () => {
     const { equities } = props.data;
     if (!equities || equities.length === 0) {
@@ -110,7 +119,9 @@ function AssetTable(props) {
     );
   };
 
-  // Renders the table for option data
+  /** 
+   * Renders the table for options data.
+   */ 
   const renderOptions = () => {
     const { options } = props.data;
     if (!options || options.length === 0) {
@@ -153,8 +164,11 @@ function AssetTable(props) {
     );
   };
 
+  /**
+   * Handles a row click.
+   * @param {*} ticker 
+   */
   const handleRowClick = (ticker) => {
-    // handle row click here
     const tickerData = JSON.parse(sessionStorage.getItem("tickerData"));
     const selectedStock = tickerData.find(
       (stock) => stock["Meta Data"]["2. Symbol"] === ticker
@@ -167,12 +181,16 @@ function AssetTable(props) {
       adjustedClosePrices.push(parseFloat(dailyData[date]["4. close"]));
     }
 
-    // Destroy previous chart if it exists
+    /** 
+     * Destroy a previous chart if it exists. 
+     */
     if (chart) {
       chart.destroy();
     }
 
-    // Create new chart
+    /** 
+     * Creates a new chart. 
+     */
     const ctx = document.getElementById("myChart").getContext("2d");
     ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
     ctx.canvas.width = "200px";
@@ -200,7 +218,9 @@ function AssetTable(props) {
       },
     });
 
-    // Save chart instance to state
+    /** 
+     * Saves chart instance to state.
+     */
     setChart(newChart);
     setActiveTicker(ticker);
   };
