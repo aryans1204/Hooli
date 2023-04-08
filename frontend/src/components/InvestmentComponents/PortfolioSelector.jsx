@@ -2,6 +2,11 @@ import React, { useState } from "react";
 import { useEffect } from "react";
 import classes from "./PortfolioSelector.module.css";
 
+/**
+ * Component to select a portfolio.
+ * @param {*} props 
+ * @returns {JSX.Element}
+ */
 function PortfolioSelector(props) {
   const [selectedPortfolioIndex, setSelectedPortfolioIndex] = useState(
     props.index
@@ -11,8 +16,10 @@ function PortfolioSelector(props) {
     console.log(selectedPortfolio);
   }, [selectedPortfolio]);
 
-  //sets the index passed in as props from the parent component
-  //index is to be used to select the portfolio to display from the parent component
+  /** 
+   * Sets the index passed in as props from the parent component.
+   * Index is to be used to select the portfolio to display from the parent component. 
+  */
   const handleChange = (e) => {
     const index = parseInt(e.target.value);
     setSelectedPortfolioIndex(index);

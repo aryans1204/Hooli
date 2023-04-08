@@ -11,7 +11,8 @@
  const validator = require('validator')
  
  /**
-  * @typedef {Object} Income
+  * incomeSchema schema
+  * @class Income
   * @property {String} income_type
   * @property {Number} monthly_income
   * @property {Date} start_date

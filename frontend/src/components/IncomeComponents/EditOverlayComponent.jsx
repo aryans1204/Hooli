@@ -18,7 +18,7 @@ import DisplayTableComponent from "./DisplayTableComponent";
  * Overlay component for editing an income record.
  * @export
  * @param {*} props
- * @returns {*}
+ * @returns {JSX.Element}
  */
 export function EditOverlayComponent(props) {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -69,7 +69,7 @@ export function EditOverlayComponent(props) {
   }
 
   /**
-   * Sets state to props data of income of selected year
+   * Sets state to props data of income of selected year.
    */
   function getData() {
     setResult(props.data);
@@ -135,7 +135,7 @@ export function EditOverlayComponent(props) {
 /**
  * Component for editing an income record.
  * @param {*} props
- * @returns {*}
+ * @returns {JSX.Element}
  */
 function EditDataComponent(props) {
   const resetValues = {
@@ -183,7 +183,7 @@ function EditDataComponent(props) {
   };
 
   /**
-   * Removea an income record using delete/api/income/:id.
+   * Removes an income record using delete/api/income/:id.
    */
   function handleRemove() {
     return fetch(

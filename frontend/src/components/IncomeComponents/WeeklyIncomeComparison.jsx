@@ -10,8 +10,6 @@ import {
 } from '@chakra-ui/react'
 import classes from "./WeeklyIncomeComparison.module.css";
 
-//provides the quarter data for the input date e.g. 2022-Q1
-
 /**
  * Returns the input date's year quarter. (e.g. '2022-Q1' for 12 Mar 2022)
  * @param {*} date
@@ -54,7 +52,9 @@ export function WeeklyIncomeComparison(props) {
   const [userData, setuserData] = useState(null); //user data passed in from parent class as prop
   const [filteredData, setFilteredData] = useState(null);
 
-  // gets latest data from props and adds the quarter data to them every thing the props data changes
+  /**
+   * Gets latest data from props and adds the quarter data each time the props data changes.
+   */
   useEffect(() => {
     let tempData = props.data.sort(
       (a, b) => new Date(b.start_date) - new Date(a.start_date)
@@ -68,7 +68,9 @@ export function WeeklyIncomeComparison(props) {
     })); //adds the quarter data to tempData, e.g. 2022-Q2
     setuserData(tempData); //userData now contains the 5 latest income data based on start_date
 
-    //accessing weekly hours API
+    /**
+     * Accessing API to retrive weekly hours.
+     */
     const endpoint = "https://data.gov.sg/api/action/datastore_search";
     const resource_id = "1109b8a4-dafe-42af-840e-0cf447147d5e";
     const query_params = {
@@ -92,7 +94,9 @@ export function WeeklyIncomeComparison(props) {
       });
   }, [props.data]);
 
-  // runs everytime apiData is changed
+  /**
+   * Runs each time apiData is changed.
+   */
   useEffect(() => {
     if (apiData != null) {
       const filteredDatas = filterDataByQuarterAndIndustry(
@@ -111,7 +115,9 @@ export function WeeklyIncomeComparison(props) {
     return finalData ? finalData.total_paid_hours : "N.A.";
   };
 
-  // Formats date to just yyyy-mm-dd format
+  /** 
+   * Formats date to just yyyy-mm-dd format.
+   */
   const formatDate = (dateString) => {
     const date = dateString.slice(0, 10);
     return date;

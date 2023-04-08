@@ -17,7 +17,7 @@ import DisplayTableComponent from "./DisplayTableComponent";
  * Overlay component for removing an income record.
  * @export
  * @param {*} props
- * @returns {*}
+ * @returns {JSX.Element}
  */
 export function RemoveOverlayComponent(props) {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -89,7 +89,7 @@ export function RemoveOverlayComponent(props) {
         <ModalOverlay />
         <ModalContent>
           <ModalHeader textAlign="center" fontSize="30px">
-            Remove income data
+            Remove Income Data
           </ModalHeader>
           <ModalCloseButton onClick={onClose} />
           <ModalBody>

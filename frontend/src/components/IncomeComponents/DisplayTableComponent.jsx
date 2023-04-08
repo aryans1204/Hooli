@@ -1,14 +1,17 @@
 import React, { useState } from "react";
 
-
 /**
- * Component for display table.
+ * Component to display table of income records.
  * @param {*} props
- * @returns {*}
+ * @returns {JSX.Element}
  */
 function DisplayTableComponent(props) {
   const [selectedItem, setSelectedItem] = useState(null);
 
+
+  /**
+   * Sets the selected item when clicked.
+   */
   function handleItemClick(item) {
     setSelectedItem(item);
     props.onItemSelected(item);

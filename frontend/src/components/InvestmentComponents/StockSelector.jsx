@@ -11,28 +11,44 @@ import {
 } from "@chakra-ui/react";
 import classes from "./StockSelector.module.css";
 
-// Renders a table with 2 tabs - equity and options, where their respective data will be displayed for the user to select
-// This page is mainly used in the delete portfolio data functions
+/**
+ * Component to display a table with 2 tabs - equity and options, 
+ * where their respective data will be displayed for the user to select.
+ * @param {*} props 
+ * @returns {JSX.Element}
+ */
 export default function StockSelector(props) {
   const [activeTab, setActiveTab] = useState("equities");
   const [selectedItem, setSelectedItem] = useState(null);
   const [showConfirmation, setShowConfirmation] = useState(false);
 
-  // ActiveTab controls which tab will be displayed
+  /**
+   * Sets the active tab when a tab is clicked.
+   */
   const handleTabClick = (tab) => {
     setActiveTab(tab);
   };
 
+  /**
+   * Sets the selected item when item is clicked.
+   */
   const handleItemClick = (item) => {
     setSelectedItem(item);
   };
 
+  /**
+   * This function calls the onSubmit function with the selectedItem as an argument if it exists in the
+   * props object.
+   */
   const handleSubmit = () => {
     if (props.onSubmit) {
       props.onSubmit(selectedItem);
     }
   };
 
+  /**
+   * Handles the confirmation of deleting a portfolio.
+   */
   const handleConfirmation = () => {
     if (showConfirmation) {
       props.deletePortfolio();
@@ -44,12 +60,18 @@ export default function StockSelector(props) {
     }
   };
 
+  /**
+   * Resets values.
+   */
   const resetValues = () => {
     setShowConfirmation(false);
     onClose();
   };
 
-  // equities tab
+  /** 
+   * Equities tab.
+   * @returns {JSX.Element}
+   */
   const renderEquities = () => {
     const { equities } = props.data;
     if (!equities || equities.length === 0) {
@@ -90,7 +112,10 @@ export default function StockSelector(props) {
     );
   };
 
-  // options tab
+  /**
+   * Options tab.
+   * @returns {JSX.Element}
+   */
   const renderOptions = () => {
     const { options } = props.data;
     if (!options || options.length === 0) {

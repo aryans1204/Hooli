@@ -7,7 +7,7 @@ import Chart from "chart.js/auto";
  * Component for income bar chart.
  * @export
  * @param {*} props
- * @returns {*}
+ * @returns {JSX.Element}
  */
 export function IncomeBarChartComponent(props) {
   const [result, setResult] = useState(null);
@@ -17,7 +17,7 @@ export function IncomeBarChartComponent(props) {
 
   
   /**
-   * Month Names
+   * Month Names.
    */
   const monthNames = [
     "January",
@@ -36,7 +36,7 @@ export function IncomeBarChartComponent(props) {
 
   
   /**
-   * Industry types
+   * Industry types.
    */
   const industry = [
     { industry: "Manufacturing" },
@@ -47,7 +47,7 @@ export function IncomeBarChartComponent(props) {
 
   
   /**
-   * Colors for industry types
+   * Colors for industry types.
    */
   const colors = {
     Manufacturing: "purple",
@@ -66,7 +66,7 @@ export function IncomeBarChartComponent(props) {
 
   
   /**
-   * Income data for the months
+   * Income data for the months.
    */
   const incomeData = {
     January: { industryObj },

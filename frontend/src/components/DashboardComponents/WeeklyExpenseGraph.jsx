@@ -12,7 +12,7 @@ import {
 import * as Spinners from "react-spinners";
 
 /**
- * Returns expense data over the past week in a line graph
+ * Returns expenses data over the past week in a line graph.
  * @export
  * @function
  * @returns {JSX.Element}
@@ -23,7 +23,7 @@ function WeeklyExpenseGraph() {
   const [expenseData, setExpenseData] = useState([]);
 
   /**
-   * Gets expense data from the past week and adds entries together
+   * Gets expenses data from the past week and adds entries together.
    * @async
    * @function
    * @returns {arr}
@@ -47,7 +47,9 @@ function WeeklyExpenseGraph() {
         setHasData(true);
       }
 
-      // Get dates for the past week and put it in the graph structure format
+      /** 
+       * Gets dates for the past week and put it in the graph structure format. 
+       */
       let weeklyData = [];
       for (let i = 0; i < 7; i++) {
         var wDate = new Date(Date.now() - i * 24 * 60 * 60 * 1000)
@@ -56,7 +58,9 @@ function WeeklyExpenseGraph() {
         weeklyData.push({ date: wDate, exp: 0 });
       }
 
-      // Iterates through response from server and adds the total amount
+      /** 
+       * Iterates through response from server and adds the total amount. 
+       */
       allData.forEach((data) => {
         weeklyData.forEach((indiv) => {
           if (data.date.includes(indiv.date)) {
@@ -73,7 +77,7 @@ function WeeklyExpenseGraph() {
   }
 
   /**
-   * Fetches data from the server
+   * Fetches data from the server.
    * Sets the graph data and isLoading state accordingly.
    *
    * @function
@@ -102,7 +106,9 @@ function WeeklyExpenseGraph() {
     );
   }
 
-  // Get the lowest and highest rate
+  /**
+   * Get the lowest and highest rate.
+   */
   let lowestValue = Number.MAX_SAFE_INTEGER;
   let highestValue = Number.MIN_SAFE_INTEGER;
   for (const data of expenseData) {

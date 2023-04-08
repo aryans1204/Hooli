@@ -1,12 +1,20 @@
 import { useState } from "react";
 import StockSelector from "./StockSelector";
 
-//function that renders the 'Edit' button
+/**
+ * Renders the 'Edit' button.
+ * @param {*} props 
+ * @returns {JSX.Element}
+ */
 export function RemovePortfolio(props) {
   const [targetFound, setTargetFound] = useState(false);
   const [targetData, setTargetData] = useState(null);
 
   // props.data._id will be the id used to locate the portfolio containing the data we want to remove
+
+  /**
+   * Removes an equity from a portfolio using delete/api/investments/equities.
+   */
   const removeEquity = (item) => {
     fetch(
       "https://hooli-backend-aryan.herokuapp.com/api/investments/equities/" +
@@ -35,6 +43,9 @@ export function RemovePortfolio(props) {
       });
   };
 
+  /**
+   * Removes an option from a portfolio using delete/api/investments/options.
+   */
   const removeOption = (item) => {
     fetch(
       "https://hooli-backend-aryan.herokuapp.com/api/investments/options/" +
@@ -63,6 +74,9 @@ export function RemovePortfolio(props) {
       });
   };
 
+  /**
+   * Deletes a portfolio using delete/api/investments.
+   */
   const deletePortfolio = () => {
     fetch(
       "https://hooli-backend-aryan.herokuapp.com/api/investments/" +
@@ -88,7 +102,9 @@ export function RemovePortfolio(props) {
       });
   };
 
-  // function to refresh the portfolios in sessionStorage after a change has been made
+  /** 
+   * Refreshes the portfolios in sessionStorage after a change has been made. 
+  */
   const updatePortfolios = () => {
     sessionStorage.removeItem("portfolios");
     props.edit();
@@ -96,25 +112,37 @@ export function RemovePortfolio(props) {
   };
 
   function deleteTicker(targetData) {
-    // Retrieve tickerData from sessionStorage
+    /** 
+     * Retrieves tickerData from sessionStorage.
+     */
     const tickerData = JSON.parse(sessionStorage.getItem("tickerData"));
 
-    // Retrieve target ticker to remove
+    /** 
+     * Retrieves target ticker to remove.
+     */
     let ticker;
     if (targetData.derivative_ticker) {
       ticker = targetData.derivative_ticker;
     } else {
       ticker = targetData.equity_ticker;
     }
-    // Filter out the object with the specified ticker symbol
+
+    /** 
+     * Filters out the object with the specified ticker symbol.
+     */
     const filteredData = tickerData.filter(
       (obj) => obj["Meta Data"]["2. Symbol"] !== ticker
     );
 
-    // Store the new tickerData back into sessionStorage
+    /** 
+     * Stores the new tickerData back into sessionStorage.
+     */
     sessionStorage.setItem("tickerData", JSON.stringify(filteredData));
   }
 
+  /**
+   * Handles the submission of an item and checks if it is a derivative or equity ticker, removing it and setting target data if found.
+   */
   const handleSubmit = (item) => {
     if (item.derivative_ticker) {
       removeOption(item);

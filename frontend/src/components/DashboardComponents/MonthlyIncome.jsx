@@ -12,7 +12,7 @@ import {
 import * as Spinners from "react-spinners";
 
 /**
- * Returns monthly income data for the year in a line graph
+ * Returns monthly income data for the year in a line graph.
  * @export
  * @function
  * @returns {string}
@@ -23,7 +23,7 @@ function MonthlyIncome() {
   const [incomeData, setIncomeData] = useState([]);
 
   /**
-   * Gets income data from the year and adds entries together by the month
+   * Gets income data from the year and adds entries together by the month.
    * @async
    * @function
    * @returns {arr}
@@ -47,7 +47,9 @@ function MonthlyIncome() {
         setHasData(true);
       }
 
-      // Get all income for the year
+      /** 
+       * Gets all income for the year. 
+      */
       const year = new Date().getFullYear();
 
       let yearData = allData.filter(
@@ -83,7 +85,7 @@ function MonthlyIncome() {
   }
 
   /**
-   * Fetches data from the server
+   * Fetches data from the server.
    * Sets the graph data and isLoading state accordingly.
    *
    * @function
@@ -112,7 +114,9 @@ function MonthlyIncome() {
     );
   }
 
-  // Get the lowest and highest rate
+  /** 
+   * Gets and lowest and highest rate.
+   */
   let lowestValue = Number.MAX_SAFE_INTEGER;
   let highestValue = Number.MIN_SAFE_INTEGER;
   for (const data of incomeData) {

@@ -57,8 +57,6 @@
  
  })
  
- 
- 
  /**
   * Route to get a specific currency for a user by ID.
   * @name get/api/currencies/:id
