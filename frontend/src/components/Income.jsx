@@ -25,12 +25,11 @@ class Income extends Component {
   constructor(props) {
     super(props);
     var curYear = new Date().getFullYear();
-    curYear = curYear.toString();
     this.state = {
       authenticated: null,
       incomeData: [],
       yearlyData: null,
-      year: curYear,
+      year: null,
       yearOptions: [],
       loading: true,
     };
@@ -62,7 +61,6 @@ class Income extends Component {
    * Retrieves all income records using get/api/income and updates the state of incomeData.
    */
   getIncomeData() {
-    var year = this.state.year;
     fetch("https://hooli-backend-aryan.herokuapp.com/api/income", {
       method: "GET",
       headers: {
@@ -89,6 +87,26 @@ class Income extends Component {
 
         this.setState({ incomeData: tempData });
 
+        let uniqueYears = [];
+        tempData.forEach((data) => {
+          let year = new Date(data.start_date).getFullYear().toString();
+          if (!uniqueYears.includes(year)) {
+            uniqueYears.push(year);
+          }
+        });
+        uniqueYears.reverse();
+
+        var year;
+        // Sets the year option to be the latest year found in the database
+        if (
+          !this.state.year ||
+          !uniqueYears.includes(this.state.year.toString())
+        ) {
+          this.setState({ year: Math.max(...uniqueYears) });
+          year = Math.max(...uniqueYears);
+        } else {
+          year = this.state.year;
+        }
         // Get DB entries within the correct year
         let finalData = [];
         tempData.forEach((data) => {
@@ -99,14 +117,6 @@ class Income extends Component {
 
         this.setState({ yearlyData: finalData });
 
-        let uniqueYears = [];
-        tempData.forEach((data) => {
-          let year = new Date(data.start_date).getFullYear().toString();
-          if (!uniqueYears.includes(year)) {
-            uniqueYears.push(year);
-          }
-        });
-        uniqueYears.reverse();
         this.setState({ yearOptions: uniqueYears, loading: false });
       });
   }
