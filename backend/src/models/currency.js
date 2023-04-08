@@ -11,7 +11,8 @@
  const validator = require('validator')
  
  /**
-  * @typedef {Object} Currency
+  * currencySchema schema
+  * @class Currency
   * @property {String} currency_from
   * @property {String} currency_to
   * @property {UserObject} currency_owner

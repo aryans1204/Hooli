@@ -11,10 +11,10 @@
  const validator = require("validator");
  
  /**
-  * @typedef {Object} Investment
+  * investmentSchema schema
+  * @class Investment
   * @property {Object} equities
   * @property {Object} options
-  * @property {Object} commodities
   * @property {UserObject} portfolio_owner
   * @property {} timestamps
   */

@@ -8,10 +8,10 @@
   * validator module
   * @const
   */
- //const validator = require('validator')
  
  /**
-  * @typedef {Object} Expenditure
+  * expenditureSchema schema
+  * @class Expenditure
   * @property {String} memo
   * @property {Number} amount
   * @property {String} category
