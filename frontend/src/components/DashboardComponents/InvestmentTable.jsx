@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import * as Spinners from "react-spinners";
 
 /**
- * Returns table of investments
+ * Returns table of investments.
  * @export
  * @function
  * @returns {JSX.Element}
@@ -13,9 +13,9 @@ export const InvestmentTable = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   /**
-   * React Hook that fetches portfolio data
+   * React Hook that fetches portfolio data.
    * If portfolio data is found in sessionStorage, it sets the state with the data from session storage.
-   * If not found, it calls getPortfolioData()
+   * If not found, it calls getPortfolioData().
    * @function
    * @name useEffect
    * @returns {void}
@@ -35,7 +35,7 @@ export const InvestmentTable = () => {
   }, []);
 
   /**
-   * React Hook that updates the equities state when portolioData changes
+   * React Hook that updates the equities state when portolioData changes.
    * @function
    * @name useEffect
    * @param {array} portfolioData
@@ -54,7 +54,7 @@ export const InvestmentTable = () => {
   }, [portfolioData]);
 
   /**
-   * Renders a table of equities with their respective P&L (profit and loss) data
+   * Renders a table of equities with their respective P&L (profit and loss) data.
    * @function
    * @param {Array} equities
    * @returns {JSX.Element}
@@ -121,7 +121,7 @@ export const InvestmentTable = () => {
   };
 
   /**
-   * Fetches portfolio data from the backend API and updates state
+   * Fetches portfolio data from the backend API and updates state.
    * @function
    * @returns {void}
    */
