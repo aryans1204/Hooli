@@ -37,7 +37,6 @@
          await req.user.populate('expenditures')
          res.send(req.user.expenditures)
      } catch (e) {
-         console.log(e)
          res.status(500).send()
      }
  })

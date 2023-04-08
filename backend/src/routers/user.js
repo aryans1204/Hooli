@@ -70,7 +70,6 @@
          res.status(201).send({ user, token })
      } catch (e) {
          res.send(e)
-         //res.status(400).send(e)
      }
  })
  
@@ -84,7 +83,6 @@
   */
  router.post('/api/users/login', async (req, res) => {
      try {
-         console.log(req.body.email)
          const user = await User.findByCredentials(req.body.email, req.body.password)
          const token = await user.generateAuthToken()
          res.send({user, token})
@@ -187,7 +185,6 @@
          await req.user.remove()
          res.send(req.user)
      } catch (e) {
-         console.log(e)
          res.status(500).send()
      }
  })

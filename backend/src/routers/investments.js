@@ -115,40 +115,10 @@
      now = getYear + "-" + getMonth + "-" + getDay;
  
      for (const portfolio of portfolios) {
-       console.log("current portfolio: ");
-       console.log(portfolio);
        const data = await fetchData(portfolio.equities, "equities");
-       //console.log(data);
+       
        portfolio.equities.forEach((equity, index) => {
-         //console.log(data[index]["Time Series (Daily)"]["2022-12-07"]);
-         /*const current_price = parseInt(
-         data[index]["Time Series (Daily)"][now]["1. open"]
-       );*/
-         /*let current_price = 0;
-         let i = 0;
-         var tempDate = getDay
-         var tempMonth = getMonth
-         while (!current_price && i < 7) {
-           console.log("current price = " + current_price);
-           if (getDay-i == 0) {
-             tempDate = 30
-             tempMonth--
-           }
-           // check up to 7 days back
-           let date = getYear + "-" + tempMonth + "-" + (tempDate).toString();
-           console.log(date)
-           if (data[index]["Time Series (Daily)"][date] !== undefined) {
-             console.log("i'm running");
-             current_price = parseInt(
-               data[index]["Time Series (Daily)"][date]["1. open"]
-             );
-             break;
-           }
-           i++;
-           tempDate--
-         }*/
          let current_price = data[index]["Global Quote"]["02. open"]
-         console.log(`current price ${current_price}`);
          const pnl =
            (
              ((current_price - equity.equity_buy_price) /
@@ -158,41 +128,16 @@
          portfolio.equities[index].equity_current_price = current_price;
          portfolio.equities[index].equity_pnl = pnl;
        });
-       console.log("equities here");
-       console.log(portfolio.equities);
+       
        const optionsData = await fetchData(portfolio.options, "options");
        portfolio.options.forEach((option, index) => {
-         /*const current_price = parseInt(
-         optionsData[index]["Time Series (Daily)"][now]["1. open"]
-       );
-       portfolio.options[index].derivative_current_price = current_price;*/
-         /*let current_price = 0;
-         let i = 0;
-         var tempDate = getDay
-         var tempMonth = getMonth
-         while (!current_price && i < 7) {
-           // check up to 7 days back
-           if (getDay-i == 0) {
-             tempDate = 30
-             tempMonth--
-           }
-           // check up to 7 days back
-           let date = getYear + "-" + tempMonth + "-" + (tempDate).toString();
-           if (optionsData[index]["Time Series (Daily)"][date] !== undefined) {
-             current_price = parseInt(
-               optionsData[index]["Time Series (Daily)"][date]["1. open"]
-             );*/
              let current_price = optionsData[index]["Global Quote"]["02. open"]
              portfolio.options[index].derivative_current_price = current_price;
        });
-       console.log("options here");
-       console.log(portfolio.options);
        await portfolio.save();
      }
      res.send(portfolios);
-     console.log("saved and sent");
    } catch (e) {
-     console.log(e);
      res.status(500).send();
    }
  });
@@ -228,12 +173,9 @@
      var url = `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=${req.body.equity_ticker}&apikey=${process.env.ALPHA_VANTAGE_API_KEY}`;
      let data = await needle("get", url);
      data = data.body;
-     console.log(data);
      let current_price = 0;
      let i = 0;
      while (!current_price && i < 7) {
-       console.log("current price = " + current_price);
-       // check up to 7 days back
        let date = now.slice(0, 8) + (getDay - i).toString();
        if (data["Time Series (Daily)"][date] !== undefined) {
          current_price = parseInt(data["Time Series (Daily)"][date]["1. open"]);
@@ -241,8 +183,6 @@
        }
        i++;
      }
-     console.log("Current price");
-     console.log(current_price);
      const pnl =
        (
          ((current_price - req.body.equity_buy_price) /
@@ -260,7 +200,6 @@
      res.send(portfolio);
    } catch (e) {
      res.status(400).send(e);
-     console.log(e);
    }
  });
  
@@ -296,7 +235,6 @@
      let current_price = 0;
      let i = 0;
      while (!current_price && i < 7) {
-       // check up to 7 days back
        const date = now.slice(0, 8) + (getDay - i).toString();
        if (data["Time Series (Daily)"][date] !== undefined) {
          current_price = parseInt(data["Time Series (Daily)"][date]["1. open"]);
@@ -316,7 +254,6 @@
      res.send(portfolio);
    } catch (e) {
      res.status(400).send(e);
-     console.log(e);
    }
  });
  
@@ -374,7 +311,6 @@
      res.send(portfolio);
    } catch (e) {
      res.status(500).send();
-     console.log(e);
    }
  });
  

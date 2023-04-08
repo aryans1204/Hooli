@@ -57,10 +57,6 @@
  
  })
  
- //GET endpoint to get a specific currency of User, this would be done via fetch in frontend
- 
- 
- //GET endpoint for historic monthly forex/crypto data, used for charts, done via fetch in frontend
  
  
  /**
@@ -93,7 +89,6 @@
   */
  router.post('/api/currencies', auth, async (req, res) => {
      try {
-         console.log("trying")
          const currency = new Currency({
              ...req.body,
              currency_owner: req.user._id
@@ -101,7 +96,6 @@
          await currency.save()
          res.send(currency)
      } catch (e) {
-         console.log(e)
          res.status(500).send()
      }
  })
