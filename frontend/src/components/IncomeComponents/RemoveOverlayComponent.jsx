@@ -17,7 +17,7 @@ import DisplayTableComponent from "./DisplayTableComponent";
  * Overlay component for removing an income record.
  * @export
  * @param {*} props
- * @returns {*}
+ * @returns {JSX.Element}
  */
 export function RemoveOverlayComponent(props) {
   const { isOpen, onOpen, onClose } = useDisclosure();

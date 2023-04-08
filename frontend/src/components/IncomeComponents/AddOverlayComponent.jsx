@@ -17,7 +17,7 @@ import classes from "./AddOverlayComponent.module.css";
  * Overlay component for adding an income record.
  * @export
  * @param {*} props
- * @returns {*}
+ * @returns {JSX.Element}
  */
 export function AddOverlayComponent(props) {
   const initialValues = {
